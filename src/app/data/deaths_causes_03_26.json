@@ -1,0 +1,13 @@
+{
+  "labels": [
+    "Cardiovascular diseases", "Cancers", "Respiratory diseases", "Lower respiratory infections", "Dementia", "Digestive diseases",
+    "Neonatal disorders", "Diarrheal disorders", "Diabetes", "Liver diseases", "Road injuries", "Kidney diseases",
+    "Tuberculosis"
+  ],
+  "data": [
+    17790000, 9560000, 3910000, 2560000, 2510000, 2380000,
+    1780000, 1570000, 1370000, 1320000, 1240000, 1230000,
+    1180000
+  ],
+  "updatedOn": "March 26th 2020"
+}

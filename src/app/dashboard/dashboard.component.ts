@@ -3,10 +3,59 @@ import Chart from 'chart.js';
 
 import * as casesData from '../data/cases_03_25.json';
 import * as deathCases from '../data/deaths_03_25.json';
+import * as totalDeaths from '../data/deaths_causes_03_26.json';
 
 const addCommas = (number: number) => {
   return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
+
+const gradientBarChartConfiguration: any = {
+  maintainAspectRatio: false,
+  legend: {
+    display: false
+  },
+
+  tooltips: {
+    backgroundColor: '#f5f5f5',
+    titleFontColor: '#333',
+    bodyFontColor: '#666',
+    bodySpacing: 4,
+    xPadding: 12,
+    mode: "nearest",
+    intersect: 0,
+    position: "nearest"
+  },
+  responsive: true,
+  scales: {
+    yAxes: [{
+
+      gridLines: {
+        drawBorder: false,
+        color: 'rgba(29,140,248,0.1)',
+        zeroLineColor: "transparent",
+      },
+      ticks: {
+        suggestedMin: 60,
+        suggestedMax: 120,
+        padding: 20,
+        fontColor: "#9e9e9e"
+      }
+    }],
+
+    xAxes: [{
+
+      gridLines: {
+        drawBorder: false,
+        color: 'rgba(29,140,248,0.1)',
+        zeroLineColor: "transparent",
+      },
+      ticks: {
+        padding: 20,
+        fontColor: "#9e9e9e"
+      }
+    }]
+  }
+};
 
 @Component({
   selector: 'app-dashboard',
@@ -14,26 +63,38 @@ const addCommas = (number: number) => {
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
-  public ctx: CanvasRenderingContext2D;
   public chartCases: Chart;
   public chartDeaths: Chart;
+
+  public casesLastUpdate: string;
+  public deathsLastUpdate: string;
+  public totalDeathCausesLastUpdate: string;
 
   constructor() { }
 
   ngOnInit() {
-    this.ctx = (document.getElementById("chartCases") as any).getContext("2d");
-    this.chartCases = this.createOldChart(casesData.labels, casesData.data)
+    const casesCTX = (document.getElementById("chartCases") as any).getContext("2d");
+    this.chartCases = this.createLineChart(casesCTX, casesData.labels, casesData.data)
+    this.casesLastUpdate = casesData.updatedOn;
 
     const deathsCTX = (document.getElementById("chartDeaths") as any).getContext("2d");
-    this.chartDeaths = this.createChart(deathsCTX, deathCases.labels, deathCases.data)
+    this.chartDeaths = this.createLineChart(deathsCTX, deathCases.labels, deathCases.data)
+    this.deathsLastUpdate = deathCases.updatedOn;
+
+    const totalDeathsCTX = (document.getElementById("CountryChart") as any).getContext("2d");
+
+    const gradientStroke = totalDeathsCTX.createLinearGradient(0, 230, 0, 50);
+
+    this.createBarChart(totalDeathsCTX, gradientStroke);
+    this.totalDeathCausesLastUpdate = totalDeaths.updatedOn;
   }
 
-  private createChart(ctx: CanvasRenderingContext2D, labels: string[], dataset: number[]) {
+  private createLineChart(ctx: CanvasRenderingContext2D, labels: string[], dataset: number[]) {
     const data = {
       labels,
       datasets: [{
           borderColor: "#3399FF",
-          pointRadius: 1,
+          pointRadius: 3,
           pointHoverRadius: 6,
           borderWidth: 3,
           data: dataset
@@ -58,6 +119,12 @@ export class DashboardComponent implements OnInit {
         yAxes: [{
 
           ticks: {
+            userCallback: function(value, index, values) {
+              value = value.toString();
+              value = value.split(/(?=(?:...)*$)/);
+              value = value.join(',');
+              return value;
+            },
             fontColor: "#9f9f9f",
             beginAtZero: false,
             maxTicksLimit: 5,
@@ -91,65 +158,28 @@ export class DashboardComponent implements OnInit {
     return new Chart(ctx, { type: 'line', data, options});
   }
 
-  private createOldChart(labels: string[], dataset: number[]) {
-    const data = {
-      labels,
-      datasets: [{
-          borderColor: "#3399FF",
-          pointRadius: 1,
-          pointHoverRadius: 8,
-          borderWidth: 3,
-          data: dataset
-        },
-      ]
-    };
-
-    const options = {
+  private createBarChart(ctx: CanvasRenderingContext2D, gradientStroke: any) {
+    return new Chart(ctx, {
+      type: 'bar',
+      responsive: true,
       legend: {
         display: false
       },
-
-      tooltips: {
-        enabled: true
-      },
-
-      scales: {
-        yAxes: [{
-
-          ticks: {
-            fontColor: "#9f9f9f",
-            beginAtZero: false,
-            maxTicksLimit: 5,
-            // padding: 20
-          },
-          gridLines: {
-            drawBorder: false,
-            zeroLineColor: "#ccc",
-            color: 'rgba(0,0,0,0.05)'
-          }
-
-        }],
-
-        xAxes: [{
-          barPercentage: 1.6,
-          gridLines: {
-            drawBorder: false,
-            color: 'rgba(255,255,255,0.1)',
-            zeroLineColor: "transparent",
-            display: false,
-          },
-          ticks: {
-            padding: 20,
-            fontColor: "#9f9f9f"
-          }
+      data: {
+        labels: totalDeaths.labels,
+        datasets: [{
+          label: "Countries",
+          fill: true,
+          backgroundColor: gradientStroke,
+          hoverBackgroundColor: gradientStroke,
+          borderColor: '#1f8ef1',
+          borderWidth: 2,
+          borderDash: [],
+          borderDashOffset: 0.0,
+          data: totalDeaths.data,
         }]
       },
-    }
-
-    return new Chart(this.ctx, {
-      type: 'line',
-      data,
-      options
+      options: gradientBarChartConfiguration
     });
   }
 }

@@ -6,16 +6,15 @@
       <div class="col-md-12">
         <div class="card ">
           <div class="card-header ">
-            <h5 class="card-title">Reported Coronavirus Infection Cases</h5>
+            <h5 class="card-category">Reported Coronavirus Infection Cases</h5>
             <!-- <p class="card-category">24 Hours performance</p> -->
           </div>
           <div class="card-body ">
             <canvas id=chartCases width="400" height="100"></canvas>
           </div>
           <div class="card-footer ">
-            <hr>
             <div class="stats">
-              <i class="fa fa-history"></i> Updated on March 25th 2020
+              Updated on {{casesLastUpdate}}
             </div>
           </div>
         </div>
@@ -26,16 +25,33 @@
       <div class="col-md-12">
         <div class="card ">
           <div class="card-header ">
-            <h5 class="card-title">Reported Coronavirus Death Cases</h5>
+            <h5 class="card-category">Reported Coronavirus Death Cases</h5>
             <!-- <p class="card-category">24 Hours performance</p> -->
           </div>
           <div class="card-body ">
             <canvas id=chartDeaths width="400" height="100"></canvas>
           </div>
           <div class="card-footer ">
-            <hr>
             <div class="stats">
-              <i class="fa fa-history"></i> Updated March on 25th 2020
+              Updated on {{deathsLastUpdate}}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class=" row">
+      <div class=" col-lg-6">
+        <div class=" card ">
+          <div class=" card-header">
+            <h5 class=" card-category">Average Death Statistics Per Year</h5>
+          </div>
+          <div class=" card-body">
+            <canvas id="CountryChart" width="100" height="400"></canvas>
+          </div>
+          <div class="card-footer ">
+            <div class="stats">
+              Updated on {{totalDeathCausesLastUpdate}}
             </div>
           </div>
         </div>
