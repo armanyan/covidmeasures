@@ -24,7 +24,7 @@ const gradientBarChartConfiguration: any = {
     position: "nearest",
     callbacks: {
       label: function(tooltipItem: any) {
-        return addCommas(tooltipItem.yLabel);
+        return addCommas(tooltipItem.xLabel);
       }
     }
   },
@@ -33,20 +33,14 @@ const gradientBarChartConfiguration: any = {
     yAxes: [{
 
       gridLines: {
-        drawBorder: false,
+        // drawBorder: false,
         color: 'rgba(29,140,248,0.1)',
-        zeroLineColor: "transparent",
+        // zeroLineColor: "transparent",
       },
       ticks: {
-        userCallback: function(value, index, values) {
-          value = value.toString();
-          value = value.split(/(?=(?:...)*$)/);
-          value = value.join(',');
-          return value;
-        },
-        suggestedMin: 60,
-        suggestedMax: 120,
-        padding: 20,
+        // suggestedMin: 0,
+        // suggestedMax: 120,
+        padding: 0,
         fontColor: "#9e9e9e"
       }
     }],
@@ -59,7 +53,13 @@ const gradientBarChartConfiguration: any = {
         zeroLineColor: "transparent",
       },
       ticks: {
-        padding: 20,
+        userCallback: function(value) {
+          value = value.toString();
+          value = value.split(/(?=(?:...)*$)/);
+          value = value.join(',');
+          return value;
+        },
+        padding: 0,
         fontColor: "#9e9e9e"
       }
     }]
@@ -167,7 +167,7 @@ export class DashboardComponent implements OnInit {
 
   private createBarChart(ctx: CanvasRenderingContext2D, gradientStroke: any, labels: string[], dataset: number[]) {
     return new Chart(ctx, {
-      type: 'bar',
+      type: 'horizontalBar',
       responsive: true,
       legend: {
         display: false
