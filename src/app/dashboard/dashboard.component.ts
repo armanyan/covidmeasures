@@ -19,11 +19,14 @@ const gradientBarChartConfiguration: any = {
     backgroundColor: '#f5f5f5',
     titleFontColor: '#333',
     bodyFontColor: '#666',
-    bodySpacing: 4,
-    xPadding: 12,
     mode: "nearest",
     intersect: 0,
-    position: "nearest"
+    position: "nearest",
+    callbacks: {
+      label: function(tooltipItem: any) {
+        return addCommas(tooltipItem.yLabel);
+      }
+    }
   },
   responsive: true,
   scales: {
@@ -35,6 +38,12 @@ const gradientBarChartConfiguration: any = {
         zeroLineColor: "transparent",
       },
       ticks: {
+        userCallback: function(value, index, values) {
+          value = value.toString();
+          value = value.split(/(?=(?:...)*$)/);
+          value = value.join(',');
+          return value;
+        },
         suggestedMin: 60,
         suggestedMax: 120,
         padding: 20,
@@ -82,10 +91,8 @@ export class DashboardComponent implements OnInit {
     this.deathsLastUpdate = deathCases.updatedOn;
 
     const totalDeathsCTX = (document.getElementById("CountryChart") as any).getContext("2d");
-
     const gradientStroke = totalDeathsCTX.createLinearGradient(0, 230, 0, 50);
-
-    this.createBarChart(totalDeathsCTX, gradientStroke);
+    this.createBarChart(totalDeathsCTX, gradientStroke, totalDeaths.labels, totalDeaths.data);
     this.totalDeathCausesLastUpdate = totalDeaths.updatedOn;
   }
 
@@ -112,7 +119,7 @@ export class DashboardComponent implements OnInit {
           label: function(tooltipItem: any) {
             return addCommas(tooltipItem.yLabel);
           }
-      }
+        }
       },
 
       scales: {
@@ -158,7 +165,7 @@ export class DashboardComponent implements OnInit {
     return new Chart(ctx, { type: 'line', data, options});
   }
 
-  private createBarChart(ctx: CanvasRenderingContext2D, gradientStroke: any) {
+  private createBarChart(ctx: CanvasRenderingContext2D, gradientStroke: any, labels: string[], dataset: number[]) {
     return new Chart(ctx, {
       type: 'bar',
       responsive: true,
@@ -166,9 +173,8 @@ export class DashboardComponent implements OnInit {
         display: false
       },
       data: {
-        labels: totalDeaths.labels,
+        labels,
         datasets: [{
-          label: "Countries",
           fill: true,
           backgroundColor: gradientStroke,
           hoverBackgroundColor: gradientStroke,
@@ -176,7 +182,7 @@ export class DashboardComponent implements OnInit {
           borderWidth: 2,
           borderDash: [],
           borderDashOffset: 0.0,
-          data: totalDeaths.data,
+          data: dataset,
         }]
       },
       options: gradientBarChartConfiguration
