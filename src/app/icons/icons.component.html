@@ -1,4 +1,4 @@
-<!-- 
+
 <div class="main-content">
   <div class="container-fluid">
       <div class="card card-plain">
@@ -26,60 +26,4 @@
           </div>
       </div>
   </div>
-</div> -->
-
-<div class="main-content">
-
-
-<mat-form-field>
-  <mat-label>Filter by Country</mat-label>
-  <input matInput (keyup)="applyFilter($event)" placeholder="USA, France, China...">
-</mat-form-field>
-
-<div class="mat-elevation-z8">
-  <table mat-table [dataSource]="dataSource" matSort>
-
-    <!-- Country Column -->
-    <ng-container matColumnDef="country">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Country </th>
-      <td mat-cell *matCellDef="let row"> {{row.country}} </td>
-    </ng-container>
-
-    <!-- Total Cases Column -->
-    <ng-container matColumnDef="total_cases">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Total Cases </th>
-      <td mat-cell *matCellDef="let row"> {{row.total_cases | number}} </td>
-    </ng-container>
-
-    <!-- New Cases Column -->
-    <ng-container matColumnDef="new_cases">
-      <th mat-header-cell *matHeaderCellDef> New Cases </th>
-      <td mat-cell *matCellDef="let row"> {{row.new_cases}} </td>
-    </ng-container>
-
-    <!-- Total Deaths Column -->
-    <ng-container matColumnDef="total_deaths">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Total Deaths </th>
-      <td mat-cell *matCellDef="let row"> {{row.total_deaths | number}} </td>
-    </ng-container>
-
-    <!-- New Deaths Column -->
-    <ng-container matColumnDef="new_deaths">
-      <th mat-header-cell *matHeaderCellDef> New Deaths </th>
-      <td mat-cell *matCellDef="let row"> {{row.new_deaths}} </td>
-    </ng-container>
-
-    <!-- Recovered Column -->
-    <ng-container matColumnDef="recovered">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Recovered </th>
-      <td mat-cell *matCellDef="let row"> {{row.recovered | number}} </td>
-    </ng-container>
-
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;">
-    </tr>
-  </table>
-
-</div>
-
 </div>
