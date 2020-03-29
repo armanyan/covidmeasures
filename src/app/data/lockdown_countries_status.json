@@ -1,0 +1,13 @@
+{
+  "values": [
+    {
+      "country": "USA", "total_cases": 123781, "new_cases": 203, "total_deaths": 2229, "new_deaths": 8, "recovered": 3238
+    },
+    {
+      "country": "Italy", "total_cases": 92472, "new_cases": "N/A", "total_deaths": 10023, "new_deaths": "N/A", "recovered": 12384
+    },
+    {
+      "country": "China", "total_cases": 81439, "new_cases": 45, "total_deaths": 3300, "new_deaths": 5, "recovered": 75448
+    }
+  ]
+}

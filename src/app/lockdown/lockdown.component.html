@@ -15,9 +15,9 @@
     Right to the table we could have a number of buttons/switches to switch between Europe/USA/Asia etc.
     Or we can have World/Europe/Asia/USA under the <b>People in Lockdown</b>, and switch between them by clicking on the text.
 
-    <div class="col-md-6">
+    <div class="col-md-8">
       <div class="card">
-        <div class="card-header card-header-danger">
+        <div class="card-header card-header-success">
           <h3 class="card-title ">People in Lockdown</h3>
           <p class="card-category">World</p>
         </div>
@@ -52,51 +52,96 @@
               </div>
           </div>
       </div>
-  </div>
+    </div>
 
-  Some random text to explain the following table.
-  Eiusmod duis minim duis occaecat id quis velit ut voluptate anim est Lorem minim. Excepteur quis veniam pariatur eu.
-  Nostrud occaecat pariatur exercitation sunt do minim.
+    Some random text to explain the following table.
+    Eiusmod duis minim duis occaecat id quis velit ut voluptate anim est Lorem minim. Excepteur quis veniam pariatur eu.
+    Nostrud occaecat pariatur exercitation sunt do minim.
 
-  <div class="col-md-6">
-    <div class="card">
-      <div class="card-header card-header-danger">
-        <h3 class="card-title ">Lucky children</h3>
-        <p class="card-category">World</p>
-      </div>
+    <div class="col-md-8">
+      <div class="card">
+        <div class="card-header card-header-success">
+          <h3 class="card-title ">Lucky children</h3>
+          <p class="card-category">World</p>
+        </div>
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table">
+                <thead class="text-primary">
+                  <th>
+                    Total Amount
+                  </th>
+                  <th>
+                    Per Active Covid Case
+                  </th>
+                  <th>
+                    Per COVID-19 Death
+                  </th>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>
+                      {{123456789 | number}}
+                    </td>
+                    <td>
+                      {{12345 | number}}
+                    </td>
+                    <td>
+                      {{123456 | number}}
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              </div>
+          </div>
+        </div>
+    </div>
+      
+    <hr>
+
+    <div class="col-md-12">
+      <div class="card">
+
+        <div class="card-header card-header-success">
+          <h3 class="card-title">COVID-19 World Stats</h3>
+          <mat-form-field>
+            <mat-label>Filter by Country</mat-label>
+            <input matInput (keyup)="applyFilter($event)" placeholder="USA, France, China...">
+          </mat-form-field>
+        </div>
+
         <div class="card-body">
-          <div class="table-responsive">
+
+          <div class="content table-responsive table-full-width">
             <table class="table">
-              <thead class="text-primary">
-                <th>
-                  Total Amount
-                </th>
-                <th>
-                  Per Active Covid Case
-                </th>
-                <th>
-                  Per COVID-19 Death
-                </th>
+              <thead>
+                <tr>
+                  <th>{{ statsHeaders[0] }}</th>
+                  <th>{{ statsHeaders[1] }}</th>
+                  <th>{{ statsHeaders[2] }}</th>
+                  <th>{{ statsHeaders[3] }}</th>
+                  <th>{{ statsHeaders[4] }}</th>
+                  <th>{{ statsHeaders[5] }}</th>
+                </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>
-                    {{123456789 | number}}
-                  </td>
-                  <td>
-                    {{12345 | number}}
-                  </td>
-                  <td>
-                    {{123456 | number}}
-                  </td>
+                <tr *ngFor="let row of stats">
+                  <td>{{ row.country }}</td>
+                  <td>{{ row.total_cases | number }}</td>
+                  <td>{{ row.new_cases }}</td>
+                  <td>{{ row.total_deaths | number }}</td>
+                  <td>{{ row.new_deaths }}</td>
+                  <td>{{ row.recovered | number }}</td>
                 </tr>
               </tbody>
             </table>
             </div>
+    
         </div>
+
       </div>
     </div>
-    
+
     <hr>
     <h3>About Us</h3>
     Fugiat irure laborum reprehenderit incididunt dolor occaecat in mollit minim aute ad. Velit Lorem quis qui nulla minim ex amet ex laboris. Minim dolore irure occaecat eu amet. Elit labore incididunt amet aute amet amet pariatur in deserunt in consequat. Amet aliquip ea veniam enim amet eiusmod cillum aute veniam ipsum. Ad eiusmod velit commodo culpa aute ea ad culpa.
