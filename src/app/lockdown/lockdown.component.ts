@@ -29,6 +29,9 @@ export class LockdownComponent implements OnInit {
 
   ngOnInit() {
     this.stats = lockdown_stats.values;
+    if (this.stats[this.stats.length-1].country === 'World') {
+      return;
+    }
     this.stats.push(getWorldRow());
   }
 

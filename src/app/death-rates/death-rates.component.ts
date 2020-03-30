@@ -19,40 +19,72 @@ const insertToArray = (arr, element, index) => {
 })
 export class DeathRatesComponent implements OnInit {
 
+  private chart: Chart;
   public totalDeathCausesLastUpdate: string;
+  public since1stToggle = true;
 
-  private backgroundColors: string[];
+  private since1st = {"labels": [], "data": [], "backgroundColor": []};
+  private yesterday = {"labels": [], "data": [], "backgroundColor": []};
 
   constructor() { }
 
   ngOnInit() {
-    this.backgroundColors = Array.apply(null, Array(totalDeaths.data.length)).map(() => { return '#1f8ef1'; })
-    this.sortDeathTolls();
+    this.since1st.backgroundColor = Array.apply(null, Array(totalDeaths.data.length)).map(() => { return '#1f8ef1'; })
+    this.yesterday.backgroundColor = Array.apply(null, Array(totalDeaths.data.length)).map(() => { return '#1f8ef1'; })
+    this.composeData();
 
     const totalDeathsCTX = (document.getElementById("CountryChart") as any).getContext("2d");
-    this.createBarChart(totalDeathsCTX, totalDeaths.labels, totalDeaths.data);
+    this.chart = this.createBarChart(totalDeathsCTX, this.since1st.labels, this.since1st.data, this.since1st.backgroundColor);
+    console.log(this.chart);
+
     this.totalDeathCausesLastUpdate = totalDeaths.updatedOn;
   }
 
-  private sortDeathTolls() {
-    const coronaDeaths = this.getCorona();
+  private composeData() {
+    const since1st = deathCases.data[deathCases.data.length-1];
+    const yesterday = since1st - deathCases.data[deathCases.data.length-2];
+
+    const today = new Date();
+    const day1 = new Date("01/11/2020");
+    const difference = Math.floor((today.getTime()-day1.getTime())/(1000*60*60*24));
+
+    this.since1st.data = totalDeaths.data.map(value => Math.floor(value/(365/difference)));
+    this.since1st.labels = [...totalDeaths.labels];
+    this.sortDeathTolls(this.since1st, since1st);
+
+    this.yesterday.data = totalDeaths.data.map(value => Math.floor(value/365));
+    this.yesterday.labels = [...totalDeaths.labels];
+    this.sortDeathTolls(this.yesterday, yesterday);
+  }
+
+  public toggle() {
+    this.since1stToggle = !this.since1stToggle;
+    if (this.since1stToggle) {
+      this.chart.data.labels = this.since1st.labels;
+      this.chart.data.datasets[0].data = this.since1st.data;
+      this.chart.data.datasets[0].backgroundColor = this.since1st.backgroundColor;
+    } else {
+      this.chart.data.labels = this.yesterday.labels;
+      this.chart.data.datasets[0].data = this.yesterday.data;
+      this.chart.data.datasets[0].backgroundColor = this.yesterday.backgroundColor;
+    }
+    this.chart.update();
+  }
+
+  private sortDeathTolls(tolls: any, coronaDeaths: number) {
     let insertIndex = 0;
-    for (const i of totalDeaths.data) {
+    for (const i of tolls.data) {
       if (i > coronaDeaths) {
         insertIndex++;
       }
     }
-    insertToArray(totalDeaths.data, coronaDeaths, insertIndex);
-    insertToArray(totalDeaths.labels, 'COVID-19', insertIndex);
-    insertToArray(this.backgroundColors, 'red', insertIndex);
+
+    insertToArray(tolls.data, coronaDeaths, insertIndex);
+    insertToArray(tolls.labels, 'COVID-19', insertIndex);
+    insertToArray(tolls.backgroundColor, 'red', insertIndex);
   }
 
-  private getCorona() {
-    const deathPerDay = deathCases.data[deathCases.data.length-1] - deathCases.data[deathCases.data.length-2];
-    return deathPerDay*356;
-  }
-
-  private createBarChart(ctx: CanvasRenderingContext2D, labels: string[], dataset: number[]) {
+  private createBarChart(ctx: CanvasRenderingContext2D, labels: string[], dataset: number[], backgroundColor) {
     return new Chart(ctx, {
       type: 'horizontalBar',
       responsive: true,
@@ -62,7 +94,7 @@ export class DeathRatesComponent implements OnInit {
       data: {
         labels,
         datasets: [{
-          backgroundColor: this.backgroundColors,
+          backgroundColor,
           data: dataset,
         }]
       },

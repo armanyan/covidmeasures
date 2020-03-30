@@ -2,7 +2,7 @@
   <div class="container-fluid">
 
     <div layout-align="end end">
-      <button mat-raised-button class="float-right" type="button" (click)="something()">
+      <button mat-raised-button class="float-right" type="button" color="primary" (click)="something()">
         <span>Help Us!</span>
       </button>
       <h2>Death Rates</h2>
@@ -16,19 +16,35 @@
       <div class=" col-lg-12">
         <div class=" card ">
 
-          <div class=" card-header">
-            <h5 class=" card-category">Average Death Statistics Per Year</h5>
+          <div class="card-header card-header-success">
+            <h3 class="card-title ">Average Death Statistics</h3>
+            <div *ngIf="!since1stToggle" class="btn-group">
+              <button mat-button class="float" type="button" color="primary" (click)="toggle()">
+                <span>Since 1st COVID-19 death (on 11 January 2020)</span>
+              </button>
+              <button mat-raised-button class="float" type="button" color="primary">
+                <span>Last 24 hours</span>
+              </button>
+            </div>
+            <div *ngIf="since1stToggle" class="btn-group">
+              <button mat-raised-button class="float" type="button" color="primary">
+                <span>Since 1st COVID-19 death (on 11 January 2020)</span>
+              </button>
+              <button mat-button class="float" type="button" color="primary" (click)="toggle()">
+                <span>Last 24 hours</span>
+              </button>
+            </div>
           </div>
 
-            <div class=" card-body">
-              <canvas id="CountryChart" height="400"></canvas>
-            </div>
+          <div class=" card-body">
+            <canvas id="CountryChart" height="500"></canvas>
+          </div>
 
-            <div class="card-footer ">
-              <div class="stats">
+          <div class="card-footer ">
+            <div class="stats">
               Updated on {{totalDeathCausesLastUpdate}}
-              </div>
             </div>
+          </div>
 
         </div>
       </div>
