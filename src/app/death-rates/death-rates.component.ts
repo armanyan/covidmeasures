@@ -34,8 +34,7 @@ export class DeathRatesComponent implements OnInit {
     this.composeData();
 
     const totalDeathsCTX = (document.getElementById("CountryChart") as any).getContext("2d");
-    this.chart = this.createBarChart(totalDeathsCTX, this.since1st.labels, this.since1st.data, this.since1st.backgroundColor);
-    console.log(this.chart);
+    this.chart = this.createBarChart(totalDeathsCTX, this.since1st.labels, this.since1st.data, this.since1st.backgroundColor, 'horizontalBar');
 
     this.totalDeathCausesLastUpdate = totalDeaths.updatedOn;
   }
@@ -84,9 +83,9 @@ export class DeathRatesComponent implements OnInit {
     insertToArray(tolls.backgroundColor, 'red', insertIndex);
   }
 
-  private createBarChart(ctx: CanvasRenderingContext2D, labels: string[], dataset: number[], backgroundColor) {
+  private createBarChart(ctx: CanvasRenderingContext2D, labels: string[], dataset: number[], backgroundColor, type: string) {
     return new Chart(ctx, {
-      type: 'horizontalBar',
+      type,
       responsive: true,
       legend: {
         display: false
