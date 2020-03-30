@@ -1,0 +1,41 @@
+<div class="main-content">
+  <div class="container-fluid">
+
+    <div layout-align="end end">
+      <button mat-raised-button class="float-right" type="button" (click)="something()">
+        <span>Help Us!</span>
+      </button>
+      <h2>Death Rates</h2>
+    </div>
+
+    <hr>
+
+    Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatum eos reiciendis, minus facere commodi velit aut, odit earum impedit rerum, error corrupti vero! Impedit assumenda, commodi sunt aperiam ducimus fugiat.
+
+    <div class=" row">
+      <div class=" col-lg-12">
+        <div class=" card ">
+
+          <div class=" card-header">
+            <h5 class=" card-category">Average Death Statistics Per Year</h5>
+          </div>
+
+            <div class=" card-body">
+              <canvas id="CountryChart" height="400"></canvas>
+            </div>
+
+            <div class="card-footer ">
+              <div class="stats">
+              Updated on {{totalDeathCausesLastUpdate}}
+              </div>
+            </div>
+
+        </div>
+      </div>
+    </div>
+
+    <hr>
+    <h3><u>COVID-19 Death Rate by Age Range</u></h3>
+
+  </div>
+</div>

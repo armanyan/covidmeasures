@@ -5,7 +5,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AdminLayoutRoutes } from './admin-layout.routing';
 import { CovidComponent } from '../../covid/covid.component';
 import { LockdownComponent } from '../../lockdown/lockdown.component';
-import { TableListComponent } from '../../table-list/table-list.component';
+import { DeathRatesComponent } from '../../death-rates/death-rates.component';
 import { TypographyComponent } from '../../typography/typography.component';
 import { IconsComponent } from '../../icons/icons.component';
 import { NotificationsComponent } from '../../notifications/notifications.component';
@@ -33,7 +33,7 @@ import { MatSelectModule } from '@angular/material/select';
   declarations: [
     CovidComponent,
     LockdownComponent,
-    TableListComponent,
+    DeathRatesComponent,
     TypographyComponent,
     IconsComponent,
     NotificationsComponent,

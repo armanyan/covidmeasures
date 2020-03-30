@@ -3,10 +3,10 @@
   <div class="container-fluid">
 
     <div layout-align="end end">
+      <button mat-raised-button class="float-right" type="button" (click)="something()">
+        <span>Help Us!</span>
+      </button>
       <h2>COVID Measures - Tracking Government Measures for COVID-19 </h2>
-      <button mat-raised-button class="float" type="button" (click)="something()">
-        <span icon="pan_tool">Help Us!</span>
-    </button>
     </div>
 
     <hr>
@@ -115,14 +115,12 @@
           <div class="content table-responsive table-full-width">
             <table class="table">
               <thead>
-                <tr>
-                  <th>{{ statsHeaders[0] }}</th>
-                  <th>{{ statsHeaders[1] }}</th>
-                  <th>{{ statsHeaders[2] }}</th>
-                  <th>{{ statsHeaders[3] }}</th>
-                  <th>{{ statsHeaders[4] }}</th>
-                  <th>{{ statsHeaders[5] }}</th>
-                </tr>
+                <th class="text-primary">{{ statsHeaders[0] }}</th>
+                <th class="text-primary">{{ statsHeaders[1] }}</th>
+                <th class="text-primary">{{ statsHeaders[2] }}</th>
+                <th class="text-primary">{{ statsHeaders[3] }}</th>
+                <th class="text-primary">{{ statsHeaders[4] }}</th>
+                <th class="text-primary">{{ statsHeaders[5] }}</th>
               </thead>
               <tbody>
                 <tr *ngFor="let row of stats">
