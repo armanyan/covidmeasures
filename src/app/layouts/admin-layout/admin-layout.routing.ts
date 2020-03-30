@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
 
-import { DashboardComponent } from '../../dashboard/dashboard.component';
+import { CovidComponent } from '../../covid/covid.component';
 import { LockdownComponent } from '../../lockdown/lockdown.component';
 // import { TableListComponent } from '../../table-list/table-list.component';
 // import { TypographyComponent } from '../../typography/typography.component';
@@ -9,7 +9,7 @@ import { LockdownComponent } from '../../lockdown/lockdown.component';
 // import { UpgradeComponent } from '../../upgrade/upgrade.component';
 
 export const AdminLayoutRoutes: Routes = [
-    { path: 'dashboard',      component: DashboardComponent },
+    { path: 'covid',      component: CovidComponent },
     { path: 'lockdown',   component: LockdownComponent },
     // { path: 'table-list',     component: TableListComponent },
     // { path: 'typography',     component: TypographyComponent },

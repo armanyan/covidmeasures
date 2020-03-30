@@ -30,7 +30,6 @@ export class LockdownComponent implements OnInit {
   ngOnInit() {
     this.stats = lockdown_stats.values;
     this.stats.push(getWorldRow());
-    console.log(this.stats);
   }
 
   applyFilter(event: Event) {
@@ -38,7 +37,6 @@ export class LockdownComponent implements OnInit {
     this.stats = lockdown_stats.values.filter(
       row => row.country.toLowerCase().includes(search)
     );
-    console.log(this.stats);
     if (this.stats[this.stats.length-1].country !== "World") {
       this.stats.push(getWorldRow());
     }

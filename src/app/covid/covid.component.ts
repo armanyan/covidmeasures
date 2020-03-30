@@ -14,11 +14,11 @@ const insertToArray = (arr, element, index) => {
 }
 
 @Component({
-  selector: 'app-dashboard',
-  templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.css']
+  selector: 'app-covid',
+  templateUrl: './covid.component.html',
+  styleUrls: ['./covid.component.css']
 })
-export class DashboardComponent implements OnInit {
+export class CovidComponent implements OnInit {
   public casesLastUpdate: string;
   public deathsLastUpdate: string;
   public totalDeathCausesLastUpdate: string;
@@ -61,10 +61,6 @@ export class DashboardComponent implements OnInit {
   }
 
   private getCorona() {
-    // const totalCorona = Math.max(...deathCases.data);
-    // const firstDeath = new Date("01/11/2020");
-    // const daysOfCorona = Math.floor(((new Date()).getTime()-firstDeath.getTime())/(60*60*24*1000));
-    // const deathPerDay = totalCorona/daysOfCorona;
     const deathPerDay = deathCases.data[deathCases.data.length-1] - deathCases.data[deathCases.data.length-2];
     return deathPerDay*356;
   }
