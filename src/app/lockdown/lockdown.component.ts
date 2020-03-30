@@ -2,6 +2,19 @@ import { Component, OnInit } from '@angular/core';
 
 import * as lockdown_stats from '../data/lockdown_countries_status.json';
 
+const getWorldRow = () => {
+  const row = {
+    "country": "World", "total_cases": 0, "new_cases": 0, "total_deaths": 0, "new_deaths": 0, "recovered": 0
+  };
+  const reducer = (acc, currVal) => {return currVal === 'N/A' ? acc : currVal + acc};
+  row.total_cases = lockdown_stats.values.map(row => row.total_cases).reduce(reducer);
+  row.new_cases = (lockdown_stats.values.map(row => row.new_cases).reduce(reducer) as any);
+  row.total_deaths = lockdown_stats.values.map(row => row.total_deaths).reduce(reducer);
+  row.new_deaths = (lockdown_stats.values.map(row => row.new_deaths).reduce(reducer) as any);
+  row.recovered = lockdown_stats.values.map(row => row.recovered).reduce(reducer);
+  return row;
+}
+
 @Component({
   selector: 'app-lockdown',
   templateUrl: './lockdown.component.html',
@@ -16,6 +29,8 @@ export class LockdownComponent implements OnInit {
 
   ngOnInit() {
     this.stats = lockdown_stats.values;
+    this.stats.push(getWorldRow());
+    console.log(this.stats);
   }
 
   applyFilter(event: Event) {
@@ -23,6 +38,10 @@ export class LockdownComponent implements OnInit {
     this.stats = lockdown_stats.values.filter(
       row => row.country.toLowerCase().includes(search)
     );
+    console.log(this.stats);
+    if (this.stats[this.stats.length-1].country !== "World") {
+      this.stats.push(getWorldRow());
+    }
   }
 
 }
