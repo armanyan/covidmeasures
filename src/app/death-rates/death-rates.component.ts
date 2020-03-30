@@ -3,9 +3,13 @@ import Chart from 'chart.js';
 
 import * as totalDeaths from '../data/deaths_causes.json';
 import * as deathCases from '../data/latest_deaths.json';
+import * as ageDeathRate from '../data/age_death_rage.json';
 
-const addCommas = (number: number) => {
-  return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+const composeTooltip = (input: any) => {
+  if (typeof input.xLabel === 'string') {
+    return input.yLabel+"%, "+Math.floor((deathCases.data[deathCases.data.length-1]*parseInt(input.yLabel))/100);
+  }
+  return input.xLabel.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 };
 
 const insertToArray = (arr, element, index) => {
@@ -21,22 +25,31 @@ export class DeathRatesComponent implements OnInit {
 
   private chart: Chart;
   public totalDeathCausesLastUpdate: string;
+  public ageDeathRateLastUpdate: string;
+
   public since1stToggle = true;
 
   private since1st = {"labels": [], "data": [], "backgroundColor": []};
   private yesterday = {"labels": [], "data": [], "backgroundColor": []};
 
+  private currentDeaths: number;
+
   constructor() { }
 
   ngOnInit() {
-    this.since1st.backgroundColor = Array.apply(null, Array(totalDeaths.data.length)).map(() => { return '#1f8ef1'; })
-    this.yesterday.backgroundColor = Array.apply(null, Array(totalDeaths.data.length)).map(() => { return '#1f8ef1'; })
+    this.since1st.backgroundColor = totalDeaths.data.map(() => { return '#1f8ef1'; })
+    this.yesterday.backgroundColor = totalDeaths.data.map(() => { return '#1f8ef1'; })
     this.composeData();
 
     const totalDeathsCTX = (document.getElementById("CountryChart") as any).getContext("2d");
-    this.chart = this.createBarChart(totalDeathsCTX, this.since1st.labels, this.since1st.data, this.since1st.backgroundColor, 'horizontalBar');
+    this.chart = this.createBarChart(totalDeathsCTX, this.since1st.labels, this.since1st.data, this.since1st.backgroundColor, 'horizontalBar', this.callbackAverage);
 
     this.totalDeathCausesLastUpdate = totalDeaths.updatedOn;
+    this.ageDeathRateLastUpdate = ageDeathRate.updatedOn;
+
+    const backgroundColor = ageDeathRate.ages.map(() => { return '#1f8ef1'; })
+    const ageDeathRateCTX = (document.getElementById("AgeDeathRateChart") as any).getContext("2d");
+    this.createBarChart(ageDeathRateCTX, ageDeathRate.ages, ageDeathRate.rate, backgroundColor, 'bar', this.callbackRate);
   }
 
   private composeData() {
@@ -83,7 +96,13 @@ export class DeathRatesComponent implements OnInit {
     insertToArray(tolls.backgroundColor, 'red', insertIndex);
   }
 
-  private createBarChart(ctx: CanvasRenderingContext2D, labels: string[], dataset: number[], backgroundColor, type: string) {
+  private createBarChart(
+    ctx: CanvasRenderingContext2D,
+    labels: string[], dataset: number[],
+    backgroundColor,
+    type: string,
+    customCallback: any
+  ) {
     return new Chart(ctx, {
       type,
       responsive: true,
@@ -112,7 +131,7 @@ export class DeathRatesComponent implements OnInit {
           position: "nearest",
           callbacks: {
             label: function(tooltipItem: any) {
-              return addCommas(tooltipItem.xLabel);
+              return composeTooltip(tooltipItem);
             }
           }
         },
@@ -138,10 +157,7 @@ export class DeathRatesComponent implements OnInit {
             },
             ticks: {
               userCallback: function(value) {
-                value = value.toString();
-                value = value.split(/(?=(?:...)*$)/);
-                value = value.join(',');
-                return value;
+                return customCallback(value);
               },
               padding: 0,
               fontColor: "#9e9e9e"
@@ -150,5 +166,16 @@ export class DeathRatesComponent implements OnInit {
         }
       }
     });
+  }
+
+  private callbackAverage (value) {
+    value = value.toString();
+    value = value.split(/(?=(?:...)*$)/);
+    value = value.join(',');
+    return value;
+  }
+
+  private callbackRate(value) {
+    return value;
   }
 }
