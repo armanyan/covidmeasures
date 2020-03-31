@@ -108,6 +108,11 @@ export class DeathRatesComponent implements OnInit {
           backgroundColor,
           data: dataset
         }]
+      },
+      options: {
+        legend: {
+          display: false
+        }
       }
     })
   }
