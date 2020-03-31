@@ -5,13 +5,6 @@ import * as totalDeaths from '../data/deaths_causes.json';
 import * as deathCases from '../data/latest_deaths.json';
 import * as ageDeathRate from '../data/age_death_rage.json';
 
-const composeTooltip = (input: any) => {
-  if (typeof input.xLabel === 'string') {
-    return input.yLabel+"%, "+Math.floor((deathCases.data[deathCases.data.length-1]*parseInt(input.yLabel))/100);
-  }
-  return input.xLabel.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-};
-
 const insertToArray = (arr, element, index) => {
   arr.splice(index, 0, element);
 }
@@ -28,6 +21,7 @@ export class DeathRatesComponent implements OnInit {
   public ageDeathRateLastUpdate: string;
 
   public since1stToggle = true;
+  public ageDeathContinent = "World";
 
   private since1st = {"labels": [], "data": [], "backgroundColor": []};
   private yesterday = {"labels": [], "data": [], "backgroundColor": []};
@@ -42,14 +36,19 @@ export class DeathRatesComponent implements OnInit {
     this.composeData();
 
     const totalDeathsCTX = (document.getElementById("CountryChart") as any).getContext("2d");
-    this.chart = this.createBarChart(totalDeathsCTX, this.since1st.labels, this.since1st.data, this.since1st.backgroundColor, 'horizontalBar', this.callbackAverage);
+    this.chart = this.createBarChart(totalDeathsCTX, this.since1st.labels, this.since1st.data, this.since1st.backgroundColor);
 
     this.totalDeathCausesLastUpdate = totalDeaths.updatedOn;
     this.ageDeathRateLastUpdate = ageDeathRate.updatedOn;
 
     const backgroundColor = ageDeathRate.ages.map(() => { return '#1f8ef1'; })
     const ageDeathRateCTX = (document.getElementById("AgeDeathRateChart") as any).getContext("2d");
-    this.createBarChart(ageDeathRateCTX, ageDeathRate.ages, ageDeathRate.rate, backgroundColor, 'bar', this.callbackRate);
+    this.createVerticalBarChart(ageDeathRateCTX, ageDeathRate.ages, ageDeathRate.rate, backgroundColor);
+
+    const ageDeathPieCTX = (document.getElementById("AgeDeathPieChart") as any).getContext("2d");
+    const ageDeathData = ageDeathRate.rate.map(rate => Math.floor((deathCases.data[deathCases.data.length-1]*rate)/100));
+    const pieCharColors = ['#000000', '#F896B8', '#CEA5DB', '#8AB7E8', '#2FC5D7', '#02CAAB', '#63C872', '#A5BE3F', '#E1AB2D'];
+    this.createPieChaer(ageDeathPieCTX, ageDeathRate.ages, ageDeathData, pieCharColors);
   }
 
   private composeData() {
@@ -96,15 +95,58 @@ export class DeathRatesComponent implements OnInit {
     insertToArray(tolls.backgroundColor, 'red', insertIndex);
   }
 
-  private createBarChart(
-    ctx: CanvasRenderingContext2D,
-    labels: string[], dataset: number[],
-    backgroundColor,
-    type: string,
-    customCallback: any
-  ) {
+  public ageDeathContinentSwitch(continent: string) {
+    this.ageDeathContinent = continent;
+  }
+
+  private createPieChaer(ctx: CanvasRenderingContext2D, labels: string[], dataset: number[], backgroundColor: string[]){
     return new Chart(ctx, {
-      type,
+      type: 'doughnut',
+      data: {
+        labels,
+        datasets: [{
+          backgroundColor,
+          data: dataset
+        }]
+      }
+    })
+  }
+
+  private createVerticalBarChart(ctx: CanvasRenderingContext2D, labels: string[], dataset: number[], backgroundColor: string[]) {
+    return new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels,
+        datasets: [{
+          backgroundColor,
+          data: dataset
+        }]
+      },
+      options: {
+        legend: {
+          display: false
+        },
+        tooltips: {
+          backgroundColor: '#f5f5f5',
+          titleFontColor: '#333',
+          bodyFontColor: '#666',
+          mode: "nearest",
+          intersect: false,
+          position: "nearest",
+          callbacks: {
+            label: function(tooltipItem: any) {
+              const allDeaths = deathCases.data[deathCases.data.length-1];
+              return tooltipItem.yLabel+"%, "+Math.floor((allDeaths*tooltipItem.yLabel)/100)+" deaths";
+            }
+          }
+        },
+      }
+    });
+  }
+
+  private createBarChart(ctx: CanvasRenderingContext2D, labels: string[], dataset: number[], backgroundColor) {
+    return new Chart(ctx, {
+      type: 'horizontalBar',
       responsive: true,
       legend: {
         display: false
@@ -121,7 +163,7 @@ export class DeathRatesComponent implements OnInit {
         legend: {
           display: false
         },
-      
+        showAllTooltips: true,
         tooltips: {
           backgroundColor: '#f5f5f5',
           titleFontColor: '#333',
@@ -131,7 +173,7 @@ export class DeathRatesComponent implements OnInit {
           position: "nearest",
           callbacks: {
             label: function(tooltipItem: any) {
-              return composeTooltip(tooltipItem);
+              return tooltipItem.xLabel.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
             }
           }
         },
@@ -157,7 +199,10 @@ export class DeathRatesComponent implements OnInit {
             },
             ticks: {
               userCallback: function(value) {
-                return customCallback(value);
+                value = value.toString();
+                value = value.split(/(?=(?:...)*$)/);
+                value = value.join(',');
+                return value;
               },
               padding: 0,
               fontColor: "#9e9e9e"
@@ -166,16 +211,5 @@ export class DeathRatesComponent implements OnInit {
         }
       }
     });
-  }
-
-  private callbackAverage (value) {
-    value = value.toString();
-    value = value.split(/(?=(?:...)*$)/);
-    value = value.join(',');
-    return value;
-  }
-
-  private callbackRate(value) {
-    return value;
   }
 }

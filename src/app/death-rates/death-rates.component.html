@@ -54,15 +54,117 @@
     <h3><u>COVID-19 Death Rate by Age Range</u></h3>
 
     <div class=" row">
-      <div class=" col-lg-8">
+      <div class=" col-lg-5">
         <div class=" card ">
 
-          <div class="card-header card-header-success">
+          <!-- <div class="card-header card-header-success">
             <h3 class="card-title">Age-Death Correlation</h3>
+          </div> -->
+
+          <div class="card-header card-header-success">
+            <h3 class="card-title ">Age-Death Correlation</h3>
+            <div class="btn-group">
+
+              <button mat-raised-button *ngIf="ageDeathContinent==='World'"
+                class="float" type="button" color="primary">
+                <span>World</span>
+              </button>
+              <button mat-button *ngIf="ageDeathContinent!=='World'"
+                class="float" type="button" color="primary" (click)="ageDeathContinentSwitch('World')">
+                <span>World</span>
+              </button>
+
+              <button mat-raised-button *ngIf="ageDeathContinent==='North America'"
+                class="float" type="button" color="primary">
+                <span>North America</span>
+              </button>
+              <button mat-button *ngIf="ageDeathContinent!=='North America'"
+                class="float" type="button" color="primary" (click)="ageDeathContinentSwitch('North America')">
+                <span>North America</span>
+              </button>
+
+              <button mat-raised-button *ngIf="ageDeathContinent==='Europe'"
+                class="float" type="button" color="primary">
+                <span>Europe</span>
+              </button>
+              <button mat-button *ngIf="ageDeathContinent!=='Europe'"
+                class="float" type="button" color="primary" (click)="ageDeathContinentSwitch('Europe')">
+                <span>Europe</span>
+              </button>
+
+              <button mat-raised-button *ngIf="ageDeathContinent==='Asia'"
+                class="float" type="button" color="primary">
+                <span>Asia</span>
+              </button>
+              <button mat-button *ngIf="ageDeathContinent!=='Asia'"
+                class="float" type="button" color="primary" (click)="ageDeathContinentSwitch('Asia')">
+                <span>Asia</span>
+              </button>
+
+            </div>
           </div>
 
           <div class=" card-body">
-            <canvas id="AgeDeathRateChart" height="400"></canvas>
+            <canvas id="AgeDeathRateChart" height="100"></canvas>
+          </div>
+
+          <div class="card-footer ">
+            <div class="stats">
+              Updated on {{ageDeathRateLastUpdate}}
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class=" col-lg-5">
+        <div class=" card ">
+
+          <div class="card-header card-header-success">
+            <h3 class="card-title ">Age-Death Correlation</h3>
+            <div class="btn-group">
+
+              <button mat-raised-button *ngIf="ageDeathContinent==='World'"
+                class="float" type="button" color="primary">
+                <span>World</span>
+              </button>
+              <button mat-button *ngIf="ageDeathContinent!=='World'"
+                class="float" type="button" color="primary" (click)="ageDeathContinentSwitch('World')">
+                <span>World</span>
+              </button>
+
+              <button mat-raised-button *ngIf="ageDeathContinent==='North America'"
+                class="float" type="button" color="primary">
+                <span>North America</span>
+              </button>
+              <button mat-button *ngIf="ageDeathContinent!=='North America'"
+                class="float" type="button" color="primary" (click)="ageDeathContinentSwitch('North America')">
+                <span>North America</span>
+              </button>
+
+              <button mat-raised-button *ngIf="ageDeathContinent==='Europe'"
+                class="float" type="button" color="primary">
+                <span>Europe</span>
+              </button>
+              <button mat-button *ngIf="ageDeathContinent!=='Europe'"
+                class="float" type="button" color="primary" (click)="ageDeathContinentSwitch('Europe')">
+                <span>Europe</span>
+              </button>
+
+              <button mat-raised-button *ngIf="ageDeathContinent==='Asia'"
+                class="float" type="button" color="primary">
+                <span>Asia</span>
+              </button>
+              <button mat-button *ngIf="ageDeathContinent!=='Asia'"
+                class="float" type="button" color="primary" (click)="ageDeathContinentSwitch('Asia')">
+                <span>Asia</span>
+              </button>
+
+            </div>
+          </div>
+
+          <div class=" card-body">
+            <canvas id="AgeDeathPieChart" height="100"></canvas>
           </div>
 
           <div class="card-footer ">
