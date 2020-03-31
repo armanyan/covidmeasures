@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 
 import * as lockdown_stats from '../data/lockdown_countries_status.json';
 
@@ -25,7 +26,9 @@ export class LockdownComponent implements OnInit {
   public statsHeaders = [ 'Country', 'Total Cases', 'New Cases', 'Total Deaths', 'New Deaths', 'Recovered'];
   public stats: any;
 
-  constructor() { }
+  constructor(
+    private http: HttpClient
+  ) { }
 
   ngOnInit() {
     this.stats = lockdown_stats.values;
