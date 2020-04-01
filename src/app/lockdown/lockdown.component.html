@@ -112,55 +112,6 @@
     </ul>
 
     <hr>
-
-    <div class="col-md-12">
-      <div class="card">
-
-        <div class="card-header card-header-success">
-          <h3 class="card-title">COVID-19 World Stats</h3>
-          <mat-form-field>
-            <mat-label>Filter by Country</mat-label>
-            <input matInput (keyup)="applyFilter($event)" placeholder="USA, France, China...">
-          </mat-form-field>
-        </div>
-
-        <div class="card-body">
-
-          <div class="content table-responsive table-full-width">
-            <table class="table">
-              <thead>
-                <th class="text-primary">{{ statsHeaders[0] }}</th>
-                <th class="text-primary">{{ statsHeaders[1] }}</th>
-                <th class="text-primary">{{ statsHeaders[2] }}</th>
-                <th class="text-primary">{{ statsHeaders[3] }}</th>
-                <th class="text-primary">{{ statsHeaders[4] }}</th>
-                <th class="text-primary">{{ statsHeaders[5] }}</th>
-              </thead>
-              <tbody>
-                <tr *ngFor="let row of stats">
-                  <td>{{ row.country }}</td>
-                  <td>{{ row.total_cases | number }}</td>
-                  <td>{{ row.new_cases | number }}</td>
-                  <td>{{ row.total_deaths | number }}</td>
-                  <td>{{ row.new_deaths | number }}</td>
-                  <td>{{ row.recovered | number }}</td>
-                </tr>
-              </tbody>
-            </table>
-            </div>
-    
-        </div>
-
-        <div class="card-footer ">
-          <div class="stats">
-            Updated on {{worldDataUpdatedOn}}
-          </div>
-        </div>
-
-      </div>
-    </div>
-
-    <hr>
     <h3>About Us</h3>
     <p>
       CovidMeasures website was born from the collaboration of regular citizen willing to better understand this unsettling episode of mankind.
