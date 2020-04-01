@@ -15,6 +15,12 @@ export class LockdownComponent implements OnInit {
   public worldStats: any;
   public worldDataUpdatedOn: string;
 
+  // TODO handle others correctly later on
+  private wrongNameCountries = [
+    'US', '', 'Iran (Islamic Republic of)', 'Hong Kong SAR', 'Others', 'Bahamas, The', 'Macao SAR', 'Russian Federation', 'Taiwan*',
+    'Holy See', 'Viet Nam', 'occupied Palestinian territory'
+  ];
+
   constructor(
     private http: HttpClient
   ) { }
@@ -22,7 +28,7 @@ export class LockdownComponent implements OnInit {
   async ngOnInit() {
     try {
       await this.fetchWorldData();
-      this.stats = this.worldStats;
+      this.stats = JSON.parse(JSON.stringify(this.worldStats))
     } catch {
       this.stats = lockdown_stats.values;
     }
@@ -35,9 +41,16 @@ export class LockdownComponent implements OnInit {
   private getCountries(data: any) {
     const countries = [];
     for (const entry of data) {
-      if (entry['Country'] !== '') {
+      if (this.wrongNameCountries.indexOf(entry['Country']) < 0) {
         const row = {
           "country": entry['Country'], "total_cases": entry['TotalConfirmed'],
+          "new_cases": entry['NewConfirmed'], "total_deaths": entry["TotalDeaths"],
+          "new_deaths": entry["NewDeaths"], "recovered": entry["TotalRecovered"]
+        }
+        countries.push(row);
+      } else if (this.wrongNameCountries.indexOf(entry['Country']) === 0) {
+        const row = {
+          "country": "USA", "total_cases": entry['TotalConfirmed'],
           "new_cases": entry['NewConfirmed'], "total_deaths": entry["TotalDeaths"],
           "new_deaths": entry["NewDeaths"], "recovered": entry["TotalRecovered"]
         }
@@ -72,7 +85,7 @@ export class LockdownComponent implements OnInit {
     const row = {
       "country": "World", "total_cases": 0, "new_cases": 0, "total_deaths": 0, "new_deaths": 0, "recovered": 0
     };
-    const reducer = (acc, currVal) => {return currVal === 'N/A' ? acc : currVal + acc};
+    const reducer = (acc, currVal) => {return currVal + acc};
     row.total_cases = this.worldStats.map(row => row.total_cases).reduce(reducer);
     row.new_cases = (this.worldStats.map(row => row.new_cases).reduce(reducer) as any);
     row.total_deaths = this.worldStats.map(row => row.total_deaths).reduce(reducer);

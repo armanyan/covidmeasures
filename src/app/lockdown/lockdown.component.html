@@ -140,9 +140,9 @@
                 <tr *ngFor="let row of stats">
                   <td>{{ row.country }}</td>
                   <td>{{ row.total_cases | number }}</td>
-                  <td>{{ row.new_cases }}</td>
+                  <td>{{ row.new_cases | number }}</td>
                   <td>{{ row.total_deaths | number }}</td>
-                  <td>{{ row.new_deaths }}</td>
+                  <td>{{ row.new_deaths | number }}</td>
                   <td>{{ row.recovered | number }}</td>
                 </tr>
               </tbody>
