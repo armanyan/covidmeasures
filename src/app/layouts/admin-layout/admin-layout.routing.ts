@@ -9,10 +9,10 @@ import { AboutUsComponent } from '../../about-us/about-us.component';
 // import { UpgradeComponent } from '../../upgrade/upgrade.component';
 
 export const AdminLayoutRoutes: Routes = [
-    { path: 'covid',      component: CovidComponent },
-    { path: 'lockdown',   component: LockdownComponent },
-    { path: 'deathrates',     component: DeathRatesComponent },
-    { path: 'aboutus',     component: AboutUsComponent },
+  { path: 'lockdown',   component: LockdownComponent },
+  { path: 'covid',      component: CovidComponent },
+  { path: 'deathrates',     component: DeathRatesComponent },
+  { path: 'aboutus',     component: AboutUsComponent },
     // { path: 'icons',          component: IconsComponent },
     // { path: 'notifications',  component: NotificationsComponent },
     // { path: 'upgrade',        component: UpgradeComponent },
