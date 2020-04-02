@@ -1,10 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import Chart from 'chart.js';
 
+import { createPieChart, createVerticalBarChart, createBarChart } from '../utils';
+
 import * as totalDeaths from '../data/deaths_causes.json';
 import * as deathCases from '../data/latest_deaths.json';
 import * as ageDeathRate from '../data/age_death_rage.json';
-import { createPieChart, createVerticalBarChart, createBarChart } from '../utils';
+import * as deathProbabilityByAge from '../data/death_stats.json';
+import * as ageStructure from '../data/age_structure.json';
 
 const insertToArray = (arr, element, index) => {
   arr.splice(index, 0, element);
@@ -18,11 +21,12 @@ const insertToArray = (arr, element, index) => {
 export class DeathRatesComponent implements OnInit {
 
   private chart: Chart;
+  private deathProbabilityChart: Chart;
   public totalDeathCausesLastUpdate: string;
   public ageDeathRateLastUpdate: string;
 
   public since1stToggle = true;
-  public ageDeathContinent = "World";
+  public ageDeathLocation = "World";
 
   private since1st = {"labels": [], "data": [], "backgroundColor": []};
   private yesterday = {"labels": [], "data": [], "backgroundColor": []};
@@ -42,14 +46,20 @@ export class DeathRatesComponent implements OnInit {
     this.totalDeathCausesLastUpdate = totalDeaths.updatedOn;
     this.ageDeathRateLastUpdate = ageDeathRate.updatedOn;
 
-    const backgroundColor = ageDeathRate.ages.map(() => { return '#1f8ef1'; })
-    const ageDeathRateCTX = (document.getElementById("AgeDeathRateChart") as any).getContext("2d");
-    createVerticalBarChart(ageDeathRateCTX, ageDeathRate.ages, ageDeathRate.rate, backgroundColor);
+    // const backgroundColor = ageDeathRate.ages.map(() => { return '#1f8ef1'; })
+    // const ageDeathRateCTX = (document.getElementById("AgeDeathRateChart") as any).getContext("2d");
+    // createVerticalBarChart(ageDeathRateCTX, ageDeathRate.ages, ageDeathRate.rate, backgroundColor);
 
-    const ageDeathPieCTX = (document.getElementById("AgeDeathPieChart") as any).getContext("2d");
-    const ageDeathData = ageDeathRate.rate.map(rate => Math.floor((deathCases.data[deathCases.data.length-1]*rate)/100));
-    const pieCharColors = ['#000000', '#F896B8', '#CEA5DB', '#8AB7E8', '#2FC5D7', '#02CAAB', '#63C872', '#A5BE3F', '#E1AB2D'];
-    createPieChart(ageDeathPieCTX, ageDeathRate.ages, ageDeathData, pieCharColors);
+    // const ageDeathPieCTX = (document.getElementById("AgeDeathPieChart") as any).getContext("2d");
+    // const ageDeathData = ageDeathRate.rate.map(rate => Math.floor((deathCases.data[deathCases.data.length-1]*rate)/100));
+    // const pieCharColors = ['#000000', '#F896B8', '#CEA5DB', '#8AB7E8', '#2FC5D7', '#02CAAB', '#63C872', '#A5BE3F', '#E1AB2D'];
+    // createPieChart(ageDeathPieCTX, ageDeathRate.ages, ageDeathData, pieCharColors);
+
+    // death probability bar chart
+    const deathsProbabilityCTX = (document.getElementById("DeathProbabilityChart") as any).getContext("2d");
+    const deathProbabilityLabels = Object.keys(deathProbabilityByAge.World);
+    const deathProbabilityValues = deathProbabilityLabels.map(age => (100*deathProbabilityByAge.World[age])/ageStructure.World.short[age].both)
+    this.deathProbabilityChart = createBarChart(deathsProbabilityCTX, deathProbabilityLabels, deathProbabilityValues, deathProbabilityValues.map(() => { return '#1f8ef1'; }))
   }
 
   private composeData() {
@@ -96,8 +106,38 @@ export class DeathRatesComponent implements OnInit {
     insertToArray(tolls.backgroundColor, 'red', insertIndex);
   }
 
-  public ageDeathContinentSwitch(continent: string) {
-    this.ageDeathContinent = continent;
+  private getData(location: string, list: any) {
+    if (location === 'World') {
+      return list === deathProbabilityByAge ? deathProbabilityByAge["World"] : ageStructure["World"].short;
+    }
+    else if (location === 'Northern America') {
+      return list === deathProbabilityByAge ? deathProbabilityByAge["Northern America"] : ageStructure["Northern America"].short;
+    }
+    else if (location === 'Europe') {
+      return list === deathProbabilityByAge ? deathProbabilityByAge["Europe"] : ageStructure["Europe"].short;
+    }
+    else if (location === 'Asia') {
+      return list === deathProbabilityByAge ? deathProbabilityByAge["Asia"] : ageStructure["Asia"].short;
+    }
+    else if (location === 'Africa') {
+      return list === deathProbabilityByAge ? deathProbabilityByAge["Africa"] : ageStructure["Africa"].short;
+    }
+    else if (location === 'Oceania') {
+      return list === deathProbabilityByAge ? deathProbabilityByAge["Oceania"] : ageStructure["Oceania"].short;
+    }
+    else if (location === 'Latin America and the Caribbean') {
+      return list === deathProbabilityByAge ? deathProbabilityByAge["Latin America and the Caribbean"] : ageStructure["Latin America and the Caribbean"].short;
+    }
+  }
+
+  public ageDeathContinentSwitch(location: string) {
+    this.ageDeathLocation = location;
+    console.log(this.getData(location, deathProbabilityByAge));
+    console.log(this.getData(location, ageStructure));
+    this.deathProbabilityChart.data.datasets[0].data = Object.keys(deathProbabilityByAge.World).map(
+        age => (100*this.getData(location, deathProbabilityByAge)[age])/this.getData(location, ageStructure)[age].both
+      );
+    this.deathProbabilityChart.update();
   }
 
 }
