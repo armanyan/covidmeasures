@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import Chart from 'chart.js';
 
-import { createPieChart, createVerticalBarChart, createBarChart } from '../utils';
+import { createPieChart, createVerticalBarChart, createBarChart, createStackedBarChart } from '../utils';
 
+import * as totalCases from '../data/latest_cases.json';
 import * as totalDeaths from '../data/deaths_causes.json';
 import * as deathCases from '../data/latest_deaths.json';
 import * as ageDeathRate from '../data/age_death_rage.json';
@@ -58,8 +59,16 @@ export class DeathRatesComponent implements OnInit {
     // death probability bar chart
     const deathsProbabilityCTX = (document.getElementById("DeathProbabilityChart") as any).getContext("2d");
     const deathProbabilityLabels = Object.keys(deathProbabilityByAge.World);
-    const deathProbabilityValues = deathProbabilityLabels.map(age => (100*deathProbabilityByAge.World[age])/ageStructure.World.short[age].both)
-    this.deathProbabilityChart = createBarChart(deathsProbabilityCTX, deathProbabilityLabels, deathProbabilityValues, deathProbabilityValues.map(() => { return '#1f8ef1'; }))
+    const deathProbabilityValues = deathProbabilityLabels.map(
+      age => (100*deathProbabilityByAge.World[age])/ageStructure.World.short[age].both
+    );
+    const deathProbabilityCovid = deathProbabilityLabels.map(age => this.getCovidProbabilityByAge(age));
+    console.log(deathProbabilityCovid);
+    this.deathProbabilityChart = createStackedBarChart(
+      deathsProbabilityCTX, deathProbabilityLabels,
+      deathProbabilityValues, deathProbabilityValues.map(() => { return '#1f8ef1'; }), 'all other causes',
+      deathProbabilityCovid, deathProbabilityValues.map(() => { return 'red'; }), 'covid-19'
+    )
   }
 
   private composeData() {
@@ -81,15 +90,10 @@ export class DeathRatesComponent implements OnInit {
 
   public toggle() {
     this.since1stToggle = !this.since1stToggle;
-    if (this.since1stToggle) {
-      this.chart.data.labels = this.since1st.labels;
-      this.chart.data.datasets[0].data = this.since1st.data;
-      this.chart.data.datasets[0].backgroundColor = this.since1st.backgroundColor;
-    } else {
-      this.chart.data.labels = this.yesterday.labels;
-      this.chart.data.datasets[0].data = this.yesterday.data;
-      this.chart.data.datasets[0].backgroundColor = this.yesterday.backgroundColor;
-    }
+    const dataset = this.since1stToggle ? this.since1st : this.yesterday;
+    this.chart.data.labels = dataset.labels;
+    this.chart.data.datasets[0].data = dataset.data;
+    this.chart.data.datasets[0].backgroundColor = dataset.backgroundColor;
     this.chart.update();
   }
 
@@ -111,7 +115,8 @@ export class DeathRatesComponent implements OnInit {
       return list === deathProbabilityByAge ? deathProbabilityByAge["World"] : ageStructure["World"].short;
     }
     else if (location === 'Northern America') {
-      return list === deathProbabilityByAge ? deathProbabilityByAge["Northern America"] : ageStructure["Northern America"].short;
+      return list === deathProbabilityByAge ?
+        deathProbabilityByAge["Northern America"] : ageStructure["Northern America"].short;
     }
     else if (location === 'Europe') {
       return list === deathProbabilityByAge ? deathProbabilityByAge["Europe"] : ageStructure["Europe"].short;
@@ -126,18 +131,34 @@ export class DeathRatesComponent implements OnInit {
       return list === deathProbabilityByAge ? deathProbabilityByAge["Oceania"] : ageStructure["Oceania"].short;
     }
     else if (location === 'Latin America and the Caribbean') {
-      return list === deathProbabilityByAge ? deathProbabilityByAge["Latin America and the Caribbean"] : ageStructure["Latin America and the Caribbean"].short;
+      return list === deathProbabilityByAge ?
+        deathProbabilityByAge["Latin America and the Caribbean"] :
+        ageStructure["Latin America and the Caribbean"].short;
     }
   }
 
   public ageDeathContinentSwitch(location: string) {
     this.ageDeathLocation = location;
-    console.log(this.getData(location, deathProbabilityByAge));
-    console.log(this.getData(location, ageStructure));
     this.deathProbabilityChart.data.datasets[0].data = Object.keys(deathProbabilityByAge.World).map(
         age => (100*this.getData(location, deathProbabilityByAge)[age])/this.getData(location, ageStructure)[age].both
       );
     this.deathProbabilityChart.update();
+  }
+
+  private getCovidProbabilityByAge(ageRange: string) {
+    const reducer = (acc, curr) => acc + curr;
+    const ages = Object.keys(ageStructure.World.short);
+    const population =  ages.map(age => ageStructure.World.short[age].both);
+    const totalPopulationCount = population.reduce(reducer);
+    const ageRangeCount = ageStructure.World.short[ageRange].both;
+
+    // percentage of people current age range
+    const ageRangePercentage = ageRangeCount/totalPopulationCount;
+    // count of covid ill people in current age range
+    const illPeopleCount = ageRangePercentage*totalCases.data[totalCases.data.length-1];
+    // estimation of lethal cases in current age range
+    const estimationLethalCases = illPeopleCount*ageDeathRate.ageRate[ageRange];
+    return estimationLethalCases/ageRangeCount;
   }
 
 }
