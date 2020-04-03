@@ -14,16 +14,21 @@
     <div class="row">
       <div class="col-md-8">
         <div class="card ">
-          <div class="card-header ">
-            <h5 class="card-category">Reported Coronavirus Infection Cases</h5>
+          <div class="card-header card-header-success">
+            <h3 class="card-title">Reported Coronavirus Infection Cases</h3>
           </div>
           <div class="card-body ">
             <canvas id=chartCases width="400" height="100"></canvas>
           </div>
-          <div class="card-footer ">
+          <div class="card-footer">
             <div class="stats">
               Updated on {{casesLastUpdate}}
             </div>
+            <div class="stats">
+              Source:
+              <a
+                href="https://www.ecdc.europa.eu/en/publications-data/download-todays-data-geographic-distribution-covid-19-cases-worldwide"
+              >European Centre for Disease Prevention and Control</a></div>
           </div>
         </div>
       </div>
@@ -32,16 +37,21 @@
     <div class="row">
       <div class="col-md-8">
         <div class="card ">
-          <div class="card-header ">
-            <h5 class="card-category">Reported Coronavirus Death Cases</h5>
+          <div class="card-header card-header-success">
+            <h3 class="card-title">Reported Coronavirus Death Cases</h3>
           </div>
           <div class="card-body ">
             <canvas id=chartDeaths width="400" height="100"></canvas>
           </div>
-          <div class="card-footer ">
+          <div class="card-footer">
             <div class="stats">
               Updated on {{deathsLastUpdate}}
             </div>
+            <div class="stats">
+              Source:
+              <a
+                href="https://www.ecdc.europa.eu/en/publications-data/download-todays-data-geographic-distribution-covid-19-cases-worldwide"
+              >European Centre for Disease Prevention and Control</a></div>
           </div>
         </div>
       </div>
@@ -87,10 +97,15 @@
     
         </div>
 
-        <div class="card-footer ">
+        <div class="card-footer">
           <div class="stats">
             Updated on {{worldDataUpdatedOn}}
           </div>
+          <div class="stats">
+            Source:
+            <a
+              href="https://www.ecdc.europa.eu/en/publications-data/download-todays-data-geographic-distribution-covid-19-cases-worldwide"
+            >European Centre for Disease Prevention and Control</a></div>
         </div>
 
       </div>

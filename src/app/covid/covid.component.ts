@@ -2,8 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import Chart from 'chart.js';
 
-import * as casesData from '../data/latest_cases.json';
-import * as deathCases from '../data/latest_deaths.json';
+import * as covid from '../data/covid_evolution.json';
 import * as lockdown_stats from '../data/lockdown_countries_status.json';
 
 const addCommas = (number: number) => {
@@ -31,8 +30,8 @@ export class CovidComponent implements OnInit {
 
   // TODO handle others correctly later on
   private wrongNameCountries = [
-    'US', '', 'Iran (Islamic Republic of)', 'Hong Kong SAR', 'Others', 'Bahamas, The', 'Macao SAR', 'Russian Federation', 'Taiwan*',
-    'Holy See', 'Viet Nam', 'occupied Palestinian territory'
+    'US', ' Azerbaijan', 'Congo (Brazzaville)', 'Congo (Kinshasa)', '', 'Iran (Islamic Republic of)', 'Hong Kong SAR', 'Others',
+    'Bahamas, The', 'Macao SAR', 'Russian Federation', 'Taiwan*', 'Holy See', 'Viet Nam', 'occupied Palestinian territory'
   ];
 
   constructor(
@@ -41,12 +40,15 @@ export class CovidComponent implements OnInit {
 
   async ngOnInit() {
     const casesCTX = (document.getElementById("chartCases") as any).getContext("2d");
-    this.chartCases = this.createLineChart(casesCTX, casesData.labels, casesData.data)
-    this.casesLastUpdate = casesData.updatedOn;
+    const labels = covid.dates;
+    const cases = covid.cases;
+    const deaths = covid.deaths;
+    this.chartCases = this.createLineChart(casesCTX, labels, cases)
+    this.casesLastUpdate = labels[labels.length-1];
 
     const deathsCTX = (document.getElementById("chartDeaths") as any).getContext("2d");
-    this.chartDeaths = this.createLineChart(deathsCTX, deathCases.labels, deathCases.data)
-    this.deathsLastUpdate = deathCases.updatedOn;
+    this.chartDeaths = this.createLineChart(deathsCTX, labels, deaths)
+    this.deathsLastUpdate = labels[labels.length-1];
 
     // world table
     try {
@@ -146,6 +148,27 @@ export class CovidComponent implements OnInit {
       } else if (this.wrongNameCountries.indexOf(entry['Country']) === 0) {
         const row = {
           "country": "USA", "total_cases": entry['TotalConfirmed'],
+          "new_cases": entry['NewConfirmed'], "total_deaths": entry["TotalDeaths"],
+          "new_deaths": entry["NewDeaths"], "recovered": entry["TotalRecovered"]
+        }
+        countries.push(row);
+      } else if (this.wrongNameCountries.indexOf(entry['Country']) === 1) {
+        const row = {
+          "country": "Azerbaijan", "total_cases": entry['TotalConfirmed'],
+          "new_cases": entry['NewConfirmed'], "total_deaths": entry["TotalDeaths"],
+          "new_deaths": entry["NewDeaths"], "recovered": entry["TotalRecovered"]
+        }
+        countries.push(row);
+      } else if (this.wrongNameCountries.indexOf(entry['Country']) === 2) {
+        const row = {
+          "country": "Republic of the Congo", "total_cases": entry['TotalConfirmed'],
+          "new_cases": entry['NewConfirmed'], "total_deaths": entry["TotalDeaths"],
+          "new_deaths": entry["NewDeaths"], "recovered": entry["TotalRecovered"]
+        }
+        countries.push(row);
+      } else if (this.wrongNameCountries.indexOf(entry['Country']) === 3) {
+        const row = {
+          "country": "Democratic Republic of the Congo", "total_cases": entry['TotalConfirmed'],
           "new_cases": entry['NewConfirmed'], "total_deaths": entry["TotalDeaths"],
           "new_deaths": entry["NewDeaths"], "recovered": entry["TotalRecovered"]
         }

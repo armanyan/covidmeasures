@@ -47,14 +47,15 @@ export class DeathRatesComponent implements OnInit {
     this.totalDeathCausesLastUpdate = totalDeaths.updatedOn;
     this.ageDeathRateLastUpdate = ageDeathRate.updatedOn;
 
-    // const backgroundColor = ageDeathRate.ages.map(() => { return '#1f8ef1'; })
-    // const ageDeathRateCTX = (document.getElementById("AgeDeathRateChart") as any).getContext("2d");
-    // createVerticalBarChart(ageDeathRateCTX, ageDeathRate.ages, ageDeathRate.rate, backgroundColor);
+    const backgroundColor = Object.keys(ageDeathRate.ageRate).map(() => { return '#1f8ef1'; })
+    const rates = Object.keys(ageDeathRate.ageRate).map(age => ageDeathRate.ageRate[age])
+    const ageDeathRateCTX = (document.getElementById("AgeDeathRateChart") as any).getContext("2d");
+    createVerticalBarChart(ageDeathRateCTX, Object.keys(ageDeathRate.ageRate), rates, backgroundColor);
 
-    // const ageDeathPieCTX = (document.getElementById("AgeDeathPieChart") as any).getContext("2d");
-    // const ageDeathData = ageDeathRate.rate.map(rate => Math.floor((deathCases.data[deathCases.data.length-1]*rate)/100));
-    // const pieCharColors = ['#000000', '#F896B8', '#CEA5DB', '#8AB7E8', '#2FC5D7', '#02CAAB', '#63C872', '#A5BE3F', '#E1AB2D'];
-    // createPieChart(ageDeathPieCTX, ageDeathRate.ages, ageDeathData, pieCharColors);
+    const ageDeathPieCTX = (document.getElementById("AgeDeathPieChart") as any).getContext("2d");
+    const ageDeathData = Object.keys(ageDeathRate.ageRate).map(rate => Math.floor((deathCases.data[deathCases.data.length-1]*ageDeathRate.ageRate[rate])/100));
+    const pieCharColors = ['#000000', '#F896B8', '#CEA5DB', '#8AB7E8', '#2FC5D7', '#02CAAB', '#63C872', '#A5BE3F', '#E1AB2D'];
+    createPieChart(ageDeathPieCTX, Object.keys(ageDeathRate), ageDeathData, pieCharColors);
 
     // death probability bar chart
     const deathsProbabilityCTX = (document.getElementById("DeathProbabilityChart") as any).getContext("2d");
@@ -158,7 +159,7 @@ export class DeathRatesComponent implements OnInit {
     const illPeopleCount = ageRangePercentage*totalCases.data[totalCases.data.length-1];
     // estimation of lethal cases in current age range
     const estimationLethalCases = illPeopleCount*ageDeathRate.ageRate[ageRange];
-    return estimationLethalCases/ageRangeCount;
+    return (estimationLethalCases*100)/ageRangeCount;
   }
 
 }
