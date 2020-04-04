@@ -9,6 +9,9 @@ import * as deathCases from '../data/latest_deaths.json';
 import * as ageDeathRate from '../data/age_death_rage.json';
 import * as deathProbabilityByAge from '../data/death_stats.json';
 import * as ageStructure from '../data/age_structure.json';
+import * as continents from '../data/country_by_continent';
+import * as worldStats from '../data/world_table';
+import * as covidEvolution from '../data/covid_evolution.json';
 
 const insertToArray = (arr, element, index) => {
   arr.splice(index, 0, element);
@@ -28,11 +31,12 @@ export class DeathRatesComponent implements OnInit {
 
   public since1stToggle = true;
   public ageDeathLocation = "World";
+  public ageDeathContinent = "World";
 
   private since1st = {"labels": [], "data": [], "backgroundColor": []};
   private yesterday = {"labels": [], "data": [], "backgroundColor": []};
 
-  private currentDeaths: number;
+  private continentsRates;
 
   constructor() { }
 
@@ -60,16 +64,55 @@ export class DeathRatesComponent implements OnInit {
     // death probability bar chart
     const deathsProbabilityCTX = (document.getElementById("DeathProbabilityChart") as any).getContext("2d");
     const deathProbabilityLabels = Object.keys(deathProbabilityByAge.World);
-    const deathProbabilityValues = deathProbabilityLabels.map(
-      age => (100*deathProbabilityByAge.World[age])/ageStructure.World.short[age].both
-    );
-    const deathProbabilityCovid = deathProbabilityLabels.map(age => this.getCovidProbabilityByAge(age));
-    console.log(deathProbabilityCovid);
-    this.deathProbabilityChart = createStackedBarChart(
-      deathsProbabilityCTX, deathProbabilityLabels,
-      deathProbabilityValues, deathProbabilityValues.map(() => { return '#1f8ef1'; }), 'all other causes',
-      deathProbabilityCovid, deathProbabilityValues.map(() => { return 'red'; }), 'covid-19'
-    )
+    // const deathProbabilityValues = deathProbabilityLabels.map(
+    //   age => (100*deathProbabilityByAge.World[age])/ageStructure.World.short[age].both
+    // );
+    // const deathProbabilityCovid = deathProbabilityLabels.map(age => this.getCovidProbabilityByAge(age));
+    // this.deathProbabilityChart = createStackedBarChart(
+    //   deathsProbabilityCTX, deathProbabilityLabels,
+    //   deathProbabilityValues, deathProbabilityValues.map(() => { return '#1f8ef1'; }), 'all other causes',
+    //   deathProbabilityCovid, deathProbabilityValues.map(() => { return 'red'; }), 'covid-19'
+    // )
+
+    // death tolls
+    this.continentsRates = this.getContinentsRates();
+    const worldToll = this.getDeathRates('World', covidEvolution.cases[covidEvolution.cases.length-1])
+    this.deathProbabilityChart = createBarChart(deathsProbabilityCTX, deathProbabilityLabels, worldToll, worldToll.map(() => { return '#1f8ef1'; })) 
+  }
+
+  private getDeathRates(continent: string, count: number){
+    let counts;
+    let res = [];
+    if (continent === 'World') {
+      counts = this.getPopulationRate().map(population => population*count);
+      let i = 0;
+      for (const age of Object.keys(ageDeathRate.ageRate)){
+        res.push(counts[i]*(ageDeathRate.ageRate[age]/100));
+        i++;
+      }
+    }
+    return res;
+  }
+
+  private getContinentsRates() {
+    const continents_count = {...continents.default};
+    for (const continent of Object.keys(continents_count)) {
+      continents_count[continent] = 0;
+    }
+    for (const country in worldStats.default.Countries) {
+      continents_count[
+        this.getContinentByCountry(worldStats.default.Countries[country].Country)
+      ] += worldStats.default.Countries[country].TotalConfirmed;
+    }
+    delete continents_count['undefined'];
+  }
+
+  private getContinentByCountry(country: string) {
+    for (const continent of Object.keys(continents.default)) {
+      if (continents.default[continent].indexOf(country) > -1) {
+        return continent;
+      }
+    }
   }
 
   private composeData() {
@@ -160,6 +203,14 @@ export class DeathRatesComponent implements OnInit {
     // estimation of lethal cases in current age range
     const estimationLethalCases = illPeopleCount*ageDeathRate.ageRate[ageRange];
     return (estimationLethalCases*100)/ageRangeCount;
+  }
+
+  private getPopulationRate() {
+    const reducer = (acc, curr) => acc + curr;
+    const ages = Object.keys(ageStructure.World.short);
+    const population =  ages.map(age => ageStructure.World.short[age].both);
+    const totalPopulationCount = population.reduce(reducer);
+    return population.map(count => count/totalPopulationCount);
   }
 
 }
