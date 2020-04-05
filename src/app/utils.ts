@@ -47,8 +47,7 @@ export const createVerticalBarChart = (
         position: "nearest",
         callbacks: {
           label: function(tooltipItem: any) {
-            const allDeaths = deathCases.data[deathCases.data.length-1];
-            return tooltipItem.yLabel+"%, "+Math.floor((allDeaths*tooltipItem.yLabel)/100)+" deaths";
+            return tooltipItem.yLabel+"%";
           }
         }
       },
@@ -87,7 +86,7 @@ export const createBarChart = (
         position: "nearest",
         callbacks: {
           label: function(tooltipItem: any) {
-            return tooltipItem.xLabel.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            return Math.floor(tooltipItem.xLabel).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
           }
         }
       },

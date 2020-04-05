@@ -6,16 +6,16 @@ declare interface RouteInfo {
     title: string;
     icon: string;
     class: string;
+    soon?: boolean;
 }
 export const ROUTES: RouteInfo[] = [
   { path: '/lockdown', title: 'Lockdown Stats',  icon:'lock', class: '' },
   { path: '/covid', title: 'COVID-19 Stats',  icon: 'dashboard', class: '' },
-    { path: '/deathrates', title: 'Death Rates',  icon:'trending_up', class: '' },
-    { path: '/aboutus', title: 'About Us',  icon:'supervisor_account', class: '' },
-    // { path: '/icons', title: 'Icons',  icon:'bubble_chart', class: '' },
-    // { path: '/maps', title: 'Maps',  icon:'location_on', class: '' },
-    // { path: '/notifications', title: 'Notifications',  icon:'notifications', class: '' },
-    // { path: '/upgrade', title: 'Upgrade to PRO',  icon:'unarchive', class: 'active-pro' },
+  { path: '/deathrates', title: 'Death Rates',  icon:'trending_up', class: '' },
+  { path: '/economics', title: 'Economic Stimulus', soon: true, icon:'monetization_on', class: '' },
+  { path: '/surveillance', title: 'Surveillance', soon: true,  icon:'policy', class: '' },
+  { path: '/borders', title: 'Border Control', soon: true,  icon:'location_on', class: '' },
+  { path: '/aboutus', title: 'About Us', icon:'supervisor_account', class: '' },
 ];
 
 @Component({

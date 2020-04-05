@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import Chart from 'chart.js';
 
 import { createPieChart, createVerticalBarChart, createBarChart, createStackedBarChart } from '../utils';
@@ -30,17 +31,23 @@ export class DeathRatesComponent implements OnInit {
   public ageDeathRateLastUpdate: string;
 
   public since1stToggle = true;
-  public ageDeathLocation = "World";
+  public deathProbLocation = "Northern America";
   public ageDeathContinent = "World";
 
   private since1st = {"labels": [], "data": [], "backgroundColor": []};
   private yesterday = {"labels": [], "data": [], "backgroundColor": []};
+ 
+  private deathsSince1st: number;
+  private deathsYesterday: number;
 
   private continentsRates;
 
-  constructor() { }
+  constructor(
+    private http: HttpClient
+  ) { }
 
-  ngOnInit() {
+  async ngOnInit() {
+    await this.setCurrentDeathEvolution()
     this.since1st.backgroundColor = totalDeaths.data.map(() => { return '#1f8ef1'; })
     this.yesterday.backgroundColor = totalDeaths.data.map(() => { return '#1f8ef1'; })
     this.composeData();
@@ -56,41 +63,43 @@ export class DeathRatesComponent implements OnInit {
     const ageDeathRateCTX = (document.getElementById("AgeDeathRateChart") as any).getContext("2d");
     createVerticalBarChart(ageDeathRateCTX, Object.keys(ageDeathRate.ageRate), rates, backgroundColor);
 
-    const ageDeathPieCTX = (document.getElementById("AgeDeathPieChart") as any).getContext("2d");
-    const ageDeathData = Object.keys(ageDeathRate.ageRate).map(rate => Math.floor((deathCases.data[deathCases.data.length-1]*ageDeathRate.ageRate[rate])/100));
-    const pieCharColors = ['#000000', '#F896B8', '#CEA5DB', '#8AB7E8', '#2FC5D7', '#02CAAB', '#63C872', '#A5BE3F', '#E1AB2D'];
-    createPieChart(ageDeathPieCTX, Object.keys(ageDeathRate), ageDeathData, pieCharColors);
+    // const ageDeathPieCTX = (document.getElementById("AgeDeathPieChart") as any).getContext("2d");
+    // const ageDeathData = Object.keys(ageDeathRate.ageRate).map(rate => Math.floor((deathCases.data[deathCases.data.length-1]*ageDeathRate.ageRate[rate])/100));
+    // const pieCharColors = ['#000000', '#F896B8', '#CEA5DB', '#8AB7E8', '#2FC5D7', '#02CAAB', '#63C872', '#A5BE3F', '#E1AB2D'];
+    // createPieChart(ageDeathPieCTX, Object.keys(ageDeathRate), ageDeathData, pieCharColors);
 
     // death probability bar chart
     const deathsProbabilityCTX = (document.getElementById("DeathProbabilityChart") as any).getContext("2d");
     const deathProbabilityLabels = Object.keys(deathProbabilityByAge.World);
-    // const deathProbabilityValues = deathProbabilityLabels.map(
-    //   age => (100*deathProbabilityByAge.World[age])/ageStructure.World.short[age].both
-    // );
-    // const deathProbabilityCovid = deathProbabilityLabels.map(age => this.getCovidProbabilityByAge(age));
-    // this.deathProbabilityChart = createStackedBarChart(
-    //   deathsProbabilityCTX, deathProbabilityLabels,
-    //   deathProbabilityValues, deathProbabilityValues.map(() => { return '#1f8ef1'; }), 'all other causes',
-    //   deathProbabilityCovid, deathProbabilityValues.map(() => { return 'red'; }), 'covid-19'
-    // )
+    /*
+    const deathProbabilityValues = deathProbabilityLabels.map(
+      age => (100*deathProbabilityByAge.World[age])/ageStructure.World.short[age].both
+    );
+    const deathProbabilityCovid = deathProbabilityLabels.map(age => this.getCovidProbabilityByAge(age));
+    this.deathProbabilityChart = createStackedBarChart(
+      deathsProbabilityCTX, deathProbabilityLabels,
+      deathProbabilityValues, deathProbabilityValues.map(() => { return '#1f8ef1'; }), 'all other causes',
+      deathProbabilityCovid, deathProbabilityValues.map(() => { return 'red'; }), 'covid-19'
+    )
+    */
 
-    // death tolls
+    // the number of ill people per continent
     this.continentsRates = this.getContinentsRates();
-    const worldToll = this.getDeathRates('World', covidEvolution.cases[covidEvolution.cases.length-1])
+    const worldToll = this.getDeathRates('Northern America', covidEvolution.cases[covidEvolution.cases.length-1])
     this.deathProbabilityChart = createBarChart(deathsProbabilityCTX, deathProbabilityLabels, worldToll, worldToll.map(() => { return '#1f8ef1'; })) 
   }
 
   private getDeathRates(continent: string, count: number){
     let counts;
     let res = [];
-    if (continent === 'World') {
-      counts = this.getPopulationRate().map(population => population*count);
-      let i = 0;
-      for (const age of Object.keys(ageDeathRate.ageRate)){
-        res.push(counts[i]*(ageDeathRate.ageRate[age]/100));
-        i++;
-      }
+    // the number of people that are ill in different age ranges
+    counts = this.getPopulationRate(continent).map(population => population*count);
+    let i = 0;
+    for (const age of Object.keys(ageDeathRate.ageRate)){
+      res.push(counts[i]*(ageDeathRate.ageRate[age]/100));
+      i++;
     }
+    // return the estimation of death people in different age ranges
     return res;
   }
 
@@ -105,6 +114,7 @@ export class DeathRatesComponent implements OnInit {
       ] += worldStats.default.Countries[country].TotalConfirmed;
     }
     delete continents_count['undefined'];
+    return continents_count;
   }
 
   private getContinentByCountry(country: string) {
@@ -115,21 +125,24 @@ export class DeathRatesComponent implements OnInit {
     }
   }
 
-  private composeData() {
-    const since1st = deathCases.data[deathCases.data.length-1];
-    const yesterday = since1st - deathCases.data[deathCases.data.length-2];
+  private async setCurrentDeathEvolution() {
+    const data = await this.http.get('https://api.covid19api.com/summary').toPromise();
+    this.deathsSince1st = data["Global"]["TotalDeaths"];
+    this.deathsYesterday = data["Global"]["NewDeaths"];
+  }
 
+  private async composeData() {
     const today = new Date();
-    const day1 = new Date("01/11/2020");
+    const day1 = new Date("01/11/2020"); // the day of the first official death recorder from COVID-19
     const difference = Math.floor((today.getTime()-day1.getTime())/(1000*60*60*24));
 
-    this.since1st.data = totalDeaths.data.map(value => Math.floor(value/(365/difference)));
+    this.since1st.data = totalDeaths.data.map(value => Math.floor((value/(365))*difference));
     this.since1st.labels = [...totalDeaths.labels];
-    this.sortDeathTolls(this.since1st, since1st);
+    this.sortDeathTolls(this.since1st, this.deathsSince1st);
 
     this.yesterday.data = totalDeaths.data.map(value => Math.floor(value/365));
     this.yesterday.labels = [...totalDeaths.labels];
-    this.sortDeathTolls(this.yesterday, yesterday);
+    this.sortDeathTolls(this.yesterday, this.deathsYesterday);
   }
 
   public toggle() {
@@ -181,11 +194,10 @@ export class DeathRatesComponent implements OnInit {
     }
   }
 
-  public ageDeathContinentSwitch(location: string) {
-    this.ageDeathLocation = location;
-    this.deathProbabilityChart.data.datasets[0].data = Object.keys(deathProbabilityByAge.World).map(
-        age => (100*this.getData(location, deathProbabilityByAge)[age])/this.getData(location, ageStructure)[age].both
-      );
+  public deathProbStatsSwitch(location: string) {
+    this.deathProbLocation = location;
+    const toll = this.getDeathRates(location, this.continentsRates[location])
+    this.deathProbabilityChart.data.datasets[0].data = toll;
     this.deathProbabilityChart.update();
   }
 
@@ -205,9 +217,9 @@ export class DeathRatesComponent implements OnInit {
     return (estimationLethalCases*100)/ageRangeCount;
   }
 
-  private getPopulationRate() {
+  private getPopulationRate(continent: string) {
     const reducer = (acc, curr) => acc + curr;
-    const ages = Object.keys(ageStructure.World.short);
+    const ages = Object.keys(this.getData(continent, ageStructure));
     const population =  ages.map(age => ageStructure.World.short[age].both);
     const totalPopulationCount = population.reduce(reducer);
     return population.map(count => count/totalPopulationCount);

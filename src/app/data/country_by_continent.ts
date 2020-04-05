@@ -15,7 +15,7 @@ export default {
 	"Northern America": [
     "USA", "US",
     "Anguilla", "Antigua and Barbuda", "Aruba", "Bahamas", "Barbados", "Belize", "Bermuda", "Canada", "Cayman Islands", "Costa Rica", "Cuba", "Dominica", "Dominican Republic", "El Salvador", "Greenland", "Grenada", "Guadeloupe", "Guatemala", "Haiti", "Honduras", "Jamaica", "Martinique", "Mexico", "Montserrat", "Netherlands Antilles", "Nicaragua", "Panama", "Puerto Rico", "Saint Kitts and Nevis", "Saint Lucia", "Saint Pierre and Miquelon", "Saint Vincent and the Grenadines", "Trinidad and Tobago", "Turks and Caicos Islands", "USA", "Virgin Islands, British", "Virgin Islands, U.S."],
-	"Latin America and Caribbean": [
+	"Latin America and the Caribbean": [
     "Curacao", "Saint Barthelemy", "Saint Martin", "St. Martin", "The Bahamas", 
     "Argentina", "Bolivia", "Brazil", "Chile", "Colombia", "Ecuador", "Falkland Islands", "French Guiana", "Guyana", "Paraguay", "Peru", "Suriname", "Uruguay", "Venezuela"]
 }
