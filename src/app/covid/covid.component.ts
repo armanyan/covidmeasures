@@ -3,7 +3,6 @@ import { HttpClient } from '@angular/common/http';
 import Chart from 'chart.js';
 
 import * as covid from '../data/covid_evolution.json';
-import * as lockdown_stats from '../data/lockdown_countries_status.json';
 
 const addCommas = (number: number) => {
   return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -55,7 +54,7 @@ export class CovidComponent implements OnInit {
       await this.fetchWorldData();
       this.stats = JSON.parse(JSON.stringify(this.worldStats))
     } catch {
-      this.stats = lockdown_stats.values;
+      // this.stats = lockdown_stats.values;
     }
     if (this.stats[this.stats.length-1].country === 'World') {
       return;

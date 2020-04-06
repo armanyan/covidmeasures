@@ -16,6 +16,7 @@ export const ROUTES: RouteInfo[] = [
   { path: '/surveillance', title: 'Surveillance', soon: true,  icon:'policy', class: '' },
   { path: '/borders', title: 'Border Control', soon: true,  icon:'location_on', class: '' },
   { path: '/aboutus', title: 'About Us', icon:'supervisor_account', class: '' },
+  { path: '/join', title: 'Join Us', icon:'contact_mail', class: 'active-pro' }
 ];
 
 @Component({

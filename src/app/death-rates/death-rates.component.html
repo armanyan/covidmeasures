@@ -2,9 +2,6 @@
   <div class="container-fluid">
 
     <div layout-align="end end">
-      <button mat-raised-button class="float-right" type="button">
-        <span>Help Us!</span>
-      </button>
       <h2>Death Rates</h2>
     </div>
 
@@ -37,7 +34,7 @@
           </div>
 
           <div class=" card-body">
-            <canvas id="CountryChart" height="500"></canvas>
+            <canvas id="DeathCausesChart" height="500"></canvas>
           </div>
 
           <div class="card-footer ">
@@ -57,119 +54,121 @@
     </div>
 
     <hr>
-    <h3><u>COVID-19 Death Rate by Age Range</u></h3>
+    <h3><u>COVID-19 Death Estimation</u></h3>
 
-      <div class=" col-lg-8">
-        <div class=" card ">
+    <div class="col-lg-12">
+      <div class="card ">
 
-          <div class="card-header card-header-success">
-            <h3 class="card-title ">Age-Death Correlation</h3>
+        <div class="card-header card-header-success">
+          <h3 class="card-title">Death Estimation</h3>
+
+          <div class="btn-group">
+
+            <button mat-raised-button *ngIf="estimationSince1st"
+              class="float" type="button" color="primary" style="background-color: rebeccapurple;">
+              <span>Since 1st COVID-19 death (on 11 January 2020)</span>
+            </button>
+            <button mat-button *ngIf="estimationSince1st"
+              class="float" type="button" color="primary" (click)="deathEstimationPeriodSwitch()">
+              <span>Last 24 hours</span>
+            </button>
+            <button mat-button *ngIf="!estimationSince1st"
+              class="float" type="button" color="primary" (click)="deathEstimationPeriodSwitch()">
+              <span>Since 1st COVID-19 death (on 11 January 2020)</span>
+            </button>
+            <button mat-raised-button *ngIf="!estimationSince1st"
+              class="float" type="button" color="primary" style="background-color: rebeccapurple;">
+              <span>Last 24 hours</span>
+            </button>
+
           </div>
+          <br>
 
-          <div class=" card-body">
-            <canvas id="AgeDeathRateChart" height="100"></canvas>
+          <div class="btn-group">
+
+            <button mat-raised-button *ngIf="deathEstimationLocation==='World'"
+              class="float" type="button" color="primary">
+              <span>World</span>
+            </button>
+            <button mat-button *ngIf="deathEstimationLocation!=='World'"
+              class="float" type="button" color="primary" (click)="deathEstimationSwitch('World')">
+              <span>World</span>
+            </button>
+
+            <button mat-raised-button *ngIf="deathEstimationLocation==='North America'"
+              class="float" type="button" color="primary">
+              <span>North America</span>
+            </button>
+            <button mat-button *ngIf="deathEstimationLocation!=='North America'"
+              class="float" type="button" color="primary" (click)="deathEstimationSwitch('North America')">
+              <span>North America</span>
+            </button>
+
+            <button mat-raised-button *ngIf="deathEstimationLocation==='Europe'"
+              class="float" type="button" color="primary">
+              <span>Europe</span>
+            </button>
+            <button mat-button *ngIf="deathEstimationLocation!=='Europe'"
+              class="float" type="button" color="primary" (click)="deathEstimationSwitch('Europe')">
+              <span>Europe</span>
+            </button>
+
+            <button mat-raised-button *ngIf="deathEstimationLocation==='Asia'"
+              class="float" type="button" color="primary">
+              <span>Asia</span>
+            </button>
+            <button mat-button *ngIf="deathEstimationLocation!=='Asia'"
+              class="float" type="button" color="primary" (click)="deathEstimationSwitch('Asia')">
+              <span>Asia</span>
+            </button>
+
+            <button mat-raised-button *ngIf="deathEstimationLocation==='Africa'"
+              class="float" type="button" color="primary">
+              <span>Africa</span>
+            </button>
+            <button mat-button *ngIf="deathEstimationLocation!=='Africa'"
+              class="float" type="button" color="primary" (click)="deathEstimationSwitch('Africa')">
+              <span>Africa</span>
+            </button>
+
+            <button mat-raised-button *ngIf="deathEstimationLocation==='Oceania'"
+              class="float" type="button" color="primary">
+              <span>Oceania</span>
+            </button>
+            <button mat-button *ngIf="deathEstimationLocation!=='Oceania'"
+              class="float" type="button" color="primary" (click)="deathEstimationSwitch('Oceania')">
+              <span>Oceania</span>
+            </button>
+
+            <button mat-raised-button *ngIf="deathEstimationLocation==='South America'"
+              class="float" type="button" color="primary">
+              <span>South America</span>
+            </button>
+            <button mat-button *ngIf="deathEstimationLocation!=='South America'"
+              class="float" type="button" color="primary" (click)="deathEstimationSwitch('South America')">
+              <span>South America</span>
+            </button>
+
           </div>
-
-          <div class="card-footer ">
-            <div class="stats">
-              Updated on {{ageDeathRateLastUpdate}}
-            </div>
-          </div>
-
         </div>
-      </div>
 
-
-    <hr>
-
-    <h3><u>Understanding how COVID-19 impacts deaths rates</u></h3>
-
-    <div class=" row">
-      <div class=" col-lg-12">
-        <div class=" card ">
-
-          <div class="card-header card-header-success">
-            <h3 class="card-title ">Death Probability Statistics</h3>
-            <div class="btn-group">
-
-              <button mat-raised-button *ngIf="deathProbLocation==='Northern America'"
-                class="float" type="button" color="primary">
-                <span>North America</span>
-              </button>
-              <button mat-button *ngIf="deathProbLocation!=='Northern America'"
-                class="float" type="button" color="primary" (click)="deathProbStatsSwitch('Northern America')">
-                <span>North America</span>
-              </button>
-
-              <button mat-raised-button *ngIf="deathProbLocation==='Europe'"
-                class="float" type="button" color="primary">
-                <span>Europe</span>
-              </button>
-              <button mat-button *ngIf="deathProbLocation!=='Europe'"
-                class="float" type="button" color="primary" (click)="deathProbStatsSwitch('Europe')">
-                <span>Europe</span>
-              </button>
-
-              <button mat-raised-button *ngIf="deathProbLocation==='Asia'"
-                class="float" type="button" color="primary">
-                <span>Asia</span>
-              </button>
-              <button mat-button *ngIf="deathProbLocation!=='Asia'"
-                class="float" type="button" color="primary" (click)="deathProbStatsSwitch('Asia')">
-                <span>Asia</span>
-              </button>
-
-              <button mat-raised-button *ngIf="deathProbLocation==='Africa'"
-                class="float" type="button" color="primary">
-                <span>Africa</span>
-              </button>
-              <button mat-button *ngIf="deathProbLocation!=='Africa'"
-                class="float" type="button" color="primary" (click)="deathProbStatsSwitch('Africa')">
-                <span>Africa</span>
-              </button>
-
-              <button mat-raised-button *ngIf="deathProbLocation==='Oceania'"
-                class="float" type="button" color="primary">
-                <span>Oceania</span>
-              </button>
-              <button mat-button *ngIf="deathProbLocation!=='Oceania'"
-                class="float" type="button" color="primary" (click)="deathProbStatsSwitch('Oceania')">
-                <span>Oceania</span>
-              </button>
-
-              <button mat-raised-button *ngIf="deathProbLocation==='Latin America and the Caribbean'"
-                class="float" type="button" color="primary">
-                <span>Latin America & Caribbean</span>
-              </button>
-              <button mat-button *ngIf="deathProbLocation!=='Latin America and the Caribbean'"
-                class="float" type="button" color="primary" (click)="deathProbStatsSwitch('Latin America and the Caribbean')">
-                <span>Latin America & Caribbean</span>
-              </button>
-
-            </div>
-          </div>
-
-          <div class=" card-body">
-            <canvas id="DeathProbabilityChart" height="400"></canvas>
-          </div>
-
-          <div class="card-footer ">
-            <div class="stats">
-              Updated on {{totalDeathCausesLastUpdate}}
-            </div>
-            <div class="stats">
-              Source: &nbsp; <a href="https://www.un.org/en/development/desa/publications/world-population-prospects-2015-revision.html">
-                United Nations &nbsp;
-              </a> &
-              <a
-                href="https://www.ecdc.europa.eu/en/publications-data/download-todays-data-geographic-distribution-covid-19-cases-worldwide"
-              >&nbsp; European Centre for Disease Prevention and Control</a>
-            </div>
-          </div>
-
+        <div class="card-body">
+          <canvas id="covidDeathEstimationChart" height="400"></canvas>
         </div>
+
+        <div class="card-footer ">
+          <div class="stats">
+            Updated on {{totalDeathCausesLastUpdate}}
+          </div>
+          <div class="stats">
+            Source: &nbsp; <a href="https://www.un.org/en/development/desa/publications/world-population-prospects-2015-revision.html">
+              United Nations &nbsp;
+            </a> &
+            <a
+              href="https://www.ecdc.europa.eu/en/publications-data/download-todays-data-geographic-distribution-covid-19-cases-worldwide"
+            >&nbsp; European Centre for Disease Prevention and Control</a>
+          </div>
+        </div>
+
       </div>
     </div>
-
-  </div>
-</div>
