@@ -2,6 +2,13 @@ import Chart from 'chart.js';
 
 import * as deathCases from './data/latest_deaths.json';
 
+export const ageRanges = ['0-9', '10-19', '20-29', '30-39', '40-49', '50-59', '60-69', '70-79', '80+'];
+
+export const monthNames = [
+  "January", "February", "March", "April", "May", "June",
+  "July", "August", "September", "October", "November", "December"
+];
+
 export const createPieChart = (
   ctx: CanvasRenderingContext2D, labels: string[], dataset: number[], backgroundColor: string[]
 ) => {
@@ -162,7 +169,7 @@ export const createStackedBarChart = (
         position: "nearest",
         callbacks: {
           label: function(tooltipItem: any) {
-            return tooltipItem.xLabel.toFixed(5).toString()+'%';
+            return Math.floor(tooltipItem.xLabel).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
           }
         }
       },
@@ -186,16 +193,16 @@ export const createStackedBarChart = (
             color: 'rgba(29,140,248,0.1)',
             zeroLineColor: "transparent",
           },
-          // ticks: {
-          //   userCallback: function(value) {
-          //     value = value.toString();
-          //     value = value.split(/(?=(?:...)*$)/);
-          //     value = value.join(',');
-          //     return value;
-          //   },
-          //   padding: 0,
-          //   fontColor: "#9e9e9e"
-          // }
+          ticks: {
+            userCallback: function(value) {
+              value = value.toString();
+              value = value.split(/(?=(?:...)*$)/);
+              value = value.join(',');
+              return value;
+            },
+            padding: 0,
+            fontColor: "#9e9e9e"
+          }
         }]
       }
     }

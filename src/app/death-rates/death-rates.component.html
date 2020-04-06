@@ -16,7 +16,7 @@
           <div class="card-header card-header-success">
             <h3 class="card-title ">Average Death Statistics</h3>
             <div *ngIf="!since1stToggle" class="btn-group">
-              <button mat-button class="float" type="button" color="primary" (click)="toggle()">
+              <button mat-button class="float" type="button" color="primary" (click)="changeDeathStatPeriod()">
                 <span>Since 1st COVID-19 death (on 11 January 2020)</span>
               </button>
               <button mat-raised-button class="float" type="button" color="primary">
@@ -27,7 +27,7 @@
               <button mat-raised-button class="float" type="button" color="primary">
                 <span>Since 1st COVID-19 death (on 11 January 2020)</span>
               </button>
-              <button mat-button class="float" type="button" color="primary" (click)="toggle()">
+              <button mat-button class="float" type="button" color="primary" (click)="changeDeathStatPeriod()">
                 <span>Last 24 hours</span>
               </button>
             </div>
@@ -39,7 +39,7 @@
 
           <div class="card-footer ">
             <div class="stats">
-              Updated on {{totalDeathCausesLastUpdate}}
+              Updated on {{ today | date }}
             </div>
             <div class="stats">
               Source: <a href="https://ourworldindata.org/causes-of-death"> Our World In Data</a> &
@@ -158,7 +158,127 @@
 
         <div class="card-footer ">
           <div class="stats">
-            Updated on {{totalDeathCausesLastUpdate}}
+            Updated on {{ today | date }}
+          </div>
+          <div class="stats">
+            Source: &nbsp; <a href="https://www.un.org/en/development/desa/publications/world-population-prospects-2015-revision.html">
+              United Nations &nbsp;
+            </a> &
+            <a
+              href="https://www.ecdc.europa.eu/en/publications-data/download-todays-data-geographic-distribution-covid-19-cases-worldwide"
+            >&nbsp; European Centre for Disease Prevention and Control</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <hr>
+    <h3><u>COVID-19 Among All Causes of Death</u></h3>
+
+    <div class="col-lg-12">
+      <div class="card ">
+
+        <div class="card-header card-header-success">
+          <h3 class="card-title">Death Estimation</h3>
+
+          <div class="btn-group">
+
+            <button mat-raised-button *ngIf="deathCausesSince1st"
+              class="float" type="button" color="primary" style="background-color: rebeccapurple;">
+              <span>Since 1st COVID-19 death (on 11 January 2020)</span>
+            </button>
+            <button mat-button *ngIf="deathCausesSince1st"
+              class="float" type="button" color="primary" (click)="deathCausesPeriodSwitch()">
+              <span>Last 24 hours</span>
+            </button>
+            <button mat-button *ngIf="!deathCausesSince1st"
+              class="float" type="button" color="primary" (click)="deathCausesPeriodSwitch()">
+              <span>Since 1st COVID-19 death (on 11 January 2020)</span>
+            </button>
+            <button mat-raised-button *ngIf="!deathCausesSince1st"
+              class="float" type="button" color="primary" style="background-color: rebeccapurple;">
+              <span>Last 24 hours</span>
+            </button>
+
+          </div>
+          <br>
+
+          <div class="btn-group">
+
+            <button mat-raised-button *ngIf="deathCausesLocation==='World'"
+              class="float" type="button" color="primary">
+              <span>World</span>
+            </button>
+            <button mat-button *ngIf="deathCausesLocation!=='World'"
+              class="float" type="button" color="primary" (click)="deathCausesLocationSwitch('World')">
+              <span>World</span>
+            </button>
+
+            <button mat-raised-button *ngIf="deathCausesLocation==='North America'"
+              class="float" type="button" color="primary">
+              <span>North America</span>
+            </button>
+            <button mat-button *ngIf="deathCausesLocation!=='North America'"
+              class="float" type="button" color="primary" (click)="deathCausesLocationSwitch('North America')">
+              <span>North America</span>
+            </button>
+
+            <button mat-raised-button *ngIf="deathCausesLocation==='Europe'"
+              class="float" type="button" color="primary">
+              <span>Europe</span>
+            </button>
+            <button mat-button *ngIf="deathCausesLocation!=='Europe'"
+              class="float" type="button" color="primary" (click)="deathCausesLocationSwitch('Europe')">
+              <span>Europe</span>
+            </button>
+
+            <button mat-raised-button *ngIf="deathCausesLocation==='Asia'"
+              class="float" type="button" color="primary">
+              <span>Asia</span>
+            </button>
+            <button mat-button *ngIf="deathCausesLocation!=='Asia'"
+              class="float" type="button" color="primary" (click)="deathCausesLocationSwitch('Asia')">
+              <span>Asia</span>
+            </button>
+
+            <button mat-raised-button *ngIf="deathCausesLocation==='Africa'"
+              class="float" type="button" color="primary">
+              <span>Africa</span>
+            </button>
+            <button mat-button *ngIf="deathCausesLocation!=='Africa'"
+              class="float" type="button" color="primary" (click)="deathCausesLocationSwitch('Africa')">
+              <span>Africa</span>
+            </button>
+
+            <button mat-raised-button *ngIf="deathCausesLocation==='Oceania'"
+              class="float" type="button" color="primary">
+              <span>Oceania</span>
+            </button>
+            <button mat-button *ngIf="deathCausesLocation!=='Oceania'"
+              class="float" type="button" color="primary" (click)="deathCausesLocationSwitch('Oceania')">
+              <span>Oceania</span>
+            </button>
+
+            <button mat-raised-button *ngIf="deathCausesLocation==='South America'"
+              class="float" type="button" color="primary">
+              <span>South America</span>
+            </button>
+            <button mat-button *ngIf="deathCausesLocation!=='South America'"
+              class="float" type="button" color="primary" (click)="deathCausesLocationSwitch('South America')">
+              <span>South America</span>
+            </button>
+
+          </div>
+        </div>
+
+        <div class="card-body">
+          <canvas id="deathCausesChart" height="400"></canvas>
+        </div>
+
+        <div class="card-footer ">
+          <div class="stats">
+            Updated on {{ today | date }}
           </div>
           <div class="stats">
             Source: &nbsp; <a href="https://www.un.org/en/development/desa/publications/world-population-prospects-2015-revision.html">
