@@ -17,6 +17,14 @@ export const getRegionByAlpha2 = (alpha2: string) => {
   }
 }
 
+export const getCountryNameByAlpha2 = (alpha2: string) => {
+  for (const country of countries.default) {
+    if (country["alpha-2"] === alpha2) {
+      return country["name"];
+    }
+  }
+}
+
 export const createPieChart = (
   ctx: CanvasRenderingContext2D, labels: string[], dataset: number[], backgroundColor: string[]
 ) => {
@@ -215,4 +223,73 @@ export const createStackedBarChart = (
       }
     }
   });
+}
+
+export const createLineChart = (ctx: CanvasRenderingContext2D, labels: string[], dataset: number[]) => {
+  const data = {
+    labels,
+    datasets: [{
+        borderColor: "#3399FF",
+        pointRadius: 3,
+        pointHoverRadius: 6,
+        borderWidth: 3,
+        data: dataset
+      },
+    ]
+  };
+
+  const options = {
+    legend: {
+      display: false
+    },
+
+    tooltips: {
+      callbacks: {
+        label: function(tooltipItem: any) {
+          return tooltipItem.yLabel.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        }
+      }
+    },
+
+    scales: {
+      yAxes: [{
+
+        ticks: {
+          userCallback: function(value, index, values) {
+            value = value.toString();
+            value = value.split(/(?=(?:...)*$)/);
+            value = value.join(',');
+            return value;
+          },
+          fontColor: "#9f9f9f",
+          beginAtZero: false,
+          maxTicksLimit: 5,
+          // padding: 20
+        },
+        gridLines: {
+          drawBorder: false,
+          zeroLineColor: "#ccc",
+          color: 'rgba(0,0,0,0.05)'
+        }
+
+      }],
+
+      xAxes: [{
+        barPercentage: 1.6,
+        gridLines: {
+          drawBorder: false,
+          color: 'rgba(255,255,255,0.1)',
+          zeroLineColor: "transparent",
+          display: true,
+        },
+        // label format
+        ticks: {
+          padding: 20,
+          fontColor: "#9f9f9f"
+        }
+      }]
+    },
+  }
+
+  return new Chart(ctx, { type: 'line', data, options});
 }
