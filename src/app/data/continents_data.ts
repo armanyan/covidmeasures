@@ -107,7 +107,7 @@ export default {
 		},
     "covid_death_rate_total": 0.809629962725157
 	},
-	"North America": {
+	"Northern America": {
 		"population": {
 			"0-9": "82855000",
 			"10-19": "85474800",
@@ -179,7 +179,7 @@ export default {
 		},
     "covid_death_rate_total": 0.126118162157782
 	},
-	"South America": {
+	"Latin America and the Caribbean": {
 		"population": {
 			"0-9": "64678000",
 			"10-19": "66699000",

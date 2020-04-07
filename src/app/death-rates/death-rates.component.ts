@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import Chart from 'chart.js';
 
-import { createBarChart, createStackedBarChart, ageRanges } from '../utils';
+import { createBarChart, createStackedBarChart, ageRanges, getRegionByAlpha2 } from '../utils';
 
 import * as totalDeaths from '../data/deaths_causes.json';
 import * as continents_data from '../data/continents_data';
@@ -23,6 +23,7 @@ export class DeathRatesComponent implements OnInit {
   private deathCausesChart: Chart;
 
   public today = Date();
+  private daysSinceCovid: number;
 
   public deathStatsSince1st = true;
   public estimationSince1st = true;
@@ -36,6 +37,16 @@ export class DeathRatesComponent implements OnInit {
  
   private deathsSince1st: number;
   private deathsYesterday: number;
+
+  private covidByContinent = {
+    "Europe": { "cases": 0, "deaths": 0 },
+    "Asia": { "cases": 0, "deaths": 0 },
+    "Africa": { "cases": 0, "deaths": 0 },
+    "Northern America": { "cases": 0, "deaths": 0 },
+    "Latin America and the Caribbean": { "cases": 0, "deaths": 0 },
+    "Oceania": { "cases": 0, "deaths": 0 },
+    "Antarctica": { "cases": 0, "deaths": 0 }
+  }
 
   constructor(
     private http: HttpClient
@@ -65,9 +76,17 @@ export class DeathRatesComponent implements OnInit {
     );
   }
 
+  private getCurrentDeath(since1sr: boolean, location: string) {
+    if (location === 'World') {
+      return since1sr ? this.deathsSince1st : this.deathsYesterday;
+    }
+    return since1sr ?
+      this.covidByContinent[location].deaths : Math.floor(this.covidByContinent[location].deaths/this.daysSinceCovid);
+  }
+
   private estimateCovidDeaths(since1sr: boolean, location: string) {
     const continent = continents_data.default[location];
-    const currentDeaths = since1sr ? this.deathsSince1st : this.deathsYesterday;
+    const currentDeaths = this.getCurrentDeath(since1sr, location);
     return ageRanges.map(
       age => Math.floor(
         currentDeaths*(parseFloat(continent.covid_death_rate[age])/continent.covid_death_rate_total)
@@ -123,14 +142,18 @@ export class DeathRatesComponent implements OnInit {
     const data = await this.http.get('https://api.covid19api.com/summary').toPromise();
     this.deathsSince1st = data["Global"]["TotalDeaths"];
     this.deathsYesterday = data["Global"]["NewDeaths"];
+    for (const row of data["Countries"]) {
+      this.covidByContinent[getRegionByAlpha2(row["CountryCode"])]["cases"] += row["TotalConfirmed"];
+      this.covidByContinent[getRegionByAlpha2(row["CountryCode"])]["deaths"] += row["TotalDeaths"];
+    }
   }
 
   private async composeData() {
     const today = new Date();
-    const day1 = new Date("01/11/2020"); // the day of the first official death recorder from COVID-19
-    const difference = Math.floor((today.getTime()-day1.getTime())/(1000*60*60*24));
+    const day1 = new Date("01/11/2020"); // the day of the first official death recorded from COVID-19
+    this.daysSinceCovid = Math.floor((today.getTime()-day1.getTime())/(1000*60*60*24));
 
-    this.since1st.data = totalDeaths.data.map(value => Math.floor((value/(365))*difference));
+    this.since1st.data = totalDeaths.data.map(value => Math.floor((value/(365))*this.daysSinceCovid));
     this.since1st.labels = [...totalDeaths.labels];
     this.sortDeathTolls(this.since1st, this.deathsSince1st);
 

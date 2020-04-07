@@ -1,6 +1,6 @@
 import Chart from 'chart.js';
 
-import * as deathCases from './data/latest_deaths.json';
+import * as countries from './data/country_codes';
 
 export const ageRanges = ['0-9', '10-19', '20-29', '30-39', '40-49', '50-59', '60-69', '70-79', '80+'];
 
@@ -8,6 +8,14 @@ export const monthNames = [
   "January", "February", "March", "April", "May", "June",
   "July", "August", "September", "October", "November", "December"
 ];
+
+export const getRegionByAlpha2 = (alpha2: string) => {
+  for (const country of countries.default) {
+    if (country["alpha-2"] === alpha2) {
+      return country.region === "Americas" ? country["sub-region"] : country["region"];
+    }
+  }
+}
 
 export const createPieChart = (
   ctx: CanvasRenderingContext2D, labels: string[], dataset: number[], backgroundColor: string[]

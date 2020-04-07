@@ -10,5 +10,6 @@ export class LockdownComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    
   }
 }
