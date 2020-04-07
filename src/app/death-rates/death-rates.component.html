@@ -15,7 +15,7 @@
 
           <div class="card-header card-header-success">
             <h3 class="card-title ">Average Death Statistics</h3>
-            <div *ngIf="!since1stToggle" class="btn-group">
+            <div *ngIf="!deathStatsSince1st" class="btn-group">
               <button mat-button class="float" type="button" color="primary" (click)="changeDeathStatPeriod()">
                 <span>Since 1st COVID-19 death (on 11 January 2020)</span>
               </button>
@@ -23,7 +23,7 @@
                 <span>Last 24 hours</span>
               </button>
             </div>
-            <div *ngIf="since1stToggle" class="btn-group">
+            <div *ngIf="deathStatsSince1st" class="btn-group">
               <button mat-raised-button class="float" type="button" color="primary">
                 <span>Since 1st COVID-19 death (on 11 January 2020)</span>
               </button>
