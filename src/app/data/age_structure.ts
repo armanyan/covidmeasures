@@ -1,4 +1,4 @@
-{
+export default {
 	"Europe": {
 		"full": {
 			"0-4": {

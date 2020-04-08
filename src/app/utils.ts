@@ -1,6 +1,7 @@
 import Chart from 'chart.js';
 
 import * as countries from './data/country_codes';
+import * as countriesData from './data/countries';
 
 export const ageRanges = ['0-9', '10-19', '20-29', '30-39', '40-49', '50-59', '60-69', '70-79', '80+'];
 
@@ -9,18 +10,28 @@ export const monthNames = [
   "July", "August", "September", "October", "November", "December"
 ];
 
-export const getRegionByAlpha2 = (alpha2: string) => {
+export const getRegionByAlpha = (alpha: string) => {
+  const key = alpha.length === 2 ? "alpha-2" : "alpha-3";
   for (const country of countries.default) {
-    if (country["alpha-2"] === alpha2) {
+    if (country[key] === alpha) {
       return country.region === "Americas" ? country["sub-region"] : country["region"];
     }
   }
 }
 
-export const getCountryNameByAlpha2 = (alpha2: string) => {
+export const getCountryNameByAlpha = (alpha: string) => {
+  const key = alpha.length === 2 ? "alpha-2" : "alpha-3";
   for (const country of countries.default) {
-    if (country["alpha-2"] === alpha2) {
+    if (country[key] === alpha) {
       return country["name"];
+    }
+  }
+}
+
+export const getSchoolPopulationByAlpha3 = (alpha3: string) => {
+  for (const country of countriesData.default) {
+    if (country["alpha3"] === alpha3) {
+      return country.population["0-9"] + country.population["10-19"]
     }
   }
 }
@@ -230,9 +241,6 @@ export const createLineChart = (ctx: CanvasRenderingContext2D, labels: string[],
     labels,
     datasets: [{
         borderColor: "#3399FF",
-        pointRadius: 3,
-        pointHoverRadius: 6,
-        borderWidth: 3,
         data: dataset
       },
     ]
@@ -262,9 +270,7 @@ export const createLineChart = (ctx: CanvasRenderingContext2D, labels: string[],
             return value;
           },
           fontColor: "#9f9f9f",
-          beginAtZero: false,
-          maxTicksLimit: 5,
-          // padding: 20
+          beginAtZero: false
         },
         gridLines: {
           drawBorder: false,

@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import Chart from 'chart.js';
 
-import { createLineChart, getCountryNameByAlpha2 } from '../utils';
+import { createLineChart, getCountryNameByAlpha, monthNames } from '../utils';
 import * as covid from '../data/covid_evolution.json';
 
 @Component({
@@ -21,21 +20,15 @@ export class CovidComponent implements OnInit {
   public deathsLastUpdate: string;
   public totalDeathCausesLastUpdate: string;
 
-  // TODO handle others correctly later on
-  private wrongNameCountries = [
-    'US', ' Azerbaijan', 'Congo (Brazzaville)', 'Congo (Kinshasa)', '', 'Iran (Islamic Republic of)', 'Hong Kong SAR', 'Others',
-    'Bahamas, The', 'Macao SAR', 'Russian Federation', 'Taiwan*', 'Holy See', 'Viet Nam', 'occupied Palestinian territory'
-  ];
-
   constructor(
     private http: HttpClient
   ) { }
 
   async ngOnInit() {
     const casesCTX = (document.getElementById("chartCases") as any).getContext("2d");
-    const labels = covid.dates;
-    const cases = covid.cases;
-    const deaths = covid.deaths;
+    const labels = covid.dates.slice(32);
+    const cases = covid.cases.slice(32);
+    const deaths = covid.deaths.slice(32);
     createLineChart(casesCTX, labels, cases)
     this.casesLastUpdate = labels[labels.length-1];
 
@@ -60,7 +53,7 @@ export class CovidComponent implements OnInit {
   private getCountries(data: any) {
     return data.map(row => {
       return {
-        "country": getCountryNameByAlpha2(row["CountryCode"]), "total_cases": row['TotalConfirmed'],
+        "country": getCountryNameByAlpha(row["CountryCode"]), "total_cases": row['TotalConfirmed'],
         "new_cases": row['NewConfirmed'], "total_deaths": row["TotalDeaths"],
         "new_deaths": row["NewDeaths"], "recovered": row["TotalRecovered"]
       }
@@ -71,10 +64,6 @@ export class CovidComponent implements OnInit {
     let data = await this.http.get('https://api.covid19api.com/summary').toPromise();
     this.worldStats = this.getCountries(data['Countries']);
     const date = new Date(data['Date']);
-    const monthNames = [
-      "January", "February", "March", "April", "May", "June",
-      "July", "August", "September", "October", "November", "December"
-    ];
     this.worldDataUpdatedOn = monthNames[date.getMonth()]+" "+date.getDate()+"th, "+date.getFullYear();
   }
 

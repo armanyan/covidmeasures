@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import Chart from 'chart.js';
 
-import { createBarChart, createStackedBarChart, ageRanges, getRegionByAlpha2 } from '../utils';
+import { createBarChart, createStackedBarChart, ageRanges, getRegionByAlpha } from '../utils';
 
 import * as totalDeaths from '../data/deaths_causes.json';
 import * as continents_data from '../data/continents_data';
@@ -143,8 +143,8 @@ export class DeathRatesComponent implements OnInit {
     this.deathsSince1st = data["Global"]["TotalDeaths"];
     this.deathsYesterday = data["Global"]["NewDeaths"];
     for (const row of data["Countries"]) {
-      this.covidByContinent[getRegionByAlpha2(row["CountryCode"])]["cases"] += row["TotalConfirmed"];
-      this.covidByContinent[getRegionByAlpha2(row["CountryCode"])]["deaths"] += row["TotalDeaths"];
+      this.covidByContinent[getRegionByAlpha(row["CountryCode"])]["cases"] += row["TotalConfirmed"];
+      this.covidByContinent[getRegionByAlpha(row["CountryCode"])]["deaths"] += row["TotalDeaths"];
     }
   }
 

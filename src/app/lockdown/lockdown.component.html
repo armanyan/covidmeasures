@@ -7,47 +7,102 @@
     </div>
 
     <hr>
-
-    <p>
-      This page tracks government measures across the globe to reduce people movement and activity outside their home.
-      Our grassroots community is gathering data to understand their magnitude, their evolution and their consequences on society.
-    </p>
-    <p>
-      This page puts the impacts of lockdown measures in perspective with the impacts of the covid-19 epidemic on society.
-      It also outlines countries using alternative approaches and compare their results with similar countries. 
-    </p>
-
-
-    <div class="col-md-6">
+    
+    <div class="col-md-7">
       <div class="card">
         <div class="card-header card-header-success">
-          <h3 class="card-title ">People in Lockdown</h3>
-          <p class="card-category">World</p>
+          <h3 class="card-title ">School Closure Measures</h3>
+          <div class="btn-group">
+
+            <button mat-raised-button *ngIf="schoolClosureRegion==='World'"
+              class="float" type="button" color="primary">
+              <span>World</span>
+            </button>
+            <button mat-button *ngIf="schoolClosureRegion!=='World'"
+              class="float" type="button" color="primary" (click)="schoolClosureChangeLocation('World')">
+              <span>World</span>
+            </button>
+
+            <button mat-raised-button *ngIf="schoolClosureRegion==='Northern America'"
+              class="float" type="button" color="primary">
+              <span>Northern America</span>
+            </button>
+            <button mat-button *ngIf="schoolClosureRegion!=='Northern America'"
+              class="float" type="button" color="primary" (click)="schoolClosureChangeLocation('Northern America')">
+              <span>Northern America</span>
+            </button>
+
+            <button mat-raised-button *ngIf="schoolClosureRegion==='Europe'"
+              class="float" type="button" color="primary">
+              <span>Europe</span>
+            </button>
+            <button mat-button *ngIf="schoolClosureRegion!=='Europe'"
+              class="float" type="button" color="primary" (click)="schoolClosureChangeLocation('Europe')">
+              <span>Europe</span>
+            </button>
+
+            <button mat-raised-button *ngIf="schoolClosureRegion==='Asia'"
+              class="float" type="button" color="primary">
+              <span>Asia</span>
+            </button>
+            <button mat-button *ngIf="schoolClosureRegion!=='Asia'"
+              class="float" type="button" color="primary" (click)="schoolClosureChangeLocation('Asia')">
+              <span>Asia</span>
+            </button>
+
+          </div>
+
+            <br>
+
+          <div class="btn-group">
+
+            <button mat-raised-button *ngIf="schoolClosureRegion==='Africa'"
+              class="float" type="button" color="primary">
+              <span>Africa</span>
+            </button>
+            <button mat-button *ngIf="schoolClosureRegion!=='Africa'"
+              class="float" type="button" color="primary" (click)="schoolClosureChangeLocation('Africa')">
+              <span>Africa</span>
+            </button>
+
+            <button mat-raised-button *ngIf="schoolClosureRegion==='Oceania'"
+              class="float" type="button" color="primary">
+              <span>Oceania</span>
+            </button>
+            <button mat-button *ngIf="schoolClosureRegion!=='Oceania'"
+              class="float" type="button" color="primary" (click)="schoolClosureChangeLocation('Oceania')">
+              <span>Oceania</span>
+            </button>
+
+            <button mat-raised-button *ngIf="schoolClosureRegion==='Latin America and the Caribbean'"
+              class="float" type="button" color="primary">
+              <span>Latin America and the Caribbean</span>
+            </button>
+            <button mat-button *ngIf="schoolClosureRegion!=='Latin America and the Caribbean'"
+              class="float" type="button" color="primary" (click)="schoolClosureChangeLocation('Latin America and the Caribbean')">
+              <span>Latin America and the Caribbean</span>
+            </button>
+
+          </div>
         </div>
           <div class="card-body">
             <div class="table-responsive">
               <table class="table">
                 <thead class="text-primary">
                   <th>
-                    Total Amount
+                    Number of children impacted
                   </th>
                   <th>
-                    Per Active Covid Case
-                  </th>
-                  <th>
-                    Per COVID-19 Death
+                    Average days missed
                   </th>
                 </thead>
                 <tbody>
                   <tr>
                     <td>
-                      {{123456789 | number}}
+                      {{numberChildrenImpacted | number}}
                     </td>
                     <td>
-                      {{12345 | number}}
-                    </td>
-                    <td>
-                      {{123456 | number}}
+                      {{averageDaysMissed | number}}
                     </td>
                   </tr>
                 </tbody>
@@ -67,44 +122,110 @@
       </div>
     </div>
 
-    <ul>
-      <li>The majority of the world population is facing lockdown measures</li>
-      <li>For every Covid-19 Active Case, the equivalent of a small town is on lockdown</li>
-      <li>For every death of Covid-19 so far, the equivalent of mid-size city is on lock down</li>
-    </ul>
-
     <hr>
+    <h2>COVID-19 VS School Closure</h2>
 
-    <div class="col-md-6">
+    <div class="col-md-7">
       <div class="card">
         <div class="card-header card-header-success">
-          <h3 class="card-title ">Lucky children</h3>
-          <p class="card-category">World</p>
+          <h3 class="card-title ">School Closure Statistics</h3>
+          <div class="btn-group">
+
+            <button mat-raised-button *ngIf="covidVSSchoolRegion==='World'"
+              class="float" type="button" color="primary">
+              <span>World</span>
+            </button>
+            <button mat-button *ngIf="covidVSSchoolRegion!=='World'"
+              class="float" type="button" color="primary" (click)="covidVSSchoolChangeRegion('World')">
+              <span>World</span>
+            </button>
+
+            <button mat-raised-button *ngIf="covidVSSchoolRegion==='Northern America'"
+              class="float" type="button" color="primary">
+              <span>Northern America</span>
+            </button>
+            <button mat-button *ngIf="covidVSSchoolRegion!=='Northern America'"
+              class="float" type="button" color="primary" (click)="covidVSSchoolChangeRegion('Northern America')">
+              <span>Northern America</span>
+            </button>
+
+            <button mat-raised-button *ngIf="covidVSSchoolRegion==='Europe'"
+              class="float" type="button" color="primary">
+              <span>Europe</span>
+            </button>
+            <button mat-button *ngIf="covidVSSchoolRegion!=='Europe'"
+              class="float" type="button" color="primary" (click)="covidVSSchoolChangeRegion('Europe')">
+              <span>Europe</span>
+            </button>
+
+            <button mat-raised-button *ngIf="covidVSSchoolRegion==='Asia'"
+              class="float" type="button" color="primary">
+              <span>Asia</span>
+            </button>
+            <button mat-button *ngIf="covidVSSchoolRegion!=='Asia'"
+              class="float" type="button" color="primary" (click)="covidVSSchoolChangeRegion('Asia')">
+              <span>Asia</span>
+            </button>
+
+          </div>
+
+            <br>
+
+          <div class="btn-group">
+
+            <button mat-raised-button *ngIf="covidVSSchoolRegion==='Africa'"
+              class="float" type="button" color="primary">
+              <span>Africa</span>
+            </button>
+            <button mat-button *ngIf="covidVSSchoolRegion!=='Africa'"
+              class="float" type="button" color="primary" (click)="covidVSSchoolChangeRegion('Africa')">
+              <span>Africa</span>
+            </button>
+
+            <button mat-raised-button *ngIf="covidVSSchoolRegion==='Oceania'"
+              class="float" type="button" color="primary">
+              <span>Oceania</span>
+            </button>
+            <button mat-button *ngIf="covidVSSchoolRegion!=='Oceania'"
+              class="float" type="button" color="primary" (click)="covidVSSchoolChangeRegion('Oceania')">
+              <span>Oceania</span>
+            </button>
+
+            <button mat-raised-button *ngIf="covidVSSchoolRegion==='Latin America and the Caribbean'"
+              class="float" type="button" color="primary">
+              <span>Latin America and the Caribbean</span>
+            </button>
+            <button mat-button *ngIf="covidVSSchoolRegion!=='Latin America and the Caribbean'"
+              class="float" type="button" color="primary" (click)="covidVSSchoolChangeRegion('Latin America and the Caribbean')">
+              <span>Latin America and the Caribbean</span>
+            </button>
+
+          </div>
         </div>
           <div class="card-body">
             <div class="table-responsive">
               <table class="table">
                 <thead class="text-primary">
                   <th>
-                    Total Amount
+                    Number of children impacted per covid death
                   </th>
                   <th>
-                    Per Active Covid Case
+                    Number of school days missed per covid death
                   </th>
                   <th>
-                    Per COVID-19 Death
+                    Number of children not going to school per active covid case
                   </th>
                 </thead>
                 <tbody>
                   <tr>
                     <td>
-                      {{123456789 | number}}
+                      {{impactedChildrenPerDeath | number}}
                     </td>
                     <td>
-                      {{12345 | number}}
+                      {{schooldaysMissedPerDeath | number}}
                     </td>
                     <td>
-                      {{123456 | number}}
+                      {{kidsNoSchoolPerActiveCase | number}}
                     </td>
                   </tr>
                 </tbody>
@@ -121,8 +242,77 @@
             </div>
           </div>
 
-        </div>
+      </div>
     </div>
+
+    <hr>
+
+    <div class="col-md-12">
+      <div class="card">
+
+        <div class="card-header card-header-success">
+          <h3 class="card-title">Lockdown Status Per Country</h3>
+          <mat-form-field>
+            <mat-label>Filter by Country</mat-label>
+            <input matInput (keyup)="applyFilter($event)" placeholder="USA, France, China...">
+          </mat-form-field>
+        </div>
+
+        <div class="card-body">
+
+          <div class="content table-responsive table-full-width">
+            <table class="table">
+              <thead>
+                <th class="text-primary">{{ statsHeaders[0] }}</th>
+                <th class="text-primary">{{ statsHeaders[1] }}</th>
+                <th class="text-primary">{{ statsHeaders[2] }}</th>
+                <th class="text-primary">{{ statsHeaders[3] }}</th>
+              </thead>
+              <tbody>
+                <tr *ngFor="let row of lockdownTable">
+                  <td>{{ row.name }}</td>
+                  <td>{{ row.start }}</td>
+                  <td>{{ row.end }}</td>
+                  <td>{{ row.status }}</td>
+                </tr>
+              </tbody>
+            </table>
+            </div>
+    
+        </div>
+
+        <div class="card-footer">
+          <div class="stats">
+            Updated on {{worldDataUpdatedOn}}
+          </div>
+          <div class="stats">
+            Source: TODO
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <hr>
+
+    <p>
+      This page tracks government measures across the globe to reduce people movement and activity outside their home.
+      Our grassroots community is gathering data to understand their magnitude, their evolution and their consequences on society.
+    </p>
+    <p>
+      This page puts the impacts of lockdown measures in perspective with the impacts of the covid-19 epidemic on society.
+      It also outlines countries using alternative approaches and compare their results with similar countries. 
+    </p>
+
+
+    <ul>
+      <li>The majority of the world population is facing lockdown measures</li>
+      <li>For every Covid-19 Active Case, the equivalent of a small town is on lockdown</li>
+      <li>For every death of Covid-19 so far, the equivalent of mid-size city is on lock down</li>
+    </ul>
+
+    <hr>
+
     
     <ul>
       <li>The majority of children around the world are currently not going to school</li>
