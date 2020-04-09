@@ -1,0 +1,343 @@
+
+<div class="main-content">
+  <div class="container-fluid">
+
+    <hr>
+
+    <div layout-align="end end">
+      <h2>School Closure</h2>
+    </div>
+
+    <p>
+      In their fight against COVID-19, governments around the world have decided to close schools,
+      universities, daycare, and other educational institutions as part of the largest shutdown ever recorded.
+      They intend to protect children from exposure to the virus as well as reducing its spread among the population.
+      We shouldn’t overlook that these measures, as legitimate as they are from the epidemic mitigation standpoint,
+      are causing an unprecedented toll on children's education and will have long-term consequences.
+      The CovidMeasures Community is compiling information to help citizens better assess the pros and cons
+      of these measures as the crisis evolves.
+    </p>
+    
+    <div class="col-md-7">
+      <div class="card">
+        <div class="card-header card-header-success">
+          <h3 class="card-title ">School Closure Overview</h3>
+          <div class="btn-group">
+
+            <button mat-raised-button *ngIf="schoolClosureRegion==='World'"
+              class="float" type="button" color="primary">
+              <span>World</span>
+            </button>
+            <button mat-button *ngIf="schoolClosureRegion!=='World'"
+              class="float" type="button" color="primary" (click)="schoolClosureChangeLocation('World')">
+              <span>World</span>
+            </button>
+
+            <button mat-raised-button *ngIf="schoolClosureRegion==='Northern America'"
+              class="float" type="button" color="primary">
+              <span>Northern America</span>
+            </button>
+            <button mat-button *ngIf="schoolClosureRegion!=='Northern America'"
+              class="float" type="button" color="primary" (click)="schoolClosureChangeLocation('Northern America')">
+              <span>Northern America</span>
+            </button>
+
+            <button mat-raised-button *ngIf="schoolClosureRegion==='Europe'"
+              class="float" type="button" color="primary">
+              <span>Europe</span>
+            </button>
+            <button mat-button *ngIf="schoolClosureRegion!=='Europe'"
+              class="float" type="button" color="primary" (click)="schoolClosureChangeLocation('Europe')">
+              <span>Europe</span>
+            </button>
+
+            <button mat-raised-button *ngIf="schoolClosureRegion==='Asia'"
+              class="float" type="button" color="primary">
+              <span>Asia</span>
+            </button>
+            <button mat-button *ngIf="schoolClosureRegion!=='Asia'"
+              class="float" type="button" color="primary" (click)="schoolClosureChangeLocation('Asia')">
+              <span>Asia</span>
+            </button>
+
+          </div>
+
+            <br>
+
+          <div class="btn-group">
+
+            <button mat-raised-button *ngIf="schoolClosureRegion==='Africa'"
+              class="float" type="button" color="primary">
+              <span>Africa</span>
+            </button>
+            <button mat-button *ngIf="schoolClosureRegion!=='Africa'"
+              class="float" type="button" color="primary" (click)="schoolClosureChangeLocation('Africa')">
+              <span>Africa</span>
+            </button>
+
+            <button mat-raised-button *ngIf="schoolClosureRegion==='Oceania'"
+              class="float" type="button" color="primary">
+              <span>Oceania</span>
+            </button>
+            <button mat-button *ngIf="schoolClosureRegion!=='Oceania'"
+              class="float" type="button" color="primary" (click)="schoolClosureChangeLocation('Oceania')">
+              <span>Oceania</span>
+            </button>
+
+            <button mat-raised-button *ngIf="schoolClosureRegion==='Latin America and the Caribbean'"
+              class="float" type="button" color="primary">
+              <span>Latin America and the Caribbean</span>
+            </button>
+            <button mat-button *ngIf="schoolClosureRegion!=='Latin America and the Caribbean'"
+              class="float" type="button" color="primary" (click)="schoolClosureChangeLocation('Latin America and the Caribbean')">
+              <span>Latin America and the Caribbean</span>
+            </button>
+
+          </div>
+        </div>
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table">
+                <thead class="text-primary">
+                  <th>
+                    Number of children impacted
+                  </th>
+                  <th>
+                    Average days missed
+                  </th>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="left">
+                      {{numberChildrenImpacted | number}}
+                    </td>
+                    <td class="center">
+                      {{averageDaysMissed | number}}
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              </div>
+          </div>
+
+          <div class="card-footer ">
+            <div class="stats">
+              Updated on 3rd April, 2020
+            </div>
+            <div class="stats">
+              Source: CovidMeasures Community
+            </div>
+          </div>
+
+      </div>
+    </div>
+
+    <p>
+      According to our count, 1.8 Billion children corresponding that more than two-thirds of the children
+      population on the planet have been impacted or are impacted by measures of the school closure.
+      These measures have largely been introduced on every continent. So far children have missed on average
+      1 month of school with a lack of clarity on the end of the measures. Recent announcements in some countries
+      suggest that it may last until the summer.
+    </p>
+
+    <hr>
+    <h2>COVID-19 VS School Closure</h2>
+
+    <div class="col-md-7">
+      <div class="card">
+        <div class="card-header card-header-success">
+          <h3 class="card-title ">School Closure Statistics</h3>
+          <div class="btn-group">
+
+            <button mat-raised-button *ngIf="covidVSSchoolRegion==='World'"
+              class="float" type="button" color="primary">
+              <span>World</span>
+            </button>
+            <button mat-button *ngIf="covidVSSchoolRegion!=='World'"
+              class="float" type="button" color="primary" (click)="covidVSSchoolChangeRegion('World')">
+              <span>World</span>
+            </button>
+
+            <button mat-raised-button *ngIf="covidVSSchoolRegion==='Northern America'"
+              class="float" type="button" color="primary">
+              <span>Northern America</span>
+            </button>
+            <button mat-button *ngIf="covidVSSchoolRegion!=='Northern America'"
+              class="float" type="button" color="primary" (click)="covidVSSchoolChangeRegion('Northern America')">
+              <span>Northern America</span>
+            </button>
+
+            <button mat-raised-button *ngIf="covidVSSchoolRegion==='Europe'"
+              class="float" type="button" color="primary">
+              <span>Europe</span>
+            </button>
+            <button mat-button *ngIf="covidVSSchoolRegion!=='Europe'"
+              class="float" type="button" color="primary" (click)="covidVSSchoolChangeRegion('Europe')">
+              <span>Europe</span>
+            </button>
+
+            <button mat-raised-button *ngIf="covidVSSchoolRegion==='Asia'"
+              class="float" type="button" color="primary">
+              <span>Asia</span>
+            </button>
+            <button mat-button *ngIf="covidVSSchoolRegion!=='Asia'"
+              class="float" type="button" color="primary" (click)="covidVSSchoolChangeRegion('Asia')">
+              <span>Asia</span>
+            </button>
+
+          </div>
+
+            <br>
+
+          <div class="btn-group">
+
+            <button mat-raised-button *ngIf="covidVSSchoolRegion==='Africa'"
+              class="float" type="button" color="primary">
+              <span>Africa</span>
+            </button>
+            <button mat-button *ngIf="covidVSSchoolRegion!=='Africa'"
+              class="float" type="button" color="primary" (click)="covidVSSchoolChangeRegion('Africa')">
+              <span>Africa</span>
+            </button>
+
+            <button mat-raised-button *ngIf="covidVSSchoolRegion==='Oceania'"
+              class="float" type="button" color="primary">
+              <span>Oceania</span>
+            </button>
+            <button mat-button *ngIf="covidVSSchoolRegion!=='Oceania'"
+              class="float" type="button" color="primary" (click)="covidVSSchoolChangeRegion('Oceania')">
+              <span>Oceania</span>
+            </button>
+
+            <button mat-raised-button *ngIf="covidVSSchoolRegion==='Latin America and the Caribbean'"
+              class="float" type="button" color="primary">
+              <span>Latin America and the Caribbean</span>
+            </button>
+            <button mat-button *ngIf="covidVSSchoolRegion!=='Latin America and the Caribbean'"
+              class="float" type="button" color="primary" (click)="covidVSSchoolChangeRegion('Latin America and the Caribbean')">
+              <span>Latin America and the Caribbean</span>
+            </button>
+
+          </div>
+        </div>
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table">
+                <thead class="text-primary">
+                  <th>
+                    Number of children impacted per covid death
+                  </th>
+                  <th>
+                    Number of school days missed per covid death
+                  </th>
+                  <th>
+                    Number of children not going to school per active covid case
+                  </th>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="left">
+                      {{impactedChildrenPerDeath | number}}
+                    </td>
+                    <td class="center">
+                      {{schooldaysMissedPerDeath | number}}
+                    </td>
+                    <td class="center">
+                      {{kidsNoSchoolPerActiveCase | number}}
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              </div>
+          </div>
+
+          <div class="card-footer ">
+            <div class="stats">
+              Updated on 3rd April, 2020
+            </div>
+            <div class="stats">
+              Source: CovidMeasures Community
+            </div>
+          </div>
+
+      </div>
+    </div>
+
+    <p>
+      At this stage of the crisis, there are large disparities between continents where governments
+      have implemented school closure when the virus was already rapidly spreading and the ones who
+      have preventively closed schools. Even in continents where the COVID-19 death toll is high,
+      the relative cost of education is significant. In Europe, for every COVID-19 death, children have
+      collectively not gone to school for 53,000 days which is equivalent to 1 child’s entire education
+      (N. Am. = 3 / Lat. Am. = 400 / Asia = 800 / Africa = 1300 / Oceania =  8).
+    </p>
+    <p>
+      These numbers remind us that children are paying a high price in this fight against
+      the spread of the virus when, at the same time, they are among the most resistant population to the virus.
+    </p>
+
+    <hr>
+
+    <div class="col-md-12">
+      <div class="card">
+
+        <div class="card-header card-header-success">
+          <h3 class="card-title">School Closure Status Per Country</h3>
+          <mat-form-field>
+            <mat-label>Filter by Country</mat-label>
+            <input matInput (keyup)="applyFilter($event)" placeholder="United States of America, France, China...">
+          </mat-form-field>
+        </div>
+
+        <div class="card-body">
+
+          <div class="content table-responsive table-full-width">
+            <table class="table">
+              <thead>
+                <th class="text-primary">{{ statsHeaders[0] }}</th>
+                <th class="text-primary">{{ statsHeaders[1] }}</th>
+                <th class="text-primary">{{ statsHeaders[2] }}</th>
+                <th class="text-primary">{{ statsHeaders[3] }}</th>
+              </thead>
+              <tbody>
+                <tr *ngFor="let row of lockdownTable">
+                  <td>{{ row.name }}</td>
+                  <td>{{ row.start }}</td>
+                  <td>{{ row.end }}</td>
+                  <td>{{ row.status }}</td>
+                </tr>
+              </tbody>
+            </table>
+            </div>
+    
+        </div>
+
+        <div class="card-footer">
+          <div class="stats">
+            Updated on {{ schoolClosureTableUpdatedOn }}
+          </div>
+          <div class="stats">
+            Source: CovidMeasures Community
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div>
+      <p>Figure interpretation</p>
+      <ul>
+        <li>The majority of children around the world are currently not going to school</li>
+      </ul>
+    </div>
+
+    <hr>
+
+    <p>
+      The status of school closure worldwide was made possible thanks to the community of CovidMeasures.
+      Please help to keep this database up-to-date. Join our team or just contribute by verifying that the
+      information is accurate in your country.
+    </p>
+
+  </div>
+</div>

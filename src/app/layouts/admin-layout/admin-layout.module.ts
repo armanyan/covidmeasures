@@ -4,8 +4,9 @@ import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http'; 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AdminLayoutRoutes } from './admin-layout.routing';
-import { CovidComponent } from '../../covid/covid.component';
 import { LockdownComponent } from '../../lockdown/lockdown.component';
+import { SchoolComponent } from '../../school/school.component';
+import { CovidComponent } from '../../covid/covid.component';
 import { DeathRatesComponent } from '../../death-rates/death-rates.component';
 import { AboutUsComponent } from '../../about-us/about-us.component';
 import { EconomicsComponent } from '../../economics/economics.component';
@@ -33,8 +34,9 @@ import { MatSelectModule } from '@angular/material/select';
     HttpClientModule
   ],
   declarations: [
-    CovidComponent,
     LockdownComponent,
+    SchoolComponent,
+    CovidComponent,
     DeathRatesComponent,
     AboutUsComponent,
     EconomicsComponent,

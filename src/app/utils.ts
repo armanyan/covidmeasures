@@ -1,7 +1,8 @@
 import Chart from 'chart.js';
 
-import * as countries from './data/country_codes';
 import * as countriesData from './data/countries';
+import * as alpha2 from './data/alpha2';
+import * as alpha3 from './data/alpha3';
 
 export const ageRanges = ['0-9', '10-19', '20-29', '30-39', '40-49', '50-59', '60-69', '70-79', '80+'];
 
@@ -11,21 +12,17 @@ export const monthNames = [
 ];
 
 export const getRegionByAlpha = (alpha: string) => {
-  const key = alpha.length === 2 ? "alpha-2" : "alpha-3";
-  for (const country of countries.default) {
-    if (country[key] === alpha) {
-      return country.region === "Americas" ? country["sub-region"] : country["region"];
-    }
-  }
+  const country = alpha.length === 2 ? alpha2.default[alpha] : alpha3.default[alpha];
+  return country.region === "Americas" ? country["sub-region"] : country["region"];
+}
+
+export const getAlpha3FromAlpha2 = (alpha: string) => {
+  return alpha2.default[alpha]['alpha-3'];
 }
 
 export const getCountryNameByAlpha = (alpha: string) => {
-  const key = alpha.length === 2 ? "alpha-2" : "alpha-3";
-  for (const country of countries.default) {
-    if (country[key] === alpha) {
-      return country["name"];
-    }
-  }
+  const country = alpha.length === 2 ? alpha2.default[alpha] : alpha3.default[alpha];
+  return country.name;
 }
 
 export const getSchoolPopulationByAlpha3 = (alpha3: string) => {
@@ -34,6 +31,10 @@ export const getSchoolPopulationByAlpha3 = (alpha3: string) => {
       return country.population["0-9"] + country.population["10-19"]
     }
   }
+}
+
+const standardTooltip = (tooltipItem: any, values: any) => {
+  return Math.floor(tooltipItem.xLabel).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
 }
 
 export const createPieChart = (
@@ -90,7 +91,7 @@ export const createVerticalBarChart = (
 }
 
 export const createBarChart = (
-  ctx: CanvasRenderingContext2D, labels: string[], dataset: number[], backgroundColor
+  ctx: CanvasRenderingContext2D, labels: string[], dataset: number[], backgroundColor: string[], customTooltip = standardTooltip
 ) => {
   return new Chart(ctx, {
     type: 'horizontalBar',
@@ -119,8 +120,8 @@ export const createBarChart = (
         intersect: 0,
         position: "nearest",
         callbacks: {
-          label: function(tooltipItem: any) {
-            return Math.floor(tooltipItem.xLabel).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+          label: function(tooltipItem, values) {
+            return customTooltip(tooltipItem, values);
           }
         }
       },

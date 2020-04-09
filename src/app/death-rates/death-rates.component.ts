@@ -2,10 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import Chart from 'chart.js';
 
-import { createBarChart, createStackedBarChart, ageRanges, getRegionByAlpha } from '../utils';
+import { createBarChart, createStackedBarChart, ageRanges, getRegionByAlpha, getAlpha3FromAlpha2 } from '../utils';
 
 import * as totalDeaths from '../data/deaths_causes.json';
 import * as continents_data from '../data/continents_data';
+import * as countriesData from '../data/countries';
 
 const insertToArray = (arr, element, index) => {
   arr.splice(index, 0, element);
@@ -48,6 +49,8 @@ export class DeathRatesComponent implements OnInit {
     "Antarctica": { "cases": 0, "deaths": 0 }
   }
 
+  private deathsPerCountry = [];
+
   constructor(
     private http: HttpClient
   ) { }
@@ -63,35 +66,60 @@ export class DeathRatesComponent implements OnInit {
 
     // covid death estimation covidDeathEstimationChart
     const backgroundColor = ageRanges.map(() => '#1f8ef1')
-    const estimatedDeaths = this.estimateCovidDeaths(true, 'World');
+    const backgroundColorCovid = ageRanges.map(() => 'red')
+    const estimatedDeaths = this.estimateCovidDeaths(this.estimationSince1st, 'World');
+    console.log(estimatedDeaths);
     const deathsEstimationCTX = (document.getElementById("covidDeathEstimationChart") as any).getContext("2d");
-    this.deathEstimationChart = createBarChart(deathsEstimationCTX, ageRanges, estimatedDeaths, backgroundColor);
+    this.deathEstimationChart = createBarChart(
+      deathsEstimationCTX, ageRanges, estimatedDeaths, backgroundColorCovid, this.covidEstimationTooltip
+    );
 
     // covid-19 deaths vs other death causes
     const covidBackgroundColor = ageRanges.map(() => 'red')
     const deathsCausesCTX = (document.getElementById("deathCausesChart") as any).getContext("2d");
     this.deathCausesChart = createStackedBarChart(
       deathsCausesCTX, ageRanges, this.getAllCausesDeaths(), backgroundColor, "other causes",
-      estimatedDeaths, covidBackgroundColor, "covid"
+      estimatedDeaths, covidBackgroundColor, "COVID-19"
     );
   }
 
-  private getCurrentDeath(since1sr: boolean, location: string) {
-    if (location === 'World') {
-      return since1sr ? this.deathsSince1st : this.deathsYesterday;
+  private covidEstimationTooltip(tooltipItem: any, values: any) {
+    const sum = values.datasets[0].data.reduce((a, b) => a + b, 0);
+    const percent = Math.floor((tooltipItem.xLabel*100)/sum);
+    return Math.floor(tooltipItem.xLabel).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + ` (${percent}%)`;
+  }
+
+  private getCountryDeathRates(alpha3: string, ageRange: string) {
+    for (const country of countriesData.default) {
+      if (country['alpha3'] === alpha3) {
+        return [country['covid_death_rate'][ageRange], country['covid_death_rate_total']];
+      }
     }
-    return since1sr ?
-      this.covidByContinent[location].deaths : Math.floor(this.covidByContinent[location].deaths/this.daysSinceCovid);
+    return [0, 1];
+  }
+
+  /**
+   * Returns the estimation of deaths
+   * @param ageRange age range of population for which it estimates
+   * @param countries list of countries
+   * @param since1sr total deaths or only last 24 hours
+   */
+  private getDeaths(ageRange: string, countries: any[], since1sr: boolean) {
+    let res = 0;
+    const index = since1sr ? 1 : 2;
+    for (const country of countries) {
+      const alpha3 = getAlpha3FromAlpha2(country[0]);
+      const rates = this.getCountryDeathRates(alpha3, ageRange);
+      res += (country[index]*rates[0])/rates[1];
+    }
+    return Math.floor(res);
   }
 
   private estimateCovidDeaths(since1sr: boolean, location: string) {
-    const continent = continents_data.default[location];
-    const currentDeaths = this.getCurrentDeath(since1sr, location);
-    return ageRanges.map(
-      age => Math.floor(
-        currentDeaths*(parseFloat(continent.covid_death_rate[age])/continent.covid_death_rate_total)
-      )
-    );
+    const countries = location === 'World' ? this.deathsPerCountry : this.deathsPerCountry.filter(country => {
+      return getRegionByAlpha(country[0]) === location ? true : false
+    });
+    return ageRanges.map(age => this.getDeaths(age, countries, since1sr));
   }
 
   private updateEstimationChart() {
@@ -145,6 +173,7 @@ export class DeathRatesComponent implements OnInit {
     for (const row of data["Countries"]) {
       this.covidByContinent[getRegionByAlpha(row["CountryCode"])]["cases"] += row["TotalConfirmed"];
       this.covidByContinent[getRegionByAlpha(row["CountryCode"])]["deaths"] += row["TotalDeaths"];
+      this.deathsPerCountry.push([row["CountryCode"], row["TotalDeaths"], row["NewDeaths"]]);
     }
   }
 
