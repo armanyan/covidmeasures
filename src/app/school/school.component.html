@@ -18,7 +18,7 @@
       of these measures as the crisis evolves.
     </p>
     
-    <div class="col-md-7">
+    <div class="col-md-6">
       <div class="card">
         <div class="card-header card-header-success">
           <h3 class="card-title ">School Closure Overview</h3>
@@ -35,11 +35,11 @@
 
             <button mat-raised-button *ngIf="schoolClosureRegion==='Northern America'"
               class="float" type="button" color="primary">
-              <span>Northern America</span>
+              <span>North America</span>
             </button>
             <button mat-button *ngIf="schoolClosureRegion!=='Northern America'"
               class="float" type="button" color="primary" (click)="schoolClosureChangeLocation('Northern America')">
-              <span>Northern America</span>
+              <span>North America</span>
             </button>
 
             <button mat-raised-button *ngIf="schoolClosureRegion==='Europe'"
@@ -103,7 +103,7 @@
                     Number of children impacted
                   </th>
                   <th>
-                    Average days missed
+                    Average duration
                   </th>
                 </thead>
                 <tbody>
@@ -111,8 +111,8 @@
                     <td class="left">
                       {{numberChildrenImpacted | number}}
                     </td>
-                    <td class="center">
-                      {{averageDaysMissed | number}}
+                    <td class="left">
+                      {{averageDaysMissed | number}} days
                     </td>
                   </tr>
                 </tbody>
@@ -143,7 +143,7 @@
     <hr>
     <h2>COVID-19 VS School Closure</h2>
 
-    <div class="col-md-7">
+    <div class="col-md-8">
       <div class="card">
         <div class="card-header card-header-success">
           <h3 class="card-title ">School Closure Statistics</h3>
@@ -160,11 +160,11 @@
 
             <button mat-raised-button *ngIf="covidVSSchoolRegion==='Northern America'"
               class="float" type="button" color="primary">
-              <span>Northern America</span>
+              <span>North America</span>
             </button>
             <button mat-button *ngIf="covidVSSchoolRegion!=='Northern America'"
               class="float" type="button" color="primary" (click)="covidVSSchoolChangeRegion('Northern America')">
-              <span>Northern America</span>
+              <span>North America</span>
             </button>
 
             <button mat-raised-button *ngIf="covidVSSchoolRegion==='Europe'"
@@ -184,13 +184,7 @@
               class="float" type="button" color="primary" (click)="covidVSSchoolChangeRegion('Asia')">
               <span>Asia</span>
             </button>
-
-          </div>
-
-            <br>
-
-          <div class="btn-group">
-
+            
             <button mat-raised-button *ngIf="covidVSSchoolRegion==='Africa'"
               class="float" type="button" color="primary">
               <span>Africa</span>
@@ -199,6 +193,12 @@
               class="float" type="button" color="primary" (click)="covidVSSchoolChangeRegion('Africa')">
               <span>Africa</span>
             </button>
+
+          </div>
+
+            <br>
+
+          <div class="btn-group">
 
             <button mat-raised-button *ngIf="covidVSSchoolRegion==='Oceania'"
               class="float" type="button" color="primary">
@@ -225,13 +225,16 @@
               <table class="table">
                 <thead class="text-primary">
                   <th>
-                    Number of children impacted per covid death
+                    Number of children impacted for every COVID-19 death
                   </th>
                   <th>
-                    Number of school days missed per covid death
+                    Cumulated days of school days missed for every COVID-19 death
                   </th>
                   <th>
-                    Number of children not going to school per active covid case
+                    Number of children currently missing school for every COVID-19 active case
+                  </th>
+                  <th>
+                    Number of impacted children
                   </th>
                 </thead>
                 <tbody>
@@ -244,6 +247,9 @@
                     </td>
                     <td class="center">
                       {{kidsNoSchoolPerActiveCase | number}}
+                    </td>
+                    <td class="center">
+                      {{impactedChildren | number}}
                     </td>
                   </tr>
                 </tbody>
@@ -284,7 +290,7 @@
         <div class="card-header card-header-success">
           <h3 class="card-title">School Closure Status Per Country</h3>
           <mat-form-field>
-            <mat-label>Filter by Country</mat-label>
+            <mat-label>Search by Country</mat-label>
             <input matInput (keyup)="applyFilter($event)" placeholder="United States of America, France, China...">
           </mat-form-field>
         </div>
@@ -298,12 +304,16 @@
                 <th class="text-primary">{{ statsHeaders[1] }}</th>
                 <th class="text-primary">{{ statsHeaders[2] }}</th>
                 <th class="text-primary">{{ statsHeaders[3] }}</th>
+                <th class="text-primary">{{ statsHeaders[4] }}</th>
+                <th class="text-primary">{{ statsHeaders[5] }}</th>
               </thead>
               <tbody>
                 <tr *ngFor="let row of lockdownTable">
                   <td>{{ row.name }}</td>
+                  <td>{{ row.children | number }}</td>
                   <td>{{ row.start }}</td>
                   <td>{{ row.end }}</td>
+                  <td>{{ row.duration }}</td>
                   <td>{{ row.status }}</td>
                 </tr>
               </tbody>
@@ -322,13 +332,6 @@
         </div>
 
       </div>
-    </div>
-
-    <div>
-      <p>Figure interpretation</p>
-      <ul>
-        <li>The majority of children around the world are currently not going to school</li>
-      </ul>
     </div>
 
     <hr>

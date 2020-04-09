@@ -1,6 +1,7 @@
 import Chart from 'chart.js';
 
 import * as countriesData from './data/countries';
+import * as closureData from './data/lockdown';
 import * as alpha2 from './data/alpha2';
 import * as alpha3 from './data/alpha3';
 
@@ -25,10 +26,18 @@ export const getCountryNameByAlpha = (alpha: string) => {
   return country.name;
 }
 
-export const getSchoolPopulationByAlpha3 = (alpha3: string) => {
+export const getChildrenNoSchoolByAlpha3 = (alpha3: string) => {
   for (const country of countriesData.default) {
     if (country["alpha3"] === alpha3) {
       return country.population["0-9"] + country.population["10-19"]
+    }
+  }
+}
+
+export const getSchoolPopulationByAlpha3 = (alpha3: string) => {
+  for (const country of closureData.default.countries) {
+    if (country["alpha3"] === alpha3) {
+      return country.children_no_school;
     }
   }
 }

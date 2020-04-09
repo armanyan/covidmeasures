@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import { getRegionByAlpha, getSchoolPopulationByAlpha3, getCountryNameByAlpha } from '../utils';
+import { getRegionByAlpha, getSchoolPopulationByAlpha3, getCountryNameByAlpha, getChildrenNoSchoolByAlpha3 } from '../utils';
 import * as lockdownData from '../data/lockdown';
+import countries from 'app/data/countries';
 
 @Component({
   selector: 'app-school',
@@ -16,6 +17,7 @@ export class SchoolComponent implements OnInit {
   public schoolClosureRegion = 'World';
   public covidVSSchoolRegion = 'World';
 
+  public impactedChildren: number;
   public impactedChildrenPerDeath: number;
   public schooldaysMissedPerDeath: number;
   public kidsNoSchoolPerActiveCase: number;
@@ -35,7 +37,7 @@ export class SchoolComponent implements OnInit {
     "World": { "activeCases": 0, "deaths": 0 }
   }
 
-  public statsHeaders = ["Country", "Start", "End", "School Closure Status"];
+  public statsHeaders = ["Country", "Number of Impacted Children", "Start", "Expected End", "Duration", "Closure Status"];
 
   constructor(
     private http: HttpClient
@@ -75,10 +77,6 @@ export class SchoolComponent implements OnInit {
     this.averageDaysMissed = this.getAverageDaysMissedPerRegion(region)
   }
 
-  // TODO there is a problem with populations,
-  // should review which country is in North/South America.
-  // Solution don't have full continent populations, just country populations
-  // current version uses data from population pyramid that uses UN data
   /**
    * Returns current population in a specific age range and location
    * @param region which population are we interested in
@@ -87,7 +85,7 @@ export class SchoolComponent implements OnInit {
   private getContinentChildrenPopulation(region: string) {
     const countries = this.getCountriesByRegion(region);
     const schoolPopulation = countries.map(
-      country => getSchoolPopulationByAlpha3(country.alpha3)*country.children_no_school
+      country => getChildrenNoSchoolByAlpha3(country.alpha3)*country.children_no_school
     );
     const reducer = (acc: number, currVal: number) => { return currVal + acc };
     return schoolPopulation.reduce(reducer);
@@ -107,14 +105,14 @@ export class SchoolComponent implements OnInit {
 
   public covidVSSchoolChangeRegion(region: string) {
     this.covidVSSchoolRegion = region;
-    const impactedChildren = this.getContinentChildrenPopulation(region);
+    this.impactedChildren = this.getContinentChildrenPopulation(region);
     this.impactedChildrenPerDeath = Math.floor(
-      impactedChildren/this.covidByContinent[region]["deaths"]
+      this.impactedChildren/this.covidByContinent[region]["deaths"]
     );
     this.schooldaysMissedPerDeath = Math.floor(
-      (this.getAverageDaysMissedPerRegion(region)*impactedChildren)/this.covidByContinent[region].deaths
+      (this.getAverageDaysMissedPerRegion(region)*this.impactedChildren)/this.covidByContinent[region].deaths
     );
-    this.kidsNoSchoolPerActiveCase = impactedChildren/this.covidByContinent[region].activeCases
+    this.kidsNoSchoolPerActiveCase = Math.floor(this.impactedChildren/this.covidByContinent[region].activeCases);
   }
 
   private async setCurrentDeathEvolution() {
@@ -130,16 +128,27 @@ export class SchoolComponent implements OnInit {
     }
   }
 
+  private getCountryChildrenByAlpha(alpha3: string) {
+    return getSchoolPopulationByAlpha3(alpha3)*getChildrenNoSchoolByAlpha3(alpha3);
+  }
+
   private setLockdownTable() {
+    let children;
+    let duration;
     for (const country of lockdownData.default.countries) {
+      children = this.getCountryChildrenByAlpha(country['alpha3']) 
+      duration = this.getMissedDaysPerCountry(country);
       this.lockdownTableFull.push({
         "name": getCountryNameByAlpha(country['alpha3']),
+        "children": children === 0 ? '' : children,
         "start": this.getDate(country['start']),
         "end": this.getDate(country['end']),
+        "duration": duration === 0 ? '' : duration,
         "status": this.getLockdownStatus(country['start'], country['end'])
       })
     }
-    this.lockdownTable = [...this.lockdownTableFull]
+    this.lockdownTable = this.lockdownTableFull.slice(0, 10);
+
   }
 
   private getDate(date: string) {
@@ -148,7 +157,7 @@ export class SchoolComponent implements OnInit {
 
   private getLockdownStatus(start: string, end: string) {
     if (start === 'N/A') {
-      return 'No Closure';
+      return 'No Data';
     }
     const startDate = new Date(start)
     const today = new Date()
@@ -167,7 +176,7 @@ export class SchoolComponent implements OnInit {
     const search = (event.target as any).value.toLowerCase();
     this.lockdownTable = this.lockdownTableFull.filter(
       row => row.name.toLowerCase().includes(search)
-    );
+    ).slice(0, 10);
   }
 
 }
