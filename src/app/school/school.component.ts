@@ -3,7 +3,6 @@ import { HttpClient } from '@angular/common/http';
 
 import { getRegionByAlpha, getSchoolPopulationByAlpha3, getCountryNameByAlpha, getChildrenNoSchoolByAlpha3 } from '../utils';
 import * as lockdownData from '../data/lockdown';
-import countries from 'app/data/countries';
 
 @Component({
   selector: 'app-school',
@@ -37,7 +36,7 @@ export class SchoolComponent implements OnInit {
     "World": { "activeCases": 0, "deaths": 0 }
   }
 
-  public statsHeaders = ["Country", "Number of Impacted Children", "Start", "Expected End", "Duration", "Closure Status"];
+  public statsHeaders = ["Country", "Impacted Children", "Start", "Expected End", "Duration", "Closure Status"];
 
   constructor(
     private http: HttpClient
@@ -45,7 +44,7 @@ export class SchoolComponent implements OnInit {
 
   async ngOnInit() {
     await this.setCurrentDeathEvolution();
-    this.numberChildrenImpacted = this.getContinentChildrenPopulation(this.schoolClosureRegion);
+    this.numberChildrenImpacted = Math.floor(this.getContinentChildrenPopulation(this.schoolClosureRegion));
     this.averageDaysMissed = this.getAverageDaysMissedPerRegion('World');
     this.covidVSSchoolChangeRegion('World');
     this.setLockdownTable();
@@ -73,7 +72,7 @@ export class SchoolComponent implements OnInit {
 
   public schoolClosureChangeLocation(region: string) {
     this.schoolClosureRegion = region;
-    this.numberChildrenImpacted = this.getContinentChildrenPopulation(region);
+    this.numberChildrenImpacted = Math.floor(this.getContinentChildrenPopulation(region));
     this.averageDaysMissed = this.getAverageDaysMissedPerRegion(region)
   }
 
@@ -87,6 +86,7 @@ export class SchoolComponent implements OnInit {
     const schoolPopulation = countries.map(
       country => getChildrenNoSchoolByAlpha3(country.alpha3)*country.children_no_school
     );
+    console.log(countries.map(c => c.children_no_school))
     const reducer = (acc: number, currVal: number) => { return currVal + acc };
     return schoolPopulation.reduce(reducer);
   }
@@ -106,6 +106,7 @@ export class SchoolComponent implements OnInit {
   public covidVSSchoolChangeRegion(region: string) {
     this.covidVSSchoolRegion = region;
     this.impactedChildren = this.getContinentChildrenPopulation(region);
+    console.log(this.impactedChildren);
     this.impactedChildrenPerDeath = Math.floor(
       this.impactedChildren/this.covidByContinent[region]["deaths"]
     );
@@ -140,11 +141,11 @@ export class SchoolComponent implements OnInit {
       duration = this.getMissedDaysPerCountry(country);
       this.lockdownTableFull.push({
         "name": getCountryNameByAlpha(country['alpha3']),
-        "children": children === 0 ? '' : children,
+        "children": children === 0 ? '' : Math.floor(children),
         "start": this.getDate(country['start']),
-        "end": this.getDate(country['end']),
+        "end": country['end'] !== 'N/A' ? this.getDate(country['end']) : this.getDate(country['expected_end']),
         "duration": duration === 0 ? '' : duration,
-        "status": this.getLockdownStatus(country['start'], country['end'])
+        "status": country['status'] === 'No Closure' ? 'No Closure' : this.getLockdownStatus(country['start'], country['end'])
       })
     }
     this.lockdownTable = this.lockdownTableFull.slice(0, 10);
@@ -168,7 +169,7 @@ export class SchoolComponent implements OnInit {
     if (end === 'N/A') {
       return 'Ongoing';
     }
-
+    
     return new Date(end) > today ? 'Ongoing' : 'Finished';
   }
 
