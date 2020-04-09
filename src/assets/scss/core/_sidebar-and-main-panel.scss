@@ -493,10 +493,15 @@
 
     .sidebar {
       .nav .nav-item {
-        &.active-pro {
+        &.bottom1 {
           position: absolute;
           width: 100%;
-          bottom: 13px;
+          bottom: 0px;
+        }
+        &.bottom2 {
+          position: absolute;
+          width: 100%;
+          bottom: 60px;
         }
       }
     }

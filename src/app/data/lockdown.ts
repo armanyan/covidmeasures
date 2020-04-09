@@ -115,7 +115,7 @@ export default {
 		"country": "Austria",
 		"start": "3/11/2020",
 		"end": "N/A",
-		"expected_end": "N/A",
+		"expected_end": "4/14/2020",
 		"school_closure": "Yes",
 		"children_no_school": 1.0,
 		"status": "Ongoing"
@@ -815,7 +815,7 @@ export default {
 		"country": "Cyprus",
 		"start": "3/10/2020",
 		"end": "N/A",
-		"expected_end": "N/A",
+		"expected_end": "4/14/2020",
 		"school_closure": "Yes",
 		"children_no_school": 1.0,
 		"status": "Ongoing"
