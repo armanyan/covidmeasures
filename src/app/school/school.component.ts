@@ -21,8 +21,8 @@ export class SchoolComponent implements OnInit {
   public schooldaysMissedPerDeath: number;
   public kidsNoSchoolPerActiveCase: number;
 
-  public lockdownTableFull = [];
-  public lockdownTable = [];
+  public schoolClosureFull = [];
+  public schoolClosure = [];
   public schoolClosureTableUpdatedOn = "April 9th, 2020";
 
   private covidByContinent = {
@@ -47,7 +47,7 @@ export class SchoolComponent implements OnInit {
     this.numberChildrenImpacted = Math.floor(this.getContinentChildrenPopulation(this.schoolClosureRegion));
     this.averageDaysMissed = this.getAverageDaysMissedPerRegion('World');
     this.covidVSSchoolChangeRegion('World');
-    this.setLockdownTable();
+    this.setSchoolClosure();
   }
 
   private getAverageDaysMissedPerRegion(region = 'World') {
@@ -86,7 +86,6 @@ export class SchoolComponent implements OnInit {
     const schoolPopulation = countries.map(
       country => getChildrenNoSchoolByAlpha3(country.alpha3)*country.children_no_school
     );
-    console.log(countries.map(c => c.children_no_school))
     const reducer = (acc: number, currVal: number) => { return currVal + acc };
     return schoolPopulation.reduce(reducer);
   }
@@ -106,7 +105,6 @@ export class SchoolComponent implements OnInit {
   public covidVSSchoolChangeRegion(region: string) {
     this.covidVSSchoolRegion = region;
     this.impactedChildren = this.getContinentChildrenPopulation(region);
-    console.log(this.impactedChildren);
     this.impactedChildrenPerDeath = Math.floor(
       this.impactedChildren/this.covidByContinent[region]["deaths"]
     );
@@ -133,30 +131,29 @@ export class SchoolComponent implements OnInit {
     return getSchoolPopulationByAlpha3(alpha3)*getChildrenNoSchoolByAlpha3(alpha3);
   }
 
-  private setLockdownTable() {
+  private setSchoolClosure() {
     let children;
     let duration;
     for (const country of lockdownData.default.countries) {
       children = this.getCountryChildrenByAlpha(country['alpha3']) 
       duration = this.getMissedDaysPerCountry(country);
-      this.lockdownTableFull.push({
+      this.schoolClosureFull.push({
         "name": getCountryNameByAlpha(country['alpha3']),
         "children": children === 0 ? '' : Math.floor(children),
         "start": this.getDate(country['start']),
         "end": country['end'] !== 'N/A' ? this.getDate(country['end']) : this.getDate(country['expected_end']),
         "duration": duration === 0 ? '' : duration,
-        "status": country['status'] === 'No Closure' ? 'No Closure' : this.getLockdownStatus(country['start'], country['end'])
+        "status": country['status'] === 'No Closure' ? 'No Closure' : this.getClosureStatus(country['start'], country['end'])
       })
     }
-    this.lockdownTable = this.lockdownTableFull.slice(0, 10);
-
+    this.schoolClosure = this.schoolClosureFull.slice(0, 10);
   }
 
   private getDate(date: string) {
     return date === 'N/A' ? '' : (new Date(date)).toDateString();
   }
 
-  private getLockdownStatus(start: string, end: string) {
+  private getClosureStatus(start: string, end: string) {
     if (start === 'N/A') {
       return 'No Data';
     }
@@ -175,7 +172,7 @@ export class SchoolComponent implements OnInit {
 
   applyFilter(event: Event) {
     const search = (event.target as any).value.toLowerCase();
-    this.lockdownTable = this.lockdownTableFull.filter(
+    this.schoolClosure = this.schoolClosureFull.filter(
       row => row.name.toLowerCase().includes(search)
     ).slice(0, 10);
   }
