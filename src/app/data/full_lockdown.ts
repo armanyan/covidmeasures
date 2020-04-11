@@ -1,8 +1,8 @@
 export default [{
-	"name": "6/4/1900",
+	"name": "China",
 	"start": "1/23/2020",
 	"end": "",
-	"busieness": "Yes",
+	"business": "Yes",
 	"lockdown": true,
 	"curfew": "N/A",
 	"public_closed": true,
@@ -10,12 +10,13 @@ export default [{
 	"army": true,
 	"population_affected": 50.0,
 	"status": "Finished",
-	"restriction_type": "Lockdown"
+	"restriction_type": "Lockdown",
+	"alpha-3": "CHN"
 }, {
-	"name": "1/14/1901",
+	"name": "Italy",
 	"start": "3/13/2020",
 	"end": "",
-	"busieness": "Yes",
+	"business": "Yes",
 	"lockdown": true,
 	"curfew": "N/A",
 	"public_closed": true,
@@ -23,12 +24,13 @@ export default [{
 	"army": "N/A",
 	"population_affected": 100.0,
 	"status": "Ongoing",
-	"restriction_type": "Lockdown"
+	"restriction_type": "Lockdown",
+	"alpha-3": "ITA"
 }, {
-	"name": "4/19/1902",
+	"name": "United States of America",
 	"start": "3/16/2020",
 	"end": "",
-	"busieness": "Yes",
+	"business": "Yes",
 	"lockdown": true,
 	"curfew": "N/A",
 	"public_closed": true,
@@ -36,12 +38,13 @@ export default [{
 	"army": "N/A",
 	"population_affected": 93.96,
 	"status": "Ongoing",
-	"restriction_type": "Lockdown"
+	"restriction_type": "Lockdown",
+	"alpha-3": "USA"
 }, {
-	"name": "12/24/1901",
+	"name": "Spain",
 	"start": "3/14/2020",
 	"end": "",
-	"busieness": "Yes",
+	"business": "Yes",
 	"lockdown": true,
 	"curfew": "N/A",
 	"public_closed": true,
@@ -49,12 +52,13 @@ export default [{
 	"army": "N/A",
 	"population_affected": 100.0,
 	"status": "Ongoing",
-	"restriction_type": "Lockdown"
+	"restriction_type": "Lockdown",
+	"alpha-3": "ESP"
 }, {
-	"name": "10/2/1900",
+	"name": "Germany",
 	"start": "3/20/2020",
 	"end": "",
-	"busieness": "Yes",
+	"business": "Yes",
 	"lockdown": true,
 	"curfew": "N/A",
 	"public_closed": true,
@@ -62,12 +66,13 @@ export default [{
 	"army": "N/A",
 	"population_affected": 100.0,
 	"status": "Ongoing",
-	"restriction_type": "Lockdown"
+	"restriction_type": "Lockdown",
+	"alpha-3": "DEU"
 }, {
-	"name": "12/29/1900",
+	"name": "Iran (Islamic Republic of)",
 	"start": "3/13/2020",
 	"end": "",
-	"busieness": "Yes",
+	"business": "Yes",
 	"lockdown": true,
 	"curfew": "N/A",
 	"public_closed": true,
@@ -75,12 +80,13 @@ export default [{
 	"army": "N/A",
 	"population_affected": 100.0,
 	"status": "Ongoing",
-	"restriction_type": "Lockdown"
+	"restriction_type": "Lockdown",
+	"alpha-3": "IRN"
 }, {
-	"name": "9/6/1900",
+	"name": "France",
 	"start": "3/16/2020",
 	"end": "",
-	"busieness": "Yes",
+	"business": "Yes",
 	"lockdown": true,
 	"curfew": "N/A",
 	"public_closed": true,
@@ -88,12 +94,13 @@ export default [{
 	"army": "N/A",
 	"population_affected": 100.0,
 	"status": "Ongoing",
-	"restriction_type": "Lockdown"
+	"restriction_type": "Lockdown",
+	"alpha-3": "FRA"
 }, {
-	"name": "1/25/1902",
+	"name": "Switzerland",
 	"start": "3/16/2020",
 	"end": "",
-	"busieness": "Yes",
+	"business": "Yes",
 	"lockdown": true,
 	"curfew": "N/A",
 	"public_closed": false,
@@ -101,12 +108,14 @@ export default [{
 	"army": "N/A",
 	"population_affected": 100.0,
 	"status": "Ongoing",
-	"restriction_type": "Businesses Shutdown"
+	"restriction_type": "Businesses Shutdown",
+	"alpha-3": "CHE"
 }, {
-	"name": "2/13/1901",
+  "name": "Republic of Korea",
+  "alpha-3": "KOR",
 	"start": "3/23/2020",
 	"end": "",
-	"busieness": "No",
+	"business": "No",
 	"lockdown": false,
 	"curfew": "N/A",
 	"public_closed": false,
@@ -116,10 +125,10 @@ export default [{
 	"status": "Ongoing",
 	"restriction_type": "N/A"
 }, {
-	"name": "4/5/1902",
+	"name": "United Kingdom",
 	"start": "3/24/2020",
 	"end": "",
-	"busieness": "Yes",
+	"business": "Yes",
 	"lockdown": true,
 	"curfew": "N/A",
 	"public_closed": true,
@@ -127,12 +136,13 @@ export default [{
 	"army": true,
 	"population_affected": 100.0,
 	"status": "Ongoing",
-	"restriction_type": "Lockdown"
+	"restriction_type": "Lockdown",
+	"alpha-3": "GBR"
 }, {
-	"name": "6/11/1901",
+	"name": "Netherlands",
 	"start": "3/24/2020",
 	"end": "",
-	"busieness": "Yes",
+	"business": "Yes",
 	"lockdown": true,
 	"curfew": "N/A",
 	"public_closed": false,
@@ -140,12 +150,13 @@ export default [{
 	"army": "N/A",
 	"population_affected": "N/A",
 	"status": "Ongoing",
-	"restriction_type": "Businesses Shutdown"
+	"restriction_type": "Businesses Shutdown",
+	"alpha-3": "NLD"
 }, {
-	"name": "2/8/1900",
+	"name": "Austria",
 	"start": "3/16/2020",
 	"end": "4/14/2020",
-	"busieness": "Yes",
+	"business": "Yes",
 	"lockdown": true,
 	"curfew": "N/A",
 	"public_closed": true,
@@ -153,12 +164,13 @@ export default [{
 	"army": "N/A",
 	"population_affected": 100.0,
 	"status": "Ongoing",
-	"restriction_type": "Lockdown"
+	"restriction_type": "Lockdown",
+	"alpha-3": "AUT"
 }, {
-	"name": "2/24/1900",
+	"name": "Belgium",
 	"start": "3/17/2020",
 	"end": "",
-	"busieness": "Yes",
+	"business": "Yes",
 	"lockdown": true,
 	"curfew": "N/A",
 	"public_closed": true,
@@ -166,12 +178,13 @@ export default [{
 	"army": "N/A",
 	"population_affected": 100.0,
 	"status": "Ongoing",
-	"restriction_type": "Lockdown"
+	"restriction_type": "Lockdown",
+	"alpha-3": "BEL"
 }, {
-	"name": "7/31/1901",
+	"name": "Norway",
 	"start": "3/12/2020",
 	"end": "",
-	"busieness": "Yes",
+	"business": "Yes",
 	"lockdown": true,
 	"curfew": "N/A",
 	"public_closed": false,
@@ -179,12 +192,13 @@ export default [{
 	"army": "N/A",
 	"population_affected": 100.0,
 	"status": "Ongoing",
-	"restriction_type": "Businesses Shutdown"
+	"restriction_type": "Businesses Shutdown",
+	"alpha-3": "NOR"
 }, {
-	"name": "9/11/1901",
+	"name": "Portugal",
 	"start": "3/19/2020",
 	"end": "",
-	"busieness": "Yes",
+	"business": "Yes",
 	"lockdown": true,
 	"curfew": "N/A",
 	"public_closed": true,
@@ -192,12 +206,13 @@ export default [{
 	"army": "N/A",
 	"population_affected": 100.0,
 	"status": "Ongoing",
-	"restriction_type": "Lockdown"
+	"restriction_type": "Lockdown",
+	"alpha-3": "PRT"
 }, {
-	"name": "5/3/1900",
+	"name": "Canada",
 	"start": "3/23/2020",
 	"end": "",
-	"busieness": "Yes",
+	"business": "Yes",
 	"lockdown": true,
 	"curfew": "N/A",
 	"public_closed": false,
@@ -205,12 +220,13 @@ export default [{
 	"army": "N/A",
 	"population_affected": 100.0,
 	"status": "Ongoing",
-	"restriction_type": "Businesses Shutdown"
+	"restriction_type": "Businesses Shutdown",
+	"alpha-3": "CAN"
 }, {
-	"name": "1/21/1902",
+	"name": "Sweden",
 	"start": "",
 	"end": "",
-	"busieness": "No",
+	"business": "No",
 	"lockdown": false,
 	"curfew": "N/A",
 	"public_closed": false,
@@ -218,12 +234,13 @@ export default [{
 	"army": "N/A",
 	"population_affected": "N/A",
 	"status": "No Closure",
-	"restriction_type": "N/A"
+	"restriction_type": "N/A",
+	"alpha-3": "SWE"
 }, {
-	"name": "2/4/1900",
+	"name": "Australia",
 	"start": "3/23/2020",
 	"end": "",
-	"busieness": "Yes",
+	"business": "Yes",
 	"lockdown": true,
 	"curfew": "N/A",
 	"public_closed": false,
@@ -231,12 +248,13 @@ export default [{
 	"army": "N/A",
 	"population_affected": "N/A",
 	"status": "Ongoing",
-	"restriction_type": "Businesses Shutdown"
+	"restriction_type": "Businesses Shutdown",
+	"alpha-3": "AUS"
 }, {
-	"name": "3/16/1900",
+	"name": "Brazil",
 	"start": "3/24/2020",
 	"end": "",
-	"busieness": "Yes",
+	"business": "Yes",
 	"lockdown": true,
 	"curfew": "N/A",
 	"public_closed": true,
@@ -244,12 +262,13 @@ export default [{
 	"army": "N/A",
 	"population_affected": 50.0,
 	"status": "Ongoing",
-	"restriction_type": "Lockdown"
+	"restriction_type": "Lockdown",
+	"alpha-3": "BRA"
 }, {
-	"name": "1/10/1901",
+	"name": "Israel",
 	"start": "3/19/2020",
 	"end": "",
-	"busieness": "Yes",
+	"business": "Yes",
 	"lockdown": true,
 	"curfew": "N/A",
 	"public_closed": true,
@@ -257,12 +276,13 @@ export default [{
 	"army": "N/A",
 	"population_affected": 100.0,
 	"status": "Ongoing",
-	"restriction_type": "Lockdown"
+	"restriction_type": "Lockdown",
+	"alpha-3": "ISR"
 }, {
-	"name": "3/2/1902",
+	"name": "Turkey",
 	"start": "3/16/2020",
 	"end": "",
-	"busieness": "Yes",
+	"business": "Yes",
 	"lockdown": true,
 	"curfew": "N/A",
 	"public_closed": false,
@@ -270,12 +290,13 @@ export default [{
 	"army": "N/A",
 	"population_affected": 100.0,
 	"status": "Ongoing",
-	"restriction_type": "Businesses Shutdown"
+	"restriction_type": "Businesses Shutdown",
+	"alpha-3": "TUR"
 }, {
-	"name": "4/2/1901",
+	"name": "Malaysia",
 	"start": "3/16/2020",
 	"end": "",
-	"busieness": "Yes",
+	"business": "Yes",
 	"lockdown": true,
 	"curfew": "N/A",
 	"public_closed": true,
@@ -283,12 +304,13 @@ export default [{
 	"army": "N/A",
 	"population_affected": 100.0,
 	"status": "Ongoing",
-	"restriction_type": "Businesses Shutdown"
+	"restriction_type": "Businesses Shutdown",
+	"alpha-3": "MYS"
 }, {
-	"name": "7/26/1900",
+	"name": "Denmark",
 	"start": "3/12/2020",
 	"end": "",
-	"busieness": "Yes",
+	"business": "Yes",
 	"lockdown": true,
 	"curfew": "N/A",
 	"public_closed": false,
@@ -296,12 +318,13 @@ export default [{
 	"army": "N/A",
 	"population_affected": 100.0,
 	"status": "Ongoing",
-	"restriction_type": "Businesses Shutdown"
+	"restriction_type": "Businesses Shutdown",
+	"alpha-3": "DNK"
 }, {
-	"name": "7/21/1900",
+	"name": "Czechia",
 	"start": "3/16/2020",
 	"end": "",
-	"busieness": "Yes",
+	"business": "Yes",
 	"lockdown": true,
 	"curfew": "N/A",
 	"public_closed": true,
@@ -309,12 +332,13 @@ export default [{
 	"army": "N/A",
 	"population_affected": 100.0,
 	"status": "Ongoing",
-	"restriction_type": "Lockdown"
+	"restriction_type": "Lockdown",
+	"alpha-3": "CZE"
 }, {
-	"name": "3/17/1901",
+	"name": "Luxembourg",
 	"start": "3/16/2020",
 	"end": "",
-	"busieness": "Yes",
+	"business": "Yes",
 	"lockdown": true,
 	"curfew": "N/A",
 	"public_closed": true,
@@ -322,12 +346,13 @@ export default [{
 	"army": "N/A",
 	"population_affected": 100.0,
 	"status": "Ongoing",
-	"restriction_type": "Lockdown"
+	"restriction_type": "Lockdown",
+	"alpha-3": "LUX"
 }, {
-	"name": "1/6/1901",
+	"name": "Ireland",
 	"start": "3/27/2020",
 	"end": "",
-	"busieness": "Yes",
+	"business": "Yes",
 	"lockdown": true,
 	"curfew": "N/A",
 	"public_closed": true,
@@ -335,12 +360,13 @@ export default [{
 	"army": "N/A",
 	"population_affected": 100.0,
 	"status": "Ongoing",
-	"restriction_type": "Lockdown"
+	"restriction_type": "Lockdown",
+	"alpha-3": "IRL"
 }, {
-	"name": "1/26/1901",
+	"name": "Japan",
 	"start": "",
 	"end": "",
-	"busieness": "No",
+	"business": "No",
 	"lockdown": false,
 	"curfew": "N/A",
 	"public_closed": false,
@@ -348,12 +374,13 @@ export default [{
 	"army": "N/A",
 	"population_affected": 100.0,
 	"status": "No Closure",
-	"restriction_type": "N/A"
+	"restriction_type": "N/A",
+	"alpha-3": "JPN"
 }, {
-	"name": "8/5/1900",
+	"name": "Ecuador",
 	"start": "3/16/2020",
 	"end": "",
-	"busieness": "Yes",
+	"business": "Yes",
 	"lockdown": true,
 	"curfew": "N/A",
 	"public_closed": true,
@@ -361,12 +388,13 @@ export default [{
 	"army": "N/A",
 	"population_affected": 100.0,
 	"status": "Ongoing",
-	"restriction_type": "Lockdown"
+	"restriction_type": "Lockdown",
+	"alpha-3": "ECU"
 }, {
-	"name": "5/31/1900",
+	"name": "Chile",
 	"start": "3/16/2020",
 	"end": "",
-	"busieness": "Yes",
+	"business": "Yes",
 	"lockdown": true,
 	"curfew": "N/A",
 	"public_closed": true,
@@ -374,12 +402,13 @@ export default [{
 	"army": "N/A",
 	"population_affected": 20.0,
 	"status": "Ongoing",
-	"restriction_type": "Lockdown"
+	"restriction_type": "Lockdown",
+	"alpha-3": "CHL"
 }, {
-	"name": "8/8/1901",
+	"name": "Pakistan",
 	"start": "3/24/2020",
 	"end": "",
-	"busieness": "Yes",
+	"business": "Yes",
 	"lockdown": true,
 	"curfew": "N/A",
 	"public_closed": true,
@@ -387,12 +416,13 @@ export default [{
 	"army": "N/A",
 	"population_affected": 100.0,
 	"status": "Ongoing",
-	"restriction_type": "Lockdown"
+	"restriction_type": "Lockdown",
+	"alpha-3": "PAK"
 }, {
-	"name": "9/7/1901",
+	"name": "Poland",
 	"start": "3/24/2020",
 	"end": "",
-	"busieness": "Yes",
+	"business": "Yes",
 	"lockdown": true,
 	"curfew": "N/A",
 	"public_closed": true,
@@ -400,12 +430,13 @@ export default [{
 	"army": "N/A",
 	"population_affected": 100.0,
 	"status": "Ongoing",
-	"restriction_type": "Lockdown"
+	"restriction_type": "Lockdown",
+	"alpha-3": "POL"
 }, {
-	"name": "2/2/1902",
+	"name": "Thailand",
 	"start": "3/21/2020",
 	"end": "",
-	"busieness": "Yes",
+	"business": "Yes",
 	"lockdown": true,
 	"curfew": "N/A",
 	"public_closed": "N/A",
@@ -413,12 +444,13 @@ export default [{
 	"army": "N/A",
 	"population_affected": 100.0,
 	"status": "Ongoing",
-	"restriction_type": "Lockdown"
+	"restriction_type": "Lockdown",
+	"alpha-3": "THA"
 }, {
-	"name": "10/3/1901",
+	"name": "Romania",
 	"start": "3/24/2020",
 	"end": "",
-	"busieness": "Yes",
+	"business": "Yes",
 	"lockdown": true,
 	"curfew": "N/A",
 	"public_closed": "N/A",
@@ -426,12 +458,13 @@ export default [{
 	"army": true,
 	"population_affected": 100.0,
 	"status": "Ongoing",
-	"restriction_type": "Lockdown"
+	"restriction_type": "Lockdown",
+	"alpha-3": "ROU"
 }, {
-	"name": "11/12/1901",
+	"name": "Saudi Arabia",
 	"start": "3/25/2020",
 	"end": "",
-	"busieness": "Yes",
+	"business": "Yes",
 	"lockdown": true,
 	"curfew": "N/A",
 	"public_closed": "N/A",
@@ -439,12 +472,13 @@ export default [{
 	"army": "N/A",
 	"population_affected": 80.0,
 	"status": "Ongoing",
-	"restriction_type": "Lockdown"
+	"restriction_type": "Lockdown",
+	"alpha-3": "SAU"
 }, {
-	"name": "9/2/1900",
+	"name": "Finland",
 	"start": "",
 	"end": "",
-	"busieness": "No",
+	"business": "No",
 	"lockdown": false,
 	"curfew": "N/A",
 	"public_closed": false,
@@ -452,12 +486,13 @@ export default [{
 	"army": "N/A",
 	"population_affected": 100.0,
 	"status": "No Closure",
-	"restriction_type": "N/A"
+	"restriction_type": "N/A",
+	"alpha-3": "FIN"
 }, {
-	"name": "12/25/1900",
+	"name": "Indonesia",
 	"start": "",
 	"end": "",
-	"busieness": "No",
+	"business": "No",
 	"lockdown": false,
 	"curfew": "N/A",
 	"public_closed": false,
@@ -465,12 +500,13 @@ export default [{
 	"army": "N/A",
 	"population_affected": 50.0,
 	"status": "No Closure",
-	"restriction_type": "N/A"
+	"restriction_type": "N/A",
+	"alpha-3": "IDN"
 }, {
-	"name": "10/26/1900",
+	"name": "Greece",
 	"start": "3/23/2020",
 	"end": "",
-	"busieness": "Yes",
+	"business": "Yes",
 	"lockdown": true,
 	"curfew": "N/A",
 	"public_closed": "N/A",
@@ -478,12 +514,13 @@ export default [{
 	"army": "N/A",
 	"population_affected": 100.0,
 	"status": "Ongoing",
-	"restriction_type": "Lockdown"
+	"restriction_type": "Lockdown",
+	"alpha-3": "GRC"
 }, {
-	"name": "12/17/1900",
+	"name": "Iceland",
 	"start": "",
 	"end": "",
-	"busieness": "No",
+	"business": "No",
 	"lockdown": false,
 	"curfew": "N/A",
 	"public_closed": false,
@@ -491,12 +528,13 @@ export default [{
 	"army": "N/A",
 	"population_affected": "N/A",
 	"status": "No Closure",
-	"restriction_type": "N/A"
+	"restriction_type": "N/A",
+	"alpha-3": "ISL"
 }, {
-	"name": "12/10/1901",
+	"name": "South Africa",
 	"start": "3/24/2020",
 	"end": "",
-	"busieness": "Yes",
+	"business": "Yes",
 	"lockdown": true,
 	"curfew": "N/A",
 	"public_closed": true,
@@ -504,12 +542,13 @@ export default [{
 	"army": true,
 	"population_affected": 100.0,
 	"status": "Ongoing",
-	"restriction_type": "Lockdown"
+	"restriction_type": "Lockdown",
+	"alpha-3": "ZAF"
 }, {
-	"name": "10/4/1901",
+	"name": "Russian Federation",
 	"start": "3/28/2020",
 	"end": "",
-	"busieness": "Yes",
+	"business": "Yes",
 	"lockdown": true,
 	"curfew": "N/A",
 	"public_closed": true,
@@ -517,12 +556,13 @@ export default [{
 	"army": "N/A",
 	"population_affected": "N/A",
 	"status": "Ongoing",
-	"restriction_type": "Lockdown"
+	"restriction_type": "Lockdown",
+	"alpha-3": "RUS"
 }, {
-	"name": "8/30/1901",
+	"name": "Philippines",
 	"start": "3/15/2020",
 	"end": "",
-	"busieness": "Yes",
+	"business": "Yes",
 	"lockdown": true,
 	"curfew": "N/A",
 	"public_closed": true,
@@ -530,12 +570,13 @@ export default [{
 	"army": "N/A",
 	"population_affected": 100.0,
 	"status": "Ongoing",
-	"restriction_type": "Lockdown"
+	"restriction_type": "Lockdown",
+	"alpha-3": "PHL"
 }, {
-	"name": "12/2/1901",
+	"name": "Singapore",
 	"start": "",
 	"end": "",
-	"busieness": "No",
+	"business": "No",
 	"lockdown": false,
 	"curfew": "N/A",
 	"public_closed": false,
@@ -543,12 +584,13 @@ export default [{
 	"army": "N/A",
 	"population_affected": "N/A",
 	"status": "No Closure",
-	"restriction_type": "N/A"
+	"restriction_type": "N/A",
+	"alpha-3": "SGP"
 }, {
-	"name": "12/21/1900",
+	"name": "India",
 	"start": "3/25/2020",
 	"end": "",
-	"busieness": "Yes",
+	"business": "Yes",
 	"lockdown": true,
 	"curfew": "N/A",
 	"public_closed": true,
@@ -556,12 +598,13 @@ export default [{
 	"army": "N/A",
 	"population_affected": 100.0,
 	"status": "Ongoing",
-	"restriction_type": "Lockdown"
+	"restriction_type": "Lockdown",
+	"alpha-3": "IND"
 }, {
-	"name": "12/5/1901",
+	"name": "Slovenia",
 	"start": "3/20/2020",
 	"end": "",
-	"busieness": "Yes",
+	"business": "Yes",
 	"lockdown": true,
 	"curfew": "N/A",
 	"public_closed": false,
@@ -569,12 +612,13 @@ export default [{
 	"army": "N/A",
 	"population_affected": 100.0,
 	"status": "Ongoing",
-	"restriction_type": "Lockdown"
+	"restriction_type": "Lockdown",
+	"alpha-3": "SVN"
 }, {
-	"name": "9/25/1901",
+	"name": "Qatar",
 	"start": "3/17/2020",
 	"end": "",
-	"busieness": "Yes",
+	"business": "Yes",
 	"lockdown": true,
 	"curfew": "N/A",
 	"public_closed": false,
@@ -582,12 +626,13 @@ export default [{
 	"army": "N/A",
 	"population_affected": 100.0,
 	"status": "Ongoing",
-	"restriction_type": "Businesses Shutdown"
+	"restriction_type": "Businesses Shutdown",
+	"alpha-3": "QAT"
 }, {
-	"name": "8/13/1901",
+	"name": "Panama",
 	"start": "3/25/2020",
 	"end": "",
-	"busieness": "Yes",
+	"business": "Yes",
 	"lockdown": true,
 	"curfew": "N/A",
 	"public_closed": true,
@@ -595,12 +640,13 @@ export default [{
 	"army": "N/A",
 	"population_affected": 100.0,
 	"status": "Ongoing",
-	"restriction_type": "Lockdown"
+	"restriction_type": "Lockdown",
+	"alpha-3": "PAN"
 }, {
-	"name": "3/28/1902",
+	"name": "Egypt",
 	"start": "3/24/2020",
 	"end": "",
-	"busieness": "Yes",
+	"business": "Yes",
 	"lockdown": true,
 	"curfew": true,
 	"public_closed": false,
@@ -608,12 +654,13 @@ export default [{
 	"army": "N/A",
 	"population_affected": 100.0,
 	"status": "Ongoing",
-	"restriction_type": "Curfew"
+	"restriction_type": "Curfew",
+	"alpha-3": "EGY"
 }, {
-	"name": "2/16/1900",
+	"name": "Bahrain",
 	"start": "",
 	"end": "",
-	"busieness": "",
+	"business": "",
 	"lockdown": "N/A",
 	"curfew": "N/A",
 	"public_closed": "N/A",
@@ -621,12 +668,13 @@ export default [{
 	"army": "N/A",
 	"population_affected": "N/A",
 	"status": "No Data",
-	"restriction_type": "N/A"
+	"restriction_type": "N/A",
+	"alpha-3": "BHR"
 }, {
-	"name": "7/9/1900",
+	"name": "Croatia",
 	"start": "3/19/2020",
 	"end": "",
-	"busieness": "Yes",
+	"business": "Yes",
 	"lockdown": true,
 	"curfew": "N/A",
 	"public_closed": false,
@@ -634,12 +682,13 @@ export default [{
 	"army": "N/A",
 	"population_affected": 100.0,
 	"status": "Ongoing",
-	"restriction_type": "Businesses Shutdown"
+	"restriction_type": "Businesses Shutdown",
+	"alpha-3": "HRV"
 }, {
-	"name": "8/26/1901",
+	"name": "Peru",
 	"start": "3/16/2020",
 	"end": "",
-	"busieness": "Yes",
+	"business": "Yes",
 	"lockdown": true,
 	"curfew": "N/A",
 	"public_closed": false,
@@ -647,12 +696,14 @@ export default [{
 	"army": "N/A",
 	"population_affected": 100.0,
 	"status": "Ongoing",
-	"restriction_type": "Lockdown"
+	"restriction_type": "Lockdown",
+	"alpha-3": "PER"
 }, {
-	"name": "12/9/1900",
+  "name": "China, Hong Kong SAR",
+  "alpha-3": "HKG",
 	"start": "",
 	"end": "",
-	"busieness": "",
+	"business": "",
 	"lockdown": "N/A",
 	"curfew": "N/A",
 	"public_closed": "N/A",
@@ -662,10 +713,10 @@ export default [{
 	"status": "No Data",
 	"restriction_type": "N/A"
 }, {
-	"name": "4/28/1901",
+	"name": "Mexico",
 	"start": "3/28/2020",
 	"end": "",
-	"busieness": "No",
+	"business": "No",
 	"lockdown": false,
 	"curfew": "N/A",
 	"public_closed": false,
@@ -673,12 +724,13 @@ export default [{
 	"army": "N/A",
 	"population_affected": 10.0,
 	"status": "Ongoing",
-	"restriction_type": "N/A"
+	"restriction_type": "N/A",
+	"alpha-3": "MEX"
 }, {
-	"name": "8/20/1900",
+	"name": "Estonia",
 	"start": "3/12/2020",
 	"end": "",
-	"busieness": "Yes",
+	"business": "Yes",
 	"lockdown": true,
 	"curfew": "N/A",
 	"public_closed": true,
@@ -686,12 +738,13 @@ export default [{
 	"army": "N/A",
 	"population_affected": 50.0,
 	"status": "Ongoing",
-	"restriction_type": "Lockdown"
+	"restriction_type": "Lockdown",
+	"alpha-3": "EST"
 }, {
-	"name": "8/1/1900",
+	"name": "Dominican Republic",
 	"start": "",
 	"end": "",
-	"busieness": "No",
+	"business": "No",
 	"lockdown": false,
 	"curfew": "N/A",
 	"public_closed": false,
@@ -699,12 +752,13 @@ export default [{
 	"army": "N/A",
 	"population_affected": "N/A",
 	"status": "No Closure",
-	"restriction_type": "N/A"
+	"restriction_type": "N/A",
+	"alpha-3": "DOM"
 }, {
-	"name": "1/31/1900",
+	"name": "Argentina",
 	"start": "3/20/2020",
 	"end": "",
-	"busieness": "Yes",
+	"business": "Yes",
 	"lockdown": true,
 	"curfew": "N/A",
 	"public_closed": true,
@@ -712,12 +766,13 @@ export default [{
 	"army": "N/A",
 	"population_affected": 100.0,
 	"status": "Ongoing",
-	"restriction_type": "Lockdown"
+	"restriction_type": "Lockdown",
+	"alpha-3": "ARG"
 }, {
-	"name": "11/18/1901",
+	"name": "Serbia",
 	"start": "3/15/2020",
 	"end": "",
-	"busieness": "",
+	"business": "",
 	"lockdown": false,
 	"curfew": "N/A",
 	"public_closed": true,
@@ -725,12 +780,13 @@ export default [{
 	"army": false,
 	"population_affected": 100.0,
 	"status": "Ongoing",
-	"restriction_type": "Lockdown"
+	"restriction_type": "Lockdown",
+	"alpha-3": "SRB"
 }, {
-	"name": "6/18/1900",
+	"name": "Colombia",
 	"start": "3/25/2020",
 	"end": "",
-	"busieness": "Yes",
+	"business": "Yes",
 	"lockdown": true,
 	"curfew": "N/A",
 	"public_closed": true,
@@ -738,12 +794,13 @@ export default [{
 	"army": "N/A",
 	"population_affected": 100.0,
 	"status": "Ongoing",
-	"restriction_type": "Lockdown"
+	"restriction_type": "Lockdown",
+	"alpha-3": "COL"
 }, {
-	"name": "1/2/1901",
+	"name": "Iraq",
 	"start": "3/28/2020",
 	"end": "",
-	"busieness": "Yes",
+	"business": "Yes",
 	"lockdown": true,
 	"curfew": "N/A",
 	"public_closed": true,
@@ -751,12 +808,13 @@ export default [{
 	"army": "N/A",
 	"population_affected": 100.0,
 	"status": "Ongoing",
-	"restriction_type": "Lockdown"
+	"restriction_type": "Lockdown",
+	"alpha-3": "IRQ"
 }, {
-	"name": "2/25/1901",
+	"name": "Lebanon",
 	"start": "3/16/2020",
 	"end": "",
-	"busieness": "yes",
+	"business": "yes",
 	"lockdown": false,
 	"curfew": true,
 	"public_closed": false,
@@ -764,12 +822,13 @@ export default [{
 	"army": false,
 	"population_affected": 100.0,
 	"status": "Ongoing",
-	"restriction_type": "Curfew"
+	"restriction_type": "Curfew",
+	"alpha-3": "LBN"
 }, {
-	"name": "2/22/1902",
+	"name": "United Arab Emirates",
 	"start": "",
 	"end": "",
-	"busieness": "No",
+	"business": "No",
 	"lockdown": false,
 	"curfew": "N/A",
 	"public_closed": false,
@@ -777,12 +836,13 @@ export default [{
 	"army": "N/A",
 	"population_affected": 100.0,
 	"status": "No Closure",
-	"restriction_type": "N/A"
+	"restriction_type": "N/A",
+	"alpha-3": "ARE"
 }, {
-	"name": "2/19/1900",
+	"name": "Armenia",
 	"start": "3/24/2020",
 	"end": "",
-	"busieness": "Yes",
+	"business": "Yes",
 	"lockdown": true,
 	"curfew": "N/A",
 	"public_closed": true,
@@ -790,12 +850,13 @@ export default [{
 	"army": "N/A",
 	"population_affected": 100.0,
 	"status": "Ongoing",
-	"restriction_type": "Lockdown"
+	"restriction_type": "Lockdown",
+	"alpha-3": "ARM"
 }, {
-	"name": "1/11/1900",
+	"name": "Algeria",
 	"start": "3/27/2020",
 	"end": "",
-	"busieness": "No",
+	"business": "No",
 	"lockdown": false,
 	"curfew": true,
 	"public_closed": "N/A",
@@ -803,12 +864,13 @@ export default [{
 	"army": "N/A",
 	"population_affected": 50.0,
 	"status": "Ongoing",
-	"restriction_type": "Curfew"
+	"restriction_type": "Curfew",
+	"alpha-3": "DZA"
 }, {
-	"name": "3/15/1901",
+	"name": "Lithuania",
 	"start": "3/15/2020",
 	"end": "",
-	"busieness": "Yes",
+	"business": "Yes",
 	"lockdown": true,
 	"curfew": "N/A",
 	"public_closed": true,
@@ -816,12 +878,13 @@ export default [{
 	"army": "N/A",
 	"population_affected": 100.0,
 	"status": "Ongoing",
-	"restriction_type": "Businesses Shutdown"
+	"restriction_type": "Businesses Shutdown",
+	"alpha-3": "LTU"
 }, {
-	"name": "4/9/1900",
+	"name": "Bulgaria",
 	"start": "3/19/2020",
 	"end": "",
-	"busieness": "yes",
+	"business": "yes",
 	"lockdown": false,
 	"curfew": "N/A",
 	"public_closed": "N/A",
@@ -829,12 +892,14 @@ export default [{
 	"army": false,
 	"population_affected": 100.0,
 	"status": "Ongoing",
-	"restriction_type": "Businesses Shutdown"
+	"restriction_type": "Businesses Shutdown",
+	"alpha-3": "BGR"
 }, {
-	"name": "6/6/1900",
+  "name": "China, Taiwan Province of China",
+  "alpha-3": "TWN",
 	"start": "",
 	"end": "",
-	"busieness": "No",
+	"business": "No",
 	"lockdown": false,
 	"curfew": "N/A",
 	"public_closed": false,
@@ -844,10 +909,10 @@ export default [{
 	"status": "No Closure",
 	"restriction_type": "N/A"
 }, {
-	"name": "12/13/1900",
+	"name": "Hungary",
 	"start": "3/17/2020",
 	"end": "",
-	"busieness": "yes",
+	"business": "yes",
 	"lockdown": false,
 	"curfew": "N/A",
 	"public_closed": false,
@@ -855,12 +920,13 @@ export default [{
 	"army": "N/A",
 	"population_affected": 100.0,
 	"status": "Ongoing",
-	"restriction_type": "Lockdown"
+	"restriction_type": "Lockdown",
+	"alpha-3": "HUN"
 }, {
-	"name": "3/3/1901",
+	"name": "Latvia",
 	"start": "3/13/2020",
 	"end": "",
-	"busieness": "Yes",
+	"business": "Yes",
 	"lockdown": true,
 	"curfew": "N/A",
 	"public_closed": true,
@@ -868,12 +934,13 @@ export default [{
 	"army": "N/A",
 	"population_affected": 100.0,
 	"status": "Ongoing",
-	"restriction_type": "Businesses Shutdown"
+	"restriction_type": "Businesses Shutdown",
+	"alpha-3": "LVA"
 }, {
-	"name": "12/3/1901",
+	"name": "Slovakia",
 	"start": "3/15/2020",
 	"end": "",
-	"busieness": "Yes",
+	"business": "Yes",
 	"lockdown": "N/A",
 	"curfew": "N/A",
 	"public_closed": "N/A",
@@ -881,12 +948,13 @@ export default [{
 	"army": "N/A",
 	"population_affected": "N/A",
 	"status": "Ongoing",
-	"restriction_type": "Businesses Shutdown"
+	"restriction_type": "Businesses Shutdown",
+	"alpha-3": "SVK"
 }, {
-	"name": "7/7/1901",
+	"name": "New Zealand",
 	"start": "3/23/2020",
 	"end": "",
-	"busieness": "Yes",
+	"business": "Yes",
 	"lockdown": true,
 	"curfew": "N/A",
 	"public_closed": true,
@@ -894,12 +962,13 @@ export default [{
 	"army": "N/A",
 	"population_affected": 100.0,
 	"status": "Ongoing",
-	"restriction_type": "Lockdown"
+	"restriction_type": "Lockdown",
+	"alpha-3": "NZL"
 }, {
-	"name": "2/17/1901",
+	"name": "Kuwait",
 	"start": "",
 	"end": "",
-	"busieness": "No",
+	"business": "No",
 	"lockdown": false,
 	"curfew": "N/A",
 	"public_closed": false,
@@ -907,12 +976,13 @@ export default [{
 	"army": "N/A",
 	"population_affected": 100.0,
 	"status": "No Closure",
-	"restriction_type": "N/A"
+	"restriction_type": "N/A",
+	"alpha-3": "KWT"
 }, {
-	"name": "5/7/1902",
+	"name": "Uruguay",
 	"start": "",
 	"end": "",
-	"busieness": "No",
+	"business": "No",
 	"lockdown": false,
 	"curfew": "N/A",
 	"public_closed": false,
@@ -920,12 +990,13 @@ export default [{
 	"army": "N/A",
 	"population_affected": 100.0,
 	"status": "No Closure",
-	"restriction_type": "N/A"
+	"restriction_type": "N/A",
+	"alpha-3": "URY"
 }, {
-	"name": "7/6/1900",
+	"name": "Costa Rica",
 	"start": "",
 	"end": "",
-	"busieness": "No",
+	"business": "No",
 	"lockdown": false,
 	"curfew": "N/A",
 	"public_closed": false,
@@ -933,12 +1004,13 @@ export default [{
 	"army": "N/A",
 	"population_affected": 100.0,
 	"status": "No Closure",
-	"restriction_type": "N/A"
+	"restriction_type": "N/A",
+	"alpha-3": "CRI"
 }, {
-	"name": "3/17/1902",
+	"name": "North Macedonia",
 	"start": "3/20/2020",
 	"end": "",
-	"busieness": "yes",
+	"business": "yes",
 	"lockdown": false,
 	"curfew": "N/A",
 	"public_closed": "N/A",
@@ -946,12 +1018,13 @@ export default [{
 	"army": false,
 	"population_affected": "N/A",
 	"status": "Ongoing",
-	"restriction_type": "Lockdown"
+	"restriction_type": "Lockdown",
+	"alpha-3": "MKD"
 }, {
-	"name": "2/26/1902",
+	"name": "Tunisia",
 	"start": "3/20/2020",
 	"end": "",
-	"busieness": "Yes",
+	"business": "Yes",
 	"lockdown": true,
 	"curfew": "N/A",
 	"public_closed": true,
@@ -959,12 +1032,13 @@ export default [{
 	"army": true,
 	"population_affected": 100.0,
 	"status": "Ongoing",
-	"restriction_type": "Lockdown"
+	"restriction_type": "Lockdown",
+	"alpha-3": "TUN"
 }, {
-	"name": "5/18/1901",
+	"name": "Morocco",
 	"start": "3/15/2020",
 	"end": "",
-	"busieness": "Yes",
+	"business": "Yes",
 	"lockdown": true,
 	"curfew": "N/A",
 	"public_closed": true,
@@ -972,12 +1046,13 @@ export default [{
 	"army": "N/A",
 	"population_affected": 100.0,
 	"status": "Ongoing",
-	"restriction_type": "Businesses Shutdown"
+	"restriction_type": "Businesses Shutdown",
+	"alpha-3": "MAR"
 }, {
-	"name": "3/10/1900",
+	"name": "Bosnia and Herzegovina",
 	"start": "",
 	"end": "",
-	"busieness": "",
+	"business": "",
 	"lockdown": "N/A",
 	"curfew": "N/A",
 	"public_closed": "N/A",
@@ -985,12 +1060,13 @@ export default [{
 	"army": "N/A",
 	"population_affected": "N/A",
 	"status": "No Data",
-	"restriction_type": "N/A"
+	"restriction_type": "N/A",
+	"alpha-3": "BIH"
 }, {
-	"name": "2/3/1901",
+	"name": "Jordan",
 	"start": "",
 	"end": "",
-	"busieness": "No",
+	"business": "No",
 	"lockdown": false,
 	"curfew": "N/A",
 	"public_closed": false,
@@ -998,12 +1074,14 @@ export default [{
 	"army": "N/A",
 	"population_affected": "N/A",
 	"status": "No Closure",
-	"restriction_type": "N/A"
+	"restriction_type": "N/A",
+	"alpha-3": "JOR"
 }, {
-	"name": "5/12/1901",
+	"name": "Republic of Moldova",
+  "alpha-3": "MDA",
 	"start": "",
 	"end": "",
-	"busieness": "",
+	"business": "",
 	"lockdown": "N/A",
 	"curfew": "N/A",
 	"public_closed": "N/A",
@@ -1013,10 +1091,10 @@ export default [{
 	"status": "No Data",
 	"restriction_type": "N/A"
 }, {
-	"name": "1/7/1900",
+	"name": "Albania",
 	"start": "3/20/2020",
 	"end": "",
-	"busieness": "Yes",
+	"business": "Yes",
 	"lockdown": true,
 	"curfew": "N/A",
 	"public_closed": true,
@@ -1024,12 +1102,13 @@ export default [{
 	"army": true,
 	"population_affected": 100.0,
 	"status": "Ongoing",
-	"restriction_type": "Lockdown"
+	"restriction_type": "Lockdown",
+	"alpha-3": "ALB"
 }, {
-	"name": "12/4/1901",
+	"name": "Viet Nam",
 	"start": "3/28/2020",
 	"end": "",
-	"busieness": "Yes",
+	"business": "Yes",
 	"lockdown": true,
 	"curfew": "N/A",
 	"public_closed": true,
@@ -1037,12 +1116,13 @@ export default [{
 	"army": "N/A",
 	"population_affected": 100.0,
 	"status": "Ongoing",
-	"restriction_type": "Lockdown"
+	"restriction_type": "Lockdown",
+	"alpha-3": "VNM"
 }, {
-	"name": "4/14/1901",
+	"name": "Malta",
 	"start": "3/17/2020",
 	"end": "",
-	"busieness": "yes",
+	"business": "yes",
 	"lockdown": false,
 	"curfew": false,
 	"public_closed": "N/A",
@@ -1050,12 +1130,13 @@ export default [{
 	"army": "N/A",
 	"population_affected": 40.0,
 	"status": "Ongoing",
-	"restriction_type": "Lockdown"
+	"restriction_type": "Lockdown",
+	"alpha-3": "MLT"
 }, {
-	"name": "7/14/1900",
+	"name": "Cyprus",
 	"start": "3/24/2020",
 	"end": "4/13/2020",
-	"busieness": "Yes",
+	"business": "Yes",
 	"lockdown": true,
 	"curfew": true,
 	"public_closed": true,
@@ -1063,12 +1144,13 @@ export default [{
 	"army": false,
 	"population_affected": 100.0,
 	"status": "Finished",
-	"restriction_type": "Lockdown"
+	"restriction_type": "Lockdown",
+	"alpha-3": "CYP"
 }, {
-	"name": "3/14/1902",
+	"name": "Ukraine",
 	"start": "",
 	"end": "",
-	"busieness": "Yes",
+	"business": "Yes",
 	"lockdown": true,
 	"curfew": "N/A",
 	"public_closed": true,
@@ -1076,12 +1158,13 @@ export default [{
 	"army": "N/A",
 	"population_affected": 100.0,
 	"status": "No Closure",
-	"restriction_type": "Lockdown"
+	"restriction_type": "Lockdown",
+	"alpha-3": "UKR"
 }, {
-	"name": "5/3/1902",
+	"name": "Burkina Faso",
 	"start": "",
 	"end": "",
-	"busieness": "",
+	"business": "",
 	"lockdown": "N/A",
 	"curfew": "N/A",
 	"public_closed": "N/A",
@@ -1089,12 +1172,13 @@ export default [{
 	"army": "N/A",
 	"population_affected": "N/A",
 	"status": "No Data",
-	"restriction_type": "N/A"
+	"restriction_type": "N/A",
+	"alpha-3": "BFA"
 }, {
-	"name": "4/5/1900",
+	"name": "Brunei Darussalam",
 	"start": "",
 	"end": "",
-	"busieness": "",
+	"business": "",
 	"lockdown": "N/A",
 	"curfew": "N/A",
 	"public_closed": "N/A",
@@ -1102,12 +1186,13 @@ export default [{
 	"army": "N/A",
 	"population_affected": "N/A",
 	"status": "No Data",
-	"restriction_type": "N/A"
+	"restriction_type": "N/A",
+	"alpha-3": "BRN"
 }, {
-	"name": "5/23/1900",
+	"name": "Sri Lanka",
 	"start": "3/20/2020",
 	"end": "",
-	"busieness": "Yes",
+	"business": "Yes",
 	"lockdown": true,
 	"curfew": "N/A",
 	"public_closed": true,
@@ -1115,12 +1200,13 @@ export default [{
 	"army": "N/A",
 	"population_affected": 100.0,
 	"status": "Ongoing",
-	"restriction_type": "Lockdown"
+	"restriction_type": "Lockdown",
+	"alpha-3": "LKA"
 }, {
-	"name": "5/26/1901",
+	"name": "Oman",
 	"start": "",
 	"end": "",
-	"busieness": "",
+	"business": "",
 	"lockdown": "N/A",
 	"curfew": "N/A",
 	"public_closed": "N/A",
@@ -1128,12 +1214,13 @@ export default [{
 	"army": "N/A",
 	"population_affected": "N/A",
 	"status": "No Data",
-	"restriction_type": "N/A"
+	"restriction_type": "N/A",
+	"alpha-3": "OMN"
 }, {
-	"name": "11/16/1901",
+	"name": "Senegal",
 	"start": "",
 	"end": "",
-	"busieness": "",
+	"business": "",
 	"lockdown": "N/A",
 	"curfew": "N/A",
 	"public_closed": "N/A",
@@ -1141,12 +1228,13 @@ export default [{
 	"army": "N/A",
 	"population_affected": "N/A",
 	"status": "No Data",
-	"restriction_type": "N/A"
+	"restriction_type": "N/A",
+	"alpha-3": "SEN"
 }, {
-	"name": "4/25/1900",
+	"name": "Cambodia",
 	"start": "",
 	"end": "",
-	"busieness": "",
+	"business": "",
 	"lockdown": "N/A",
 	"curfew": "N/A",
 	"public_closed": "N/A",
@@ -1154,12 +1242,13 @@ export default [{
 	"army": "N/A",
 	"population_affected": "N/A",
 	"status": "No Data",
-	"restriction_type": "N/A"
+	"restriction_type": "N/A",
+	"alpha-3": "KHM"
 }, {
-	"name": "1/30/1900",
+	"name": "Azerbaijan",
 	"start": "",
 	"end": "",
-	"busieness": "",
+	"business": "",
 	"lockdown": "N/A",
 	"curfew": "N/A",
 	"public_closed": "N/A",
@@ -1167,12 +1256,13 @@ export default [{
 	"army": "N/A",
 	"population_affected": "N/A",
 	"status": "No Data",
-	"restriction_type": "N/A"
+	"restriction_type": "N/A",
+	"alpha-3": "AZE"
 }, {
-	"name": "5/11/1902",
+	"name": "Venezuela (Bolivarian Republic of)",
 	"start": "3/17/2020",
 	"end": "",
-	"busieness": "Yes",
+	"business": "Yes",
 	"lockdown": true,
 	"curfew": "N/A",
 	"public_closed": true,
@@ -1180,12 +1270,13 @@ export default [{
 	"army": "N/A",
 	"population_affected": 100.0,
 	"status": "Ongoing",
-	"restriction_type": "Lockdown"
+	"restriction_type": "Lockdown",
+	"alpha-3": "VEN"
 }, {
-	"name": "4/21/1900",
+	"name": "Belarus",
 	"start": "",
 	"end": "",
-	"busieness": "",
+	"business": "",
 	"lockdown": "N/A",
 	"curfew": "N/A",
 	"public_closed": "N/A",
@@ -1193,12 +1284,13 @@ export default [{
 	"army": "N/A",
 	"population_affected": "N/A",
 	"status": "No Data",
-	"restriction_type": "N/A"
+	"restriction_type": "N/A",
+	"alpha-3": "BLR"
 }, {
-	"name": "1/3/1900",
+	"name": "Afghanistan",
 	"start": "3/27/2020",
 	"end": "",
-	"busieness": "Yes",
+	"business": "Yes",
 	"lockdown": "N/A",
 	"curfew": true,
 	"public_closed": true,
@@ -1206,12 +1298,13 @@ export default [{
 	"army": "N/A",
 	"population_affected": 20.0,
 	"status": "Ongoing",
-	"restriction_type": "Curfew"
+	"restriction_type": "Curfew",
+	"alpha-3": "AFG"
 }, {
-	"name": "2/1/1901",
+	"name": "Kazakhstan",
 	"start": "3/17/2020",
 	"end": "",
-	"busieness": "Yes",
+	"business": "Yes",
 	"lockdown": true,
 	"curfew": "N/A",
 	"public_closed": true,
@@ -1219,12 +1312,13 @@ export default [{
 	"army": "N/A",
 	"population_affected": 50.0,
 	"status": "Ongoing",
-	"restriction_type": "Lockdown"
+	"restriction_type": "Lockdown",
+	"alpha-3": "KAZ"
 }, {
-	"name": "9/24/1900",
+	"name": "Georgia",
 	"start": "3/30/2020",
 	"end": "",
-	"busieness": "Yes",
+	"business": "Yes",
 	"lockdown": true,
 	"curfew": "N/A",
 	"public_closed": true,
@@ -1232,12 +1326,13 @@ export default [{
 	"army": "N/A",
 	"population_affected": 100.0,
 	"status": "Ongoing",
-	"restriction_type": "Lockdown"
+	"restriction_type": "Lockdown",
+	"alpha-3": "GEO"
 }, {
-	"name": "1/18/1901",
+	"name": "Cote d'Ivoire",
 	"start": "",
 	"end": "",
-	"busieness": "",
+	"business": "",
 	"lockdown": "N/A",
 	"curfew": "N/A",
 	"public_closed": "N/A",
@@ -1245,12 +1340,13 @@ export default [{
 	"army": "N/A",
 	"population_affected": "N/A",
 	"status": "No Data",
-	"restriction_type": "N/A"
+	"restriction_type": "N/A",
+	"alpha-3": "CIV"
 }, {
-	"name": "4/29/1900",
+	"name": "Cameroon",
 	"start": "",
 	"end": "",
-	"busieness": "",
+	"business": "",
 	"lockdown": "N/A",
 	"curfew": "N/A",
 	"public_closed": "N/A",
@@ -1258,12 +1354,13 @@ export default [{
 	"army": "N/A",
 	"population_affected": "N/A",
 	"status": "No Data",
-	"restriction_type": "N/A"
+	"restriction_type": "N/A",
+	"alpha-3": "CMR"
 }, {
-	"name": "10/14/1900",
+	"name": "Ghana",
 	"start": "3/28/2020",
 	"end": "",
-	"busieness": "Yes",
+	"business": "Yes",
 	"lockdown": true,
 	"curfew": "N/A",
 	"public_closed": true,
@@ -1271,12 +1368,14 @@ export default [{
 	"army": true,
 	"population_affected": 50.0,
 	"status": "Ongoing",
-	"restriction_type": "Lockdown"
+	"restriction_type": "Lockdown",
+	"alpha-3": "GHA"
 }, {
-	"name": "10/1/1900",
+	"name": "State of Palestine",
+  "alpha-3": "PSE",
 	"start": "",
 	"end": "",
-	"busieness": "",
+	"business": "",
 	"lockdown": "N/A",
 	"curfew": "N/A",
 	"public_closed": "N/A",
@@ -1286,10 +1385,10 @@ export default [{
 	"status": "No Data",
 	"restriction_type": "N/A"
 }, {
-	"name": "2/18/1902",
+	"name": "Trinidad and Tobago",
 	"start": "",
 	"end": "",
-	"busieness": "",
+	"business": "",
 	"lockdown": "N/A",
 	"curfew": "N/A",
 	"public_closed": "N/A",
@@ -1297,12 +1396,13 @@ export default [{
 	"army": "N/A",
 	"population_affected": "N/A",
 	"status": "No Data",
-	"restriction_type": "N/A"
+	"restriction_type": "N/A",
+	"alpha-3": "TTO"
 }, {
-	"name": "7/10/1900",
+	"name": "Cuba",
 	"start": "",
 	"end": "",
-	"busieness": "",
+	"business": "",
 	"lockdown": "N/A",
 	"curfew": "N/A",
 	"public_closed": "N/A",
@@ -1310,12 +1410,13 @@ export default [{
 	"army": "N/A",
 	"population_affected": "N/A",
 	"status": "No Data",
-	"restriction_type": "N/A"
+	"restriction_type": "N/A",
+	"alpha-3": "CUB"
 }, {
-	"name": "5/9/1902",
+	"name": "Uzbekistan",
 	"start": "3/26/2020",
 	"end": "",
-	"busieness": "Yes",
+	"business": "Yes",
 	"lockdown": true,
 	"curfew": "N/A",
 	"public_closed": true,
@@ -1323,12 +1424,13 @@ export default [{
 	"army": "N/A",
 	"population_affected": 50.0,
 	"status": "Ongoing",
-	"restriction_type": "Lockdown"
+	"restriction_type": "Lockdown",
+	"alpha-3": "UZB"
 }, {
-	"name": "5/13/1901",
+	"name": "Montenegro",
 	"start": "",
 	"end": "",
-	"busieness": "",
+	"business": "",
 	"lockdown": "N/A",
 	"curfew": "N/A",
 	"public_closed": "N/A",
@@ -1336,12 +1438,14 @@ export default [{
 	"army": "N/A",
 	"population_affected": "N/A",
 	"status": "No Data",
-	"restriction_type": "N/A"
+	"restriction_type": "N/A",
+	"alpha-3": "MNE"
 }, {
-	"name": "6/28/1900",
+	"name": "Democratic Republic of the Congo",
+  "alpha-3": "COD",
 	"start": "3/26/2020",
 	"end": "",
-	"busieness": "Yes",
+	"business": "Yes",
 	"lockdown": true,
 	"curfew": "N/A",
 	"public_closed": "N/A",
@@ -1351,10 +1455,10 @@ export default [{
 	"status": "Ongoing",
 	"restriction_type": "Lockdown"
 }, {
-	"name": "4/24/1901",
+	"name": "Mauritius",
 	"start": "",
 	"end": "",
-	"busieness": "",
+	"business": "",
 	"lockdown": "N/A",
 	"curfew": "N/A",
 	"public_closed": "N/A",
@@ -1362,12 +1466,13 @@ export default [{
 	"army": "N/A",
 	"population_affected": "N/A",
 	"status": "No Data",
-	"restriction_type": "N/A"
+	"restriction_type": "N/A",
+	"alpha-3": "MUS"
 }, {
-	"name": "7/19/1901",
+	"name": "Nigeria",
 	"start": "3/29/2020",
 	"end": "",
-	"busieness": "Yes",
+	"business": "Yes",
 	"lockdown": true,
 	"curfew": "N/A",
 	"public_closed": "N/A",
@@ -1375,12 +1480,13 @@ export default [{
 	"army": "N/A",
 	"population_affected": 20.0,
 	"status": "Ongoing",
-	"restriction_type": "Lockdown"
+	"restriction_type": "Lockdown",
+	"alpha-3": "NGA"
 }, {
-	"name": "2/20/1901",
+	"name": "Kyrgyzstan",
 	"start": "3/24/2020",
 	"end": "",
-	"busieness": "Yes",
+	"business": "Yes",
 	"lockdown": true,
 	"curfew": "N/A",
 	"public_closed": true,
@@ -1388,12 +1494,13 @@ export default [{
 	"army": "N/A",
 	"population_affected": 20.0,
 	"status": "Ongoing",
-	"restriction_type": "Lockdown"
+	"restriction_type": "Lockdown",
+	"alpha-3": "KGZ"
 }, {
-	"name": "10/7/1901",
+	"name": "Rwanda",
 	"start": "3/22/2020",
 	"end": "",
-	"busieness": "Yes",
+	"business": "Yes",
 	"lockdown": true,
 	"curfew": "N/A",
 	"public_closed": true,
@@ -1401,12 +1508,13 @@ export default [{
 	"army": true,
 	"population_affected": 100.0,
 	"status": "Ongoing",
-	"restriction_type": "Lockdown"
+	"restriction_type": "Lockdown",
+	"alpha-3": "RWA"
 }, {
-	"name": "2/18/1900",
+	"name": "Bangladesh",
 	"start": "3/25/2020",
 	"end": "",
-	"busieness": "Yes",
+	"business": "Yes",
 	"lockdown": true,
 	"curfew": "N/A",
 	"public_closed": true,
@@ -1414,12 +1522,13 @@ export default [{
 	"army": "N/A",
 	"population_affected": 100.0,
 	"status": "Ongoing",
-	"restriction_type": "Lockdown"
+	"restriction_type": "Lockdown",
+	"alpha-3": "BGD"
 }, {
-	"name": "8/22/1901",
+	"name": "Paraguay",
 	"start": "3/28/2020",
 	"end": "",
-	"busieness": "Yes",
+	"business": "Yes",
 	"lockdown": true,
 	"curfew": "N/A",
 	"public_closed": true,
@@ -1427,12 +1536,13 @@ export default [{
 	"army": "N/A",
 	"population_affected": 100.0,
 	"status": "Ongoing",
-	"restriction_type": "Lockdown"
+	"restriction_type": "Lockdown",
+	"alpha-3": "PRY"
 }, {
-	"name": "12/5/1900",
+	"name": "Honduras",
 	"start": "3/16/2020",
 	"end": "",
-	"busieness": "Yes",
+	"business": "Yes",
 	"lockdown": true,
 	"curfew": true,
 	"public_closed": "N/A",
@@ -1440,12 +1550,13 @@ export default [{
 	"army": "N/A",
 	"population_affected": 100.0,
 	"status": "Ongoing",
-	"restriction_type": "Lockdown"
+	"restriction_type": "Lockdown",
+	"alpha-3": "HND"
 }, {
-	"name": "3/8/1900",
+	"name": "Bolivia (Plurinational State of)",
 	"start": "3/21/2020",
 	"end": "",
-	"busieness": "yes",
+	"business": "yes",
 	"lockdown": false,
 	"curfew": "N/A",
 	"public_closed": "N/A",
@@ -1453,12 +1564,14 @@ export default [{
 	"army": false,
 	"population_affected": 100.0,
 	"status": "Ongoing",
-	"restriction_type": "Lockdown"
+	"restriction_type": "Lockdown",
+	"alpha-3": "BOL"
 }, {
-	"name": "3/21/1901",
+	"name": "China, Macao SAR",
+  "alpha-3": "MAC",
 	"start": "",
 	"end": "",
-	"busieness": "",
+	"business": "",
 	"lockdown": "N/A",
 	"curfew": "N/A",
 	"public_closed": "N/A",
@@ -1468,10 +1581,10 @@ export default [{
 	"status": "No Data",
 	"restriction_type": "N/A"
 }, {
-	"name": "2/7/1901",
+	"name": "Kenya",
 	"start": "3/15/2020",
 	"end": "",
-	"busieness": "Yes",
+	"business": "Yes",
 	"lockdown": "N/A",
 	"curfew": true,
 	"public_closed": "N/A",
@@ -1479,12 +1592,13 @@ export default [{
 	"army": "N/A",
 	"population_affected": 100.0,
 	"status": "Ongoing",
-	"restriction_type": "Curfew"
+	"restriction_type": "Curfew",
+	"alpha-3": "KEN"
 }, {
-	"name": "1/22/1901",
+	"name": "Jamaica",
 	"start": "",
 	"end": "",
-	"busieness": "No",
+	"business": "No",
 	"lockdown": false,
 	"curfew": "N/A",
 	"public_closed": false,
@@ -1492,12 +1606,13 @@ export default [{
 	"army": "N/A",
 	"population_affected": 100.0,
 	"status": "No Closure",
-	"restriction_type": "N/A"
+	"restriction_type": "N/A",
+	"alpha-3": "JAM"
 }, {
-	"name": "9/14/1900",
+	"name": "French Polynesia",
 	"start": "",
 	"end": "",
-	"busieness": "",
+	"business": "",
 	"lockdown": "N/A",
 	"curfew": "N/A",
 	"public_closed": "N/A",
@@ -1505,12 +1620,13 @@ export default [{
 	"army": "N/A",
 	"population_affected": "N/A",
 	"status": "No Data",
-	"restriction_type": "N/A"
+	"restriction_type": "N/A",
+	"alpha-3": "PYF"
 }, {
-	"name": "2/6/1902",
+	"name": "Togo",
 	"start": "",
 	"end": "",
-	"busieness": "",
+	"business": "",
 	"lockdown": "N/A",
 	"curfew": "N/A",
 	"public_closed": "N/A",
@@ -1518,12 +1634,13 @@ export default [{
 	"army": "N/A",
 	"population_affected": "N/A",
 	"status": "No Data",
-	"restriction_type": "N/A"
+	"restriction_type": "N/A",
+	"alpha-3": "TGO"
 }, {
-	"name": "11/15/1900",
+	"name": "Guatemala",
 	"start": "3/23/2020",
 	"end": "",
-	"busieness": "Yes",
+	"business": "Yes",
 	"lockdown": true,
 	"curfew": true,
 	"public_closed": "N/A",
@@ -1531,12 +1648,13 @@ export default [{
 	"army": "N/A",
 	"population_affected": 100.0,
 	"status": "Ongoing",
-	"restriction_type": "Curfew"
+	"restriction_type": "Curfew",
+	"alpha-3": "GTM"
 }, {
-	"name": "3/25/1901",
+	"name": "Madagascar",
 	"start": "",
 	"end": "",
-	"busieness": "",
+	"business": "",
 	"lockdown": "N/A",
 	"curfew": "N/A",
 	"public_closed": "N/A",
@@ -1544,12 +1662,13 @@ export default [{
 	"army": "N/A",
 	"population_affected": "N/A",
 	"status": "No Data",
-	"restriction_type": "N/A"
+	"restriction_type": "N/A",
+	"alpha-3": "MDG"
 }, {
-	"name": "2/20/1900",
+	"name": "Barbados",
 	"start": "",
 	"end": "",
-	"busieness": "",
+	"business": "",
 	"lockdown": "N/A",
 	"curfew": "N/A",
 	"public_closed": "N/A",
@@ -1557,12 +1676,13 @@ export default [{
 	"army": "N/A",
 	"population_affected": "N/A",
 	"status": "No Data",
-	"restriction_type": "N/A"
+	"restriction_type": "N/A",
+	"alpha-3": "BRB"
 }, {
-	"name": "6/16/1901",
+	"name": "Aruba",
 	"start": "",
 	"end": "",
-	"busieness": "",
+	"business": "",
 	"lockdown": "N/A",
 	"curfew": "N/A",
 	"public_closed": "N/A",
@@ -1570,12 +1690,13 @@ export default [{
 	"army": "N/A",
 	"population_affected": "N/A",
 	"status": "No Data",
-	"restriction_type": "N/A"
+	"restriction_type": "N/A",
+	"alpha-3": "ABW"
 }, {
-	"name": "6/23/1901",
+	"name": "New Caledonia",
 	"start": "",
 	"end": "",
-	"busieness": "",
+	"business": "",
 	"lockdown": "N/A",
 	"curfew": "N/A",
 	"public_closed": "N/A",
@@ -1583,12 +1704,13 @@ export default [{
 	"army": "N/A",
 	"population_affected": "N/A",
 	"status": "No Data",
-	"restriction_type": "N/A"
+	"restriction_type": "N/A",
+	"alpha-3": "NCL"
 }, {
-	"name": "3/10/1902",
+	"name": "Uganda",
 	"start": "3/30/2020",
 	"end": "",
-	"busieness": "Yes",
+	"business": "Yes",
 	"lockdown": true,
 	"curfew": "N/A",
 	"public_closed": true,
@@ -1596,12 +1718,42 @@ export default [{
 	"army": "N/A",
 	"population_affected": 100.0,
 	"status": "Ongoing",
-	"restriction_type": "Lockdown"
+	"restriction_type": "Lockdown",
+	"alpha-3": "UGA"
 }, {
-	"name": "4/6/1901",
+	"name": "Maldives",
 	"start": "",
 	"end": "",
-	"busieness": "",
+	"business": "",
+	"lockdown": "N/A",
+	"curfew": "N/A",
+	"public_closed": "N/A",
+	"movement_enforcement": "N/A",
+	"army": "N/A",
+	"population_affected": "N/A",
+	"status": "No Data",
+	"restriction_type": "N/A",
+	"alpha-3": "MDV"
+}, {
+	"name": "Ethiopia",
+	"start": "",
+	"end": "",
+	"business": "",
+	"lockdown": "N/A",
+	"curfew": "N/A",
+	"public_closed": "N/A",
+	"movement_enforcement": "N/A",
+	"army": "N/A",
+	"population_affected": "N/A",
+	"status": "No Data",
+	"restriction_type": "N/A",
+	"alpha-3": "ETH"
+}, {
+	"name": "United Republic of Tanzania",
+  "alpha-3": "TZA",
+	"start": "",
+	"end": "",
+	"business": "",
 	"lockdown": "N/A",
 	"curfew": "N/A",
 	"public_closed": "N/A",
@@ -1611,10 +1763,10 @@ export default [{
 	"status": "No Data",
 	"restriction_type": "N/A"
 }, {
-	"name": "8/18/1900",
+	"name": "Zambia",
 	"start": "",
 	"end": "",
-	"busieness": "",
+	"business": "",
 	"lockdown": "N/A",
 	"curfew": "N/A",
 	"public_closed": "N/A",
@@ -1622,12 +1774,13 @@ export default [{
 	"army": "N/A",
 	"population_affected": "N/A",
 	"status": "No Data",
-	"restriction_type": "N/A"
+	"restriction_type": "N/A",
+	"alpha-3": "ZMB"
 }, {
-	"name": "4/13/1902",
+	"name": "Djibouti",
 	"start": "",
 	"end": "",
-	"busieness": "",
+	"business": "",
 	"lockdown": "N/A",
 	"curfew": "N/A",
 	"public_closed": "N/A",
@@ -1635,12 +1788,13 @@ export default [{
 	"army": "N/A",
 	"population_affected": "N/A",
 	"status": "No Data",
-	"restriction_type": "N/A"
+	"restriction_type": "N/A",
+	"alpha-3": "DJI"
 }, {
-	"name": "6/12/1902",
+	"name": "Mongolia",
 	"start": "",
 	"end": "",
-	"busieness": "",
+	"business": "",
 	"lockdown": "N/A",
 	"curfew": "N/A",
 	"public_closed": "N/A",
@@ -1648,38 +1802,13 @@ export default [{
 	"army": "N/A",
 	"population_affected": "N/A",
 	"status": "No Data",
-	"restriction_type": "N/A"
+	"restriction_type": "N/A",
+	"alpha-3": "MNG"
 }, {
-	"name": "9/18/1900",
-	"start": "",
-	"end": "",
-	"busieness": "",
-	"lockdown": "N/A",
-	"curfew": "N/A",
-	"public_closed": "N/A",
-	"movement_enforcement": "N/A",
-	"army": "N/A",
-	"population_affected": "N/A",
-	"status": "No Data",
-	"restriction_type": "N/A"
-}, {
-	"name": "5/10/1901",
-	"start": "",
-	"end": "",
-	"busieness": "",
-	"lockdown": "N/A",
-	"curfew": "N/A",
-	"public_closed": "N/A",
-	"movement_enforcement": "N/A",
-	"army": "N/A",
-	"population_affected": "N/A",
-	"status": "No Data",
-	"restriction_type": "N/A"
-}, {
-	"name": "8/9/1900",
+	"name": "El Salvador",
 	"start": "3/20/2020",
 	"end": "",
-	"busieness": "Yes",
+	"business": "Yes",
 	"lockdown": true,
 	"curfew": true,
 	"public_closed": "N/A",
@@ -1687,12 +1816,13 @@ export default [{
 	"army": "N/A",
 	"population_affected": 100.0,
 	"status": "Ongoing",
-	"restriction_type": "Curfew"
+	"restriction_type": "Curfew",
+	"alpha-3": "SLV"
 }, {
-	"name": "8/13/1900",
+	"name": "Equatorial Guinea",
 	"start": "",
 	"end": "",
-	"busieness": "",
+	"business": "",
 	"lockdown": "N/A",
 	"curfew": "N/A",
 	"public_closed": "N/A",
@@ -1700,12 +1830,13 @@ export default [{
 	"army": "N/A",
 	"population_affected": "N/A",
 	"status": "No Data",
-	"restriction_type": "N/A"
+	"restriction_type": "N/A",
+	"alpha-3": "GNQ"
 }, {
-	"name": "1/9/1902",
+	"name": "Suriname",
 	"start": "",
 	"end": "",
-	"busieness": "",
+	"business": "",
 	"lockdown": "N/A",
 	"curfew": "N/A",
 	"public_closed": "N/A",
@@ -1713,12 +1844,13 @@ export default [{
 	"army": "N/A",
 	"population_affected": "N/A",
 	"status": "No Data",
-	"restriction_type": "N/A"
+	"restriction_type": "N/A",
+	"alpha-3": "SUR"
 }, {
-	"name": "7/15/1901",
+	"name": "Niger",
 	"start": "",
 	"end": "",
-	"busieness": "",
+	"business": "",
 	"lockdown": "N/A",
 	"curfew": "N/A",
 	"public_closed": "N/A",
@@ -1726,12 +1858,13 @@ export default [{
 	"army": "N/A",
 	"population_affected": "N/A",
 	"status": "No Data",
-	"restriction_type": "N/A"
+	"restriction_type": "N/A",
+	"alpha-3": "NER"
 }, {
-	"name": "11/27/1900",
+	"name": "Haiti",
 	"start": "",
 	"end": "",
-	"busieness": "",
+	"business": "",
 	"lockdown": "N/A",
 	"curfew": "N/A",
 	"public_closed": "N/A",
@@ -1739,12 +1872,13 @@ export default [{
 	"army": "N/A",
 	"population_affected": "N/A",
 	"status": "No Data",
-	"restriction_type": "N/A"
+	"restriction_type": "N/A",
+	"alpha-3": "HTI"
 }, {
-	"name": "5/30/1901",
+	"name": "Namibia",
 	"start": "",
 	"end": "",
-	"busieness": "",
+	"business": "",
 	"lockdown": "N/A",
 	"curfew": "N/A",
 	"public_closed": "N/A",
@@ -1752,12 +1886,13 @@ export default [{
 	"army": "N/A",
 	"population_affected": "N/A",
 	"status": "No Data",
-	"restriction_type": "N/A"
+	"restriction_type": "N/A",
+	"alpha-3": "NAM"
 }, {
-	"name": "11/20/1901",
+	"name": "Seychelles",
 	"start": "",
 	"end": "",
-	"busieness": "",
+	"business": "",
 	"lockdown": "N/A",
 	"curfew": "N/A",
 	"public_closed": "N/A",
@@ -1765,12 +1900,13 @@ export default [{
 	"army": "N/A",
 	"population_affected": "N/A",
 	"status": "No Data",
-	"restriction_type": "N/A"
+	"restriction_type": "N/A",
+	"alpha-3": "SYC"
 }, {
-	"name": "6/14/1901",
+	"name": "Cura\\u00e7ao",
 	"start": "",
 	"end": "",
-	"busieness": "",
+	"business": "",
 	"lockdown": "N/A",
 	"curfew": "N/A",
 	"public_closed": "N/A",
@@ -1778,12 +1914,13 @@ export default [{
 	"army": "N/A",
 	"population_affected": "N/A",
 	"status": "No Data",
-	"restriction_type": "N/A"
+	"restriction_type": "N/A",
+	"alpha-3": "CUW"
 }, {
-	"name": "9/22/1900",
+	"name": "Gabon",
 	"start": "",
 	"end": "",
-	"busieness": "",
+	"business": "",
 	"lockdown": "N/A",
 	"curfew": "N/A",
 	"public_closed": "N/A",
@@ -1791,12 +1928,13 @@ export default [{
 	"army": "N/A",
 	"population_affected": "N/A",
 	"status": "No Data",
-	"restriction_type": "N/A"
+	"restriction_type": "N/A",
+	"alpha-3": "GAB"
 }, {
-	"name": "7/22/1900",
+	"name": "Benin",
 	"start": "",
 	"end": "",
-	"busieness": "",
+	"business": "",
 	"lockdown": "N/A",
 	"curfew": "N/A",
 	"public_closed": "N/A",
@@ -1804,12 +1942,13 @@ export default [{
 	"army": "N/A",
 	"population_affected": "N/A",
 	"status": "No Data",
-	"restriction_type": "N/A"
+	"restriction_type": "N/A",
+	"alpha-3": "BEN"
 }, {
-	"name": "11/23/1900",
+	"name": "Guyana",
 	"start": "",
 	"end": "",
-	"busieness": "",
+	"business": "",
 	"lockdown": "N/A",
 	"curfew": "N/A",
 	"public_closed": "N/A",
@@ -1817,12 +1956,13 @@ export default [{
 	"army": "N/A",
 	"population_affected": "N/A",
 	"status": "No Data",
-	"restriction_type": "N/A"
+	"restriction_type": "N/A",
+	"alpha-3": "GUY"
 }, {
-	"name": "2/12/1900",
+	"name": "Bahamas",
 	"start": "",
 	"end": "",
-	"busieness": "",
+	"business": "",
 	"lockdown": "N/A",
 	"curfew": "N/A",
 	"public_closed": "N/A",
@@ -1830,12 +1970,13 @@ export default [{
 	"army": "N/A",
 	"population_affected": "N/A",
 	"status": "No Data",
-	"restriction_type": "N/A"
+	"restriction_type": "N/A",
+	"alpha-3": "BHS"
 }, {
-	"name": "8/29/1900",
+	"name": "Fiji",
 	"start": "",
 	"end": "",
-	"busieness": "",
+	"business": "",
 	"lockdown": "N/A",
 	"curfew": "N/A",
 	"public_closed": "N/A",
@@ -1843,12 +1984,13 @@ export default [{
 	"army": "N/A",
 	"population_affected": "N/A",
 	"status": "No Data",
-	"restriction_type": "N/A"
+	"restriction_type": "N/A",
+	"alpha-3": "FJI"
 }, {
-	"name": "5/22/1901",
+	"name": "Mozambique",
 	"start": "",
 	"end": "",
-	"busieness": "",
+	"business": "",
 	"lockdown": "N/A",
 	"curfew": "N/A",
 	"public_closed": "N/A",
@@ -1856,12 +1998,13 @@ export default [{
 	"army": "N/A",
 	"population_affected": "N/A",
 	"status": "No Data",
-	"restriction_type": "N/A"
+	"restriction_type": "N/A",
+	"alpha-3": "MOZ"
 }, {
-	"name": "5/11/1900",
+	"name": "Cabo Verde",
 	"start": "",
 	"end": "",
-	"busieness": "",
+	"business": "",
 	"lockdown": "N/A",
 	"curfew": "N/A",
 	"public_closed": "N/A",
@@ -1869,12 +2012,13 @@ export default [{
 	"army": "N/A",
 	"population_affected": "N/A",
 	"status": "No Data",
-	"restriction_type": "N/A"
+	"restriction_type": "N/A",
+	"alpha-3": "CPV"
 }, {
-	"name": "6/26/1900",
+	"name": "Congo",
 	"start": "",
 	"end": "",
-	"busieness": "",
+	"business": "",
 	"lockdown": "N/A",
 	"curfew": "N/A",
 	"public_closed": "N/A",
@@ -1882,12 +2026,13 @@ export default [{
 	"army": "N/A",
 	"population_affected": "N/A",
 	"status": "No Data",
-	"restriction_type": "N/A"
+	"restriction_type": "N/A",
+	"alpha-3": "COG"
 }, {
-	"name": "11/19/1900",
+	"name": "Guinea",
 	"start": "",
 	"end": "",
-	"busieness": "",
+	"business": "",
 	"lockdown": "N/A",
 	"curfew": "N/A",
 	"public_closed": "N/A",
@@ -1895,12 +2040,13 @@ export default [{
 	"army": "N/A",
 	"population_affected": "N/A",
 	"status": "No Data",
-	"restriction_type": "N/A"
+	"restriction_type": "N/A",
+	"alpha-3": "GIN"
 }, {
-	"name": "1/17/1902",
+	"name": "Eswatini",
 	"start": "",
 	"end": "",
-	"busieness": "",
+	"business": "",
 	"lockdown": "N/A",
 	"curfew": "N/A",
 	"public_closed": "N/A",
@@ -1908,12 +2054,13 @@ export default [{
 	"army": "N/A",
 	"population_affected": "N/A",
 	"status": "No Data",
-	"restriction_type": "N/A"
+	"restriction_type": "N/A",
+	"alpha-3": "SWZ"
 }, {
-	"name": "1/29/1902",
+	"name": "Syrian Arab Republic",
 	"start": "",
 	"end": "",
-	"busieness": "",
+	"business": "",
 	"lockdown": "N/A",
 	"curfew": "N/A",
 	"public_closed": "N/A",
@@ -1921,12 +2068,13 @@ export default [{
 	"army": "N/A",
 	"population_affected": "N/A",
 	"status": "No Data",
-	"restriction_type": "N/A"
+	"restriction_type": "N/A",
+	"alpha-3": "SYR"
 }, {
-	"name": "9/26/1900",
+	"name": "Gambia",
 	"start": "",
 	"end": "",
-	"busieness": "",
+	"business": "",
 	"lockdown": "N/A",
 	"curfew": "N/A",
 	"public_closed": "N/A",
@@ -1934,12 +2082,13 @@ export default [{
 	"army": "N/A",
 	"population_affected": "N/A",
 	"status": "No Data",
-	"restriction_type": "N/A"
+	"restriction_type": "N/A",
+	"alpha-3": "GMB"
 }, {
-	"name": "12/29/1901",
+	"name": "Sudan",
 	"start": "",
 	"end": "",
-	"busieness": "",
+	"business": "",
 	"lockdown": "N/A",
 	"curfew": "N/A",
 	"public_closed": "N/A",
@@ -1947,12 +2096,13 @@ export default [{
 	"army": "N/A",
 	"population_affected": "N/A",
 	"status": "No Data",
-	"restriction_type": "N/A"
+	"restriction_type": "N/A",
+	"alpha-3": "SDN"
 }, {
-	"name": "12/16/1901",
+	"name": "Zimbabwe",
 	"start": "3/27/2020",
 	"end": "",
-	"busieness": "Yes",
+	"business": "Yes",
 	"lockdown": true,
 	"curfew": "N/A",
 	"public_closed": true,
@@ -1960,12 +2110,13 @@ export default [{
 	"army": "N/A",
 	"population_affected": 100.0,
 	"status": "Ongoing",
-	"restriction_type": "Lockdown"
+	"restriction_type": "Lockdown",
+	"alpha-3": "ZWE"
 }, {
-	"name": "6/7/1901",
+	"name": "Nepal",
 	"start": "3/24/2020",
 	"end": "",
-	"busieness": "Yes",
+	"business": "Yes",
 	"lockdown": true,
 	"curfew": "N/A",
 	"public_closed": true,
@@ -1973,12 +2124,13 @@ export default [{
 	"army": "N/A",
 	"population_affected": 100.0,
 	"status": "Ongoing",
-	"restriction_type": "Lockdown"
+	"restriction_type": "Lockdown",
+	"alpha-3": "NPL"
 }, {
-	"name": "1/23/1900",
+	"name": "Angola",
 	"start": "",
 	"end": "",
-	"busieness": "",
+	"business": "",
 	"lockdown": "N/A",
 	"curfew": "N/A",
 	"public_closed": "N/A",
@@ -1986,12 +2138,13 @@ export default [{
 	"army": "N/A",
 	"population_affected": "N/A",
 	"status": "No Data",
-	"restriction_type": "N/A"
+	"restriction_type": "N/A",
+	"alpha-3": "AGO"
 }, {
-	"name": "1/27/1900",
+	"name": "Antigua and Barbuda",
 	"start": "",
 	"end": "",
-	"busieness": "",
+	"business": "",
 	"lockdown": "N/A",
 	"curfew": "N/A",
 	"public_closed": "N/A",
@@ -1999,12 +2152,13 @@ export default [{
 	"army": "N/A",
 	"population_affected": "N/A",
 	"status": "No Data",
-	"restriction_type": "N/A"
+	"restriction_type": "N/A",
+	"alpha-3": "ATG"
 }, {
-	"name": "5/19/1900",
+	"name": "Central African Republic",
 	"start": "",
 	"end": "",
-	"busieness": "",
+	"business": "",
 	"lockdown": "N/A",
 	"curfew": "N/A",
 	"public_closed": "N/A",
@@ -2012,12 +2166,13 @@ export default [{
 	"army": "N/A",
 	"population_affected": "N/A",
 	"status": "No Data",
-	"restriction_type": "N/A"
+	"restriction_type": "N/A",
+	"alpha-3": "CAF"
 }, {
-	"name": "5/27/1900",
+	"name": "Chad",
 	"start": "",
 	"end": "",
-	"busieness": "",
+	"business": "",
 	"lockdown": "N/A",
 	"curfew": "N/A",
 	"public_closed": "N/A",
@@ -2025,12 +2180,13 @@ export default [{
 	"army": "N/A",
 	"population_affected": "N/A",
 	"status": "No Data",
-	"restriction_type": "N/A"
+	"restriction_type": "N/A",
+	"alpha-3": "TCD"
 }, {
-	"name": "2/21/1901",
+	"name": "Lao People's Democratic Republic",
 	"start": "",
 	"end": "",
-	"busieness": "",
+	"business": "",
 	"lockdown": "N/A",
 	"curfew": "N/A",
 	"public_closed": "N/A",
@@ -2038,12 +2194,13 @@ export default [{
 	"army": "N/A",
 	"population_affected": "N/A",
 	"status": "No Data",
-	"restriction_type": "N/A"
+	"restriction_type": "N/A",
+	"alpha-3": "LAO"
 }, {
-	"name": "3/5/1901",
+	"name": "Liberia",
 	"start": "",
 	"end": "",
-	"busieness": "",
+	"business": "",
 	"lockdown": "N/A",
 	"curfew": "N/A",
 	"public_closed": "N/A",
@@ -2051,12 +2208,13 @@ export default [{
 	"army": "N/A",
 	"population_affected": "N/A",
 	"status": "No Data",
-	"restriction_type": "N/A"
+	"restriction_type": "N/A",
+	"alpha-3": "LBR"
 }, {
-	"name": "4/13/1900",
+	"name": "Myanmar",
 	"start": "",
 	"end": "",
-	"busieness": "",
+	"business": "",
 	"lockdown": "N/A",
 	"curfew": "N/A",
 	"public_closed": "N/A",
@@ -2064,12 +2222,13 @@ export default [{
 	"army": "N/A",
 	"population_affected": "N/A",
 	"status": "No Data",
-	"restriction_type": "N/A"
+	"restriction_type": "N/A",
+	"alpha-3": "MMR"
 }, {
-	"name": "10/23/1901",
+	"name": "Saint Lucia",
 	"start": "",
 	"end": "",
-	"busieness": "",
+	"business": "",
 	"lockdown": "N/A",
 	"curfew": "N/A",
 	"public_closed": "N/A",
@@ -2077,12 +2236,13 @@ export default [{
 	"army": "N/A",
 	"population_affected": "N/A",
 	"status": "No Data",
-	"restriction_type": "N/A"
+	"restriction_type": "N/A",
+	"alpha-3": "LCA"
 }, {
-	"name": "3/4/1900",
+	"name": "Bhutan",
 	"start": "",
 	"end": "",
-	"busieness": "",
+	"business": "",
 	"lockdown": "N/A",
 	"curfew": "N/A",
 	"public_closed": "N/A",
@@ -2090,12 +2250,13 @@ export default [{
 	"army": "N/A",
 	"population_affected": "N/A",
 	"status": "No Data",
-	"restriction_type": "N/A"
+	"restriction_type": "N/A",
+	"alpha-3": "BTN"
 }, {
-	"name": "9/15/1901",
+	"name": "Guinea-Bissau",
 	"start": "",
 	"end": "",
-	"busieness": "",
+	"business": "",
 	"lockdown": "N/A",
 	"curfew": "N/A",
 	"public_closed": "N/A",
@@ -2103,12 +2264,13 @@ export default [{
 	"army": "N/A",
 	"population_affected": "N/A",
 	"status": "No Data",
-	"restriction_type": "N/A"
+	"restriction_type": "N/A",
+	"alpha-3": "GNB"
 }, {
-	"name": "4/10/1901",
+	"name": "Mali",
 	"start": "",
 	"end": "",
-	"busieness": "",
+	"business": "",
 	"lockdown": "N/A",
 	"curfew": "N/A",
 	"public_closed": "N/A",
@@ -2116,12 +2278,13 @@ export default [{
 	"army": "N/A",
 	"population_affected": "N/A",
 	"status": "No Data",
-	"restriction_type": "N/A"
+	"restriction_type": "N/A",
+	"alpha-3": "MLI"
 }, {
-	"name": "4/22/1901",
+	"name": "Mauritania",
 	"start": "",
 	"end": "",
-	"busieness": "",
+	"business": "",
 	"lockdown": "N/A",
 	"curfew": "N/A",
 	"public_closed": "N/A",
@@ -2129,12 +2292,13 @@ export default [{
 	"army": "N/A",
 	"population_affected": "N/A",
 	"status": "No Data",
-	"restriction_type": "N/A"
+	"restriction_type": "N/A",
+	"alpha-3": "MRT"
 }, {
-	"name": "7/11/1901",
+	"name": "Nicaragua",
 	"start": "",
 	"end": "",
-	"busieness": "",
+	"business": "",
 	"lockdown": "N/A",
 	"curfew": "N/A",
 	"public_closed": "N/A",
@@ -2142,12 +2306,13 @@ export default [{
 	"army": "N/A",
 	"population_affected": "N/A",
 	"status": "No Data",
-	"restriction_type": "N/A"
+	"restriction_type": "N/A",
+	"alpha-3": "NIC"
 }, {
-	"name": "3/24/1900",
+	"name": "Belize",
 	"start": "",
 	"end": "",
-	"busieness": "",
+	"business": "",
 	"lockdown": "N/A",
 	"curfew": "N/A",
 	"public_closed": "N/A",
@@ -2155,12 +2320,13 @@ export default [{
 	"army": "N/A",
 	"population_affected": "N/A",
 	"status": "No Data",
-	"restriction_type": "N/A"
+	"restriction_type": "N/A",
+	"alpha-3": "BLZ"
 }, {
-	"name": "8/19/1900",
+	"name": "Eritrea",
 	"start": "3/27/2020",
 	"end": "",
-	"busieness": "Yes",
+	"business": "Yes",
 	"lockdown": true,
 	"curfew": "N/A",
 	"public_closed": true,
@@ -2168,12 +2334,13 @@ export default [{
 	"army": "N/A",
 	"population_affected": 100.0,
 	"status": "Ongoing",
-	"restriction_type": "Lockdown"
+	"restriction_type": "Lockdown",
+	"alpha-3": "ERI"
 }, {
-	"name": "11/3/1900",
+	"name": "Grenada",
 	"start": "",
 	"end": "",
-	"busieness": "",
+	"business": "",
 	"lockdown": "N/A",
 	"curfew": "N/A",
 	"public_closed": "N/A",
@@ -2181,12 +2348,13 @@ export default [{
 	"army": "N/A",
 	"population_affected": "N/A",
 	"status": "No Data",
-	"restriction_type": "N/A"
+	"restriction_type": "N/A",
+	"alpha-3": "GRD"
 }, {
-	"name": "3/9/1901",
+	"name": "Libya",
 	"start": "",
 	"end": "",
-	"busieness": "",
+	"business": "",
 	"lockdown": "N/A",
 	"curfew": "N/A",
 	"public_closed": "N/A",
@@ -2194,12 +2362,13 @@ export default [{
 	"army": "N/A",
 	"population_affected": "N/A",
 	"status": "No Data",
-	"restriction_type": "N/A"
+	"restriction_type": "N/A",
+	"alpha-3": "LBY"
 }, {
-	"name": "8/20/1901",
+	"name": "Papua New Guinea",
 	"start": "",
 	"end": "",
-	"busieness": "",
+	"business": "",
 	"lockdown": "N/A",
 	"curfew": "N/A",
 	"public_closed": "N/A",
@@ -2207,12 +2376,13 @@ export default [{
 	"army": "N/A",
 	"population_affected": "N/A",
 	"status": "No Data",
-	"restriction_type": "N/A"
+	"restriction_type": "N/A",
+	"alpha-3": "PNG"
 }, {
-	"name": "11/24/1901",
+	"name": "Sierra Leone",
 	"start": "4/1/2020",
 	"end": "",
-	"busieness": "Yes",
+	"business": "Yes",
 	"lockdown": true,
 	"curfew": "N/A",
 	"public_closed": true,
@@ -2220,12 +2390,126 @@ export default [{
 	"army": "N/A",
 	"population_affected": 100.0,
 	"status": "Ongoing",
-	"restriction_type": "Lockdown"
+	"restriction_type": "Lockdown",
+	"alpha-3": "SLE"
 }, {
-	"name": "12/6/1901",
+	"name": "Somalia",
 	"start": "",
 	"end": "",
-	"busieness": "",
+	"business": "",
+	"lockdown": "N/A",
+	"curfew": "N/A",
+	"public_closed": "N/A",
+	"movement_enforcement": "N/A",
+	"army": "N/A",
+	"population_affected": "N/A",
+	"status": "No Data",
+	"restriction_type": "N/A",
+	"alpha-3": "SOM"
+}, {
+	"name": "Timor-Leste",
+	"start": "",
+	"end": "",
+	"business": "",
+	"lockdown": "N/A",
+	"curfew": "N/A",
+	"public_closed": "N/A",
+	"movement_enforcement": "N/A",
+	"army": "N/A",
+	"population_affected": "N/A",
+	"status": "No Data",
+	"restriction_type": "N/A",
+	"alpha-3": "TLS"
+}, {
+	"name": "Botswana",
+	"start": "",
+	"end": "",
+	"business": "",
+	"lockdown": "N/A",
+	"curfew": "N/A",
+	"public_closed": "N/A",
+	"movement_enforcement": "N/A",
+	"army": "N/A",
+	"population_affected": "N/A",
+	"status": "No Data",
+	"restriction_type": "N/A",
+	"alpha-3": "BWA"
+}, {
+	"name": "Solomon Islands",
+	"start": "",
+	"end": "",
+	"business": "",
+	"lockdown": "N/A",
+	"curfew": "N/A",
+	"public_closed": "N/A",
+	"movement_enforcement": "N/A",
+	"army": "N/A",
+	"population_affected": "N/A",
+	"status": "No Data",
+	"restriction_type": "N/A",
+	"alpha-3": "SLB"
+}, {
+	"name": "Burundi",
+	"start": "",
+	"end": "",
+	"business": "",
+	"lockdown": "N/A",
+	"curfew": "N/A",
+	"public_closed": "N/A",
+	"movement_enforcement": "N/A",
+	"army": "N/A",
+	"population_affected": "N/A",
+	"status": "No Data",
+	"restriction_type": "N/A",
+	"alpha-3": "BDI"
+}, {
+	"name": "Comoros",
+	"start": "",
+	"end": "",
+	"business": "",
+	"lockdown": "N/A",
+	"curfew": "N/A",
+	"public_closed": "N/A",
+	"movement_enforcement": "N/A",
+	"army": "N/A",
+	"population_affected": "N/A",
+	"status": "No Data",
+	"restriction_type": "N/A",
+	"alpha-3": "COM"
+}, {
+	"name": "Kiribati",
+	"start": "",
+	"end": "",
+	"business": "",
+	"lockdown": "N/A",
+	"curfew": "N/A",
+	"public_closed": "N/A",
+	"movement_enforcement": "N/A",
+	"army": "N/A",
+	"population_affected": "N/A",
+	"status": "No Data",
+	"restriction_type": "N/A",
+	"alpha-3": "KIR"
+}, {
+	"name": "Guam",
+	"start": "",
+	"end": "",
+	"business": "",
+	"lockdown": "N/A",
+	"curfew": "N/A",
+	"public_closed": "N/A",
+	"movement_enforcement": "N/A",
+	"army": "N/A",
+	"population_affected": "N/A",
+	"status": "No Data",
+	"restriction_type": "N/A",
+	"alpha-3": "GUM"
+}, {
+	"name": "Dem. People's Republic of Korea",
+  "alpha-3": "PRK",
+	"start": "",
+	"end": "",
+	"business": "",
 	"lockdown": "N/A",
 	"curfew": "N/A",
 	"public_closed": "N/A",
@@ -2235,10 +2519,53 @@ export default [{
 	"status": "No Data",
 	"restriction_type": "N/A"
 }, {
-	"name": "9/17/1901",
+	"name": "Lesotho",
 	"start": "",
 	"end": "",
-	"busieness": "",
+	"business": "",
+	"lockdown": "N/A",
+	"curfew": "N/A",
+	"public_closed": "N/A",
+	"movement_enforcement": "N/A",
+	"army": "N/A",
+	"population_affected": "N/A",
+	"status": "No Data",
+	"restriction_type": "N/A",
+	"alpha-3": "LSO"
+}, {
+	"name": "Malawi",
+	"start": "",
+	"end": "",
+	"business": "",
+	"lockdown": "N/A",
+	"curfew": "N/A",
+	"public_closed": "N/A",
+	"movement_enforcement": "N/A",
+	"army": "N/A",
+	"population_affected": "N/A",
+	"status": "No Data",
+	"restriction_type": "N/A",
+	"alpha-3": "MWI"
+}, {
+	"name": "Vanuatu",
+	"start": "",
+	"end": "",
+	"business": "",
+	"lockdown": "N/A",
+	"curfew": "N/A",
+	"public_closed": "N/A",
+	"movement_enforcement": "N/A",
+	"army": "N/A",
+	"population_affected": "N/A",
+	"status": "No Data",
+	"restriction_type": "N/A",
+	"alpha-3": "VUT"
+}, {
+	"name": "Micronesia (Fed. States of)",
+	"alpha-3": "FSM",
+	"start": "",
+	"end": "",
+	"business": "",
 	"lockdown": "N/A",
 	"curfew": "N/A",
 	"public_closed": "N/A",
@@ -2248,10 +2575,109 @@ export default [{
 	"status": "No Data",
 	"restriction_type": "N/A"
 }, {
-	"name": "3/12/1900",
+	"name": "Puerto Rico",
 	"start": "",
 	"end": "",
-	"busieness": "",
+	"business": "",
+	"lockdown": "N/A",
+	"curfew": "N/A",
+	"public_closed": "N/A",
+	"movement_enforcement": "N/A",
+	"army": "N/A",
+	"population_affected": "N/A",
+	"status": "No Data",
+	"restriction_type": "N/A",
+	"alpha-3": "PRI"
+}, {
+	"name": "Saint Vincent and the Grenadines",
+	"start": "",
+	"end": "",
+	"business": "",
+	"lockdown": "N/A",
+	"curfew": "N/A",
+	"public_closed": "N/A",
+	"movement_enforcement": "N/A",
+	"army": "N/A",
+	"population_affected": "N/A",
+	"status": "No Data",
+	"restriction_type": "N/A",
+	"alpha-3": "VCT"
+}, {
+	"name": "Sao Tome and Principe",
+	"start": "",
+	"end": "",
+	"business": "",
+	"lockdown": "N/A",
+	"curfew": "N/A",
+	"public_closed": "N/A",
+	"movement_enforcement": "N/A",
+	"army": "N/A",
+	"population_affected": "N/A",
+	"status": "No Data",
+	"restriction_type": "N/A",
+	"alpha-3": "STP"
+}, {
+	"name": "South Sudan",
+	"start": "",
+	"end": "",
+	"business": "",
+	"lockdown": "N/A",
+	"curfew": "N/A",
+	"public_closed": "N/A",
+	"movement_enforcement": "N/A",
+	"army": "N/A",
+	"population_affected": "N/A",
+	"status": "No Data",
+	"restriction_type": "N/A",
+	"alpha-3": "SSD"
+}, {
+	"name": "Tajikistan",
+	"start": "",
+	"end": "",
+	"business": "",
+	"lockdown": "N/A",
+	"curfew": "N/A",
+	"public_closed": "N/A",
+	"movement_enforcement": "N/A",
+	"army": "N/A",
+	"population_affected": "N/A",
+	"status": "No Data",
+	"restriction_type": "N/A",
+	"alpha-3": "TJK"
+}, {
+	"name": "Tonga",
+	"start": "",
+	"end": "",
+	"business": "",
+	"lockdown": "N/A",
+	"curfew": "N/A",
+	"public_closed": "N/A",
+	"movement_enforcement": "N/A",
+	"army": "N/A",
+	"population_affected": "N/A",
+	"status": "No Data",
+	"restriction_type": "N/A",
+	"alpha-3": "TON"
+}, {
+	"name": "Turkmenistan",
+	"start": "",
+	"end": "",
+	"business": "",
+	"lockdown": "N/A",
+	"curfew": "N/A",
+	"public_closed": "N/A",
+	"movement_enforcement": "N/A",
+	"army": "N/A",
+	"population_affected": "N/A",
+	"status": "No Data",
+	"restriction_type": "N/A",
+	"alpha-3": "TKM"
+}, {
+	"name": "United States Virgin Islands",
+	"alpha-3": "VIR",
+	"start": "",
+	"end": "",
+	"business": "",
 	"lockdown": "N/A",
 	"curfew": "N/A",
 	"public_closed": "N/A",
@@ -2261,10 +2687,10 @@ export default [{
 	"status": "No Data",
 	"restriction_type": "N/A"
 }, {
-	"name": "3/30/1900",
+	"name": "Samoa",
 	"start": "",
 	"end": "",
-	"busieness": "",
+	"business": "",
 	"lockdown": "N/A",
 	"curfew": "N/A",
 	"public_closed": "N/A",
@@ -2272,12 +2698,13 @@ export default [{
 	"army": "N/A",
 	"population_affected": "N/A",
 	"status": "No Data",
-	"restriction_type": "N/A"
+	"restriction_type": "N/A",
+	"alpha-3": "WSM"
 }, {
-	"name": "4/17/1900",
+	"name": "Yemen",
 	"start": "",
 	"end": "",
-	"busieness": "",
+	"business": "",
 	"lockdown": "N/A",
 	"curfew": "N/A",
 	"public_closed": "N/A",
@@ -2285,239 +2712,6 @@ export default [{
 	"army": "N/A",
 	"population_affected": "N/A",
 	"status": "No Data",
-	"restriction_type": "N/A"
-}, {
-	"name": "6/22/1900",
-	"start": "",
-	"end": "",
-	"busieness": "",
-	"lockdown": "N/A",
-	"curfew": "N/A",
-	"public_closed": "N/A",
-	"movement_enforcement": "N/A",
-	"army": "N/A",
-	"population_affected": "N/A",
-	"status": "No Data",
-	"restriction_type": "N/A"
-}, {
-	"name": "10/22/1900",
-	"start": "",
-	"end": "",
-	"busieness": "",
-	"lockdown": "N/A",
-	"curfew": "N/A",
-	"public_closed": "N/A",
-	"movement_enforcement": "N/A",
-	"army": "N/A",
-	"population_affected": "N/A",
-	"status": "No Data",
-	"restriction_type": "N/A"
-}, {
-	"name": "11/11/1900",
-	"start": "",
-	"end": "",
-	"busieness": "",
-	"lockdown": "N/A",
-	"curfew": "N/A",
-	"public_closed": "N/A",
-	"movement_enforcement": "N/A",
-	"army": "N/A",
-	"population_affected": "N/A",
-	"status": "No Data",
-	"restriction_type": "N/A"
-}, {
-	"name": "2/11/1901",
-	"start": "",
-	"end": "",
-	"busieness": "",
-	"lockdown": "N/A",
-	"curfew": "N/A",
-	"public_closed": "N/A",
-	"movement_enforcement": "N/A",
-	"army": "N/A",
-	"population_affected": "N/A",
-	"status": "No Data",
-	"restriction_type": "N/A"
-}, {
-	"name": "3/1/1901",
-	"start": "",
-	"end": "",
-	"busieness": "",
-	"lockdown": "N/A",
-	"curfew": "N/A",
-	"public_closed": "N/A",
-	"movement_enforcement": "N/A",
-	"army": "N/A",
-	"population_affected": "N/A",
-	"status": "No Data",
-	"restriction_type": "N/A"
-}, {
-	"name": "3/29/1901",
-	"start": "",
-	"end": "",
-	"busieness": "",
-	"lockdown": "N/A",
-	"curfew": "N/A",
-	"public_closed": "N/A",
-	"movement_enforcement": "N/A",
-	"army": "N/A",
-	"population_affected": "N/A",
-	"status": "No Data",
-	"restriction_type": "N/A"
-}, {
-	"name": "7/1/1901",
-	"start": "",
-	"end": "",
-	"busieness": "",
-	"lockdown": "N/A",
-	"curfew": "N/A",
-	"public_closed": "N/A",
-	"movement_enforcement": "N/A",
-	"army": "N/A",
-	"population_affected": "N/A",
-	"status": "No Data",
-	"restriction_type": "N/A"
-}, {
-	"name": "8/5/1901",
-	"start": "",
-	"end": "",
-	"busieness": "",
-	"lockdown": "N/A",
-	"curfew": "N/A",
-	"public_closed": "N/A",
-	"movement_enforcement": "N/A",
-	"army": "N/A",
-	"population_affected": "N/A",
-	"status": "No Data",
-	"restriction_type": "N/A"
-}, {
-	"name": "9/21/1901",
-	"start": "",
-	"end": "",
-	"busieness": "",
-	"lockdown": "N/A",
-	"curfew": "N/A",
-	"public_closed": "N/A",
-	"movement_enforcement": "N/A",
-	"army": "N/A",
-	"population_affected": "N/A",
-	"status": "No Data",
-	"restriction_type": "N/A"
-}, {
-	"name": "10/31/1901",
-	"start": "",
-	"end": "",
-	"busieness": "",
-	"lockdown": "N/A",
-	"curfew": "N/A",
-	"public_closed": "N/A",
-	"movement_enforcement": "N/A",
-	"army": "N/A",
-	"population_affected": "N/A",
-	"status": "No Data",
-	"restriction_type": "N/A"
-}, {
-	"name": "11/8/1901",
-	"start": "",
-	"end": "",
-	"busieness": "",
-	"lockdown": "N/A",
-	"curfew": "N/A",
-	"public_closed": "N/A",
-	"movement_enforcement": "N/A",
-	"army": "N/A",
-	"population_affected": "N/A",
-	"status": "No Data",
-	"restriction_type": "N/A"
-}, {
-	"name": "12/28/1901",
-	"start": "",
-	"end": "",
-	"busieness": "",
-	"lockdown": "N/A",
-	"curfew": "N/A",
-	"public_closed": "N/A",
-	"movement_enforcement": "N/A",
-	"army": "N/A",
-	"population_affected": "N/A",
-	"status": "No Data",
-	"restriction_type": "N/A"
-}, {
-	"name": "1/31/1902",
-	"start": "",
-	"end": "",
-	"busieness": "",
-	"lockdown": "N/A",
-	"curfew": "N/A",
-	"public_closed": "N/A",
-	"movement_enforcement": "N/A",
-	"army": "N/A",
-	"population_affected": "N/A",
-	"status": "No Data",
-	"restriction_type": "N/A"
-}, {
-	"name": "2/14/1902",
-	"start": "",
-	"end": "",
-	"busieness": "",
-	"lockdown": "N/A",
-	"curfew": "N/A",
-	"public_closed": "N/A",
-	"movement_enforcement": "N/A",
-	"army": "N/A",
-	"population_affected": "N/A",
-	"status": "No Data",
-	"restriction_type": "N/A"
-}, {
-	"name": "3/5/1902",
-	"start": "",
-	"end": "",
-	"busieness": "",
-	"lockdown": "N/A",
-	"curfew": "N/A",
-	"public_closed": "N/A",
-	"movement_enforcement": "N/A",
-	"army": "N/A",
-	"population_affected": "N/A",
-	"status": "No Data",
-	"restriction_type": "N/A"
-}, {
-	"name": "4/29/1902",
-	"start": "",
-	"end": "",
-	"busieness": "",
-	"lockdown": "N/A",
-	"curfew": "N/A",
-	"public_closed": "N/A",
-	"movement_enforcement": "N/A",
-	"army": "N/A",
-	"population_affected": "N/A",
-	"status": "No Data",
-	"restriction_type": "N/A"
-}, {
-	"name": "5/31/1902",
-	"start": "",
-	"end": "",
-	"busieness": "",
-	"lockdown": "N/A",
-	"curfew": "N/A",
-	"public_closed": "N/A",
-	"movement_enforcement": "N/A",
-	"army": "N/A",
-	"population_affected": "N/A",
-	"status": "No Data",
-	"restriction_type": "N/A"
-}, {
-	"name": "6/5/1902",
-	"start": "",
-	"end": "",
-	"busieness": "",
-	"lockdown": "N/A",
-	"curfew": "N/A",
-	"public_closed": "N/A",
-	"movement_enforcement": "N/A",
-	"army": "N/A",
-	"population_affected": "N/A",
-	"status": "No Data",
-	"restriction_type": "N/A"
+	"restriction_type": "N/A",
+	"alpha-3": "YEM"
 }]
