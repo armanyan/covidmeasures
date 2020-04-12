@@ -6,10 +6,10 @@
           <span class="navbar-toggler-icon icon-bar"></span>
           <span class="navbar-toggler-icon icon-bar"></span>
       </button>
-      <div class="navbar-wrapper" *ngIf="!isMobileMenu()">
+      <div class="navbar-wrapper" *ngIf="!isMobile">
         <h3>Citizens tracking government measures and their impacts</h3>
       </div>
-      <div class="navbar-wrapper" *ngIf="isMobileMenu()">
+      <div class="navbar-wrapper" *ngIf="isMobile">
         <h3>{{getTitle()}}</h3>
       </div>
     </div>

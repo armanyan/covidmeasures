@@ -1,6 +1,6 @@
 import { Component, OnInit, ElementRef } from '@angular/core';
 import { ROUTES } from '../sidebar/sidebar.component';
-import {Location, LocationStrategy, PathLocationStrategy} from '@angular/common';
+import { Location } from '@angular/common';
 import { Router } from '@angular/router';
 
 @Component({
@@ -11,9 +11,10 @@ import { Router } from '@angular/router';
 export class NavbarComponent implements OnInit {
     private listTitles: any[];
     location: Location;
-      mobile_menu_visible: any = 0;
+    mobile_menu_visible: any = 0;
     private toggleButton: any;
     private sidebarVisible: boolean;
+    public isMobile: boolean;
 
     constructor(location: Location,  private element: ElementRef, private router: Router) {
       this.location = location;
@@ -21,6 +22,7 @@ export class NavbarComponent implements OnInit {
     }
 
     ngOnInit(){
+      this.isMobile = window.innerWidth > 600 ? false : true;
       this.listTitles = ROUTES.filter(listTitle => listTitle);
       const navbar: HTMLElement = this.element.nativeElement;
       this.toggleButton = navbar.getElementsByClassName('navbar-toggler')[0];
@@ -33,14 +35,6 @@ export class NavbarComponent implements OnInit {
          }
      });
     }
-
-    isMobileMenu() {
-      console.log("mobile", $(window).width());
-      if ($(window).width() > 991) {
-          return false;
-      }
-      return true;
-    };
 
     sidebarOpen() {
         const toggleButton = this.toggleButton;
