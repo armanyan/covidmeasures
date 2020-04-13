@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import Chart from 'chart.js';
 
-import { ageRanges, getCountryNameByAlpha, getRegionByAlpha } from '../utils';
+import { ageRanges, getCountryNameByAlpha, getRegionByAlpha, createPieChart } from '../utils';
 import * as lockdownData from '../data/full_lockdown';
 import * as countriesData from '../data/countries';
 
@@ -36,11 +36,16 @@ export class LockdownComponent implements OnInit {
   public lockdownTableFull = [];
 
   public lockdownRegion = "World";
+  public lockdownPieChartCountriesRegion = "World";
+  public lockdownPieChartPopulationRegion = "World";
   public lockdownImpactedPeople: number;
   public curfewImpactedPeople: number;
   public averageDaysMissed: number;
 
   public lockdownTableUpdatedOn = 'April 11th, 2020';
+
+  private lockdownCountriesPieChart: Chart;
+  private lockdownPopulationPieChart: Chart;
 
   constructor() { }
 
@@ -48,6 +53,77 @@ export class LockdownComponent implements OnInit {
     this.isMobile = window.innerWidth > 600 ? false : true;
     this.setLockdownStatistics();
     this.lockdownChangeRegion('World');
+
+    const labels = ['Lockdown', 'Curfew', 'Removed Restrictions', 'No Or Light Restrictions', 'No Data']
+    const backgroundColor = ['#ffa600', '#ff6361', '#bc5090', '#58508d', '#003f5c'];
+    const countries = this.getCountriesByRegion('World');
+
+    const data1 = this.getCountriesData(countries);
+    const countriesCTX = (document.getElementById("lockdownCountriesPieChart") as any).getContext("2d");
+    this.lockdownCountriesPieChart = createPieChart(countriesCTX, labels, data1, backgroundColor);
+
+    const data2 = this.getPopulationData(countries);
+    const populationCTX = (document.getElementById("lockdownPopulationPieChart") as any).getContext("2d");
+    this.lockdownPopulationPieChart = createPieChart(populationCTX, labels, data2, backgroundColor);
+  }
+
+  private getCountriesData(countries) {
+    let lockdown = 0;
+    let curfew = 0;
+    let removedRestrictions = 0;
+    let lightRestrictions = 0;
+    let noData = 0;
+    for (const country of countries) {
+      if (country.end !== "N/A") {
+        removedRestrictions++;
+      } else if (country.restriction_type === "Lockdown") {
+        lockdown++;
+      } else if (country.restriction_type === "Curfew") {
+        curfew++;
+      } else if (country.restriction_type === "Businesses Shutdown") {
+        lightRestrictions++;
+      } else {
+        noData++;
+      }
+    }
+    return [lockdown, curfew, removedRestrictions, lightRestrictions, noData];
+  }
+
+  private getCountryPopulation(alpha3: string) {
+    const reducer = (acc: number, currVal: number) => { return currVal + acc };
+    for (const country of countriesData.default) {
+      if (country.alpha3 === alpha3) {
+        const population = ageRanges.map((ageRange) => country.population[ageRange]);
+        return Math.floor(population.reduce(reducer));
+      }
+    }
+  }
+
+  private getPopulationData(countries) {
+    let lockdown = 0;
+    let curfew = 0;
+    let removedRestrictions = 0;
+    let lightRestrictions = 0;
+    let noData = 0;
+    for (const country of countries) {
+      const population = this.getCountryPopulation(country["alpha-3"]);
+      if (country.end !== "N/A") {
+        removedRestrictions += Math.floor(population*country.population_affected);
+        lightRestrictions += Math.floor(population*(1-country.population_affected));
+      } else if (country.restriction_type === "Lockdown") {
+        lockdown += Math.floor(population*country.population_affected);
+        lightRestrictions += Math.floor(population*(1-country.population_affected));
+      } else if (country.restriction_type === "Curfew") {
+        curfew += Math.floor(population*country.population_affected);
+        lightRestrictions += Math.floor(population*(1-country.population_affected));
+      } else if (country.restriction_type === "Businesses Shutdown") {
+        lightRestrictions += population;
+      } else {
+        noData += population;
+      }
+    }
+    console.log([lockdown, curfew, removedRestrictions, lightRestrictions, noData]);
+    return [lockdown, curfew, removedRestrictions, lightRestrictions, noData];
   }
 
   public lockdownChangeRegion(region: string) {
@@ -56,6 +132,20 @@ export class LockdownComponent implements OnInit {
     this.lockdownImpactedPeople = Math.floor(this.getLockdownImpactedPopulation(countries));
     this.curfewImpactedPeople = this.getCurfewImpactedPopulation(countries);
     this.averageDaysMissed = this.getAverageDaysMissedPerRegion(countries);
+  }
+
+  public lockdownChangePieChartCountriesRegion(region: string) {
+    this.lockdownPieChartCountriesRegion = region;
+    const countries = this.getCountriesByRegion(region);
+    this.lockdownCountriesPieChart.data.datasets[0].data = this.getCountriesData(countries);
+    this.lockdownCountriesPieChart.update();
+  }
+
+  public lockdownChangePieChartPopulationRegion(region: string) {
+    this.lockdownPieChartPopulationRegion = region;
+    const countries = this.getCountriesByRegion(region);
+    this.lockdownPopulationPieChart.data.datasets[0].data = this.getPopulationData(countries);
+    this.lockdownPopulationPieChart.update();
   }
 
   private getLockdownImpactedPopulation(countries) {

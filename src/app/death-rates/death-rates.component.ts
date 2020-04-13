@@ -111,14 +111,6 @@ export class DeathRatesComponent implements OnInit {
     );
   }
 
-  // public changeDeathIntervale(dateIntervale: string) {
-  //   this.deathStatsSince1st = dateIntervale === 'Last 24h' ? false : true;
-  // }
-
-  // public changeEstimationIntervale(dateIntervale: string) {
-  //   this.estimationSince1st = dateIntervale === 'Last 24h' ? false : true;
-  // }
-
   private covidEstimationTooltip(tooltipItem: any, values: any) {
     const sum = values.datasets[0].data.reduce((a, b) => a + b, 0);
     const percent = Math.floor((tooltipItem.xLabel*100)/sum);
@@ -177,7 +169,6 @@ export class DeathRatesComponent implements OnInit {
 
   private getAllCausesDeaths() {
     const continent = continents_data.default[this.deathCausesLocation];
-    console.log(continent, this.deathCausesLocation);
     const today = new Date();
     const day1 = new Date("01/11/2020"); // the day of the first official death recorder from COVID-19
     const difference = Math.floor((today.getTime()-day1.getTime())/(1000*60*60*24));
