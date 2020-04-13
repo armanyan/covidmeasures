@@ -29,7 +29,7 @@ export class LockdownComponent implements OnInit {
   ]
 
   public statsHeaders = [
-    'Name', 'Start', 'End', 'Duration', 'Lockdown', 'Curfew', 'Other Measures', 'Population Impacted', 'Status'
+    'Name', 'Population Impacted', 'Lockdown', 'Curfew', 'Business Closure', 'Other Measures', 'Start', 'End', 'Duration', 'Status'
   ];
 
   public lockdownTable = [];
@@ -50,7 +50,7 @@ export class LockdownComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    this.isMobile = window.innerWidth > 600 ? false : true;
+    this.isMobile = window.innerWidth > 991 ? false : true;
     this.setLockdownStatistics();
     this.lockdownChangeRegion('World');
 
@@ -190,36 +190,43 @@ export class LockdownComponent implements OnInit {
     let duration;
     for (const country of lockdownData.default) {
       duration = this.getMissedDaysPerCountry(country);
-      if (country.public_closed)
       this.lockdownTableFull.push({
         "name": getCountryNameByAlpha(country['alpha-3']),
-        "start": this.getDate(country['start']),
-        "end": country['end'] !== '' ? this.getDate(country['end']) : this.getDate(country['expected_end']),
-        "duration": duration === 0 ? '' : duration,
-        "lockdown": country.lockdown,
-        "curfew": country.curfew === 'N/A' ? 'No Data' : country.curfew,
-        "other": this.getOtherMeasures(country),
         "population": this.getImpactedPeople(country['alpha-3'], country.population_affected),
+        "duration": duration === 0 ? '' : duration,
+        "lockdown": country.lockdown === 'N/A' ? '' : country.lockdown,
+        "curfew": country.curfew === 'N/A' ? '' : country.curfew,
+        "business": country.busieness === "N/A" ? '' : country.busieness,
+        "other": this.getOtherMeasures(country),
+        "start": this.getDate(country['start']),
+        "end": this.getEndDate(country['end'], country['expected_end']),
         "status": country['status']
       });
     }
     this.lockdownTable = this.lockdownTableFull.slice(0, 10);
   }
 
+  private getEndDate(end: string, expectedEnd: string) {
+    if (end !== 'N/A') {
+      return new Date(end).toDateString();
+    }
+    return expectedEnd === 'N/A' ? '' : new Date(expectedEnd).toDateString();
+  }
+
   private getOtherMeasures(country) {
     const measures = [];
-    if (country.public_closed) {
+    if (country.public_closed === true) {
       measures.push('Public Places Closed');
     }
-    if (country.movement_enforcement) {
+    if (country.movement_enforcement === "Yes") {
       measures.push('Movement Enforcement');
     }
     if (country.army === true) {
       measures.push('Army Intervention');
     }
-    if (country.business === "Yes") {
-      measures.push('Business Shutdown');
-    }
+    // if (country.business === "Yes") {
+    //   measures.push('Business Shutdown');
+    // }
     return measures;
   }
 

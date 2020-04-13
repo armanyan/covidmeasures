@@ -225,13 +225,14 @@
               <tbody>
                 <tr *ngFor="let row of lockdownTable">
                   <td>{{ row.name }}</td>
+                  <td>{{ row.population | number}}</td>
+                  <td>{{ row.lockdown }}</td>
+                  <td>{{ row.curfew }}</td>
+                  <td>{{ row.business }}</td>
+                  <td>{{ row.other }}</td>
                   <td>{{ row.start }}</td>
                   <td>{{ row.end }}</td>
                   <td>{{ row.duration }}</td>
-                  <td>{{ row.lockdown }}</td>
-                  <td>{{ row.curfew }}</td>
-                  <td>{{ row.other }}</td>
-                  <td>{{ row.population | number}}</td>
                   <td>{{ row.status }}</td>
                 </tr>
               </tbody>

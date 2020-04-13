@@ -1,11 +1,11 @@
 <div class="logo">
-  <a href="https://www.creative-tim.com" class="simple-text">
+  <a href="http://www.covidmeasures.info" class="simple-text">
     <div class="logo-img">
       <img src="/assets/img/logo.png"/>
     </div>
   </a>
 </div>
-<div class="sidebar-wrapper">
+<div class="sidebar-wrapper menu-on-left">
   <ul class="nav">
     <li routerLinkActive="active" *ngFor="let menuItem of menuItems" class="{{menuItem.class}} nav-item">
       <a *ngIf="!menuItem.soon && !menuItem.join && !menuItem.contribute" class="nav-link" [routerLink]="[menuItem.path]">

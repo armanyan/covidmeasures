@@ -60,7 +60,7 @@ export class SchoolComponent implements OnInit {
   ) { }
 
   async ngOnInit() {
-    this.isMobile = window.innerWidth > 600 ? false : true;
+    this.isMobile = window.innerWidth > 991 ? false : true;
     await this.setCurrentDeathEvolution();
     this.numberChildrenImpacted = Math.floor(this.getContinentChildrenPopulation(this.schoolClosureRegion));
     this.averageDaysMissed = this.getAverageDaysMissedPerRegion('World');

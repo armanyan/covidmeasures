@@ -84,7 +84,7 @@ export class DeathRatesComponent implements OnInit {
   ) { }
 
   async ngOnInit() {
-    this.isMobile = window.innerWidth > 600 ? false : true;
+    this.isMobile = window.innerWidth > 991 ? false : true;
     await this.setCurrentDeathEvolution()
     this.since1st.backgroundColor = totalDeaths.data.map(() => { return '#1f8ef1'; })
     this.yesterday.backgroundColor = totalDeaths.data.map(() => { return '#1f8ef1'; })
