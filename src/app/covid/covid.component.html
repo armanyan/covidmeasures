@@ -3,10 +3,8 @@
   <div class="container-fluid">
 
     <div layout-align="end end">
-      <h2>Some COVID Stats</h2>
+      <h2><u>Citizens Tracking COVID-19 Statistics</u></h2>
     </div>
-
-    <hr>
 
     <div class="row">
       <div class="col-md-6">
@@ -25,7 +23,7 @@
               Source:
               <a
                 href="https://www.ecdc.europa.eu/en/publications-data/download-todays-data-geographic-distribution-covid-19-cases-worldwide"
-              >European Centre for Disease Prevention and Control</a></div>
+              >ECDC</a></div>
           </div>
         </div>
       </div>
@@ -48,7 +46,7 @@
               Source:
               <a
                 href="https://www.ecdc.europa.eu/en/publications-data/download-todays-data-geographic-distribution-covid-19-cases-worldwide"
-              >European Centre for Disease Prevention and Control</a></div>
+              >ECDC</a></div>
           </div>
         </div>
       </div>
@@ -72,12 +70,9 @@
           <div class="content table-responsive table-full-width">
             <table class="table">
               <thead>
-                <th class="text-primary">{{ statsHeaders[0] }}</th>
-                <th class="text-primary">{{ statsHeaders[1] }}</th>
-                <th class="text-primary">{{ statsHeaders[2] }}</th>
-                <th class="text-primary">{{ statsHeaders[3] }}</th>
-                <th class="text-primary">{{ statsHeaders[4] }}</th>
-                <th class="text-primary">{{ statsHeaders[5] }}</th>
+                <th class="text-primary" *ngFor="let row of statsHeaders">
+                  {{ row }}
+                </th>
               </thead>
               <tbody>
                 <tr *ngFor="let row of stats">
@@ -102,7 +97,7 @@
             Source:
             <a
               href="https://www.ecdc.europa.eu/en/publications-data/download-todays-data-geographic-distribution-covid-19-cases-worldwide"
-            >European Centre for Disease Prevention and Control</a>
+            >ECDC</a>
           </div>
         </div>
 

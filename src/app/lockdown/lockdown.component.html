@@ -3,7 +3,7 @@
   <div class="container-fluid">
 
     <div layout-align="end end">
-      <h2>Lockdown Measures</h2>
+      <h2><u>Citizens Tracking Lockdown Measures</u></h2>
     </div>
 
     <p>
@@ -32,80 +32,20 @@
             </mat-select>
           </div>
 
-          <div *ngIf="!isMobile">
-
-            <div class="btn-group">
-
-              <button mat-raised-button *ngIf="lockdownRegion==='World'"
+          <ng-container *ngIf="!isMobile">
+            <ng-container *ngFor="let location of locations">
+              <button mat-raised-button *ngIf="lockdownRegion===location.value"
                 class="float" type="button" color="primary">
-                <span>World</span>
-              </button>
-              <button mat-button *ngIf="lockdownRegion!=='World'"
-                class="float" type="button" color="primary" (click)="lockdownChangeRegion('World')">
-                <span>World</span>
+                <span>{{ location.viewValue }}</span>
               </button>
 
-              <button mat-raised-button *ngIf="lockdownRegion==='Northern America'"
-                class="float" type="button" color="primary">
-                <span>North America</span>
+              <button mat-button *ngIf="lockdownRegion!==location.value"
+                class="float" type="button" color="primary"
+                (click)="lockdownChangeRegion(location.value)">
+                <span>{{ location.viewValue }}</span>
               </button>
-              <button mat-button *ngIf="lockdownRegion!=='Northern America'"
-                class="float" type="button" color="primary" (click)="lockdownChangeRegion('Northern America')">
-                <span>North America</span>
-              </button>
-
-              <button mat-raised-button *ngIf="lockdownRegion==='Europe'"
-                class="float" type="button" color="primary">
-                <span>Europe</span>
-              </button>
-              <button mat-button *ngIf="lockdownRegion!=='Europe'"
-                class="float" type="button" color="primary" (click)="lockdownChangeRegion('Europe')">
-                <span>Europe</span>
-              </button>
-
-              <button mat-raised-button *ngIf="lockdownRegion==='Asia'"
-                class="float" type="button" color="primary">
-                <span>Asia</span>
-              </button>
-              <button mat-button *ngIf="lockdownRegion!=='Asia'"
-                class="float" type="button" color="primary" (click)="lockdownChangeRegion('Asia')">
-                <span>Asia</span>
-              </button>
-
-              <button mat-raised-button *ngIf="lockdownRegion==='Africa'"
-                class="float" type="button" color="primary">
-                <span>Africa</span>
-              </button>
-              <button mat-button *ngIf="lockdownRegion!=='Africa'"
-                class="float" type="button" color="primary" (click)="lockdownChangeRegion('Africa')">
-                <span>Africa</span>
-              </button>
-
-            </div>
-
-            <div class="btn-group">
-
-              <button mat-raised-button *ngIf="lockdownRegion==='Oceania'"
-                class="float" type="button" color="primary">
-                <span>Oceania</span>
-              </button>
-              <button mat-button *ngIf="lockdownRegion!=='Oceania'"
-                class="float" type="button" color="primary" (click)="lockdownChangeRegion('Oceania')">
-                <span>Oceania</span>
-              </button>
-
-              <button mat-raised-button *ngIf="lockdownRegion==='Latin America and the Caribbean'"
-                class="float" type="button" color="primary">
-                <span>Latin America and the Caribbean</span>
-              </button>
-              <button mat-button *ngIf="lockdownRegion!=='Latin America and the Caribbean'"
-                class="float" type="button" color="primary" (click)="lockdownChangeRegion('Latin America and the Caribbean')">
-                <span>Latin America and the Caribbean</span>
-              </button>
-
-            </div>
-
-          </div>
+            </ng-container>
+          </ng-container>
 
         </div>
           <div class="card-body">
@@ -164,83 +104,29 @@
 
             <div *ngIf="isMobile">
               <mat-label>Choose Region</mat-label>
-                <mat-select [(value)]="lockdownPieChartCountriesRegion" (selectionChange)="lockdownChangePieChartCountriesRegion($event.value)">
-                  <mat-option *ngFor="let location of locations" [value]="location.value">
-                    {{location.viewValue}}
-                  </mat-option>
-                </mat-select>
-              </div>
-
-            <div *ngIf="!isMobile">
-              <div class="btn-group" *ngIf="!isMobile">
-                <button mat-raised-button *ngIf="lockdownPieChartCountriesRegion==='World'"
-                  class="float" type="button" color="primary">
-                  <span>World</span>
-                </button>
-                <button mat-button *ngIf="lockdownPieChartCountriesRegion!=='World'"
-                  class="float" type="button" color="primary" (click)="lockdownChangePieChartCountriesRegion('World')">
-                  <span>World</span>
-                </button>
-    
-                <button mat-raised-button *ngIf="lockdownPieChartCountriesRegion==='Northern America'"
-                  class="float" type="button" color="primary">
-                  <span>North America</span>
-                </button>
-                <button mat-button *ngIf="lockdownPieChartCountriesRegion!=='Northern America'"
-                  class="float" type="button" color="primary" (click)="lockdownChangePieChartCountriesRegion('Northern America')">
-                  <span>North America</span>
-                </button>
-    
-                <button mat-raised-button *ngIf="lockdownPieChartCountriesRegion==='Europe'"
-                  class="float" type="button" color="primary">
-                  <span>Europe</span>
-                </button>
-                <button mat-button *ngIf="lockdownPieChartCountriesRegion!=='Europe'"
-                  class="float" type="button" color="primary" (click)="lockdownChangePieChartCountriesRegion('Europe')">
-                  <span>Europe</span>
-                </button>
-    
-                <button mat-raised-button *ngIf="lockdownPieChartCountriesRegion==='Asia'"
-                  class="float" type="button" color="primary">
-                  <span>Asia</span>
-                </button>
-                <button mat-button *ngIf="lockdownPieChartCountriesRegion!=='Asia'"
-                  class="float" type="button" color="primary" (click)="lockdownChangePieChartCountriesRegion('Asia')">
-                  <span>Asia</span>
-                </button>
-                
-                <button mat-raised-button *ngIf="lockdownPieChartCountriesRegion==='Africa'"
-                  class="float" type="button" color="primary">
-                  <span>Africa</span>
-                </button>
-                <button mat-button *ngIf="lockdownPieChartCountriesRegion!=='Africa'"
-                  class="float" type="button" color="primary" (click)="lockdownChangePieChartCountriesRegion('Africa')">
-                  <span>Africa</span>
-                </button>
-    
-              </div>
+              <mat-select
+                [(value)]="lockdownPieChartCountriesRegion"
+                (selectionChange)="lockdownChangePieChartCountriesRegion($event.value)">
+                <mat-option *ngFor="let location of locations" [value]="location.value">
+                  {{location.viewValue}}
+                </mat-option>
+              </mat-select>
             </div>
-            <div class="btn-group" *ngIf="!isMobile">
 
-              <button mat-raised-button *ngIf="lockdownPieChartCountriesRegion==='Oceania'"
-                class="float" type="button" color="primary">
-                <span>Oceania</span>
-              </button>
-              <button mat-button *ngIf="lockdownPieChartCountriesRegion!=='Oceania'"
-                class="float" type="button" color="primary" (click)="lockdownChangePieChartCountriesRegion('Oceania')">
-                <span>Oceania</span>
-              </button>
-  
-              <button mat-raised-button *ngIf="lockdownPieChartCountriesRegion==='Latin America and the Caribbean'"
-                class="float" type="button" color="primary">
-                <span>Latin America and the Caribbean</span>
-              </button>
-              <button mat-button *ngIf="lockdownPieChartCountriesRegion!=='Latin America and the Caribbean'"
-                class="float" type="button" color="primary" (click)="lockdownChangePieChartCountriesRegion('Latin America and the Caribbean')">
-                <span>Latin America and the Caribbean</span>
-              </button>
-  
-            </div>
+            <ng-container *ngIf="!isMobile">
+              <ng-container *ngFor="let location of locations">
+                <button mat-raised-button *ngIf="lockdownPieChartCountriesRegion===location.value"
+                  class="float" type="button" color="primary">
+                  <span>{{ location.viewValue }}</span>
+                </button>
+
+                <button mat-button *ngIf="lockdownPieChartCountriesRegion!==location.value"
+                  class="float" type="button" color="primary"
+                  (click)="lockdownChangePieChartCountriesRegion(location.value)">
+                  <span>{{ location.viewValue }}</span>
+                </button>
+              </ng-container>
+            </ng-container>
           </div>
 
           <div class="card-body">
@@ -266,83 +152,29 @@
             <h3 class="card-title">Population</h3>
             <div *ngIf="isMobile">
               <mat-label>Choose Region</mat-label>
-              <mat-select [(value)]="lockdownPieChartPopulationRegion" (selectionChange)="lockdownChangePieChartPopulationRegion($event.value)">
+              <mat-select
+                [(value)]="lockdownPieChartPopulationRegion"
+                (selectionChange)="lockdownChangePieChartPopulationRegion($event.value)">
                 <mat-option *ngFor="let location of locations" [value]="location.value">
-                  {{location.viewValue}}
+                  {{ location.viewValue }}
                 </mat-option>
               </mat-select>
             </div>
 
-            <div *ngIf="!isMobile">
-              <div class="btn-group" *ngIf="!isMobile">
-                <button mat-raised-button *ngIf="lockdownPieChartPopulationRegion==='World'"
+            <ng-container *ngIf="!isMobile">
+              <ng-container *ngFor="let location of locations">
+                <button mat-raised-button *ngIf="lockdownPieChartPopulationRegion===location.value"
                   class="float" type="button" color="primary">
-                  <span>World</span>
+                  <span>{{ location.viewValue }}</span>
                 </button>
-                <button mat-button *ngIf="lockdownPieChartPopulationRegion!=='World'"
-                  class="float" type="button" color="primary" (click)="lockdownChangePieChartPopulationRegion('World')">
-                  <span>World</span>
-                </button>
-    
-                <button mat-raised-button *ngIf="lockdownPieChartPopulationRegion==='Northern America'"
-                  class="float" type="button" color="primary">
-                  <span>North America</span>
-                </button>
-                <button mat-button *ngIf="lockdownPieChartPopulationRegion!=='Northern America'"
-                  class="float" type="button" color="primary" (click)="lockdownChangePieChartPopulationRegion('Northern America')">
-                  <span>North America</span>
-                </button>
-    
-                <button mat-raised-button *ngIf="lockdownPieChartPopulationRegion==='Europe'"
-                  class="float" type="button" color="primary">
-                  <span>Europe</span>
-                </button>
-                <button mat-button *ngIf="lockdownPieChartPopulationRegion!=='Europe'"
-                  class="float" type="button" color="primary" (click)="lockdownChangePieChartPopulationRegion('Europe')">
-                  <span>Europe</span>
-                </button>
-    
-                <button mat-raised-button *ngIf="lockdownPieChartPopulationRegion==='Asia'"
-                  class="float" type="button" color="primary">
-                  <span>Asia</span>
-                </button>
-                <button mat-button *ngIf="lockdownPieChartPopulationRegion!=='Asia'"
-                  class="float" type="button" color="primary" (click)="lockdownChangePieChartPopulationRegion('Asia')">
-                  <span>Asia</span>
-                </button>
-                
-                <button mat-raised-button *ngIf="lockdownPieChartPopulationRegion==='Africa'"
-                  class="float" type="button" color="primary">
-                  <span>Africa</span>
-                </button>
-                <button mat-button *ngIf="lockdownPieChartPopulationRegion!=='Africa'"
-                  class="float" type="button" color="primary" (click)="lockdownChangePieChartPopulationRegion('Africa')">
-                  <span>Africa</span>
-                </button>
-    
-              </div>
-            </div>
-            <div class="btn-group" *ngIf="!isMobile">
 
-              <button mat-raised-button *ngIf="lockdownPieChartPopulationRegion==='Oceania'"
-                class="float" type="button" color="primary">
-                <span>Oceania</span>
-              </button>
-              <button mat-button *ngIf="lockdownPieChartPopulationRegion!=='Oceania'"
-                class="float" type="button" color="primary" (click)="lockdownChangePieChartPopulationRegion('Oceania')">
-                <span>Oceania</span>
-              </button>
-  
-              <button mat-raised-button *ngIf="lockdownPieChartPopulationRegion==='Latin America and the Caribbean'"
-                class="float" type="button" color="primary">
-                <span>Latin America and the Caribbean</span>
-              </button>
-              <button mat-button *ngIf="lockdownPieChartPopulationRegion!=='Latin America and the Caribbean'"
-                class="float" type="button" color="primary" (click)="lockdownChangePieChartPopulationRegion('Latin America and the Caribbean')">
-                <span>Latin America and the Caribbean</span>
-              </button>
-  
-            </div>
+                <button mat-button *ngIf="lockdownPieChartPopulationRegion!==location.value"
+                  class="float" type="button" color="primary"
+                  (click)="lockdownChangePieChartPopulationRegion(location.value)">
+                  <span>{{ location.viewValue }}</span>
+                </button>
+              </ng-container>
+            </ng-container>
           </div>
             
           <div class="card-body">
@@ -375,7 +207,9 @@
           <h3 class="card-title">Lockdown Status Per Country</h3>
           <mat-form-field>
             <mat-label>Search by Country</mat-label>
-            <input matInput (keyup)="applyFilter($event)" placeholder="United States of America, France, China...">
+            <input matInput (keyup)="applyFilter($event)"
+              placeholder="United States of America, France, China..."
+            >
           </mat-form-field>
         </div>
 

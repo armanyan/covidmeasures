@@ -122,7 +122,6 @@ export class LockdownComponent implements OnInit {
         noData += population;
       }
     }
-    console.log([lockdown, curfew, removedRestrictions, lightRestrictions, noData]);
     return [lockdown, curfew, removedRestrictions, lightRestrictions, noData];
   }
 

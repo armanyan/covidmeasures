@@ -10,7 +10,6 @@ import * as covid from '../data/covid_evolution.json';
   styleUrls: ['./covid.component.css']
 })
 export class CovidComponent implements OnInit {
-  public tableData1: any;
   public statsHeaders = ['Country', 'Total Cases', 'New Cases', 'Total Deaths', 'New Deaths', 'Recovered'];
   public stats: any;
   public worldStats: any;
@@ -39,7 +38,7 @@ export class CovidComponent implements OnInit {
     // world table
     try {
       await this.fetchWorldData();
-      this.stats = JSON.parse(JSON.stringify(this.worldStats))
+      this.stats = JSON.parse(JSON.stringify(this.worldStats)).slice(0, 10);
     } catch {
       // this.stats = lockdown_stats.values;
     }
@@ -71,7 +70,7 @@ export class CovidComponent implements OnInit {
     const search = (event.target as any).value.toLowerCase();
     this.stats = this.worldStats.filter(
       row => row.country.toLowerCase().includes(search)
-    );
+    ).slice(0, 10);
     if (this.stats[this.stats.length-1].country !== "World") {
       this.stats.push(this.getWorldRow());
     }

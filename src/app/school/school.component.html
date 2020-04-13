@@ -2,10 +2,8 @@
 <div class="main-content">
   <div class="container-fluid">
 
-    <hr>
-
     <div layout-align="end end">
-      <h2>School Closure</h2>
+      <h2><u>Citizens Tracking School Closures</u></h2>
     </div>
 
     <p>
@@ -32,75 +30,20 @@
             </mat-select>
           </div>
 
-          <div class="btn-group" *ngIf="!isMobile">
-            <button mat-raised-button *ngIf="schoolClosureRegion==='World'"
-              class="float" type="button" color="primary">
-              <span>World</span>
-            </button>
-            <button mat-button *ngIf="schoolClosureRegion!=='World'"
-              class="float" type="button" color="primary" (click)="schoolClosureChangeLocation('World')">
-              <span>World</span>
-            </button>
+          <ng-container *ngIf="!isMobile">
+            <ng-container *ngFor="let location of locations">
+              <button mat-raised-button *ngIf="schoolClosureRegion===location.value"
+                class="float" type="button" color="primary">
+                <span>{{ location.viewValue }}</span>
+              </button>
 
-            <button mat-raised-button *ngIf="schoolClosureRegion==='Northern America'"
-              class="float" type="button" color="primary">
-              <span>North America</span>
-            </button>
-            <button mat-button *ngIf="schoolClosureRegion!=='Northern America'"
-              class="float" type="button" color="primary" (click)="schoolClosureChangeLocation('Northern America')">
-              <span>North America</span>
-            </button>
-
-            <button mat-raised-button *ngIf="schoolClosureRegion==='Europe'"
-              class="float" type="button" color="primary">
-              <span>Europe</span>
-            </button>
-            <button mat-button *ngIf="schoolClosureRegion!=='Europe'"
-              class="float" type="button" color="primary" (click)="schoolClosureChangeLocation('Europe')">
-              <span>Europe</span>
-            </button>
-
-            <button mat-raised-button *ngIf="schoolClosureRegion==='Asia'"
-              class="float" type="button" color="primary">
-              <span>Asia</span>
-            </button>
-            <button mat-button *ngIf="schoolClosureRegion!=='Asia'"
-              class="float" type="button" color="primary" (click)="schoolClosureChangeLocation('Asia')">
-              <span>Asia</span>
-            </button>
-
-            <button mat-raised-button *ngIf="schoolClosureRegion==='Africa'"
-              class="float" type="button" color="primary">
-              <span>Africa</span>
-            </button>
-            <button mat-button *ngIf="schoolClosureRegion!=='Africa'"
-              class="float" type="button" color="primary" (click)="schoolClosureChangeLocation('Africa')">
-              <span>Africa</span>
-            </button>
-
-          </div>
-
-          <div class="btn-group" *ngIf="!isMobile">
-
-            <button mat-raised-button *ngIf="schoolClosureRegion==='Oceania'"
-              class="float" type="button" color="primary">
-              <span>Oceania</span>
-            </button>
-            <button mat-button *ngIf="schoolClosureRegion!=='Oceania'"
-              class="float" type="button" color="primary" (click)="schoolClosureChangeLocation('Oceania')">
-              <span>Oceania</span>
-            </button>
-
-            <button mat-raised-button *ngIf="schoolClosureRegion==='Latin America and the Caribbean'"
-              class="float" type="button" color="primary">
-              <span>Latin America and the Caribbean</span>
-            </button>
-            <button mat-button *ngIf="schoolClosureRegion!=='Latin America and the Caribbean'"
-              class="float" type="button" color="primary" (click)="schoolClosureChangeLocation('Latin America and the Caribbean')">
-              <span>Latin America and the Caribbean</span>
-            </button>
-
-          </div>
+              <button mat-button *ngIf="schoolClosureRegion!==location.value"
+                class="float" type="button" color="primary"
+                (click)="schoolClosureChangeLocation(location.value)">
+                <span>{{ location.viewValue }}</span>
+              </button>
+            </ng-container>
+          </ng-container>
 
         </div>
           <div class="card-body">
@@ -165,75 +108,21 @@
             </mat-select>
           </div>
 
-          <div class="btn-group" *ngIf="!isMobile">
-            <button mat-raised-button *ngIf="covidVSSchoolRegion==='World'"
-              class="float" type="button" color="primary">
-              <span>World</span>
-            </button>
-            <button mat-button *ngIf="covidVSSchoolRegion!=='World'"
-              class="float" type="button" color="primary" (click)="covidVSSchoolChangeRegion('World')">
-              <span>World</span>
-            </button>
+          <ng-container *ngIf="!isMobile">
+            <ng-container *ngFor="let location of locations">
+              <button mat-raised-button *ngIf="covidVSSchoolRegion===location.value"
+                class="float" type="button" color="primary">
+                <span>{{ location.viewValue }}</span>
+              </button>
 
-            <button mat-raised-button *ngIf="covidVSSchoolRegion==='Northern America'"
-              class="float" type="button" color="primary">
-              <span>North America</span>
-            </button>
-            <button mat-button *ngIf="covidVSSchoolRegion!=='Northern America'"
-              class="float" type="button" color="primary" (click)="covidVSSchoolChangeRegion('Northern America')">
-              <span>North America</span>
-            </button>
+              <button mat-button *ngIf="covidVSSchoolRegion!==location.value"
+                class="float" type="button" color="primary"
+                (click)="covidVSSchoolChangeRegion(location.value)">
+                <span>{{ location.viewValue }}</span>
+              </button>
+            </ng-container>
+          </ng-container>
 
-            <button mat-raised-button *ngIf="covidVSSchoolRegion==='Europe'"
-              class="float" type="button" color="primary">
-              <span>Europe</span>
-            </button>
-            <button mat-button *ngIf="covidVSSchoolRegion!=='Europe'"
-              class="float" type="button" color="primary" (click)="covidVSSchoolChangeRegion('Europe')">
-              <span>Europe</span>
-            </button>
-
-            <button mat-raised-button *ngIf="covidVSSchoolRegion==='Asia'"
-              class="float" type="button" color="primary">
-              <span>Asia</span>
-            </button>
-            <button mat-button *ngIf="covidVSSchoolRegion!=='Asia'"
-              class="float" type="button" color="primary" (click)="covidVSSchoolChangeRegion('Asia')">
-              <span>Asia</span>
-            </button>
-            
-            <button mat-raised-button *ngIf="covidVSSchoolRegion==='Africa'"
-              class="float" type="button" color="primary">
-              <span>Africa</span>
-            </button>
-            <button mat-button *ngIf="covidVSSchoolRegion!=='Africa'"
-              class="float" type="button" color="primary" (click)="covidVSSchoolChangeRegion('Africa')">
-              <span>Africa</span>
-            </button>
-
-          </div>
-
-          <div class="btn-group" *ngIf="!isMobile">
-
-            <button mat-raised-button *ngIf="covidVSSchoolRegion==='Oceania'"
-              class="float" type="button" color="primary">
-              <span>Oceania</span>
-            </button>
-            <button mat-button *ngIf="covidVSSchoolRegion!=='Oceania'"
-              class="float" type="button" color="primary" (click)="covidVSSchoolChangeRegion('Oceania')">
-              <span>Oceania</span>
-            </button>
-
-            <button mat-raised-button *ngIf="covidVSSchoolRegion==='Latin America and the Caribbean'"
-              class="float" type="button" color="primary">
-              <span>Latin America and the Caribbean</span>
-            </button>
-            <button mat-button *ngIf="covidVSSchoolRegion!=='Latin America and the Caribbean'"
-              class="float" type="button" color="primary" (click)="covidVSSchoolChangeRegion('Latin America and the Caribbean')">
-              <span>Latin America and the Caribbean</span>
-            </button>
-
-          </div>
         </div>
           <div class="card-body">
             <div class="table-responsive">
