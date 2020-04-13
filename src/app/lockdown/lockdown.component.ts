@@ -1,9 +1,14 @@
 import { Component, OnInit } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 
 import { ageRanges, getCountryNameByAlpha, getRegionByAlpha } from '../utils';
 import * as lockdownData from '../data/full_lockdown';
 import * as countriesData from '../data/countries';
-import { computeMsgId } from '@angular/compiler';
+
+interface Location {
+  value: string;
+  viewValue: string;
+}
 
 @Component({
   selector: 'app-lockdown',
@@ -11,6 +16,17 @@ import { computeMsgId } from '@angular/compiler';
   styleUrls: ['./lockdown.component.css']
 })
 export class LockdownComponent implements OnInit {
+  public isMobile: boolean;
+
+  public locations: Location[] = [
+    {value: 'World', viewValue: 'World'},
+    {value: 'Northern America', viewValue: 'North America'},
+    {value: 'Europe', viewValue: 'Europe'},
+    {value: 'Asia', viewValue: 'Asia'},
+    {value: 'Africa', viewValue: 'Africa'},
+    {value: 'Oceania', viewValue: 'Oceania'},
+    {value: 'Latin America and the Caribbean', viewValue: 'Latin America and the Caribbean'},
+  ]
 
   public statsHeaders = [
     'Name', 'Start', 'End', 'Duration', 'Lockdown', 'Curfew', 'Other Measures', 'Population Impacted', 'Status'
@@ -29,6 +45,7 @@ export class LockdownComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    this.isMobile = window.innerWidth > 600 ? false : true;
     this.setLockdownStatistics();
     this.lockdownChangeRegion('World');
   }

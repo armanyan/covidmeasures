@@ -4,12 +4,29 @@ import { HttpClient } from '@angular/common/http';
 import { getRegionByAlpha, getSchoolPopulationByAlpha3, getCountryNameByAlpha, getChildrenNoSchoolByAlpha3 } from '../utils';
 import * as lockdownData from '../data/lockdown';
 
+interface Location {
+  value: string;
+  viewValue: string;
+}
+
 @Component({
   selector: 'app-school',
   templateUrl: './school.component.html',
   styleUrls: ['./school.component.css']
 })
 export class SchoolComponent implements OnInit {
+  public isMobile: boolean;
+
+  public locations: Location[] = [
+    {value: 'World', viewValue: 'World'},
+    {value: 'Northern America', viewValue: 'North America'},
+    {value: 'Europe', viewValue: 'Europe'},
+    {value: 'Asia', viewValue: 'Asia'},
+    {value: 'Africa', viewValue: 'Africa'},
+    {value: 'Oceania', viewValue: 'Oceania'},
+    {value: 'Latin America and the Caribbean', viewValue: 'Latin America and the Caribbean'},
+  ]
+
   public numberChildrenImpacted: number;
   public averageDaysMissed: number;
 
@@ -43,6 +60,7 @@ export class SchoolComponent implements OnInit {
   ) { }
 
   async ngOnInit() {
+    this.isMobile = window.innerWidth > 600 ? false : true;
     await this.setCurrentDeathEvolution();
     this.numberChildrenImpacted = Math.floor(this.getContinentChildrenPopulation(this.schoolClosureRegion));
     this.averageDaysMissed = this.getAverageDaysMissedPerRegion('World');

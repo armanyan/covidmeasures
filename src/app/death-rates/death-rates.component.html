@@ -20,23 +20,32 @@
 
     <div class=" row">
       <div class=" col-lg-12">
-        <div class=" card ">
+        <div class="card">
 
           <div class="card-header card-header-success">
             <h3 class="card-title">COVID-19 Death VS Other Causes of Deaths</h3>
-            <div *ngIf="!deathStatsSince1st" class="btn-group">
-              <button mat-button class="float" type="button" color="primary" (click)="changeDeathStatPeriod()">
+
+            <div *ngIf="isMobile">
+              <mat-label>Choose Time Interval</mat-label>
+              <mat-select [(value)]="deathStatsSince1stInit" (selectionChange)="changeDeathStatPeriod()">
+                <mat-option *ngFor="let date of dates" [value]="date.value">
+                  {{date.value}}
+                </mat-option>
+              </mat-select>
+            </div>
+
+            <div class="btn-group" *ngIf="!isMobile">
+              <button mat-button *ngIf="!deathStatsSince1st" class="float" type="button" color="primary" (click)="changeDeathStatPeriod()">
                 <span>Since 1st COVID-19 death (on 11 January 2020)</span>
               </button>
-              <button mat-raised-button class="float" type="button" color="primary">
+              <button mat-raised-button *ngIf="deathStatsSince1st" class="float" type="button" color="primary">
+                <span>Since 1st COVID-19 death (on 11 January 2020)</span>
+              </button>
+
+              <button mat-button *ngIf="deathStatsSince1st" class="float" type="button" color="primary" (click)="changeDeathStatPeriod()">
                 <span>Last 24 hours</span>
               </button>
-            </div>
-            <div *ngIf="deathStatsSince1st" class="btn-group">
-              <button mat-raised-button class="float" type="button" color="primary">
-                <span>Since 1st COVID-19 death (on 11 January 2020)</span>
-              </button>
-              <button mat-button class="float" type="button" color="primary" (click)="changeDeathStatPeriod()">
+              <button mat-raised-button *ngIf="!deathStatsSince1st" class="float" type="button" color="primary">
                 <span>Last 24 hours</span>
               </button>
             </div>
@@ -78,8 +87,25 @@
         <div class="card-header card-header-success">
           <h3 class="card-title">COVID-19 Death Estimate By Age Range</h3>
 
-          <div class="btn-group">
+          <div *ngIf="isMobile">
+            <mat-label>Choose Time Interval</mat-label>
+            <mat-select [(value)]="estimationStatsSince1stInit" (selectionChange)="deathEstimationPeriodSwitch()">
+              <mat-option *ngFor="let date of dates" [value]="date.value">
+                {{date.value}}
+              </mat-option>
+            </mat-select>
+          </div>
 
+          <div *ngIf="isMobile">
+            <mat-label>Choose Region</mat-label>
+            <mat-select [(value)]="deathEstimationLocation" (selectionChange)="deathEstimationSwitch($event.value)">
+              <mat-option *ngFor="let location of locations" [value]="location.value">
+                {{location.value}}
+              </mat-option>
+            </mat-select>
+          </div>
+
+          <div class="btn-group" *ngIf="!isMobile">
             <button mat-raised-button *ngIf="estimationSince1st"
               class="float" type="button" color="primary" style="background-color: rebeccapurple;">
               <span>Since 1st COVID-19 death (on 11 January 2020)</span>
@@ -96,12 +122,9 @@
               class="float" type="button" color="primary" style="background-color: rebeccapurple;">
               <span>Last 24 hours</span>
             </button>
-
           </div>
-          <br>
 
-          <div class="btn-group">
-
+          <div class="btn-group" *ngIf="!isMobile">
             <button mat-raised-button *ngIf="deathEstimationLocation==='World'"
               class="float" type="button" color="primary">
               <span>World</span>
@@ -164,7 +187,6 @@
               class="float" type="button" color="primary" (click)="deathEstimationSwitch('Latin America and the Caribbean')">
               <span>Latin America and the Caribbean</span>
             </button>
-
           </div>
         </div>
 
@@ -216,7 +238,25 @@
         <div class="card-header card-header-success">
           <h3 class="card-title">Death Estimate By Age Range</h3>
 
-          <div class="btn-group">
+          <div *ngIf="isMobile">
+            <mat-label>Choose Time Interval</mat-label>
+            <mat-select [(value)]="deathCausesSince1stInit" (selectionChange)="deathCausesPeriodSwitch()">
+              <mat-option *ngFor="let date of dates" [value]="date.value">
+                {{date.value}}
+              </mat-option>
+            </mat-select>
+          </div>
+
+          <div *ngIf="isMobile">
+            <mat-label>Choose Region</mat-label>
+            <mat-select [(value)]="deathCausesLocation" (selectionChange)="deathCausesLocationSwitch($event.value)">
+              <mat-option *ngFor="let location of locations" [value]="location.value">
+                {{location.value}}
+              </mat-option>
+            </mat-select>
+          </div>
+
+          <div class="btn-group" *ngIf="!isMobile">
 
             <button mat-raised-button *ngIf="deathCausesSince1st"
               class="float" type="button" color="primary" style="background-color: rebeccapurple;">
@@ -234,12 +274,9 @@
               class="float" type="button" color="primary" style="background-color: rebeccapurple;">
               <span>Last 24 hours</span>
             </button>
-
           </div>
-          <br>
 
-          <div class="btn-group">
-
+          <div class="btn-group" *ngIf="!isMobile">
             <button mat-raised-button *ngIf="deathCausesLocation==='World'"
               class="float" type="button" color="primary">
               <span>World</span>

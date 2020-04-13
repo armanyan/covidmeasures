@@ -12,12 +12,37 @@ const insertToArray = (arr, element, index) => {
   arr.splice(index, 0, element);
 }
 
+interface Location {
+  value: string;
+  viewValue: string;
+}
+
+interface DateIntervale {
+  value: string;
+}
+
 @Component({
   selector: 'app-death-rates',
   templateUrl: './death-rates.component.html',
   styleUrls: ['./death-rates.component.css']
 })
 export class DeathRatesComponent implements OnInit {
+  public isMobile: boolean;
+
+  public locations: Location[] = [
+    {value: 'World', viewValue: 'World'},
+    {value: 'Northern America', viewValue: 'North America'},
+    {value: 'Europe', viewValue: 'Europe'},
+    {value: 'Asia', viewValue: 'Asia'},
+    {value: 'Africa', viewValue: 'Africa'},
+    {value: 'Oceania', viewValue: 'Oceania'},
+    {value: 'Latin America and the Caribbean', viewValue: 'Latin America and the Caribbean'},
+  ]
+
+  public dates: DateIntervale[] = [
+    {value: 'Since 1st COVID-19 death (on 11 January 2020)'},
+    {value: 'Last 24h'}
+  ]
 
   private chart: Chart;
   private deathEstimationChart: Chart;
@@ -27,8 +52,11 @@ export class DeathRatesComponent implements OnInit {
   private daysSinceCovid: number;
 
   public deathStatsSince1st = true;
+  public deathStatsSince1stInit = 'Since 1st COVID-19 death (on 11 January 2020)';
   public estimationSince1st = true;
+  public estimationStatsSince1stInit = 'Since 1st COVID-19 death (on 11 January 2020)';
   public deathCausesSince1st = true;
+  public deathCausesSince1stInit = 'Since 1st COVID-19 death (on 11 January 2020)';
   public ageDeathContinent = "World";
   public deathEstimationLocation = "World";
   public deathCausesLocation = "World";
@@ -56,6 +84,7 @@ export class DeathRatesComponent implements OnInit {
   ) { }
 
   async ngOnInit() {
+    this.isMobile = window.innerWidth > 600 ? false : true;
     await this.setCurrentDeathEvolution()
     this.since1st.backgroundColor = totalDeaths.data.map(() => { return '#1f8ef1'; })
     this.yesterday.backgroundColor = totalDeaths.data.map(() => { return '#1f8ef1'; })
@@ -68,7 +97,6 @@ export class DeathRatesComponent implements OnInit {
     const backgroundColor = ageRanges.map(() => '#1f8ef1')
     const backgroundColorCovid = ageRanges.map(() => 'red')
     const estimatedDeaths = this.estimateCovidDeaths(this.estimationSince1st, 'World');
-    console.log(estimatedDeaths);
     const deathsEstimationCTX = (document.getElementById("covidDeathEstimationChart") as any).getContext("2d");
     this.deathEstimationChart = createBarChart(
       deathsEstimationCTX, ageRanges, estimatedDeaths, backgroundColorCovid, this.covidEstimationTooltip
@@ -82,6 +110,14 @@ export class DeathRatesComponent implements OnInit {
       estimatedDeaths, covidBackgroundColor, "COVID-19"
     );
   }
+
+  // public changeDeathIntervale(dateIntervale: string) {
+  //   this.deathStatsSince1st = dateIntervale === 'Last 24h' ? false : true;
+  // }
+
+  // public changeEstimationIntervale(dateIntervale: string) {
+  //   this.estimationSince1st = dateIntervale === 'Last 24h' ? false : true;
+  // }
 
   private covidEstimationTooltip(tooltipItem: any, values: any) {
     const sum = values.datasets[0].data.reduce((a, b) => a + b, 0);
@@ -141,6 +177,7 @@ export class DeathRatesComponent implements OnInit {
 
   private getAllCausesDeaths() {
     const continent = continents_data.default[this.deathCausesLocation];
+    console.log(continent, this.deathCausesLocation);
     const today = new Date();
     const day1 = new Date("01/11/2020"); // the day of the first official death recorder from COVID-19
     const difference = Math.floor((today.getTime()-day1.getTime())/(1000*60*60*24));

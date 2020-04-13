@@ -22,8 +22,17 @@
       <div class="card">
         <div class="card-header card-header-success">
           <h3 class="card-title ">School Closure Overview</h3>
-          <div class="btn-group">
 
+          <div *ngIf="isMobile">
+            <mat-label>Choose Region</mat-label>
+            <mat-select [(value)]="schoolClosureRegion" (selectionChange)="schoolClosureChangeLocation($event.value)">
+              <mat-option *ngFor="let location of locations" [value]="location.value">
+                {{location.viewValue}}
+              </mat-option>
+            </mat-select>
+          </div>
+
+          <div class="btn-group" *ngIf="!isMobile">
             <button mat-raised-button *ngIf="schoolClosureRegion==='World'"
               class="float" type="button" color="primary">
               <span>World</span>
@@ -60,12 +69,6 @@
               <span>Asia</span>
             </button>
 
-          </div>
-
-            <br>
-
-          <div class="btn-group">
-
             <button mat-raised-button *ngIf="schoolClosureRegion==='Africa'"
               class="float" type="button" color="primary">
               <span>Africa</span>
@@ -74,6 +77,10 @@
               class="float" type="button" color="primary" (click)="schoolClosureChangeLocation('Africa')">
               <span>Africa</span>
             </button>
+
+          </div>
+
+          <div class="btn-group" *ngIf="!isMobile">
 
             <button mat-raised-button *ngIf="schoolClosureRegion==='Oceania'"
               class="float" type="button" color="primary">
@@ -94,6 +101,7 @@
             </button>
 
           </div>
+
         </div>
           <div class="card-body">
             <div class="table-responsive">
@@ -147,8 +155,17 @@
       <div class="card">
         <div class="card-header card-header-success">
           <h3 class="card-title ">School Closure Statistics</h3>
-          <div class="btn-group">
 
+          <div *ngIf="isMobile">
+            <mat-label>Choose Region</mat-label>
+            <mat-select [(value)]="covidVSSchoolRegion" (selectionChange)="covidVSSchoolChangeRegion($event.value)">
+              <mat-option *ngFor="let location of locations" [value]="location.value">
+                {{location.viewValue}}
+              </mat-option>
+            </mat-select>
+          </div>
+
+          <div class="btn-group" *ngIf="!isMobile">
             <button mat-raised-button *ngIf="covidVSSchoolRegion==='World'"
               class="float" type="button" color="primary">
               <span>World</span>
@@ -196,9 +213,7 @@
 
           </div>
 
-            <br>
-
-          <div class="btn-group">
+          <div class="btn-group" *ngIf="!isMobile">
 
             <button mat-raised-button *ngIf="covidVSSchoolRegion==='Oceania'"
               class="float" type="button" color="primary">
