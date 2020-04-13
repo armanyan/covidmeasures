@@ -5,7 +5,7 @@
     </div>
   </a>
 </div>
-<div class="sidebar-wrapper menu-on-left">
+<div class="sidebar-wrapper">
   <ul class="nav">
     <li routerLinkActive="active" *ngFor="let menuItem of menuItems" class="{{menuItem.class}} nav-item">
       <a *ngIf="!menuItem.soon && !menuItem.join && !menuItem.contribute" class="nav-link" [routerLink]="[menuItem.path]">

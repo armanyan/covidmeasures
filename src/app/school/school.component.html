@@ -108,6 +108,28 @@
             </mat-select>
           </div>
 
+          <div class="btn-group" *ngIf="!isMobile">
+
+            <button mat-raised-button *ngIf="perCovidActive"
+              class="float" type="button" color="primary" style="background-color: rebeccapurple;">
+              <span>Per COVID-19 Active Case</span>
+            </button>
+            <button mat-button *ngIf="perCovidActive"
+              class="float" type="button" color="primary" (click)="changeCovidActiveDeath()">
+              <span>Per COVID-19 Death</span>
+            </button>
+            <button mat-button *ngIf="!perCovidActive"
+              class="float" type="button" color="primary" (click)="changeCovidActiveDeath()">
+              <span>Per COVID-19 Active Case</span>
+            </button>
+            <button mat-raised-button *ngIf="!perCovidActive"
+              class="float" type="button" color="primary" style="background-color: rebeccapurple;">
+              <span>Per COVID-19 Death</span>
+            </button>
+          </div>
+
+          <br>
+
           <ng-container *ngIf="!isMobile">
             <ng-container *ngFor="let location of locations">
               <button mat-raised-button *ngIf="covidVSSchoolRegion===location.value"

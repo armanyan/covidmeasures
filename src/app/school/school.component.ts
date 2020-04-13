@@ -38,6 +38,8 @@ export class SchoolComponent implements OnInit {
   public schooldaysMissedPerDeath: number;
   public kidsNoSchoolPerActiveCase: number;
 
+  public perCovidActive = true;
+
   public schoolClosureFull = [];
   public schoolClosure = [];
   public schoolClosureTableUpdatedOn = "April 9th, 2020";
@@ -75,6 +77,10 @@ export class SchoolComponent implements OnInit {
     return Math.floor(missedDays.reduce(reducer)/missedDays.filter(
       days => { return days > 0 ? true: false }
     ).length);
+  }
+
+  public changeCovidActiveDeath() {
+    this.perCovidActive = !this.perCovidActive;
   }
 
   private getMissedDaysPerCountry(country: any) {
