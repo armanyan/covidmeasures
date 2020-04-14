@@ -94,7 +94,7 @@
     <hr>
     <h2>COVID-19 VS School Closure</h2>
 
-    <div class="col-md-8">
+    <div class="col-md-6">
       <div class="card">
         <div class="card-header card-header-success">
           <h3 class="card-title ">School Closure Statistics</h3>
@@ -128,7 +128,7 @@
             </button>
           </div>
 
-          <br>
+          <hr>
 
           <ng-container *ngIf="!isMobile">
             <ng-container *ngFor="let location of locations">
@@ -151,25 +151,19 @@
               <table class="table">
                 <thead class="text-primary">
                   <th>
-                    Number of children impacted for every COVID-19 death
+                    Number of children impacted
                   </th>
                   <th>
-                    Cumulated school days missed for every COVID-19 death
-                  </th>
-                  <th>
-                    Number of children currently missing school for every COVID-19 active case
+                    Cumulated school days missed
                   </th>
                 </thead>
                 <tbody>
                   <tr>
                     <td class="left">
-                      {{impactedChildrenPerDeath | number}}
+                      {{impactedChildrenPer | number}}
                     </td>
                     <td class="center">
-                      {{schooldaysMissedPerDeath | number}}
-                    </td>
-                    <td class="center">
-                      {{kidsNoSchoolPerActiveCase | number}}
+                      {{schooldaysMissedPer | number}}
                     </td>
                   </tr>
                 </tbody>

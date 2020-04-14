@@ -1,9 +1,13 @@
 import Chart from 'chart.js';
 
 import * as countriesData from './data/countries';
-import * as closureData from './data/lockdown';
+import * as closureData from './data/school_closure';
 import * as alpha2 from './data/alpha2';
 import * as alpha3 from './data/alpha3';
+
+export const insertToArray = (arr, element, index) => {
+  arr.splice(index, 0, element);
+}
 
 export const ageRanges = ['0-9', '10-19', '20-29', '30-39', '40-49', '50-59', '60-69', '70-79', '80+'];
 

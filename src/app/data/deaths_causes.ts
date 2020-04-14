@@ -1,4 +1,4 @@
-{
+export default {
   "labels": [
     "Cardiovascular diseases", "Cancers", "Respiratory diseases", "Lower respiratory infections", "Dementia", "Digestive diseases",
     "Neonatal disorders", "Diarrheal disorders", "Diabetes", "Liver diseases", "Road injuries", "Kidney diseases",

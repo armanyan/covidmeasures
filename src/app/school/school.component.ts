@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 import { getRegionByAlpha, getSchoolPopulationByAlpha3, getCountryNameByAlpha, getChildrenNoSchoolByAlpha3 } from '../utils';
-import * as lockdownData from '../data/lockdown';
+import * as lockdownData from '../data/school_closure';
 
 interface Location {
   value: string;
@@ -34,9 +34,8 @@ export class SchoolComponent implements OnInit {
   public covidVSSchoolRegion = 'World';
 
   public impactedChildren: number;
-  public impactedChildrenPerDeath: number;
-  public schooldaysMissedPerDeath: number;
-  public kidsNoSchoolPerActiveCase: number;
+  public impactedChildrenPer: number;
+  public schooldaysMissedPer: number;
 
   public perCovidActive = true;
 
@@ -81,6 +80,7 @@ export class SchoolComponent implements OnInit {
 
   public changeCovidActiveDeath() {
     this.perCovidActive = !this.perCovidActive;
+    this.covidVSSchoolChangeRegion(this.covidVSSchoolRegion);
   }
 
   private getMissedDaysPerCountry(country: any) {
@@ -129,13 +129,9 @@ export class SchoolComponent implements OnInit {
   public covidVSSchoolChangeRegion(region: string) {
     this.covidVSSchoolRegion = region;
     this.impactedChildren = this.getContinentChildrenPopulation(region);
-    this.impactedChildrenPerDeath = Math.floor(
-      this.impactedChildren/this.covidByContinent[region]["deaths"]
-    );
-    this.schooldaysMissedPerDeath = Math.floor(
-      (this.getAverageDaysMissedPerRegion(region)*this.impactedChildren)/this.covidByContinent[region].deaths
-    );
-    this.kidsNoSchoolPerActiveCase = Math.floor(this.impactedChildren/this.covidByContinent[region].activeCases);
+    const divider = this.perCovidActive ? this.covidByContinent[region].activeCases : this.covidByContinent[region].deaths;
+    this.impactedChildrenPer = Math.floor(this.impactedChildren/divider);
+    this.schooldaysMissedPer = Math.floor((this.getAverageDaysMissedPerRegion(region)*this.impactedChildren)/divider);
   }
 
   private async setCurrentDeathEvolution() {

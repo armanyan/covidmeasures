@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import Chart from 'chart.js';
 
 import { ageRanges, getCountryNameByAlpha, getRegionByAlpha, createPieChart } from '../utils';
-import * as lockdownData from '../data/full_lockdown';
+import * as lockdownData from '../data/lockdown';
 import * as countriesData from '../data/countries';
 
 interface Location {
@@ -196,7 +196,7 @@ export class LockdownComponent implements OnInit {
         "duration": duration === 0 ? '' : duration,
         "lockdown": country.lockdown === 'N/A' ? '' : country.lockdown,
         "curfew": country.curfew === 'N/A' ? '' : country.curfew,
-        "business": country.busieness === "N/A" ? '' : country.busieness,
+        "business": country.business === "N/A" ? '' : country.business,
         "other": this.getOtherMeasures(country),
         "start": this.getDate(country['start']),
         "end": this.getEndDate(country['end'], country['expected_end']),

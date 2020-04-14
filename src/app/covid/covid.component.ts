@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 import { createLineChart, getCountryNameByAlpha, monthNames } from '../utils';
-import * as covid from '../data/covid_evolution.json';
+import * as covid from '../data/covid_evolution';
 
 @Component({
   selector: 'app-covid',
@@ -25,9 +25,9 @@ export class CovidComponent implements OnInit {
 
   async ngOnInit() {
     const casesCTX = (document.getElementById("chartCases") as any).getContext("2d");
-    const labels = covid.dates.slice(32);
-    const cases = covid.cases.slice(32);
-    const deaths = covid.deaths.slice(32);
+    const labels = covid.default.dates.slice(32);
+    const cases = covid.default.cases.slice(32);
+    const deaths = covid.default.deaths.slice(32);
     createLineChart(casesCTX, labels, cases)
     this.casesLastUpdate = labels[labels.length-1];
 

@@ -2,15 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import Chart from 'chart.js';
 
-import { createBarChart, createStackedBarChart, ageRanges, getRegionByAlpha, getAlpha3FromAlpha2 } from '../utils';
+import { createBarChart, createStackedBarChart, ageRanges, getRegionByAlpha, getAlpha3FromAlpha2, insertToArray } from '../utils';
 
-import * as totalDeaths from '../data/deaths_causes.json';
+import * as totalDeaths from '../data/deaths_causes';
 import * as continents_data from '../data/continents_data';
 import * as countriesData from '../data/countries';
-
-const insertToArray = (arr, element, index) => {
-  arr.splice(index, 0, element);
-}
 
 interface Location {
   value: string;
@@ -51,12 +47,9 @@ export class DeathRatesComponent implements OnInit {
   public today = Date();
   private daysSinceCovid: number;
 
-  public deathStatsSince1st = true;
-  public deathStatsSince1stInit = 'Since 1st COVID-19 death (on 11 January 2020)';
-  public estimationSince1st = true;
-  public estimationStatsSince1stInit = 'Since 1st COVID-19 death (on 11 January 2020)';
-  public deathCausesSince1st = true;
-  public deathCausesSince1stInit = 'Since 1st COVID-19 death (on 11 January 2020)';
+  public deathStatsPeriod = 'Since 1st COVID-19 death (on 11 January 2020)';
+  public estimationStatsPeriod = 'Since 1st COVID-19 death (on 11 January 2020)';
+  public deathCausesPeriod = 'Since 1st COVID-19 death (on 11 January 2020)';
   public ageDeathContinent = "World";
   public deathEstimationLocation = "World";
   public deathCausesLocation = "World";
@@ -86,8 +79,8 @@ export class DeathRatesComponent implements OnInit {
   async ngOnInit() {
     this.isMobile = window.innerWidth > 991 ? false : true;
     await this.setCurrentDeathEvolution()
-    this.since1st.backgroundColor = totalDeaths.data.map(() => { return '#1f8ef1'; })
-    this.yesterday.backgroundColor = totalDeaths.data.map(() => { return '#1f8ef1'; })
+    this.since1st.backgroundColor = totalDeaths.default.data.map(() => { return '#1f8ef1'; })
+    this.yesterday.backgroundColor = totalDeaths.default.data.map(() => { return '#1f8ef1'; })
     this.composeData();
 
     const totalDeathsCTX = (document.getElementById("DeathCausesChart") as any).getContext("2d");
@@ -96,7 +89,7 @@ export class DeathRatesComponent implements OnInit {
     // covid death estimation covidDeathEstimationChart
     const backgroundColor = ageRanges.map(() => '#1f8ef1')
     const backgroundColorCovid = ageRanges.map(() => 'red')
-    const estimatedDeaths = this.estimateCovidDeaths(this.estimationSince1st, 'World');
+    const estimatedDeaths = this.estimateCovidDeaths('World', true);
     const deathsEstimationCTX = (document.getElementById("covidDeathEstimationChart") as any).getContext("2d");
     this.deathEstimationChart = createBarChart(
       deathsEstimationCTX, ageRanges, estimatedDeaths, backgroundColorCovid, this.covidEstimationTooltip
@@ -143,22 +136,21 @@ export class DeathRatesComponent implements OnInit {
     return Math.floor(res);
   }
 
-  private estimateCovidDeaths(since1sr: boolean, location: string) {
+  private estimateCovidDeaths(location: string, since11Jan: boolean) {
     const countries = location === 'World' ? this.deathsPerCountry : this.deathsPerCountry.filter(country => {
       return getRegionByAlpha(country[0]) === location ? true : false
     });
-    return ageRanges.map(age => this.getDeaths(age, countries, since1sr));
+    return ageRanges.map(age => this.getDeaths(age, countries, since11Jan));
   }
 
   private updateEstimationChart() {
-    this.deathEstimationChart.data.datasets[0].data = this.estimateCovidDeaths(
-      this.estimationSince1st, this.deathEstimationLocation
-    );
+    const since1stDeath = this.estimationStatsPeriod === 'Last 24h' ? false : true;
+    this.deathEstimationChart.data.datasets[0].data = this.estimateCovidDeaths(this.deathEstimationLocation, since1stDeath);
     this.deathEstimationChart.update();
   }
 
-  public deathEstimationPeriodSwitch(){
-    this.estimationSince1st = !this.estimationSince1st;
+  public deathEstimationPeriodSwitch(datePeriod: string){
+    this.estimationStatsPeriod = datePeriod;
     this.updateEstimationChart();
   }
 
@@ -172,15 +164,14 @@ export class DeathRatesComponent implements OnInit {
     const today = new Date();
     const day1 = new Date("01/11/2020"); // the day of the first official death recorder from COVID-19
     const difference = Math.floor((today.getTime()-day1.getTime())/(1000*60*60*24));
-    const multiplier = this.deathCausesSince1st ? difference : 1;
+    const multiplier = this.deathCausesPeriod === 'Last 24h' ? 1 : difference;
     return ageRanges.map(age => Math.floor((continent.deaths[age]/365))*multiplier);
   }
 
   private updateDeathCausesChart() {
     this.deathCausesChart.data.datasets[0].data = this.getAllCausesDeaths();
-    this.deathCausesChart.data.datasets[1].data = this.estimateCovidDeaths(
-      this.deathCausesSince1st, this.deathCausesLocation
-    );
+    const since1stDeath = this.deathCausesPeriod === 'Last 24h' ? false : true;
+    this.deathCausesChart.data.datasets[1].data = this.estimateCovidDeaths(this.deathCausesLocation, since1stDeath);
     this.deathCausesChart.update();
   }
 
@@ -189,8 +180,8 @@ export class DeathRatesComponent implements OnInit {
     this.updateDeathCausesChart();
   }
 
-  public deathCausesPeriodSwitch(){
-    this.deathCausesSince1st = !this.deathCausesSince1st;
+  public deathCausesPeriodSwitch(datePeriod: string){
+    this.deathCausesPeriod = datePeriod;
     this.updateDeathCausesChart();
   }
 
@@ -210,18 +201,18 @@ export class DeathRatesComponent implements OnInit {
     const day1 = new Date("01/11/2020"); // the day of the first official death recorded from COVID-19
     this.daysSinceCovid = Math.floor((today.getTime()-day1.getTime())/(1000*60*60*24));
 
-    this.since1st.data = totalDeaths.data.map(value => Math.floor((value/(365))*this.daysSinceCovid));
-    this.since1st.labels = [...totalDeaths.labels];
+    this.since1st.data = totalDeaths.default.data.map(value => Math.floor((value/(365))*this.daysSinceCovid));
+    this.since1st.labels = [...totalDeaths.default.labels];
     this.sortDeathTolls(this.since1st, this.deathsSince1st);
 
-    this.yesterday.data = totalDeaths.data.map(value => Math.floor(value/365));
-    this.yesterday.labels = [...totalDeaths.labels];
+    this.yesterday.data = totalDeaths.default.data.map(value => Math.floor(value/365));
+    this.yesterday.labels = [...totalDeaths.default.labels];
     this.sortDeathTolls(this.yesterday, this.deathsYesterday);
   }
 
-  public changeDeathStatPeriod() {
-    this.deathStatsSince1st = !this.deathStatsSince1st;
-    const dataset = this.deathStatsSince1st ? this.since1st : this.yesterday;
+  public changeDeathStatPeriod(datePeriod: string) {
+    this.deathStatsPeriod = datePeriod;
+    const dataset = datePeriod === 'Last 24h' ? this.yesterday : this.since1st;
     this.chart.data.labels = dataset.labels;
     this.chart.data.datasets[0].data = dataset.data;
     this.chart.data.datasets[0].backgroundColor = dataset.backgroundColor;
