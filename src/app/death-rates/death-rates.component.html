@@ -21,7 +21,7 @@
 
             <div *ngIf="isMobile">
               <mat-label>Choose Time Interval</mat-label>
-              <mat-select [(value)]="deathStatsPeriod" (selectionChange)="changeDeathStatPeriod()">
+              <mat-select [(value)]="deathStatsPeriod" (selectionChange)="changeDeathStatPeriod($event.value)">
                 <mat-option *ngFor="let date of dates" [value]="date.value">
                   {{date.value}}
                 </mat-option>
@@ -175,7 +175,7 @@
 
           <div *ngIf="isMobile">
             <mat-label>Choose Time Interval</mat-label>
-            <mat-select [(value)]="deathCausesPeriod" (selectionChange)="deathCausesPeriodSwitch()">
+            <mat-select [(value)]="deathCausesPeriod" (selectionChange)="deathCausesPeriodSwitch($event.value)">
               <mat-option *ngFor="let date of dates" [value]="date.value">
                 {{date.value}}
               </mat-option>
