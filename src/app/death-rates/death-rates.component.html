@@ -6,14 +6,10 @@
     </div>
 
     <p>
-      On this page, we want to remind everyone that COVID-19, as scary as it looks,
-      is only one of the many causes of deaths. The graphs below show the COVID-19 death rate
-      as an incremental rather than the sole focus of the analysis. We are also providing an overview
-      by age range which highlights the age effect of the virus compared to the usual death rates.
+      {{ death_intro_1 }}
     </p>
     <p>
-      We hope that this page can inform individuals on how COVID-19 has become a threat for themselves and
-      their loved ones compare to all the other death causes that we normally face in our day-to-day.
+      {{ death_intro_2 }}
     </p>
 
     <div class=" row">
@@ -70,10 +66,10 @@
     </div>
 
     <p>
-      COVID-19 is now part of the top 5 causes of deaths worldwide.
-      With 7,300 daily deaths, COVID-19 represents an increment of just below 5% of the total deaths.
-      Since the beginning of the crisis, COVID-19 accounts for an increase of 0.5% overall.
-      <b>Internal note: we should probably use dynamic values.</b>
+      {{death_graph_1_below}}
+    </p>
+    <p style="text-align: right;">
+      <em>{{death_graph_1_below_last_update}}</em>
     </p>
 
     <hr>
@@ -156,20 +152,15 @@
     </div>
 
     <p>
-      The distribution among age range demonstrates the bigger impact of the COVID-19 over the older population.
-      Worldwide, the 60+ population accounts for 75% of the total deaths, versus 65% for other causes.
-      This phenomenon is exacerbated in certain continents, such as Europe where the 60+ population accounts
-      for 85% of the total COVID-19 deaths. In the case of Europe which has the highest life expectancy
-      and a large older population, the 60+ population usually represents 88% of the total deaths which is
-      3% above the COVID-19 death rate. 
+      {{ death_graph_2_below }}
+    </p>
+    <p style="text-align: right;">
+      <em>{{ death_graph_1_below_last_update }}</em>
     </p>
     <p>
       <i>
-        Note that the age distribution numbers are estimates based on a
-        <a href="https://www.who.int/docs/default-source/coronaviruse/who-china-joint-mission-on-covid-19-final-report.pdf">
-          WHO study
-        </a>
-        on death rate, not actual figures.
+        Note: the age distribution figures are only <u>estimates</u> based on a
+        <a href="https://www.who.int/docs/default-source/coronaviruse/who-china-joint-mission-on-covid-19-final-report.pdf" target="_blank">WHO study</a> on the COVID-19 death rate, not actual figures.
       </i>
     </p>
 
@@ -252,3 +243,54 @@
 
       </div>
     </div>
+
+    <p>
+      {{ death_graph_3_below }}
+    </p>
+    <p style="text-align: right;">
+      <em>{{ death_graph_3_below_last_update }}</em>
+    </p>
+    <p>
+      <i>
+        Note: this graph doesn't capture highly localized increases in certain countries or cities where COVID-19 death rates could be much higher.
+      </i>
+    </p>
+
+    <hr>
+
+    <p>
+      The figures above can help you assess if COVID-19 is a threat to your life or your beloved ones.
+      There is no simple answer and it will depend on your perception of death in your day-to-day.
+      Ask yourself the following questions: Before COVID-19, were you regularly scared of dying
+      or losing a beloved one? Was it something you were thinking about often?
+    </p>
+    <p>
+      If the answer is <strong>No</strong>. Then you shouldn't probably change your perception
+      because of the coronavirus. Even a 50% increase in something you are not scared of,
+      should not make you change from &quot;I don't think about it&quot; to
+      &quot;I am scared now every day&quot;. Remember that chances of dying tomorrow or next
+      month are usually extremely low and that we live on average 26,718 days.
+    </p>
+    <p>
+      If the answer is <strong>Yes</strong>. Depending on your age and where you live,
+      you should be slightly more scared because of the coronavirus. But on the bright side,
+      you should look at all the other causes of death and evaluate the ones that
+      have dismissed due to COVID-19 measures. Recent statistics on death rates published by
+      the French government show that the death rate in France for March 2020 was lower
+      or equivalent than the years prior despite COVID-19[<a href="https://www.lemonde.fr/les-decodeurs/article/2020/04/03/coronavirus-visualisez-la-surmortalite-en-france-par-departement-depuis-le-1er-mars_6035485_4355770.html" target="_blank">1</a>]."
+    </p>
+    <p>
+      Historical points of reference to consider in your thinking:
+    </p>
+    <ul>
+      <li>if you were an allies soldier debarking on Normandy beaches on D-Day,
+          your chances of dying that day would be multiplied by 750 times compared
+          to a normal day[<a href="https://en.wikipedia.org/wiki/Normandy_landings#cite_note-Allied_strength-7" target="_blank">2</a>];
+      </li>
+      <li>for any living human, chances of dying from Spanish flu in 1918 were 2,744 times higher
+        than from COVID-19 between January and March 2020[<a href="https://www.weforum.org/agenda/2020/03/coronavirus-great-influenza-pandemic-covid19-prepared-outbreak/" target="_blank">3</a>].
+      </li>
+    </ul>
+    <p style="text-align: right;">
+      <em>Last update: 2020/04/11</em>
+    </p>

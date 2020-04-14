@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 
 import { getRegionByAlpha, getSchoolPopulationByAlpha3, getCountryNameByAlpha, getChildrenNoSchoolByAlpha3 } from '../utils';
 import * as lockdownData from '../data/school_closure';
+import * as text from '../data/texts/school_closure';
 
 interface Location {
   value: string;
@@ -16,6 +17,12 @@ interface Location {
 })
 export class SchoolComponent implements OnInit {
   public isMobile: boolean;
+
+  public school_intro_1: string;
+  public school_graph_1_below: string;
+  public school_graph_1_below_last_update: string;
+  public school_graph_2_below: string;
+  public school_graph_2_below_last_update: string;
 
   public locations: Location[] = [
     {value: 'World', viewValue: 'World'},
@@ -62,11 +69,20 @@ export class SchoolComponent implements OnInit {
 
   async ngOnInit() {
     this.isMobile = window.innerWidth > 991 ? false : true;
+    this.setTexts();
     await this.setCurrentDeathEvolution();
     this.numberChildrenImpacted = Math.floor(this.getContinentChildrenPopulation(this.schoolClosureRegion));
     this.averageDaysMissed = this.getAverageDaysMissedPerRegion('World');
     this.covidVSSchoolChangeRegion('World');
     this.setSchoolClosure();
+  }
+
+  private setTexts() {
+    this.school_intro_1 = text.default.school_intro_1;
+    this.school_graph_1_below = text.default.school_graph_1_below;
+    this.school_graph_1_below_last_update = text.default.school_graph_1_below_last_update;
+    this.school_graph_2_below = text.default.school_graph_2_below;
+    this.school_graph_2_below_last_update = text.default.school_graph_2_below_last_update;
   }
 
   private getAverageDaysMissedPerRegion(region = 'World') {

@@ -4,6 +4,7 @@ import Chart from 'chart.js';
 import { ageRanges, getCountryNameByAlpha, getRegionByAlpha, createPieChart } from '../utils';
 import * as lockdownData from '../data/lockdown';
 import * as countriesData from '../data/countries';
+import * as text from '../data/texts/lockdown';
 
 interface Location {
   value: string;
@@ -17,6 +18,13 @@ interface Location {
 })
 export class LockdownComponent implements OnInit {
   public isMobile: boolean;
+  
+  public lockdown_intro_1: string;
+  public lockdown_tab_1_below: string;
+  public lockdown_tab_2_below: string;
+  public lockdown_tab_3_below_li_1: string;
+  public lockdown_tab_3_below_li_2: string;
+  public lockdown_tab_4_below: string;
 
   public locations: Location[] = [
     {value: 'World', viewValue: 'World'},
@@ -51,6 +59,7 @@ export class LockdownComponent implements OnInit {
 
   ngOnInit() {
     this.isMobile = window.innerWidth > 991 ? false : true;
+    this.setTexts();
     this.setLockdownStatistics();
     this.lockdownChangeRegion('World');
 
@@ -65,6 +74,14 @@ export class LockdownComponent implements OnInit {
     const data2 = this.getPopulationData(countries);
     const populationCTX = (document.getElementById("lockdownPopulationPieChart") as any).getContext("2d");
     this.lockdownPopulationPieChart = createPieChart(populationCTX, labels, data2, backgroundColor);
+  }
+
+  private setTexts() {
+    this.lockdown_intro_1 = text.default.lockdown_intro_1;
+    this.lockdown_tab_1_below = text.default.lockdown_tab_1_below;
+    this.lockdown_tab_2_below = text.default.lockdown_tab_2_below;
+    this.lockdown_tab_3_below_li_1 = text.default.lockdown_tab_3_below_li_1;
+    this.lockdown_tab_3_below_li_2 = text.default.lockdown_tab_3_below_li_2;
   }
 
   private getCountriesData(countries) {

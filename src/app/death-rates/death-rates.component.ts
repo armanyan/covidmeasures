@@ -7,6 +7,7 @@ import { createBarChart, createStackedBarChart, ageRanges, getRegionByAlpha, get
 import * as totalDeaths from '../data/deaths_causes';
 import * as continents_data from '../data/continents_data';
 import * as countriesData from '../data/countries';
+import * as text from '../data/texts/death_rates';
 
 interface Location {
   value: string;
@@ -24,6 +25,15 @@ interface DateIntervale {
 })
 export class DeathRatesComponent implements OnInit {
   public isMobile: boolean;
+
+  public death_intro_1: string;
+  public death_intro_2: string;
+  public death_graph_1_below: string;
+  public death_graph_1_below_last_update: string;
+  public death_graph_2_below: string;
+  public death_graph_2_below_last_update: string;
+  public death_graph_3_below: string;
+  public death_graph_3_below_last_update: string;
 
   public locations: Location[] = [
     {value: 'World', viewValue: 'World'},
@@ -78,6 +88,7 @@ export class DeathRatesComponent implements OnInit {
 
   async ngOnInit() {
     this.isMobile = window.innerWidth > 991 ? false : true;
+    this.setText();
     await this.setCurrentDeathEvolution()
     this.since1st.backgroundColor = totalDeaths.default.data.map(() => { return '#1f8ef1'; })
     this.yesterday.backgroundColor = totalDeaths.default.data.map(() => { return '#1f8ef1'; })
@@ -102,6 +113,17 @@ export class DeathRatesComponent implements OnInit {
       deathsCausesCTX, ageRanges, this.getAllCausesDeaths(), backgroundColor, "other causes",
       estimatedDeaths, covidBackgroundColor, "COVID-19"
     );
+  }
+
+  private setText() {
+    this.death_intro_1 = text.default.death_intro_1;
+    this.death_intro_2 = text.default.death_intro_2;
+    this.death_graph_1_below = text.default.death_graph_1_below;
+    this.death_graph_1_below_last_update = text.default.death_graph_1_below_last_update;
+    this.death_graph_2_below = text.default.death_graph_2_below;
+    this.death_graph_2_below_last_update = text.default.death_graph_2_below_last_update;
+    this.death_graph_3_below = text.default.death_graph_3_below;
+    this.death_graph_3_below_last_update = text.default.death_graph_3_below_last_update;
   }
 
   private covidEstimationTooltip(tooltipItem: any, values: any) {
