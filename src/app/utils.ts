@@ -46,12 +46,21 @@ export const getSchoolPopulationByAlpha3 = (alpha3: string) => {
   }
 }
 
+export const getCountryPopulation = (alpha3: string) => {
+  for (const country of countriesData.default) {
+    if (country.alpha3 === alpha3) {
+      const population = ageRanges.map((ageRange) => country.population[ageRange]);
+      return Math.floor(population.reduce((acc: number, currVal: number) => { return currVal + acc }));
+    }
+  }
+}
+
 const standardTooltip = (tooltipItem: any, values: any) => {
   return Math.floor(tooltipItem.xLabel).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
 }
 
 export const createPieChart = (
-  ctx: CanvasRenderingContext2D, labels: string[], dataset: number[], backgroundColor: string[]
+  ctx: CanvasRenderingContext2D, labels: string[], dataset: number[], backgroundColor: string[], tooltipText: string
 ) => {
   return new Chart(ctx, {
     type: 'doughnut',
@@ -91,7 +100,7 @@ export const createPieChart = (
             }
   
             // return the text to display on the tooltip
-            return dataLabel;
+            return dataLabel+` ${tooltipText}`;
           }
         }
       },

@@ -180,9 +180,9 @@
                 {{date.value}}
               </mat-option>
             </mat-select>
-          </div>
 
-          <div *ngIf="isMobile">
+          <hr>
+
             <mat-label>Choose Region</mat-label>
             <mat-select [(value)]="deathCausesLocation" (selectionChange)="deathCausesLocationSwitch($event.value)">
               <mat-option *ngFor="let location of locations" [value]="location.value">
@@ -258,6 +258,8 @@
 
     <hr>
 
+    <p style="text-align: center;"><b>Should we be scared of dying of COVID-19?</b></p>
+
     <p>
       The figures above can help you assess if COVID-19 is a threat to your life or your beloved ones.
       There is no simple answer and it will depend on your perception of death in your day-to-day.
@@ -277,10 +279,10 @@
       you should look at all the other causes of death and evaluate the ones that
       have dismissed due to COVID-19 measures. Recent statistics on death rates published by
       the French government show that the death rate in France for March 2020 was lower
-      or equivalent than the years prior despite COVID-19[<a href="https://www.lemonde.fr/les-decodeurs/article/2020/04/03/coronavirus-visualisez-la-surmortalite-en-france-par-departement-depuis-le-1er-mars_6035485_4355770.html" target="_blank">1</a>]."
+      or equivalent than the years prior despite COVID-19[<a href="https://www.lemonde.fr/les-decodeurs/article/2020/04/03/coronavirus-visualisez-la-surmortalite-en-france-par-departement-depuis-le-1er-mars_6035485_4355770.html" target="_blank">1</a>].
     </p>
     <p>
-      Historical points of reference to consider in your thinking:
+      <u>Historical points of reference to consider in your thinking:</u>
     </p>
     <ul>
       <li>if you were an allies soldier debarking on Normandy beaches on D-Day,

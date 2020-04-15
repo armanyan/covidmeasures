@@ -7,6 +7,8 @@ import { DeathRatesComponent } from '../../death-rates/death-rates.component';
 import { EconomicsComponent } from '../../economics/economics.component';
 import { SurveillanceComponent } from '../../surveillance/surveillance.component';
 import { BordersComponent } from '../../borders/borders.component';
+import { MasksComponent } from '../../masks/masks.component';
+import { TestingComponent } from '../../testing/testing.component';
 import { AboutUsComponent } from '../../about-us/about-us.component';
 
 
@@ -18,5 +20,7 @@ export const AdminLayoutRoutes: Routes = [
   { path: 'economics', component: EconomicsComponent },
   { path: 'surveillance',  component: SurveillanceComponent },
   { path: 'borders', component: BordersComponent },
+  { path: 'masks', component: MasksComponent },
+  { path: 'testing', component: TestingComponent },
   { path: 'aboutus', component: AboutUsComponent }
 ];

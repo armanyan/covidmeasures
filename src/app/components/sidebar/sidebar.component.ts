@@ -18,6 +18,8 @@ export const ROUTES: RouteInfo[] = [
   { path: '/economics', title: 'Economic Stimulus', soon: true, icon:'monetization_on', class: '' },
   { path: '/surveillance', title: 'Surveillance', soon: true,  icon:'policy', class: '' },
   { path: '/borders', title: 'Border Control', soon: true,  icon:'location_on', class: '' },
+  { path: '/masks', title: 'Masks', soon: true,  icon:'healing', class: '' },
+  { path: '/testing', title: 'Testing', soon: true,  icon:'local_hospital', class: '' },
   { path: '/aboutus', title: 'About Us', icon:'supervisor_account', class: '' },
   { path: '/join', title: 'Join Us', join: true, icon:'contact_mail', class: '' },
   { path: '/contribute', title: 'Contribute', contribute: true, icon:'pan_tool', class: '' }

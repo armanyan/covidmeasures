@@ -11,6 +11,22 @@
         <div class="card ">
           <div class="card-header card-header-success">
             <h3 class="card-title">Reported COVID-19 Infection Cases</h3>
+
+            <ng-container *ngIf="!isMobile">
+              <ng-container *ngFor="let view of views">
+                <button mat-raised-button *ngIf="casesView===view"
+                  class="float" type="button" color="primary">
+                  <span>{{ view }}</span>
+                </button>
+  
+                <button mat-button *ngIf="casesView!==view"
+                  class="float" type="button" color="primary"
+                  (click)="casesChangeView()">
+                  <span>{{ view }}</span>
+                </button>
+              </ng-container>
+            </ng-container>
+
           </div>
           <div class="card-body ">
             <canvas id=chartCases width="400" height="400"></canvas>
@@ -32,6 +48,22 @@
         <div class="card ">
           <div class="card-header card-header-success">
             <h3 class="card-title">Reported COVID-19 Lethal Cases</h3>
+
+            <ng-container *ngIf="!isMobile">
+              <ng-container *ngFor="let view of views">
+                <button mat-raised-button *ngIf="deathsView===view"
+                  class="float" type="button" color="primary">
+                  <span>{{ view }}</span>
+                </button>
+  
+                <button mat-button *ngIf="deathsView!==view"
+                  class="float" type="button" color="primary"
+                  (click)="deathsChangeView()">
+                  <span>{{ view }}</span>
+                </button>
+              </ng-container>
+            </ng-container>
+
           </div>
           <div class="card-body ">
             <canvas id=chartDeaths width="400" height="400"></canvas>
@@ -56,7 +88,7 @@
       <div class="card">
 
         <div class="card-header card-header-success">
-          <h3 class="card-title">COVID-19 World Stats</h3>
+          <h3 class="card-title">COVID-19 Worldwide Statistics</h3>
           <mat-form-field>
             <mat-label>Filter by Country</mat-label>
             <input matInput (keyup)="applyFilter($event)" placeholder="United States of America, France, China...">

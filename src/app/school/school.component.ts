@@ -10,6 +10,10 @@ interface Location {
   viewValue: string;
 }
 
+interface CovidCategories {
+  value: string;
+}
+
 @Component({
   selector: 'app-school',
   templateUrl: './school.component.html',
@@ -34,6 +38,13 @@ export class SchoolComponent implements OnInit {
     {value: 'Latin America and the Caribbean', viewValue: 'Latin America and the Caribbean'},
   ]
 
+  public covidCategories: CovidCategories[] = [
+    {value: 'COVID-19 Death'},
+    {value: 'COVID-19 Active Case'}
+  ]
+
+  public currentCovidCategory = 'COVID-19 Death';
+
   public numberChildrenImpacted: number;
   public averageDaysMissed: number;
 
@@ -44,7 +55,7 @@ export class SchoolComponent implements OnInit {
   public impactedChildrenPer: number;
   public schooldaysMissedPer: number;
 
-  public perCovidActive = true;
+  public perCovidActive = false;
 
   public schoolClosureFull = [];
   public schoolClosure = [];
@@ -94,7 +105,11 @@ export class SchoolComponent implements OnInit {
     ).length);
   }
 
-  public changeCovidActiveDeath() {
+  // TODO unify the desktop and mobile versions
+  public changeCovidActiveDeath(category?: string) {
+    if (category) {
+      this.currentCovidCategory = category;
+    }
     this.perCovidActive = !this.perCovidActive;
     this.covidVSSchoolChangeRegion(this.covidVSSchoolRegion);
   }

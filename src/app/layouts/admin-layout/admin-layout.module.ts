@@ -12,12 +12,15 @@ import { AboutUsComponent } from '../../about-us/about-us.component';
 import { EconomicsComponent } from '../../economics/economics.component';
 import { SurveillanceComponent } from '../../surveillance/surveillance.component';
 import { BordersComponent } from '../../borders/borders.component';
+import { MasksComponent } from '../../masks/masks.component';
+import { TestingComponent } from '../../testing/testing.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatRippleModule } from '@angular/material/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatSelectModule } from '@angular/material/select';
+import { MatSortModule } from '@angular/material/sort';
 
 @NgModule({
   imports: [
@@ -31,6 +34,7 @@ import { MatSelectModule } from '@angular/material/select';
     MatInputModule,
     MatSelectModule,
     MatTooltipModule,
+    MatSortModule,
     HttpClientModule
   ],
   declarations: [
@@ -42,6 +46,8 @@ import { MatSelectModule } from '@angular/material/select';
     EconomicsComponent,
     SurveillanceComponent,
     BordersComponent,
+    MasksComponent,
+    TestingComponent
   ]
 })
 

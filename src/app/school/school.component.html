@@ -10,10 +10,9 @@
       {{ school_intro_1 }}
     </p>
     
-    <div class="col-md-8">
       <div class="card">
         <div class="card-header card-header-success">
-          <h3 class="card-title ">School Closure Overview</h3>
+          <h3 class="card-title">How many children impacted around the world?</h3>
 
           <div *ngIf="isMobile">
             <mat-label>Choose Region</mat-label>
@@ -75,7 +74,6 @@
           </div>
 
       </div>
-    </div>
 
     <p>
       {{ school_graph_1_below }}
@@ -85,84 +83,90 @@
     </p>
 
     <hr>
-    <h2>COVID-19 VS School Closure</h2>
+    <h2>How COVID-19 compares to school closure impacts?</h2>
 
-    <div class="col-md-8">
-      <div class="card">
-        <div class="card-header card-header-success">
-          <h3 class="card-title ">School Closure Statistics</h3>
+    <div class="card">
+      <div class="card-header card-header-success">
+        <h3 class="card-title ">School Closure & COVID-19 Ratios</h3>
 
-          <div *ngIf="isMobile">
-            <mat-label>Choose Region</mat-label>
-            <mat-select [(value)]="covidVSSchoolRegion" (selectionChange)="covidVSSchoolChangeRegion($event.value)">
-              <mat-option *ngFor="let location of locations" [value]="location.value">
-                {{location.viewValue}}
-              </mat-option>
-            </mat-select>
-          </div>
-
-          <div class="btn-group" *ngIf="!isMobile">
-
-            <button mat-raised-button *ngIf="perCovidActive"
-              class="float" type="button" color="primary" style="background-color: rebeccapurple;">
-              <span>Per COVID-19 Active Case</span>
-            </button>
-            <button mat-button *ngIf="perCovidActive"
-              class="float" type="button" color="primary" (click)="changeCovidActiveDeath()">
-              <span>Per COVID-19 Death</span>
-            </button>
-            <button mat-button *ngIf="!perCovidActive"
-              class="float" type="button" color="primary" (click)="changeCovidActiveDeath()">
-              <span>Per COVID-19 Active Case</span>
-            </button>
-            <button mat-raised-button *ngIf="!perCovidActive"
-              class="float" type="button" color="primary" style="background-color: rebeccapurple;">
-              <span>Per COVID-19 Death</span>
-            </button>
-          </div>
+        <div *ngIf="isMobile">
+          <mat-label>Per</mat-label>
+          <mat-select [(value)]="currentCovidCategory" (selectionChange)="changeCovidActiveDeath($event.value)">
+            <mat-option *ngFor="let cat of covidCategories" [value]="cat.value">
+              {{cat.value}}
+            </mat-option>
+          </mat-select>
 
           <hr>
 
-          <ng-container *ngIf="!isMobile">
-            <ng-container *ngFor="let location of locations">
-              <button mat-raised-button *ngIf="covidVSSchoolRegion===location.value"
-                class="float" type="button" color="primary">
-                <span>{{ location.viewValue }}</span>
-              </button>
-
-              <button mat-button *ngIf="covidVSSchoolRegion!==location.value"
-                class="float" type="button" color="primary"
-                (click)="covidVSSchoolChangeRegion(location.value)">
-                <span>{{ location.viewValue }}</span>
-              </button>
-            </ng-container>
-          </ng-container>
-
+          <mat-label>Choose Region</mat-label>
+          <mat-select [(value)]="covidVSSchoolRegion" (selectionChange)="covidVSSchoolChangeRegion($event.value)">
+            <mat-option *ngFor="let location of locations" [value]="location.value">
+              {{location.viewValue}}
+            </mat-option>
+          </mat-select>
         </div>
-          <div class="card-body">
-            <div class="table-responsive">
-              <table class="table">
-                <thead class="text-primary">
-                  <th>
-                    Number of children impacted
-                  </th>
-                  <th>
-                    Cumulated school days missed
-                  </th>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td class="left">
-                      {{impactedChildrenPer | number}}
-                    </td>
-                    <td class="center">
-                      {{schooldaysMissedPer | number}}
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-              </div>
-          </div>
+
+        <ng-container *ngIf="!isMobile">
+
+          <button mat-raised-button *ngIf="perCovidActive"
+            class="float" type="button" color="primary" style="background-color: rebeccapurple;">
+            <span>Per COVID-19 Active Case</span>
+          </button>
+          <button mat-button *ngIf="perCovidActive"
+            class="float" type="button" color="primary" (click)="changeCovidActiveDeath()">
+            <span>Per COVID-19 Death</span>
+          </button>
+          <button mat-button *ngIf="!perCovidActive"
+            class="float" type="button" color="primary" (click)="changeCovidActiveDeath()">
+            <span>Per COVID-19 Active Case</span>
+          </button>
+          <button mat-raised-button *ngIf="!perCovidActive"
+            class="float" type="button" color="primary" style="background-color: rebeccapurple;">
+            <span>Per COVID-19 Death</span>
+          </button>
+
+        <hr>
+
+          <ng-container *ngFor="let location of locations">
+            <button mat-raised-button *ngIf="covidVSSchoolRegion===location.value"
+              class="float" type="button" color="primary">
+              <span>{{ location.viewValue }}</span>
+            </button>
+
+            <button mat-button *ngIf="covidVSSchoolRegion!==location.value"
+              class="float" type="button" color="primary"
+              (click)="covidVSSchoolChangeRegion(location.value)">
+              <span>{{ location.viewValue }}</span>
+            </button>
+          </ng-container>
+        </ng-container>
+
+      </div>
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table">
+              <thead class="text-primary">
+                <th>
+                  Number of children impacted
+                </th>
+                <th>
+                  Cumulated school days missed
+                </th>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="left">
+                    {{impactedChildrenPer | number}}
+                  </td>
+                  <td class="left">
+                    {{schooldaysMissedPer | number}}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            </div>
+        </div>
 
           <div class="card-footer ">
             <div class="stats">
@@ -174,7 +178,6 @@
           </div>
 
       </div>
-    </div>
 
     <p>
       {{ school_graph_2_below }}

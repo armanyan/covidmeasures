@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import Chart from 'chart.js';
 
-import { ageRanges, getCountryNameByAlpha, getRegionByAlpha, createPieChart } from '../utils';
+import { getCountryNameByAlpha, getCountryPopulation, getRegionByAlpha, createPieChart } from '../utils';
 import * as lockdownData from '../data/lockdown';
-import * as countriesData from '../data/countries';
 import * as text from '../data/texts/lockdown';
 
 interface Location {
@@ -22,9 +21,6 @@ export class LockdownComponent implements OnInit {
   public lockdown_intro_1: string;
   public lockdown_tab_1_below: string;
   public lockdown_tab_2_below: string;
-  public lockdown_tab_3_below_li_1: string;
-  public lockdown_tab_3_below_li_2: string;
-  public lockdown_tab_4_below: string;
 
   public locations: Location[] = [
     {value: 'World', viewValue: 'World'},
@@ -67,21 +63,19 @@ export class LockdownComponent implements OnInit {
     const backgroundColor = ['#ffa600', '#ff6361', '#bc5090', '#58508d', '#003f5c'];
     const countries = this.getCountriesByRegion('World');
 
-    const data1 = this.getCountriesData(countries);
+    const countriesDatasets = this.getCountriesData(countries);
     const countriesCTX = (document.getElementById("lockdownCountriesPieChart") as any).getContext("2d");
-    this.lockdownCountriesPieChart = createPieChart(countriesCTX, labels, data1, backgroundColor);
+    this.lockdownCountriesPieChart = createPieChart(countriesCTX, labels, countriesDatasets, backgroundColor, 'Countries');
 
-    const data2 = this.getPopulationData(countries);
+    const populationDatasets = this.getPopulationData(countries);
     const populationCTX = (document.getElementById("lockdownPopulationPieChart") as any).getContext("2d");
-    this.lockdownPopulationPieChart = createPieChart(populationCTX, labels, data2, backgroundColor);
+    this.lockdownPopulationPieChart = createPieChart(populationCTX, labels, populationDatasets, backgroundColor, 'People');
   }
 
   private setTexts() {
     this.lockdown_intro_1 = text.default.lockdown_intro_1;
     this.lockdown_tab_1_below = text.default.lockdown_tab_1_below;
     this.lockdown_tab_2_below = text.default.lockdown_tab_2_below;
-    this.lockdown_tab_3_below_li_1 = text.default.lockdown_tab_3_below_li_1;
-    this.lockdown_tab_3_below_li_2 = text.default.lockdown_tab_3_below_li_2;
   }
 
   private getCountriesData(countries) {
@@ -106,16 +100,6 @@ export class LockdownComponent implements OnInit {
     return [lockdown, curfew, removedRestrictions, lightRestrictions, noData];
   }
 
-  private getCountryPopulation(alpha3: string) {
-    const reducer = (acc: number, currVal: number) => { return currVal + acc };
-    for (const country of countriesData.default) {
-      if (country.alpha3 === alpha3) {
-        const population = ageRanges.map((ageRange) => country.population[ageRange]);
-        return Math.floor(population.reduce(reducer));
-      }
-    }
-  }
-
   private getPopulationData(countries) {
     let lockdown = 0;
     let curfew = 0;
@@ -123,7 +107,7 @@ export class LockdownComponent implements OnInit {
     let lightRestrictions = 0;
     let noData = 0;
     for (const country of countries) {
-      const population = this.getCountryPopulation(country["alpha-3"]);
+      const population = getCountryPopulation(country["alpha-3"]);
       if (country.end !== "N/A") {
         removedRestrictions += Math.floor(population*country.population_affected);
         lightRestrictions += Math.floor(population*(1-country.population_affected));
@@ -145,8 +129,11 @@ export class LockdownComponent implements OnInit {
   public lockdownChangeRegion(region: string) {
     this.lockdownRegion = region;
     const countries = this.getCountriesByRegion(region);
-    this.lockdownImpactedPeople = Math.floor(this.getLockdownImpactedPopulation(countries));
-    this.curfewImpactedPeople = this.getCurfewImpactedPopulation(countries);
+    const restrictionData = this.getPopulationData(countries);
+    // 0 - lockdown, 2 - restrictions removed
+    this.lockdownImpactedPeople = Math.floor(restrictionData[0]+restrictionData[2]);
+    // 1 - curfew
+    this.curfewImpactedPeople = Math.floor(restrictionData[1]);
     this.averageDaysMissed = this.getAverageDaysMissedPerRegion(countries);
   }
 
@@ -162,25 +149,6 @@ export class LockdownComponent implements OnInit {
     const countries = this.getCountriesByRegion(region);
     this.lockdownPopulationPieChart.data.datasets[0].data = this.getPopulationData(countries);
     this.lockdownPopulationPieChart.update();
-  }
-
-  private getLockdownImpactedPopulation(countries) {
-    const population = countries.map(
-      country => this.getImpactedPeople(country["alpha-3"], country.population_affected)
-    );
-    const reducer = (acc: number, currVal: number) => { return currVal + acc };
-    return population.length === 0 ? 0 : population.reduce(reducer);
-  }
-
-  private getCurfewImpactedPopulation(region_countries) {
-    const countries = region_countries.filter(country => {
-      return country.curfew === "Yes" ? true : false;
-    });
-    const population = countries.map(
-      country => this.getImpactedPeople(country["alpha-3"], 1)
-    );
-    const reducer = (acc: number, currVal: number) => { return currVal + acc };
-    return population.length === 0 ? 0 : population.reduce(reducer);
   }
 
   private getAverageDaysMissedPerRegion(countries) {
@@ -205,11 +173,13 @@ export class LockdownComponent implements OnInit {
 
   private setLockdownStatistics() {
     let duration;
+    let population;
     for (const country of lockdownData.default) {
       duration = this.getMissedDaysPerCountry(country);
+      population = getCountryPopulation(country['alpha-3'])*country.population_affected;
       this.lockdownTableFull.push({
         "name": getCountryNameByAlpha(country['alpha-3']),
-        "population": this.getImpactedPeople(country['alpha-3'], country.population_affected),
+        "population": population === 0 ? '' : population,
         "duration": duration === 0 ? '' : duration,
         "lockdown": country.lockdown === 'N/A' ? '' : country.lockdown,
         "curfew": country.curfew === 'N/A' ? '' : country.curfew,
@@ -241,20 +211,7 @@ export class LockdownComponent implements OnInit {
     if (country.army === true) {
       measures.push('Army Intervention');
     }
-    // if (country.business === "Yes") {
-    //   measures.push('Business Shutdown');
-    // }
     return measures;
-  }
-
-  private getImpactedPeople(alpha3: string, affected_population_percent: number) {
-    const reducer = (acc: number, currVal: number) => { return currVal + acc };
-    for (const country of countriesData.default) {
-      if (country.alpha3 === alpha3) {
-        const population = ageRanges.map((ageRange) => country.population[ageRange]);
-        return Math.floor(population.reduce(reducer)*affected_population_percent);
-      }
-    }
   }
 
   private getMissedDaysPerCountry(country: any) {

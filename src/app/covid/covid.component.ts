@@ -1,8 +1,19 @@
 import { Component, OnInit } from '@angular/core';
+import {Sort} from '@angular/material/sort';
 import { HttpClient } from '@angular/common/http';
+import Chart from 'chart.js';
 
 import { createLineChart, getCountryNameByAlpha, monthNames } from '../utils';
-import * as covid from '../data/covid_evolution';
+import * as evolution from '../data/ecdc';
+
+export interface Stats {
+  country: string;
+  total_cases: number;
+  new_cases: number;
+  total_deaths: number;
+  new_deaths: number;
+  recovered: number;
+}
 
 @Component({
   selector: 'app-covid',
@@ -11,13 +22,22 @@ import * as covid from '../data/covid_evolution';
 })
 export class CovidComponent implements OnInit {
   public statsHeaders = ['Country', 'Total Cases', 'New Cases', 'Total Deaths', 'New Deaths', 'Recovered'];
-  public stats: any;
-  public worldStats: any;
+  public stats: Stats[];
+  public worldStats: Stats[];
   public worldDataUpdatedOn: string;
+  public views = ['Day by Day', 'Total'];
+  public casesView = 'Day by Day';
+  public deathsView = 'Day by Day';
 
   public casesLastUpdate: string;
   public deathsLastUpdate: string;
   public totalDeathCausesLastUpdate: string;
+
+  public casesChart: Chart;
+  public deathsChart: Chart;
+
+  private casesEvolutionData: number[];
+  private deathsEvolutionData: number[];
 
   constructor(
     private http: HttpClient
@@ -25,27 +45,94 @@ export class CovidComponent implements OnInit {
 
   async ngOnInit() {
     const casesCTX = (document.getElementById("chartCases") as any).getContext("2d");
-    const labels = covid.default.dates.slice(32);
-    const cases = covid.default.cases.slice(32);
-    const deaths = covid.default.deaths.slice(32);
-    createLineChart(casesCTX, labels, cases)
+    const labels = evolution.default.dates.reverse();
+    this.casesEvolutionData = this.getEvolutionData('cases');
+    this.deathsEvolutionData = this.getEvolutionData('deaths');
+    this.casesChart = createLineChart(casesCTX, labels, this.casesEvolutionData)
     this.casesLastUpdate = labels[labels.length-1];
 
     const deathsCTX = (document.getElementById("chartDeaths") as any).getContext("2d");
-    createLineChart(deathsCTX, labels, deaths)
+    this.deathsChart = createLineChart(deathsCTX, labels, this.deathsEvolutionData)
     this.deathsLastUpdate = labels[labels.length-1];
 
     // world table
     try {
       await this.fetchWorldData();
       this.stats = JSON.parse(JSON.stringify(this.worldStats)).slice(0, 10);
-    } catch {
-      // this.stats = lockdown_stats.values;
+    } catch (e) {
+      console.log(e)
     }
     if (this.stats[this.stats.length-1].country === 'World') {
       return;
     }
     this.stats.push(this.getWorldRow());
+  }
+
+  private getEvolutionData(dataKey: string) {
+    const data = []
+    for (const index in evolution.default.dates) {
+      let current = 0;
+      for(const country in evolution.default.data) {
+        current += evolution.default.data[country][dataKey][index]
+      }
+      data.push(current);
+    }
+    return data.reverse()
+  }
+
+  private getTotalData(evolutionData: number[]) {
+    const data = []
+    let previousDay = 0;
+    for (const current of evolutionData) {
+      previousDay = previousDay + current;
+      data.push(previousDay);
+    }
+    return data;
+  }
+
+  public casesChangeView() {
+    this.casesView = this.casesView === 'Total' ? 'Day by Day' : 'Total';
+    if (this.casesView === 'Total') {
+      this.casesChart.data.datasets[0].data = this.getTotalData(this.casesEvolutionData);
+    } else {
+      this.casesChart.data.datasets[0].data = this.getEvolutionData('cases');
+    }
+    this.casesChart.update();
+  }
+
+  public deathsChangeView() {
+    this.deathsView = this.deathsView === 'Total' ? 'Day by Day' : 'Total';
+    if (this.deathsView === 'Total') {
+      this.deathsChart.data.datasets[0].data = this.getTotalData(this.deathsEvolutionData);
+    } else {
+      this.deathsChart.data.datasets[0].data = this.getEvolutionData('deaths');
+    }
+    this.deathsChart.update();
+  }
+
+  sortData(sort: Sort) {
+    const data = this.worldStats.slice();
+    if (!sort.active || sort.direction === '') {
+      this.stats = data;
+      return;
+    }
+
+    this.stats = data.sort((a, b) => {
+      const isAsc = sort.direction === 'asc';
+      switch (sort.active) {
+        case 'country': return this.compare(a.country, b.country, isAsc);
+        case 'total_cases': return this.compare(a.total_cases, b.total_cases, isAsc);
+        case 'new_cases': return this.compare(a.new_cases, b.new_cases, isAsc);
+        case 'total_deaths': return this.compare(a.total_deaths, b.total_deaths, isAsc);
+        case 'new_deaths': return this.compare(a.new_deaths, b.new_deaths, isAsc);
+        case 'recovered': return this.compare(a.recovered, b.recovered, isAsc);
+        default: return 0;
+      }
+    }).slice(0, 10);
+  }
+
+  private compare(a: number | string, b: number | string, isAsc: boolean) {
+    return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
   }
 
   // world table part
