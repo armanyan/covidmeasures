@@ -27,6 +27,14 @@
               </ng-container>
             </ng-container>
 
+            <ng-container *ngIf="isMobile">
+              <mat-select [(value)]="casesView" (selectionChange)="casesChangeView($event.value)">
+                <mat-option *ngFor="let view of views" [value]="view">
+                  {{view}}
+                </mat-option>
+              </mat-select>
+            </ng-container>
+
           </div>
           <div class="card-body ">
             <canvas id=chartCases width="400" height="400"></canvas>
@@ -62,6 +70,14 @@
                   <span>{{ view }}</span>
                 </button>
               </ng-container>
+            </ng-container>
+
+            <ng-container *ngIf="isMobile">
+              <mat-select [(value)]="deathsView" (selectionChange)="deathsChangeView($event.value)">
+                <mat-option *ngFor="let view of views" [value]="view">
+                  {{view}}
+                </mat-option>
+              </mat-select>
             </ng-container>
 
           </div>

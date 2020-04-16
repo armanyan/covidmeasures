@@ -21,6 +21,7 @@ export interface Stats {
   styleUrls: ['./covid.component.css']
 })
 export class CovidComponent implements OnInit {
+  public isMobile: boolean;
   public statsHeaders = ['Country', 'Total Cases', 'New Cases', 'Total Deaths', 'New Deaths', 'Recovered'];
   public stats: Stats[];
   public worldStats: Stats[];
@@ -44,10 +45,16 @@ export class CovidComponent implements OnInit {
   ) { }
 
   async ngOnInit() {
+    this.isMobile = window.innerWidth > 991 ? false : true;
     const casesCTX = (document.getElementById("chartCases") as any).getContext("2d");
-    const labels = evolution.default.dates.reverse();
+    const labels = evolution.default.dates.reverse()
+                                          .map(date => this.changeDateFormat(date));
+    // remove today's data since in the other parts we use data from different sources,
+    // and incoherence would be obvious
+    labels.pop()
     this.casesEvolutionData = this.getEvolutionData('cases');
     this.deathsEvolutionData = this.getEvolutionData('deaths');
+
     this.casesChart = createLineChart(casesCTX, labels, this.casesEvolutionData)
     this.casesLastUpdate = labels[labels.length-1];
 
@@ -77,7 +84,12 @@ export class CovidComponent implements OnInit {
       }
       data.push(current);
     }
-    return data.reverse()
+    // ecdc data comes ordered with the newest cases/deaths first
+    data.reverse();
+    // remove today's data since in the other parts we use data from different sources,
+    // and incoherence would be obvious
+    data.pop();
+    return data;
   }
 
   private getTotalData(evolutionData: number[]) {
@@ -90,8 +102,22 @@ export class CovidComponent implements OnInit {
     return data;
   }
 
-  public casesChangeView() {
-    this.casesView = this.casesView === 'Total' ? 'Day by Day' : 'Total';
+  /**
+   * Transforms a european format date to universal
+   * Ex: 15/01/2020 to 15 January 2020
+   * @param date to change
+   */
+  private changeDateFormat(date: string) {
+    const data = date.split('/');
+    return `${data[0]} ${monthNames[parseInt(data[1])-1]} ${data[2]}` 
+   }
+
+  public casesChangeView(view?: string) {
+    if (view) {
+      this.casesView = view;
+    } else {
+      this.casesView = this.casesView === 'Total' ? 'Day by Day' : 'Total';
+    }
     if (this.casesView === 'Total') {
       this.casesChart.data.datasets[0].data = this.getTotalData(this.casesEvolutionData);
     } else {
@@ -100,8 +126,12 @@ export class CovidComponent implements OnInit {
     this.casesChart.update();
   }
 
-  public deathsChangeView() {
-    this.deathsView = this.deathsView === 'Total' ? 'Day by Day' : 'Total';
+  public deathsChangeView(view?: string) {
+    if (view) {
+      this.deathsView = view;
+    } else {
+      this.deathsView = this.deathsView === 'Total' ? 'Day by Day' : 'Total';
+    }
     if (this.deathsView === 'Total') {
       this.deathsChart.data.datasets[0].data = this.getTotalData(this.deathsEvolutionData);
     } else {
