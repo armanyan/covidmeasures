@@ -22,7 +22,6 @@ export const ROUTES: RouteInfo[] = [
   { path: '/testing', title: 'Testing', soon: true,  icon:'local_hospital', class: '' },
   { path: '/aboutus', title: 'About Us', icon:'supervisor_account', class: '' },
   { path: '/join', title: 'Join Us', join: true, icon:'contact_mail', class: '' },
-  { path: '/contribute', title: 'Contribute', contribute: true, icon:'pan_tool', class: '' }
 ];
 
 @Component({
