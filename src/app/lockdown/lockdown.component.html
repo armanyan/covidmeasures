@@ -256,6 +256,54 @@
 
     <hr>
 
+    <h3>Lockdown Impacts</h3>
+
+    <div class="col-md-12">
+      <div class="card">
+
+        <div class="card-header card-header-success">
+          <h3 class="card-title">List of Lockdown Impacts & Solutions</h3>
+          <button mat-raised-button class="float-right" type="button" color="primary">
+            <span>Add Your Contribution</span>
+          </button>
+        </div>
+
+        <div class="card-body">
+
+          <div class="content table-responsive table-full-width">
+            <table class="table">
+              <thead>
+                <th class="text-primary" *ngFor="let row of impactHeaders">
+                  {{ row }}
+                </th>
+              </thead>
+              <tbody>
+                <tr *ngFor="let row of impactTable">
+                  <td>{{ row.impact }}</td>
+                  <td>{{ row.desc}}</td>
+                  <td>{{ row.link }}</td>
+                  <td>{{ row.countries }}</td>
+                  <td>
+                    <a href="{{ row.source }}">{{ row.source_name }}</a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            </div>
+    
+        </div>
+
+        <div class="card-footer">
+          <div class="stats">
+            Source: CovidMeasures Community
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <hr>
+
     <p>
       The status of lockdown measures worldwide was made possible thanks to the community of <b>CovidMeasures</b>.
       Please help to keep this database up-to-date. <a href="https://forms.gle/DmmnetQ76by64hF68" target="_blank">Join our team </a>or

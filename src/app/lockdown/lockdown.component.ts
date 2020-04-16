@@ -3,6 +3,7 @@ import Chart from 'chart.js';
 
 import { getCountryNameByAlpha, getCountryPopulation, getRegionByAlpha, createPieChart } from '../utils';
 import * as lockdownData from '../data/lockdown';
+import * as lockdownImpactData from '../data/lockdown_impacts';
 import * as text from '../data/texts/lockdown';
 
 interface Location {
@@ -35,9 +36,11 @@ export class LockdownComponent implements OnInit {
   public statsHeaders = [
     'Name', 'Population Impacted', 'Lockdown', 'Curfew', 'Business Closure', 'Other Measures', 'Start', 'End', 'Duration', 'Status'
   ];
-
   public lockdownTable = [];
   public lockdownTableFull = [];
+
+  public impactHeaders = ['Impact', 'Description', 'Link to Lockdown', 'Countries Impacted', 'Source'];
+  public impactTable = [];
 
   public lockdownRegion = "World";
   public lockdownPieChartCountriesRegion = "World";
@@ -57,6 +60,7 @@ export class LockdownComponent implements OnInit {
     this.isMobile = window.innerWidth > 991 ? false : true;
     this.setTexts();
     this.setLockdownStatistics();
+    this.setLockdownImpactStatistics();
     this.lockdownChangeRegion('World');
 
     const labels = ['Lockdown', 'Curfew', 'Removed Restrictions', 'No Or Light Restrictions', 'No Data']
@@ -191,6 +195,19 @@ export class LockdownComponent implements OnInit {
       });
     }
     this.lockdownTable = this.lockdownTableFull.slice(0, 10);
+  }
+
+  private setLockdownImpactStatistics() {
+    for (const row of lockdownImpactData.default) {
+      this.impactTable.push({
+        "impact": row.impact,
+        "desc": row.desc,
+        "link": row.link,
+        "countries": row.countries,
+        "source_name": row.source_name,
+        "source": row.source
+      });
+    }
   }
 
   private getEndDate(end: string, expectedEnd: string) {

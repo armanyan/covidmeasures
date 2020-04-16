@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 
 import { getRegionByAlpha, getSchoolPopulationByAlpha3, getCountryNameByAlpha, getChildrenNoSchoolByAlpha3 } from '../utils';
 import * as lockdownData from '../data/school_closure';
+import * as impactData from '../data/school_closure_impact';
 import * as text from '../data/texts/school_closure';
 
 interface Location {
@@ -43,6 +44,9 @@ export class SchoolComponent implements OnInit {
     {value: 'COVID-19 Active Case'}
   ]
 
+  public impactHeaders = ['Impact', 'Description', 'Link to Lockdown', 'Countries Impacted', 'Source'];
+  public impactTable = [];
+
   public currentCovidCategory = 'COVID-19 Death';
 
   public numberChildrenImpacted: number;
@@ -53,7 +57,7 @@ export class SchoolComponent implements OnInit {
 
   public impactedChildren: number;
   public impactedChildrenPer: number;
-  public schooldaysMissedPer: number;
+  public schoolYearsMissedPer: number;
 
   public perCovidActive = false;
 
@@ -82,6 +86,7 @@ export class SchoolComponent implements OnInit {
     this.isMobile = window.innerWidth > 991 ? false : true;
     this.setTexts();
     await this.setCurrentDeathEvolution();
+    this.setLockdownImpactStatistics();
     this.numberChildrenImpacted = Math.floor(this.getContinentChildrenPopulation(this.schoolClosureRegion));
     this.averageDaysMissed = this.getAverageDaysMissedPerRegion('World');
     this.covidVSSchoolChangeRegion('World');
@@ -162,7 +167,9 @@ export class SchoolComponent implements OnInit {
     this.impactedChildren = this.getContinentChildrenPopulation(region);
     const divider = this.perCovidActive ? this.covidByContinent[region].activeCases : this.covidByContinent[region].deaths;
     this.impactedChildrenPer = Math.floor(this.impactedChildren/divider);
-    this.schooldaysMissedPer = Math.floor((this.getAverageDaysMissedPerRegion(region)*this.impactedChildren)/divider);
+    this.schoolYearsMissedPer = Math.floor(
+      (this.getAverageDaysMissedPerRegion(region)*this.impactedChildren)/(divider*365)
+    );
   }
 
   private async setCurrentDeathEvolution() {
@@ -226,6 +233,20 @@ export class SchoolComponent implements OnInit {
     this.schoolClosure = this.schoolClosureFull.filter(
       row => row.name.toLowerCase().includes(search)
     ).slice(0, 10);
+  }
+
+  private setLockdownImpactStatistics() {
+    for (const row of impactData.default) {
+      console.log(row)
+      this.impactTable.push({
+        "impact": row.impact,
+        "desc": row.desc,
+        "link": row.link,
+        "countries": row.countries,
+        "source_name": row.source_name,
+        "source": row.source
+      });
+    }
   }
 
 }
