@@ -10,7 +10,7 @@
     <li routerLinkActive="active" *ngFor="let menuItem of menuItems" class="{{menuItem.class}} nav-item">
       <a *ngIf="!menuItem.soon && !menuItem.join && !menuItem.contribute" class="nav-link" [routerLink]="[menuItem.path]">
         <i class="material-icons">{{menuItem.icon}}</i>
-        <p style="color: black;"><b>{{menuItem.title}}</b></p>
+        <p><b>{{menuItem.title}}</b></p>
       </a>
       <a *ngIf="menuItem.soon" class="nav-link" [routerLink]="[menuItem.path]">
         <i class="material-icons">{{menuItem.icon}}</i>
