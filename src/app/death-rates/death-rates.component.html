@@ -31,7 +31,7 @@
             <ng-container class="btn-group" *ngIf="!isMobile">
               <ng-container *ngFor="let date of dates">
                 <button mat-raised-button *ngIf="deathStatsPeriod===date.value"
-                  class="float" type="button" color="primary" style="background-color: rebeccapurple;">
+                  class="float" type="button" color="primary">
                   <span>{{ date.value }}</span>
                 </button>
   
@@ -102,7 +102,7 @@
           <ng-container *ngIf="!isMobile">
             <ng-container *ngFor="let date of dates">
               <button mat-raised-button *ngIf="estimationStatsPeriod===date.value"
-                class="float" type="button" color="primary" style="background-color: rebeccapurple;">
+                class="float" type="button" color="primary">
                 <span>{{ date.value }}</span>
               </button>
 
@@ -195,7 +195,7 @@
 
             <ng-container *ngFor="let date of dates">
               <button mat-raised-button *ngIf="deathCausesPeriod===date.value"
-                class="float" type="button" color="primary" style="background-color: rebeccapurple;">
+                class="float" type="button" color="primary">
                 <span>{{ date.value }}</span>
               </button>
 

@@ -27,7 +27,7 @@ export default {
 		"end": "N/A",
 		"expected_end": "N/A",
 		"school_closure": "Yes",
-		"children_no_school": 0.9395695142,
+		"children_no_school": 9.549772458,
 		"status": "Ongoing"
 	}, {
 		"alpha3": "ESP",
@@ -103,19 +103,19 @@ export default {
 		"alpha3": "NLD",
 		"code": "528",
 		"country": "Netherlands",
-		"start": "N/A",
+		"start": "3/26/2020",
 		"end": "N/A",
 		"expected_end": "N/A",
-		"school_closure": "No",
-		"children_no_school": 0.0,
-		"status": "No Closure"
+		"school_closure": "Yes",
+		"children_no_school": 1.0,
+		"status": "Ongoing"
 	}, {
 		"alpha3": "AUT",
 		"code": "40",
 		"country": "Austria",
 		"start": "3/11/2020",
 		"end": "N/A",
-		"expected_end": "4/14/2020",
+		"expected_end": "N/A",
 		"school_closure": "Yes",
 		"children_no_school": 1.0,
 		"status": "Ongoing"
@@ -487,7 +487,7 @@ export default {
 		"end": "N/A",
 		"expected_end": "N/A",
 		"school_closure": "No",
-		"children_no_school": 1.0,
+		"children_no_school": 0.0,
 		"status": "Ongoing"
 	}, {
 		"alpha3": "PER",
@@ -815,7 +815,7 @@ export default {
 		"country": "Cyprus",
 		"start": "3/10/2020",
 		"end": "N/A",
-		"expected_end": "4/14/2020",
+		"expected_end": "N/A",
 		"school_closure": "Yes",
 		"children_no_school": 1.0,
 		"status": "Ongoing"
@@ -952,7 +952,7 @@ export default {
 	}, {
 		"alpha3": "CIV",
 		"code": "384",
-		"country": "Cote d'Ivoire",
+		"country": "Cote dIvoire",
 		"start": "N/A",
 		"end": "N/A",
 		"expected_end": "N/A",
@@ -1562,7 +1562,7 @@ export default {
 	}, {
 		"alpha3": "LAO",
 		"code": "418",
-		"country": "Lao People's Democratic Republic",
+		"country": "Lao Peoples Democratic Republic",
 		"start": "N/A",
 		"end": "N/A",
 		"expected_end": "N/A",
@@ -1792,7 +1792,7 @@ export default {
 	}, {
 		"alpha3": "PRK",
 		"code": "408",
-		"country": "Dem. People's Republic of Korea",
+		"country": "Dem. Peoples Republic of Korea",
 		"start": "N/A",
 		"end": "N/A",
 		"expected_end": "N/A",
@@ -1940,5 +1940,5 @@ export default {
 		"children_no_school": 0,
 		"status": "No Data"
 	}],
-	"updatedOn": "09/07/2020"
+	"updatedOn": "17 April 2020"
 }

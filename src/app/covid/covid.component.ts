@@ -15,6 +15,11 @@ export interface Stats {
   recovered: number;
 }
 
+interface Country {
+  value: string;
+  viewValue: string;
+}
+
 @Component({
   selector: 'app-covid',
   templateUrl: './covid.component.html',
@@ -29,6 +34,8 @@ export class CovidComponent implements OnInit {
   public views = ['Day by Day', 'Total'];
   public casesView = 'Day by Day';
   public deathsView = 'Day by Day';
+  public countryCasesView = "US";
+  public countryDeathsView = "US";
 
   public casesLastUpdate: string;
   public deathsLastUpdate: string;
@@ -36,6 +43,11 @@ export class CovidComponent implements OnInit {
 
   public casesChart: Chart;
   public deathsChart: Chart;
+
+  public countryCasesChart: Chart;
+  public countryDeathsChart: Chart;
+
+  public countryList: Country[];
 
   private casesEvolutionData: number[];
   private deathsEvolutionData: number[];
@@ -47,20 +59,36 @@ export class CovidComponent implements OnInit {
   async ngOnInit() {
     this.isMobile = window.innerWidth > 991 ? false : true;
     const casesCTX = (document.getElementById("chartCases") as any).getContext("2d");
-    const labels = evolution.default.dates.reverse()
-                                          .map(date => this.changeDateFormat(date));
+    const labels = evolution.default.dates.map(date => this.changeDateFormat(date));
     // remove today's data since in the other parts we use data from different sources,
     // and incoherence would be obvious
     labels.pop()
     this.casesEvolutionData = this.getEvolutionData('cases');
     this.deathsEvolutionData = this.getEvolutionData('deaths');
 
-    this.casesChart = createLineChart(casesCTX, labels, this.casesEvolutionData)
+    this.casesChart = createLineChart(casesCTX, labels, this.casesEvolutionData);
     this.casesLastUpdate = labels[labels.length-1];
 
     const deathsCTX = (document.getElementById("chartDeaths") as any).getContext("2d");
-    this.deathsChart = createLineChart(deathsCTX, labels, this.deathsEvolutionData)
+    this.deathsChart = createLineChart(deathsCTX, labels, this.deathsEvolutionData);
     this.deathsLastUpdate = labels[labels.length-1];
+
+
+    const alphas = Object.keys(evolution.default.data);
+    this.countryList = [];
+    for (const alpha of alphas) {
+      this.countryList.push({
+        "value": alpha,
+        "viewValue": evolution.default.data[alpha].name.split('_').join(' ')
+      });
+    }
+
+    const countryCasesCTX = (document.getElementById("countryChartCases") as any).getContext("2d");
+    this.countryCasesChart = createLineChart(countryCasesCTX, labels, evolution.default.data.US.cases);
+
+    const countryDeathsCTX = (document.getElementById("countryChartDeaths") as any).getContext("2d");
+    this.countryDeathsChart = createLineChart(countryDeathsCTX, labels, evolution.default.data.US.deaths);
+
 
     // world table
     try {
@@ -84,8 +112,6 @@ export class CovidComponent implements OnInit {
       }
       data.push(current);
     }
-    // ecdc data comes ordered with the newest cases/deaths first
-    data.reverse();
     // remove today's data since in the other parts we use data from different sources,
     // and incoherence would be obvious
     data.pop();
@@ -140,30 +166,6 @@ export class CovidComponent implements OnInit {
     this.deathsChart.update();
   }
 
-  sortData(sort: Sort) {
-    const data = this.worldStats.slice();
-    if (!sort.active || sort.direction === '') {
-      this.stats = data;
-      return;
-    }
-
-    this.stats = data.sort((a, b) => {
-      const isAsc = sort.direction === 'asc';
-      switch (sort.active) {
-        case 'country': return this.compare(a.country, b.country, isAsc);
-        case 'total_cases': return this.compare(a.total_cases, b.total_cases, isAsc);
-        case 'new_cases': return this.compare(a.new_cases, b.new_cases, isAsc);
-        case 'total_deaths': return this.compare(a.total_deaths, b.total_deaths, isAsc);
-        case 'new_deaths': return this.compare(a.new_deaths, b.new_deaths, isAsc);
-        case 'recovered': return this.compare(a.recovered, b.recovered, isAsc);
-        default: return 0;
-      }
-    }).slice(0, 10);
-  }
-
-  private compare(a: number | string, b: number | string, isAsc: boolean) {
-    return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
-  }
 
   // world table part
   private getCountries(data: any) {
@@ -204,6 +206,28 @@ export class CovidComponent implements OnInit {
     row.new_deaths = (this.worldStats.map(row => row.new_deaths).reduce(reducer) as any);
     row.recovered = this.worldStats.map(row => row.recovered).reduce(reducer);
     return row;
+  }
+
+  public countryCasesChangeView(value: string) {
+    this.countryCasesView = value;
+    for (const country of this.countryList) {
+      if (country.value === value) {
+        this.countryCasesChart.data.datasets[0].data = evolution.default.data[value].cases;
+        this.countryCasesChart.update();
+        return;
+      }
+    }
+  }
+
+  public countryDeathsChangeView(value: string) {
+    this.countryDeathsView = value;
+    for (const country of this.countryList) {
+      if (country.value === value) {
+        this.countryDeathsChart.data.datasets[0].data = evolution.default.data[value].deaths;
+        this.countryDeathsChart.update();
+        return;
+      }
+    }
   }
 
 }

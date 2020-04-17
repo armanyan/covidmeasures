@@ -110,7 +110,7 @@
         <ng-container *ngIf="!isMobile">
 
           <button mat-raised-button *ngIf="perCovidActive"
-            class="float" type="button" color="primary" style="background-color: rebeccapurple;">
+            class="float" type="button" color="primary">
             <span>Per COVID-19 Active Case</span>
           </button>
           <button mat-button *ngIf="perCovidActive"
@@ -122,7 +122,7 @@
             <span>Per COVID-19 Active Case</span>
           </button>
           <button mat-raised-button *ngIf="!perCovidActive"
-            class="float" type="button" color="primary" style="background-color: rebeccapurple;">
+            class="float" type="button" color="primary">
             <span>Per COVID-19 Death</span>
           </button>
 
@@ -245,9 +245,11 @@
 
         <div class="card-header card-header-success">
           <h3 class="card-title">List of School Closure Impacts</h3>
-          <button mat-raised-button class="float-right" type="button" color="primary">
+          <a mat-raised-button class="nav-link float-right" type="button"
+            color="primary" href="https://forms.gle/TuLNu54Xr6vfYedq5" target="_blank"
+          >
             <span>Add Your Contribution</span>
-          </button>
+          </a>
         </div>
 
         <div class="card-body">
@@ -288,7 +290,7 @@
 
     <p>
       The status of school closures worldwide was made possible thanks to the community of <b>CovidMeasures</b>.
-      Please help to keep this database up-to-date. <a href="https://forms.gle/DmmnetQ76by64hF68" target="_blank">Join our team </a>or
+      Please help to keep this database up-to-date. <a href="https://forms.gle/aFGWDjLbvXAm8ZkR7" target="_blank">Join our team </a>or
       just <a href="https://forms.gle/TuLNu54Xr6vfYedq5" target="_blank">contribute</a>
       by verifying its accuracy in your region.
     </p>

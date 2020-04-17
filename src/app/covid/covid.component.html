@@ -100,6 +100,70 @@
 
     <hr>
 
+    <h3>Day by Day COVID-19 Evolution by Country</h3>
+
+    <div class="row">
+      <div class="col-md-6">
+        <div class="card ">
+          <div class="card-header card-header-success">
+            <h3 class="card-title">Reported COVID-19 Infection Cases</h3>
+
+            <mat-label>Choose Country</mat-label>
+            <mat-select [(value)]="countryCasesView" (selectionChange)="countryCasesChangeView($event.value)">
+              <mat-option *ngFor="let country of countryList" [value]="country.value">
+                {{ country.viewValue }}
+              </mat-option>
+            </mat-select>
+
+          </div>
+          <div class="card-body ">
+            <canvas id=countryChartCases width="400" height="400"></canvas>
+          </div>
+          <div class="card-footer">
+            <div class="stats">
+              Updated on {{casesLastUpdate}}
+            </div>
+            <div class="stats">
+              Source:
+              <a
+                href="https://www.ecdc.europa.eu/en/publications-data/download-todays-data-geographic-distribution-covid-19-cases-worldwide"
+              >ECDC</a></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="card ">
+          <div class="card-header card-header-success">
+            <h3 class="card-title">Reported COVID-19 Deaths</h3>
+
+            <mat-label>Choose Country</mat-label>
+            <mat-select [(value)]="countryDeathsView" (selectionChange)="countryDeathsChangeView($event.value)">
+              <mat-option *ngFor="let country of countryList" [value]="country.value">
+                {{ country.viewValue }}
+              </mat-option>
+            </mat-select>
+
+          </div>
+          <div class="card-body ">
+            <canvas id=countryChartDeaths width="400" height="400"></canvas>
+          </div>
+          <div class="card-footer">
+            <div class="stats">
+              Updated on {{deathsLastUpdate}}
+            </div>
+            <div class="stats">
+              Source:
+              <a
+                href="https://www.ecdc.europa.eu/en/publications-data/download-todays-data-geographic-distribution-covid-19-cases-worldwide"
+              >ECDC</a></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <hr>
+
     <div class="col-md-12">
       <div class="card">
 

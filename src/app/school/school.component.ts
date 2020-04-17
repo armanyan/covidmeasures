@@ -237,7 +237,6 @@ export class SchoolComponent implements OnInit {
 
   private setLockdownImpactStatistics() {
     for (const row of impactData.default) {
-      console.log(row)
       this.impactTable.push({
         "impact": row.impact,
         "desc": row.desc,
