@@ -27,7 +27,7 @@ export default {
 		"end": "N/A",
 		"expected_end": "N/A",
 		"school_closure": "Yes",
-		"children_no_school": 9.549772458,
+		"children_no_school": 0.9549772458,
 		"status": "Ongoing"
 	}, {
 		"alpha3": "ESP",

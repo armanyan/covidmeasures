@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Title } from '@angular/platform-browser';
 import Chart from 'chart.js';
 
 import { createBarChart, createStackedBarChart, ageRanges, getRegionByAlpha, getAlpha3FromAlpha2, insertToArray } from '../utils';
@@ -83,10 +84,12 @@ export class DeathRatesComponent implements OnInit {
   private deathsPerCountry = [];
 
   constructor(
+    private titleService: Title,
     private http: HttpClient
   ) { }
 
   async ngOnInit() {
+    this.titleService.setTitle('COVID-19 Death Rates Compared To Other Death Causes');
     this.isMobile = window.innerWidth > 991 ? false : true;
     this.setText();
     await this.setCurrentDeathEvolution()

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 
 import * as economics from '../data/economic';
 
@@ -17,7 +18,12 @@ export class EconomicsComponent implements OnInit {
 
   public table = [];
 
+  constructor(
+    private titleService: Title
+  ) { }
+
   ngOnInit() {
+    this.titleService.setTitle('Economic Stimulus Related to COVID-19 Pandemics');
     this.isMobile = window.innerWidth > 991 ? false : true;
 
     this.setTable();

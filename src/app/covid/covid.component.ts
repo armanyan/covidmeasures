@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {Sort} from '@angular/material/sort';
 import { HttpClient } from '@angular/common/http';
+import { Title } from "@angular/platform-browser";
 import Chart from 'chart.js';
 
 import { createLineChart, getCountryNameByAlpha, monthNames } from '../utils';
@@ -53,10 +53,12 @@ export class CovidComponent implements OnInit {
   private deathsEvolutionData: number[];
 
   constructor(
+    private titleService: Title,
     private http: HttpClient
   ) { }
 
   async ngOnInit() {
+    this.titleService.setTitle('COVID-19 Statistics');
     this.isMobile = window.innerWidth > 991 ? false : true;
     const casesCTX = (document.getElementById("chartCases") as any).getContext("2d");
     const labels = evolution.default.dates.map(date => this.changeDateFormat(date));

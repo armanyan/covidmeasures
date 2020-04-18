@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 
 import * as surveillance from '../data/surveillance';
 
@@ -17,9 +18,12 @@ export class SurveillanceComponent implements OnInit {
 
   public table = [];
 
-  constructor() { }
+  constructor(
+    private titleService: Title
+  ) { }
 
   ngOnInit() {
+    this.titleService.setTitle('Surveillance Related to COVID-19 Pandemics');
     this.isMobile = window.innerWidth > 991 ? false : true;
 
     this.setTable();

@@ -55,7 +55,7 @@ export const getCountryPopulation = (alpha3: string) => {
   }
 }
 
-const standardTooltip = (tooltipItem: any, values: any) => {
+const standardTooltip = (tooltipItem: any, values = undefined) => {
   return Math.floor(tooltipItem.xLabel).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
 }
 
@@ -248,7 +248,7 @@ export const createStackedBarChart = (
         position: "nearest",
         callbacks: {
           label: function(tooltipItem: any) {
-            return Math.floor(tooltipItem.xLabel).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            return standardTooltip(tooltipItem);
           }
         }
       },

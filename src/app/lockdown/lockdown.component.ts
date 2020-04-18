@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import Chart from 'chart.js';
+import { Title } from "@angular/platform-browser";
 
 import { getCountryNameByAlpha, getCountryPopulation, getRegionByAlpha, createPieChart } from '../utils';
 import * as lockdownData from '../data/lockdown';
@@ -54,9 +55,12 @@ export class LockdownComponent implements OnInit {
   private lockdownCountriesPieChart: Chart;
   private lockdownPopulationPieChart: Chart;
 
-  constructor() { }
+  constructor(
+    private titleService: Title
+  ) { }
 
   ngOnInit() {
+    this.titleService.setTitle('Lockdown Status All Over The World');
     this.isMobile = window.innerWidth > 991 ? false : true;
     this.setTexts();
     this.setLockdownStatistics();

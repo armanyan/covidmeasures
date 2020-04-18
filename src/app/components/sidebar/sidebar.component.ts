@@ -7,13 +7,11 @@ declare interface RouteInfo {
     icon: string;
     class: string;
     soon?: boolean;
-    join?: boolean;
-    contribute?: boolean;
 }
 export const ROUTES: RouteInfo[] = [
-  { path: '/lockdown', title: 'Lockdown Stats',  icon:'lock', class: '' },
+  { path: '/lockdown', title: 'Lockdown Statistics',  icon:'lock', class: '' },
   { path: '/school', title: 'School Closure',  icon:'school', class: '' },
-  { path: '/covid', title: 'COVID-19 Stats',  icon: 'dashboard', class: '' },
+  { path: '/covid', title: 'COVID-19 Statistics',  icon: 'dashboard', class: '' },
   { path: '/deathrates', title: 'Death Rates',  icon:'trending_up', class: '' },
   { path: '/economics', title: 'Economic Stimulus', icon:'monetization_on', class: '' },
   { path: '/surveillance', title: 'Surveillance',  icon:'policy', class: '' },
@@ -21,7 +19,6 @@ export const ROUTES: RouteInfo[] = [
   { path: '/masks', title: 'Masks', soon: true,  icon:'healing', class: '' },
   { path: '/testing', title: 'Testing', soon: true,  icon:'local_hospital', class: '' },
   { path: '/aboutus', title: 'About Us', icon:'supervisor_account', class: '' },
-  { path: '/join', title: 'Join Us', join: true, icon:'contact_mail', class: '' },
 ];
 
 @Component({

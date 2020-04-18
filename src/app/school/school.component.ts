@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Title } from "@angular/platform-browser";
 
 import { getRegionByAlpha, getSchoolPopulationByAlpha3, getCountryNameByAlpha, getChildrenNoSchoolByAlpha3 } from '../utils';
 import * as lockdownData from '../data/school_closure';
@@ -79,10 +80,12 @@ export class SchoolComponent implements OnInit {
   public statsHeaders = ["Country", "Impacted Children", "Start", "Expected End", "Duration", "Closure Status"];
 
   constructor(
+    private titleService: Title,
     private http: HttpClient
   ) { }
 
   async ngOnInit() {
+    this.titleService.setTitle('School Closure Status All Over The World');
     this.isMobile = window.innerWidth > 991 ? false : true;
     this.setTexts();
     await this.setCurrentDeathEvolution();

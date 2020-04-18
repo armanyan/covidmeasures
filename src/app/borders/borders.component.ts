@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 
 import * as border_control from '../data/border_control';
 
@@ -17,9 +18,12 @@ export class BordersComponent implements OnInit {
 
   public table = [];
 
-  constructor() { }
+  constructor(
+    private titleService: Title,
+  ) { }
 
   ngOnInit() {
+    this.titleService.setTitle('Border Control Related To COVID-19 Pandemic');
     this.isMobile = window.innerWidth > 991 ? false : true;
 
     this.setTable();

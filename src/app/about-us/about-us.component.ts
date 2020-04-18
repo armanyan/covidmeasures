@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 
 import * as text from '../data/texts/aboutus';
 
@@ -14,9 +15,12 @@ export class AboutUsComponent implements OnInit {
   public aboutus_intro_1_p2 = text.default.aboutus_intro_1_p2;
   public disclaimer_1 = text.default.disclaimer_1;
 
-  constructor() { }
+  constructor(
+    private titleService: Title
+  ) { }
 
   ngOnInit() {
+    this.titleService.setTitle('About Us');
     this.isMobile = window.innerWidth > 991 ? false : true;
   }
 

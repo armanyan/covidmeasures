@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-masks',
@@ -7,9 +8,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MasksComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private titleService: Title
+  ) { }
 
   ngOnInit(): void {
+    this.titleService.setTitle('Masks Issues Related to COVID-29 Pandemics');
   }
 
 }
