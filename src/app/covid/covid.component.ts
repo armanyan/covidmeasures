@@ -97,7 +97,7 @@ export class CovidComponent implements OnInit {
       await this.fetchWorldData();
       this.stats = JSON.parse(JSON.stringify(this.worldStats)).slice(0, 10);
     } catch (e) {
-      console.log(e)
+      throw new Error(`Covid19API Error: ${e.message}`)
     }
     if (this.stats[this.stats.length-1].country === 'World') {
       return;
