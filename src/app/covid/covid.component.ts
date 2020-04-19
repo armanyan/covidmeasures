@@ -68,9 +68,11 @@ export class CovidComponent implements OnInit {
     this.casesEvolutionData = this.getEvolutionData('cases');
     this.deathsEvolutionData = this.getEvolutionData('deaths');
 
+    // World cases evolution chart
     this.casesChart = createLineChart(casesCTX, labels, this.casesEvolutionData);
     this.casesLastUpdate = labels[labels.length-1];
 
+    // World deaths evolution chart
     const deathsCTX = (document.getElementById("chartDeaths") as any).getContext("2d");
     this.deathsChart = createLineChart(deathsCTX, labels, this.deathsEvolutionData);
     this.deathsLastUpdate = labels[labels.length-1];
@@ -85,9 +87,11 @@ export class CovidComponent implements OnInit {
       });
     }
 
+    // One country cases evolution chart
     const countryCasesCTX = (document.getElementById("countryChartCases") as any).getContext("2d");
     this.countryCasesChart = createLineChart(countryCasesCTX, labels, evolution.default.data.US.cases);
 
+    // One country deaths evolution chart
     const countryDeathsCTX = (document.getElementById("countryChartDeaths") as any).getContext("2d");
     this.countryDeathsChart = createLineChart(countryDeathsCTX, labels, evolution.default.data.US.deaths);
 
@@ -105,6 +109,11 @@ export class CovidComponent implements OnInit {
     this.stats.push(this.getWorldRow());
   }
 
+  /**
+   *  Returns an array where every element represents the number of COVID-19 cases/deaths for every day since 31 December 2019
+   * @param dataKey 'cases' if we compute the evolution of COVID-19 infection cases,
+   *                'deaths' if we compute the evolution of COVID-19 deaths
+   */
   private getEvolutionData(dataKey: string) {
     const data = []
     for (const index in evolution.default.dates) {
@@ -120,6 +129,10 @@ export class CovidComponent implements OnInit {
     return data;
   }
 
+  /**
+   * Returns an array where every element represents the number of cumulated COVID-19 cases/deaths since 31 December 2019
+   * @param evolutionData data returned by getEvolutionData function
+   */
   private getTotalData(evolutionData: number[]) {
     const data = []
     let previousDay = 0;
@@ -180,6 +193,9 @@ export class CovidComponent implements OnInit {
     })
   }
 
+  /**
+   * Fetches World COVID-19 data from covid19API that uses Hopkins University reports.
+   */
   private async fetchWorldData() {
     let data = await this.http.get('https://api.covid19api.com/summary').toPromise();
     this.worldStats = this.getCountries(data['Countries']);
@@ -187,6 +203,10 @@ export class CovidComponent implements OnInit {
     this.worldDataUpdatedOn = monthNames[date.getMonth()]+" "+date.getDate()+"th, "+date.getFullYear();
   }
 
+  /**
+   * Search filter for the world COVID-19 Statistics table
+   * @param event object that contains the search word entered by the user.
+   */
   applyFilter(event: Event) {
     const search = (event.target as any).value.toLowerCase();
     this.stats = this.worldStats.filter(
@@ -197,6 +217,9 @@ export class CovidComponent implements OnInit {
     }
   }
 
+  /**
+   * Computes a row for the COVID-19 world table that contains the combined data off all countries 
+   */
   private getWorldRow() {
     const row = {
       "country": "World", "total_cases": 0, "new_cases": 0, "total_deaths": 0, "new_deaths": 0, "recovered": 0

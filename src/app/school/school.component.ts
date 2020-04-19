@@ -104,6 +104,10 @@ export class SchoolComponent implements OnInit {
     this.school_graph_2_below_last_update = text.default.school_graph_2_below_last_update;
   }
 
+  /**
+   * Gets the average number of school days missed for a region.
+   * @param region name of a continent or 'World'
+   */
   private getAverageDaysMissedPerRegion(region = 'World') {
     let countries = this.getCountriesByRegion(region);
     const missedDays = countries.map(country => this.getMissedDaysPerCountry(country));
@@ -122,6 +126,10 @@ export class SchoolComponent implements OnInit {
     this.covidVSSchoolChangeRegion(this.covidVSSchoolRegion);
   }
 
+  /**
+   * computes the school days missed in a specific country
+   * @param country country data
+   */
   private getMissedDaysPerCountry(country: any) {
     if (country.start === 'N/A') {
       return 0
@@ -153,6 +161,10 @@ export class SchoolComponent implements OnInit {
     return schoolPopulation.reduce(reducer);
   }
 
+  /**
+   * Returns a list of countries for a continent or all the countries in the World.
+   * @param region name of a continent or 'World'
+   */
   private getCountriesByRegion(region: string) {
     let countries;
     if (region === "World") {
@@ -165,6 +177,10 @@ export class SchoolComponent implements OnInit {
     return countries;
   }
 
+  /**
+   * Sets the variables related to the missed school days.
+   * @param region name of a continent or 'World'
+   */
   public covidVSSchoolChangeRegion(region: string) {
     this.covidVSSchoolRegion = region;
     this.impactedChildren = this.getContinentChildrenPopulation(region);
@@ -175,6 +191,9 @@ export class SchoolComponent implements OnInit {
     );
   }
 
+  /**
+   * Sets the number of active cases and deaths for every country in the world.
+   */
   private async setCurrentDeathEvolution() {
     const data = await this.http.get('https://api.covid19api.com/summary').toPromise();
     let region: string;
@@ -188,10 +207,17 @@ export class SchoolComponent implements OnInit {
     }
   }
 
+  /**
+   * Returns the population of a country between 0 and 19 years that are experiencing school closure.
+   * @param alpha3 gets the 
+   */
   private getCountryChildrenByAlpha(alpha3: string) {
     return getSchoolPopulationByAlpha3(alpha3)*getChildrenNoSchoolByAlpha3(alpha3);
   }
 
+  /**
+   * Sets the school closure table
+   */
   private setSchoolClosure() {
     let children;
     let duration;
@@ -231,6 +257,10 @@ export class SchoolComponent implements OnInit {
     return new Date(end) > today ? 'Ongoing' : 'Finished';
   }
 
+  /**
+   * Search filter for the school closure table
+   * @param event object that contains the search word entered by the user.
+   */
   applyFilter(event: Event) {
     const search = (event.target as any).value.toLowerCase();
     this.schoolClosure = this.schoolClosureFull.filter(

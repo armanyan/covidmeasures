@@ -86,6 +86,10 @@ export class LockdownComponent implements OnInit {
     this.lockdown_tab_2_below = text.default.lockdown_tab_2_below;
   }
 
+  /**
+   * Returns the number of countries under lockdown, curfew etc.
+   * @param countries an array of country data.
+   */
   private getCountriesData(countries) {
     let lockdown = 0;
     let curfew = 0;
@@ -108,6 +112,10 @@ export class LockdownComponent implements OnInit {
     return [lockdown, curfew, removedRestrictions, lightRestrictions, noData];
   }
 
+  /**
+   * Returns the number of people under restrictions for a set of countries
+   * @param countries an array of country data
+   */
   private getPopulationData(countries) {
     let lockdown = 0;
     let curfew = 0;
@@ -159,6 +167,10 @@ export class LockdownComponent implements OnInit {
     this.lockdownPopulationPieChart.update();
   }
 
+  /**
+   * Returns the average number of days under restrictions for a set of countries
+   * @param countries an array of country data
+   */
   private getAverageDaysMissedPerRegion(countries) {
     const missedDays = countries.map(country => this.getMissedDaysPerCountry(country));
     const reducer = (acc: number, currVal: number) => {return currVal + acc};
@@ -167,6 +179,10 @@ export class LockdownComponent implements OnInit {
     ).length);
   }
 
+  /**
+   * Returns an array of country data for a region
+   * @param region continent name or 'World'
+   */
   private getCountriesByRegion(region: string) {
     let countries;
     if (region === "World") {
@@ -179,6 +195,9 @@ export class LockdownComponent implements OnInit {
     return countries;
   }
 
+  /**
+   * Set restriction statistics.
+   */
   private setLockdownStatistics() {
     let duration;
     let population;
@@ -221,6 +240,10 @@ export class LockdownComponent implements OnInit {
     return expectedEnd === 'N/A' ? '' : new Date(expectedEnd).toDateString();
   }
 
+  /**
+   * 
+   * @param country Regroups secondary restrictions for the lockdown table.
+   */
   private getOtherMeasures(country) {
     const measures = [];
     if (country.public_closed === true) {
@@ -235,6 +258,10 @@ export class LockdownComponent implements OnInit {
     return measures;
   }
 
+  /**
+   * Returns the number of days under restrictions for a country
+   * @param country a country data
+   */
   private getMissedDaysPerCountry(country: any) {
     if (country.start === '') {
       return 0
@@ -250,6 +277,10 @@ export class LockdownComponent implements OnInit {
     return date === '' ? '' : (new Date(date)).toDateString();
   }
 
+  /**
+   * Search filter for the lockdown table
+   * @param event object that contains the search word entered by the user.
+   */
   applyFilter(event: Event) {
     const search = (event.target as any).value.toLowerCase();
     this.lockdownTable = this.lockdownTableFull.filter(

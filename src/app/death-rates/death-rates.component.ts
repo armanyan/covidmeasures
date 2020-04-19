@@ -161,6 +161,11 @@ export class DeathRatesComponent implements OnInit {
     return Math.floor(res);
   }
 
+  /**
+   * Returns an estimation of COVID-19 deaths since 11 January 2020 or just for last 24 hours for a country or whole world.
+   * @param location country code or 'World'
+   * @param since11Jan true if estimation should be since 11 January 2020, false for the last 24 hours.
+   */
   private estimateCovidDeaths(location: string, since11Jan: boolean) {
     const countries = location === 'World' ? this.deathsPerCountry : this.deathsPerCountry.filter(country => {
       return getRegionByAlpha(country[0]) === location ? true : false
@@ -174,16 +179,28 @@ export class DeathRatesComponent implements OnInit {
     this.deathEstimationChart.update();
   }
 
+  /**
+   * Switches from 'Since 11 Jan' to 'Last 24h' or vice versa.
+   * @param datePeriod
+   */
   public deathEstimationPeriodSwitch(datePeriod: string){
     this.estimationStatsPeriod = datePeriod;
     this.updateEstimationChart();
   }
 
+  /**
+   * Switches the location of the death estimation location.
+   * @param location the name of the new location.
+   */
   public deathEstimationSwitch(location: string) {
     this.deathEstimationLocation = location;
     this.updateEstimationChart();
   }
 
+  /**
+   * Returns an array with estimation of the number of deaths from every cause since 11 January or for only for last 24 hours,
+   * depending on the deathCausesPeriod variable
+   */
   private getAllCausesDeaths() {
     const continent = continents_data.default[this.deathCausesLocation];
     const today = new Date();
@@ -192,6 +209,7 @@ export class DeathRatesComponent implements OnInit {
     const multiplier = this.deathCausesPeriod === 'Last 24h' ? 1 : difference;
     return ageRanges.map(age => Math.floor((continent.deaths[age]/365))*multiplier);
   }
+
 
   private updateDeathCausesChart() {
     this.deathCausesChart.data.datasets[0].data = this.getAllCausesDeaths();
@@ -210,6 +228,9 @@ export class DeathRatesComponent implements OnInit {
     this.updateDeathCausesChart();
   }
 
+  /**
+   * Sets the death evolution for every continent, both for 'Since 11 Jan' and 'last 24h'
+   */
   private async setCurrentDeathEvolution() {
     const data = await this.http.get('https://api.covid19api.com/summary').toPromise();
     this.deathsSince1st = data["Global"]["TotalDeaths"];
@@ -221,6 +242,10 @@ export class DeathRatesComponent implements OnInit {
     }
   }
 
+  /**
+   * Pushes the estimation of COVID-19 deaths in the estimation array of deaths from all the causes,
+   * both for the death estimation arrays for 'Since 11 Jan' and for 'Last 24h'.
+   */
   private async composeData() {
     const today = new Date();
     const day1 = new Date("01/11/2020"); // the day of the first official death recorded from COVID-19
@@ -244,6 +269,11 @@ export class DeathRatesComponent implements OnInit {
     this.chart.update();
   }
 
+  /**
+   * Pushes the COVID-19 death estimation the int respective place in the death estimation array
+   * @param tolls estimation array of the deaths from all the causes
+   * @param coronaDeaths estimation of the COVID-19 deaths
+   */
   private sortDeathTolls(tolls: any, coronaDeaths: number) {
     let insertIndex = 0;
     for (const i of tolls.data) {
