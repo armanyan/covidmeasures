@@ -1,9 +1,10 @@
 import Chart from 'chart.js';
 
 import * as countriesData from './data/countries';
-import * as closureData from './data/school_closure';
 import * as alpha2 from './data/alpha2';
 import * as alpha3 from './data/alpha3';
+
+export const mobileWidth = 767;
 
 export const insertToArray = (arr, element, index) => {
   arr.splice(index, 0, element);
@@ -12,8 +13,7 @@ export const insertToArray = (arr, element, index) => {
 export const ageRanges = ['0-9', '10-19', '20-29', '30-39', '40-49', '50-59', '60-69', '70-79', '80+'];
 
 export const monthNames = [
-  "January", "February", "March", "April", "May", "June",
-  "July", "August", "September", "October", "November", "December"
+  "Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sep", "Oct", "Nov", "Dec"
 ];
 
 export const getRegionByAlpha = (alpha: string) => {
@@ -34,14 +34,6 @@ export const getChildrenNoSchoolByAlpha3 = (alpha3: string) => {
   for (const country of countriesData.default) {
     if (country["alpha3"] === alpha3) {
       return country.population["0-9"] + country.population["10-19"]
-    }
-  }
-}
-
-export const getSchoolPopulationByAlpha3 = (alpha3: string) => {
-  for (const country of closureData.default.countries) {
-    if (country["alpha3"] === alpha3) {
-      return country.children_no_school;
     }
   }
 }

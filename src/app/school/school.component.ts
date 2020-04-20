@@ -2,8 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Title } from "@angular/platform-browser";
 
-import { getRegionByAlpha, getSchoolPopulationByAlpha3, getCountryNameByAlpha, getChildrenNoSchoolByAlpha3 } from '../utils';
-import * as lockdownData from '../data/school_closure';
+import { getRegionByAlpha, getCountryNameByAlpha, getChildrenNoSchoolByAlpha3 } from '../utils';
 import * as impactData from '../data/school_closure_impact';
 import * as text from '../data/texts/school_closure';
 
@@ -79,14 +78,17 @@ export class SchoolComponent implements OnInit {
 
   public statsHeaders = ["Country", "Impacted Children", "Start", "Expected End", "Duration", "Closure Status"];
 
+  private schoolClosureData: any;
+
   constructor(
     private titleService: Title,
     private http: HttpClient
   ) { }
 
   async ngOnInit() {
-    this.titleService.setTitle('School Closure Status All Over The World');
-    this.isMobile = window.innerWidth > 991 ? false : true;
+    this.titleService.setTitle('School Closure: Citizens Tracking School Closures');
+    this.isMobile = window.innerWidth > 767 ? false : true;
+    this.schoolClosureData = await this.http.get('https://covidmeasures-data.s3.amazonaws.com/school_closure.json').toPromise();
     this.setTexts();
     await this.setCurrentDeathEvolution();
     this.setLockdownImpactStatistics();
@@ -104,6 +106,10 @@ export class SchoolComponent implements OnInit {
     this.school_graph_2_below_last_update = text.default.school_graph_2_below_last_update;
   }
 
+  /**
+   * Gets the average number of school days missed for a region.
+   * @param region name of a continent or 'World'
+   */
   private getAverageDaysMissedPerRegion(region = 'World') {
     let countries = this.getCountriesByRegion(region);
     const missedDays = countries.map(country => this.getMissedDaysPerCountry(country));
@@ -122,6 +128,10 @@ export class SchoolComponent implements OnInit {
     this.covidVSSchoolChangeRegion(this.covidVSSchoolRegion);
   }
 
+  /**
+   * computes the school days missed in a specific country
+   * @param country country data
+   */
   private getMissedDaysPerCountry(country: any) {
     if (country.start === 'N/A') {
       return 0
@@ -153,18 +163,26 @@ export class SchoolComponent implements OnInit {
     return schoolPopulation.reduce(reducer);
   }
 
+  /**
+   * Returns a list of countries for a continent or all the countries in the World.
+   * @param region name of a continent or 'World'
+   */
   private getCountriesByRegion(region: string) {
     let countries;
     if (region === "World") {
-      countries = lockdownData.default.countries;
+      countries = this.schoolClosureData.countries;
     } else {
-      countries = lockdownData.default.countries.filter(country => {
+      countries = this.schoolClosureData.countries.filter(country => {
         return getRegionByAlpha(country.alpha3) === region ? true : false;
       })
     }
     return countries;
   }
 
+  /**
+   * Sets the variables related to the missed school days.
+   * @param region name of a continent or 'World'
+   */
   public covidVSSchoolChangeRegion(region: string) {
     this.covidVSSchoolRegion = region;
     this.impactedChildren = this.getContinentChildrenPopulation(region);
@@ -175,6 +193,9 @@ export class SchoolComponent implements OnInit {
     );
   }
 
+  /**
+   * Sets the number of active cases and deaths for every country in the world.
+   */
   private async setCurrentDeathEvolution() {
     const data = await this.http.get('https://api.covid19api.com/summary').toPromise();
     let region: string;
@@ -188,14 +209,25 @@ export class SchoolComponent implements OnInit {
     }
   }
 
+  /**
+   * Returns the population of a country between 0 and 19 years that are experiencing school closure.
+   * @param alpha3 gets the 
+   */
   private getCountryChildrenByAlpha(alpha3: string) {
-    return getSchoolPopulationByAlpha3(alpha3)*getChildrenNoSchoolByAlpha3(alpha3);
+    for (const country of this.schoolClosureData.countries) {
+      if (country["alpha3"] === alpha3) {
+        return country.children_no_school*getChildrenNoSchoolByAlpha3(alpha3);
+      }
+    }
   }
 
+  /**
+   * Sets the school closure table
+   */
   private setSchoolClosure() {
     let children;
     let duration;
-    for (const country of lockdownData.default.countries) {
+    for (const country of this.schoolClosureData.countries) {
       children = this.getCountryChildrenByAlpha(country['alpha3']) 
       duration = this.getMissedDaysPerCountry(country);
       this.schoolClosureFull.push({
@@ -231,6 +263,10 @@ export class SchoolComponent implements OnInit {
     return new Date(end) > today ? 'Ongoing' : 'Finished';
   }
 
+  /**
+   * Search filter for the school closure table
+   * @param event object that contains the search word entered by the user.
+   */
   applyFilter(event: Event) {
     const search = (event.target as any).value.toLowerCase();
     this.schoolClosure = this.schoolClosureFull.filter(

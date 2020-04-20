@@ -3,8 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Title } from "@angular/platform-browser";
 import Chart from 'chart.js';
 
-import { createLineChart, getCountryNameByAlpha, monthNames } from '../utils';
-import * as evolution from '../data/ecdc';
+import { createLineChart, getCountryNameByAlpha, monthNames, mobileWidth } from '../utils';
 
 export interface Stats {
   country: string;
@@ -52,44 +51,54 @@ export class CovidComponent implements OnInit {
   private casesEvolutionData: number[];
   private deathsEvolutionData: number[];
 
+  private evolution: any;
+
   constructor(
     private titleService: Title,
     private http: HttpClient
   ) { }
 
   async ngOnInit() {
-    this.titleService.setTitle('COVID-19 Statistics');
-    this.isMobile = window.innerWidth > 991 ? false : true;
+    this.titleService.setTitle('COVID-19 Statistics: Citizens Tracking COVID-19 Statistics');
+    this.isMobile = window.innerWidth > mobileWidth ? false : true;
+
+    const url = 'https://covidmeasures-data.s3.amazonaws.com/evolution.json';
+    this.evolution = (await this.http.get(url).toPromise() as any);
+
     const casesCTX = (document.getElementById("chartCases") as any).getContext("2d");
-    const labels = evolution.default.dates.map(date => this.changeDateFormat(date));
+    const labels = this.evolution.dates.map(date => this.changeDateFormat(date));
     // remove today's data since in the other parts we use data from different sources,
     // and incoherence would be obvious
     labels.pop()
     this.casesEvolutionData = this.getEvolutionData('cases');
     this.deathsEvolutionData = this.getEvolutionData('deaths');
 
+    // World cases evolution chart
     this.casesChart = createLineChart(casesCTX, labels, this.casesEvolutionData);
     this.casesLastUpdate = labels[labels.length-1];
 
+    // World deaths evolution chart
     const deathsCTX = (document.getElementById("chartDeaths") as any).getContext("2d");
     this.deathsChart = createLineChart(deathsCTX, labels, this.deathsEvolutionData);
     this.deathsLastUpdate = labels[labels.length-1];
 
 
-    const alphas = Object.keys(evolution.default.data);
+    const alphas = Object.keys(this.evolution.data);
     this.countryList = [];
     for (const alpha of alphas) {
       this.countryList.push({
         "value": alpha,
-        "viewValue": evolution.default.data[alpha].name.split('_').join(' ')
+        "viewValue": this.evolution.data[alpha].name.split('_').join(' ')
       });
     }
 
+    // One country cases evolution chart
     const countryCasesCTX = (document.getElementById("countryChartCases") as any).getContext("2d");
-    this.countryCasesChart = createLineChart(countryCasesCTX, labels, evolution.default.data.US.cases);
+    this.countryCasesChart = createLineChart(countryCasesCTX, labels, this.evolution.data.US.cases);
 
+    // One country deaths evolution chart
     const countryDeathsCTX = (document.getElementById("countryChartDeaths") as any).getContext("2d");
-    this.countryDeathsChart = createLineChart(countryDeathsCTX, labels, evolution.default.data.US.deaths);
+    this.countryDeathsChart = createLineChart(countryDeathsCTX, labels, this.evolution.data.US.deaths);
 
 
     // world table
@@ -97,7 +106,7 @@ export class CovidComponent implements OnInit {
       await this.fetchWorldData();
       this.stats = JSON.parse(JSON.stringify(this.worldStats)).slice(0, 10);
     } catch (e) {
-      console.log(e)
+      throw new Error(`Covid19API Error: ${e.message}`)
     }
     if (this.stats[this.stats.length-1].country === 'World') {
       return;
@@ -105,12 +114,17 @@ export class CovidComponent implements OnInit {
     this.stats.push(this.getWorldRow());
   }
 
+  /**
+   *  Returns an array where every element represents the number of COVID-19 cases/deaths for every day since 31 December 2019
+   * @param dataKey 'cases' if we compute the evolution of COVID-19 infection cases,
+   *                'deaths' if we compute the evolution of COVID-19 deaths
+   */
   private getEvolutionData(dataKey: string) {
     const data = []
-    for (const index in evolution.default.dates) {
+    for (const index in this.evolution.dates) {
       let current = 0;
-      for(const country in evolution.default.data) {
-        current += evolution.default.data[country][dataKey][index]
+      for(const country in this.evolution.data) {
+        current += this.evolution.data[country][dataKey][index]
       }
       data.push(current);
     }
@@ -120,6 +134,10 @@ export class CovidComponent implements OnInit {
     return data;
   }
 
+  /**
+   * Returns an array where every element represents the number of cumulated COVID-19 cases/deaths since 31 December 2019
+   * @param evolutionData data returned by getEvolutionData function
+   */
   private getTotalData(evolutionData: number[]) {
     const data = []
     let previousDay = 0;
@@ -180,6 +198,9 @@ export class CovidComponent implements OnInit {
     })
   }
 
+  /**
+   * Fetches World COVID-19 data from covid19API that uses Hopkins University reports.
+   */
   private async fetchWorldData() {
     let data = await this.http.get('https://api.covid19api.com/summary').toPromise();
     this.worldStats = this.getCountries(data['Countries']);
@@ -187,6 +208,10 @@ export class CovidComponent implements OnInit {
     this.worldDataUpdatedOn = monthNames[date.getMonth()]+" "+date.getDate()+"th, "+date.getFullYear();
   }
 
+  /**
+   * Search filter for the world COVID-19 Statistics table
+   * @param event object that contains the search word entered by the user.
+   */
   applyFilter(event: Event) {
     const search = (event.target as any).value.toLowerCase();
     this.stats = this.worldStats.filter(
@@ -197,6 +222,9 @@ export class CovidComponent implements OnInit {
     }
   }
 
+  /**
+   * Computes a row for the COVID-19 world table that contains the combined data off all countries 
+   */
   private getWorldRow() {
     const row = {
       "country": "World", "total_cases": 0, "new_cases": 0, "total_deaths": 0, "new_deaths": 0, "recovered": 0
@@ -214,7 +242,7 @@ export class CovidComponent implements OnInit {
     this.countryCasesView = value;
     for (const country of this.countryList) {
       if (country.value === value) {
-        this.countryCasesChart.data.datasets[0].data = evolution.default.data[value].cases;
+        this.countryCasesChart.data.datasets[0].data = this.evolution.data[value].cases;
         this.countryCasesChart.update();
         return;
       }
@@ -225,7 +253,7 @@ export class CovidComponent implements OnInit {
     this.countryDeathsView = value;
     for (const country of this.countryList) {
       if (country.value === value) {
-        this.countryDeathsChart.data.datasets[0].data = evolution.default.data[value].deaths;
+        this.countryDeathsChart.data.datasets[0].data = this.evolution.data[value].deaths;
         this.countryDeathsChart.update();
         return;
       }

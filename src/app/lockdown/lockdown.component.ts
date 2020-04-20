@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import Chart from 'chart.js';
-import { Title } from "@angular/platform-browser";
+import { Title } from '@angular/platform-browser';
+import { HttpClient } from '@angular/common/http';
 
 import { getCountryNameByAlpha, getCountryPopulation, getRegionByAlpha, createPieChart } from '../utils';
-import * as lockdownData from '../data/lockdown';
 import * as lockdownImpactData from '../data/lockdown_impacts';
 import * as text from '../data/texts/lockdown';
 
@@ -52,16 +52,20 @@ export class LockdownComponent implements OnInit {
 
   public lockdownTableUpdatedOn = 'April 11th, 2020';
 
+  private lockdownData: any;
+
   private lockdownCountriesPieChart: Chart;
   private lockdownPopulationPieChart: Chart;
 
   constructor(
-    private titleService: Title
+    private titleService: Title,
+    private http: HttpClient
   ) { }
 
-  ngOnInit() {
-    this.titleService.setTitle('Lockdown Status All Over The World');
-    this.isMobile = window.innerWidth > 991 ? false : true;
+  async ngOnInit() {
+    this.titleService.setTitle('Lockdown Statistics: Citizens Tracking Lockdown Measures');
+    this.isMobile = window.innerWidth > 767 ? false : true;
+    this.lockdownData = await this.http.get('https://covidmeasures-data.s3.amazonaws.com/lockdown.json').toPromise();
     this.setTexts();
     this.setLockdownStatistics();
     this.setLockdownImpactStatistics();
@@ -86,6 +90,10 @@ export class LockdownComponent implements OnInit {
     this.lockdown_tab_2_below = text.default.lockdown_tab_2_below;
   }
 
+  /**
+   * Returns the number of countries under lockdown, curfew etc.
+   * @param countries an array of country data.
+   */
   private getCountriesData(countries) {
     let lockdown = 0;
     let curfew = 0;
@@ -108,6 +116,10 @@ export class LockdownComponent implements OnInit {
     return [lockdown, curfew, removedRestrictions, lightRestrictions, noData];
   }
 
+  /**
+   * Returns the number of people under restrictions for a set of countries
+   * @param countries an array of country data
+   */
   private getPopulationData(countries) {
     let lockdown = 0;
     let curfew = 0;
@@ -159,6 +171,10 @@ export class LockdownComponent implements OnInit {
     this.lockdownPopulationPieChart.update();
   }
 
+  /**
+   * Returns the average number of days under restrictions for a set of countries
+   * @param countries an array of country data
+   */
   private getAverageDaysMissedPerRegion(countries) {
     const missedDays = countries.map(country => this.getMissedDaysPerCountry(country));
     const reducer = (acc: number, currVal: number) => {return currVal + acc};
@@ -167,31 +183,38 @@ export class LockdownComponent implements OnInit {
     ).length);
   }
 
+  /**
+   * Returns an array of country data for a region
+   * @param region continent name or 'World'
+   */
   private getCountriesByRegion(region: string) {
     let countries;
     if (region === "World") {
-      countries = lockdownData.default;
+      countries = this.lockdownData;
     } else {
-      countries = lockdownData.default.filter(country => {
+      countries = this.lockdownData.filter(country => {
         return getRegionByAlpha(country["alpha-3"]) === region ? true : false;
       })
     }
     return countries;
   }
 
+  /**
+   * Set restriction statistics.
+   */
   private setLockdownStatistics() {
     let duration;
     let population;
-    for (const country of lockdownData.default) {
+    for (const country of this.lockdownData) {
       duration = this.getMissedDaysPerCountry(country);
       population = getCountryPopulation(country['alpha-3'])*country.population_affected;
       this.lockdownTableFull.push({
         "name": getCountryNameByAlpha(country['alpha-3']),
-        "population": population === 0 ? '' : population,
+        "population": population,
         "duration": duration === 0 ? '' : duration,
-        "lockdown": country.lockdown === 'N/A' ? '' : country.lockdown,
-        "curfew": country.curfew === 'N/A' ? '' : country.curfew,
-        "business": country.business === "N/A" ? '' : country.business,
+        "lockdown": this.formatRestriction(country.lockdown),
+        "curfew": this.formatRestriction(country.curfew),
+        "business": this.formatRestriction(country.business),
         "other": this.getOtherMeasures(country),
         "start": this.getDate(country['start']),
         "end": this.getEndDate(country['end'], country['expected_end']),
@@ -199,6 +222,13 @@ export class LockdownComponent implements OnInit {
       });
     }
     this.lockdownTable = this.lockdownTableFull.slice(0, 10);
+  }
+
+  private formatRestriction(lockdown: string | boolean) {
+    if (lockdown === 'N/A') {
+      return '';
+    }
+    return lockdown ? 'Yes' : 'No';
   }
 
   private setLockdownImpactStatistics() {
@@ -221,12 +251,17 @@ export class LockdownComponent implements OnInit {
     return expectedEnd === 'N/A' ? '' : new Date(expectedEnd).toDateString();
   }
 
+  /**
+   * 
+   * @param country Regroups secondary restrictions for the lockdown table.
+   */
   private getOtherMeasures(country) {
     const measures = [];
+    // should always check for true explicitly because it could be 'N/A'
     if (country.public_closed === true) {
       measures.push('Public Places Closed');
     }
-    if (country.movement_enforcement === "Yes") {
+    if (country.movement_enforcement === true) {
       measures.push('Movement Enforcement');
     }
     if (country.army === true) {
@@ -235,6 +270,10 @@ export class LockdownComponent implements OnInit {
     return measures;
   }
 
+  /**
+   * Returns the number of days under restrictions for a country
+   * @param country a country data
+   */
   private getMissedDaysPerCountry(country: any) {
     if (country.start === '') {
       return 0
@@ -250,6 +289,10 @@ export class LockdownComponent implements OnInit {
     return date === '' ? '' : (new Date(date)).toDateString();
   }
 
+  /**
+   * Search filter for the lockdown table
+   * @param event object that contains the search word entered by the user.
+   */
   applyFilter(event: Event) {
     const search = (event.target as any).value.toLowerCase();
     this.lockdownTable = this.lockdownTableFull.filter(

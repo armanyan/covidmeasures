@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 
+import { CountryComponent } from '../../country/country.component';
 import { LockdownComponent } from '../../lockdown/lockdown.component';
 import { SchoolComponent } from '../../school/school.component';
 import { CovidComponent } from '../../covid/covid.component';
@@ -13,6 +14,7 @@ import { AboutUsComponent } from '../../about-us/about-us.component';
 
 
 export const AdminLayoutRoutes: Routes = [
+  { path: 'country', component: CountryComponent },
   { path: 'lockdown', component: LockdownComponent },
   { path: 'school', component: SchoolComponent },
   { path: 'covid', component: CovidComponent },

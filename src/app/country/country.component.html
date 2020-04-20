@@ -1,0 +1,71 @@
+
+<div class="main-content">
+  <div class="container-fluid">
+
+    <div layout-align="end end">
+      <h2 *ngIf=isMobile><u>{{titleService.getTitle()}}</u></h2>
+    </div>
+
+    <h3>COVID-19 Evolution Day by Day</h3>
+
+    <div class="card ">
+      <div class="card-body">
+        <mat-label>Choose Country</mat-label>
+          <mat-select [(value)]="countryView" (selectionChange)="countryChangeView($event.value)">
+            <mat-option *ngFor="let country of countryList" [value]="country.value">
+              {{ country.viewValue }}
+            </mat-option>
+          </mat-select>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6">
+        <div class="card ">
+          <div class="card-header card-header-success">
+            <h3 class="card-title">Reported COVID-19 Infection Cases</h3>
+          </div>
+
+          <div class="card-body ">
+            <canvas id=countryChartCases width="400" height="400"></canvas>
+          </div>
+          <div class="card-footer">
+            <div class="stats">
+              Updated on {{casesLastUpdate}}
+            </div>
+            <div class="stats">
+              Source:
+              <a
+                href="https://www.ecdc.europa.eu/en/publications-data/download-todays-data-geographic-distribution-covid-19-cases-worldwide"
+              >ECDC</a></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="card ">
+          <div class="card-header card-header-success">
+            <h3 class="card-title">Reported COVID-19 Deaths</h3>
+          </div>
+
+          <div class="card-body ">
+            <canvas id=countryChartDeaths width="400" height="400"></canvas>
+          </div>
+          <div class="card-footer">
+            <div class="stats">
+              Updated on {{deathsLastUpdate}}
+            </div>
+            <div class="stats">
+              Source:
+              <a
+                href="https://www.ecdc.europa.eu/en/publications-data/download-todays-data-geographic-distribution-covid-19-cases-worldwide"
+              >ECDC</a></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <br>
+
+  </div>
+</div>

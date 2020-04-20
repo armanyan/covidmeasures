@@ -2,7 +2,7 @@
   <div class="container-fluid">
 
     <div layout-align="end end">
-      <h2>Mask Control</h2>
+      <h2 *ngIf="isMobile"><u>{{titleService.getTitle()}}</u></h2>
     </div>
 
     <p>
