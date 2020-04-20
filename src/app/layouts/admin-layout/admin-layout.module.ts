@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http'; 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AdminLayoutRoutes } from './admin-layout.routing';
+import { CountryComponent } from '../../country/country.component';
 import { LockdownComponent } from '../../lockdown/lockdown.component';
 import { SchoolComponent } from '../../school/school.component';
 import { CovidComponent } from '../../covid/covid.component';
@@ -38,6 +39,7 @@ import { MatSortModule } from '@angular/material/sort';
     HttpClientModule
   ],
   declarations: [
+    CountryComponent,
     LockdownComponent,
     SchoolComponent,
     CovidComponent,

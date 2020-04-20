@@ -9,6 +9,7 @@ declare interface RouteInfo {
     soon?: boolean;
 }
 export const ROUTES: RouteInfo[] = [
+  { path: '/country', title: 'Country Overview',  icon:'outlined_flag', class: '' },
   { path: '/lockdown', title: 'Lockdown Statistics',  icon:'lock', class: '' },
   { path: '/school', title: 'School Closure',  icon:'school', class: '' },
   { path: '/covid', title: 'COVID-19 Statistics',  icon: 'dashboard', class: '' },

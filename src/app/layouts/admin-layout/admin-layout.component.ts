@@ -17,6 +17,7 @@ export class AdminLayoutComponent implements OnInit {
   private lastPoppedUrl: string;
   private yScrollStack: number[] = [];
   public title: string; /** this will hold the title of the document */
+  public isMobile: boolean;
 
   constructor( 
     public location: Location, 
