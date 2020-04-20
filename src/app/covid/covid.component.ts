@@ -3,8 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Title } from "@angular/platform-browser";
 import Chart from 'chart.js';
 
-import { createLineChart, getCountryNameByAlpha, monthNames } from '../utils';
-import * as evolution from '../data/ecdc';
+import { createLineChart, getCountryNameByAlpha, monthNames, mobileWidth } from '../utils';
 
 export interface Stats {
   country: string;
@@ -52,16 +51,22 @@ export class CovidComponent implements OnInit {
   private casesEvolutionData: number[];
   private deathsEvolutionData: number[];
 
+  private evolution: any;
+
   constructor(
     private titleService: Title,
     private http: HttpClient
   ) { }
 
   async ngOnInit() {
-    this.titleService.setTitle('COVID-19 Statistics');
-    this.isMobile = window.innerWidth > 991 ? false : true;
+    this.titleService.setTitle('COVID-19 Statistics: Citizens Tracking COVID-19 Statistics');
+    this.isMobile = window.innerWidth > mobileWidth ? false : true;
+
+    const url = 'https://covidmeasures-data.s3.amazonaws.com/evolution.json';
+    this.evolution = (await this.http.get(url).toPromise() as any);
+
     const casesCTX = (document.getElementById("chartCases") as any).getContext("2d");
-    const labels = evolution.default.dates.map(date => this.changeDateFormat(date));
+    const labels = this.evolution.dates.map(date => this.changeDateFormat(date));
     // remove today's data since in the other parts we use data from different sources,
     // and incoherence would be obvious
     labels.pop()
@@ -78,22 +83,22 @@ export class CovidComponent implements OnInit {
     this.deathsLastUpdate = labels[labels.length-1];
 
 
-    const alphas = Object.keys(evolution.default.data);
+    const alphas = Object.keys(this.evolution.data);
     this.countryList = [];
     for (const alpha of alphas) {
       this.countryList.push({
         "value": alpha,
-        "viewValue": evolution.default.data[alpha].name.split('_').join(' ')
+        "viewValue": this.evolution.data[alpha].name.split('_').join(' ')
       });
     }
 
     // One country cases evolution chart
     const countryCasesCTX = (document.getElementById("countryChartCases") as any).getContext("2d");
-    this.countryCasesChart = createLineChart(countryCasesCTX, labels, evolution.default.data.US.cases);
+    this.countryCasesChart = createLineChart(countryCasesCTX, labels, this.evolution.data.US.cases);
 
     // One country deaths evolution chart
     const countryDeathsCTX = (document.getElementById("countryChartDeaths") as any).getContext("2d");
-    this.countryDeathsChart = createLineChart(countryDeathsCTX, labels, evolution.default.data.US.deaths);
+    this.countryDeathsChart = createLineChart(countryDeathsCTX, labels, this.evolution.data.US.deaths);
 
 
     // world table
@@ -116,10 +121,10 @@ export class CovidComponent implements OnInit {
    */
   private getEvolutionData(dataKey: string) {
     const data = []
-    for (const index in evolution.default.dates) {
+    for (const index in this.evolution.dates) {
       let current = 0;
-      for(const country in evolution.default.data) {
-        current += evolution.default.data[country][dataKey][index]
+      for(const country in this.evolution.data) {
+        current += this.evolution.data[country][dataKey][index]
       }
       data.push(current);
     }
@@ -237,7 +242,7 @@ export class CovidComponent implements OnInit {
     this.countryCasesView = value;
     for (const country of this.countryList) {
       if (country.value === value) {
-        this.countryCasesChart.data.datasets[0].data = evolution.default.data[value].cases;
+        this.countryCasesChart.data.datasets[0].data = this.evolution.data[value].cases;
         this.countryCasesChart.update();
         return;
       }
@@ -248,7 +253,7 @@ export class CovidComponent implements OnInit {
     this.countryDeathsView = value;
     for (const country of this.countryList) {
       if (country.value === value) {
-        this.countryDeathsChart.data.datasets[0].data = evolution.default.data[value].deaths;
+        this.countryDeathsChart.data.datasets[0].data = this.evolution.data[value].deaths;
         this.countryDeathsChart.update();
         return;
       }

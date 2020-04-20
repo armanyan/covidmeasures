@@ -3,7 +3,7 @@
   <div class="container-fluid">
 
     <div layout-align="end end">
-      <h2><u>Citizens Tracking COVID-19 Statistics</u></h2>
+      <h2 *ngIf="isMobile"><u>{{titleService.getTitle()}}</u></h2>
     </div>
 
     <div class="row">

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 
 import * as border_control from '../data/border_control';
+import { mobileWidth } from 'app/utils';
 
 @Component({
   selector: 'app-borders',
@@ -23,8 +24,8 @@ export class BordersComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.titleService.setTitle('Border Control Related To COVID-19 Pandemic');
-    this.isMobile = window.innerWidth > 991 ? false : true;
+    this.titleService.setTitle('Border Control: Citizens Tracking Border Control Related To COVID-19');
+    this.isMobile = window.innerWidth > mobileWidth ? false : true;
 
     this.setTable();
   }

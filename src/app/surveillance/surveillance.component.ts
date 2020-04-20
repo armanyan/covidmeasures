@@ -23,7 +23,7 @@ export class SurveillanceComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.titleService.setTitle('Surveillance Related to COVID-19 Pandemics');
+    this.titleService.setTitle('Surveillance: Citizens Tracking Surveillance Related to COVID-19');
     this.isMobile = window.innerWidth > 991 ? false : true;
 
     this.setTable();

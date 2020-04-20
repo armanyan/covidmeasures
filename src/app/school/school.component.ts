@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Title } from "@angular/platform-browser";
 
-import { getRegionByAlpha, getSchoolPopulationByAlpha3, getCountryNameByAlpha, getChildrenNoSchoolByAlpha3 } from '../utils';
+import { getRegionByAlpha, getCountryNameByAlpha, getChildrenNoSchoolByAlpha3 } from '../utils';
 import * as impactData from '../data/school_closure_impact';
 import * as text from '../data/texts/school_closure';
 
@@ -86,8 +86,8 @@ export class SchoolComponent implements OnInit {
   ) { }
 
   async ngOnInit() {
-    this.titleService.setTitle('School Closure Status All Over The World');
-    this.isMobile = window.innerWidth > 991 ? false : true;
+    this.titleService.setTitle('School Closure: Citizens Tracking School Closures');
+    this.isMobile = window.innerWidth > 767 ? false : true;
     this.schoolClosureData = await this.http.get('https://covidmeasures-data.s3.amazonaws.com/school_closure.json').toPromise();
     this.setTexts();
     await this.setCurrentDeathEvolution();
@@ -214,7 +214,11 @@ export class SchoolComponent implements OnInit {
    * @param alpha3 gets the 
    */
   private getCountryChildrenByAlpha(alpha3: string) {
-    return getSchoolPopulationByAlpha3(alpha3)*getChildrenNoSchoolByAlpha3(alpha3);
+    for (const country of this.schoolClosureData.countries) {
+      if (country["alpha3"] === alpha3) {
+        return country.children_no_school*getChildrenNoSchoolByAlpha3(alpha3);
+      }
+    }
   }
 
   /**

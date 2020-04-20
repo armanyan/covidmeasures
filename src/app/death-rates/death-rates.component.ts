@@ -3,7 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import { Title } from '@angular/platform-browser';
 import Chart from 'chart.js';
 
-import { createBarChart, createStackedBarChart, ageRanges, getRegionByAlpha, getAlpha3FromAlpha2, insertToArray } from '../utils';
+import { createBarChart, createStackedBarChart, ageRanges, getRegionByAlpha,
+         getAlpha3FromAlpha2, insertToArray, mobileWidth } from '../utils';
 
 import * as totalDeaths from '../data/deaths_causes';
 import * as continents_data from '../data/continents_data';
@@ -89,8 +90,8 @@ export class DeathRatesComponent implements OnInit {
   ) { }
 
   async ngOnInit() {
-    this.titleService.setTitle('COVID-19 Death Rates Compared To Other Death Causes');
-    this.isMobile = window.innerWidth > 991 ? false : true;
+    this.titleService.setTitle('Death Rates: Citizens Tracking COVID-19 & Other Deaths Causes Statistics');
+    this.isMobile = window.innerWidth > mobileWidth ? false : true;
     this.setText();
     await this.setCurrentDeathEvolution()
     this.since1st.backgroundColor = totalDeaths.default.data.map(() => { return '#1f8ef1'; })

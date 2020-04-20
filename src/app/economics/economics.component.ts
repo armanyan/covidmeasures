@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 
 import * as economics from '../data/economic';
+import { mobileWidth } from '../utils';
 
 @Component({
   selector: 'app-economics',
@@ -23,8 +24,8 @@ export class EconomicsComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.titleService.setTitle('Economic Stimulus Related to COVID-19 Pandemics');
-    this.isMobile = window.innerWidth > 991 ? false : true;
+    this.titleService.setTitle('Economic Stimulus: Citizens Tracking Economic Stimulus Related to COVID-19');
+    this.isMobile = window.innerWidth > mobileWidth ? false : true;
 
     this.setTable();
   }
