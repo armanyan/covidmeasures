@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import 'rxjs/add/operator/filter';
-import { Router } from '@angular/router';
+import { Router, Event } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
 import PerfectScrollbar from 'perfect-scrollbar';
+import { Title } from '@angular/platform-browser';
+import { NavigationEnd } from '@angular/router';
 
 @Component({
   selector: 'app-admin-layout',
@@ -14,14 +16,32 @@ export class AdminLayoutComponent implements OnInit {
   private _router: Subscription;
   private lastPoppedUrl: string;
   private yScrollStack: number[] = [];
+  public title: string; /** this will hold the title of the document */
 
-  constructor( public location: Location, private router: Router) {}
+  constructor( 
+    public location: Location, 
+    private router: Router, 
+    private titleService: Title 
+    ) {
+        //Router subscriber
+        this.router.events.subscribe((event: Event) => {
+          if (event instanceof NavigationEnd) {
+            // we change the title in the banner
+            setTimeout(()=> {
+              this.title = this.titleService.getTitle()
+            }, 500)
+          }
+      });
+    }
 
   ngOnInit() {
       
   }
   ngAfterViewInit() {
       this.runOnRouteChange();
+  }
+  ngAfterContentChecked(){
+    this.title = this.titleService.getTitle()
   }
   isMaps(path){
       var titlee = this.location.prepareExternalUrl(this.location.path());

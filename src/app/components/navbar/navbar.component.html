@@ -1,10 +1,14 @@
-<nav class="navbar navbar-expand-lg navbar-transparent  navbar-absolute fixed-top">
-    <div class="container-fluid">
+<nav class="navbar navbar-expand-lg navbar-transparent pt-0 fixed-top">
+    <div class="w-100 d-flex d-lg-none bg-light py-sm-2">
       <button mat-raised-button class="navbar-toggler" type="button" (click)="sidebarToggle()">
           <span class="sr-only">Toggle navigation</span>
           <span class="navbar-toggler-icon icon-bar"></span>
           <span class="navbar-toggler-icon icon-bar"></span>
           <span class="navbar-toggler-icon icon-bar"></span>
       </button>
+      <!-- we make the logo centered -->
+      <div class="d-flex w-100 justify-content-center">
+        <img src="../../../assets/img/logo.png" style="height: 40px;" alt="" srcset="">
+      </div>
     </div>
 </nav>
