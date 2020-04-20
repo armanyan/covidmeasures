@@ -3,7 +3,6 @@ import { HttpClient } from '@angular/common/http';
 import { Title } from "@angular/platform-browser";
 
 import { getRegionByAlpha, getSchoolPopulationByAlpha3, getCountryNameByAlpha, getChildrenNoSchoolByAlpha3 } from '../utils';
-import * as lockdownData from '../data/school_closure';
 import * as impactData from '../data/school_closure_impact';
 import * as text from '../data/texts/school_closure';
 
@@ -79,6 +78,8 @@ export class SchoolComponent implements OnInit {
 
   public statsHeaders = ["Country", "Impacted Children", "Start", "Expected End", "Duration", "Closure Status"];
 
+  private schoolClosureData: any;
+
   constructor(
     private titleService: Title,
     private http: HttpClient
@@ -87,6 +88,7 @@ export class SchoolComponent implements OnInit {
   async ngOnInit() {
     this.titleService.setTitle('School Closure Status All Over The World');
     this.isMobile = window.innerWidth > 991 ? false : true;
+    this.schoolClosureData = await this.http.get('https://covidmeasures-data.s3.amazonaws.com/school_closure.json').toPromise();
     this.setTexts();
     await this.setCurrentDeathEvolution();
     this.setLockdownImpactStatistics();
@@ -168,9 +170,9 @@ export class SchoolComponent implements OnInit {
   private getCountriesByRegion(region: string) {
     let countries;
     if (region === "World") {
-      countries = lockdownData.default.countries;
+      countries = this.schoolClosureData.countries;
     } else {
-      countries = lockdownData.default.countries.filter(country => {
+      countries = this.schoolClosureData.countries.filter(country => {
         return getRegionByAlpha(country.alpha3) === region ? true : false;
       })
     }
@@ -221,7 +223,7 @@ export class SchoolComponent implements OnInit {
   private setSchoolClosure() {
     let children;
     let duration;
-    for (const country of lockdownData.default.countries) {
+    for (const country of this.schoolClosureData.countries) {
       children = this.getCountryChildrenByAlpha(country['alpha3']) 
       duration = this.getMissedDaysPerCountry(country);
       this.schoolClosureFull.push({
