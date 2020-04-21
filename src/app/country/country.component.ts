@@ -20,6 +20,7 @@ export class CountryComponent implements OnInit {
 
   public countryView = "US";
 
+  public countryAllCasesCTX: Chart;
   public countryCasesChart: Chart;
   public countryDeathsChart: Chart;
 
@@ -53,6 +54,33 @@ export class CountryComponent implements OnInit {
     // and incoherence would be obvious
     labels.pop()
 
+    const dataSets = [
+      {
+        label: "Infection Cases",
+        backgroundColor: "#3f51b552",
+        borderColor: "#3399FF",
+        fill: true,
+        data: this.evolution.data.US.cases
+      },
+      {
+        label: "Deaths",
+        backgroundColor: "#f443365c",
+        borderColor: "#f44336",
+        fill: true,
+        data: this.evolution.data.US.deaths
+      }
+    ]
+     // One country cases evolution chart
+     const countryAllCasesCTX = (document.getElementById("countryChartAllCases") as any).getContext("2d");
+     this.countryAllCasesCTX = createLineChart(
+        countryAllCasesCTX, 
+        labels, 
+        dataSets, 
+        true,
+        true,
+        false // we make aspect ratio to false this prevents the chart from growing too much
+       );
+
     // One country cases evolution chart
     const countryCasesCTX = (document.getElementById("countryChartCases") as any).getContext("2d");
     this.countryCasesChart = createLineChart(countryCasesCTX, labels, this.evolution.data.US.cases);
@@ -66,6 +94,11 @@ export class CountryComponent implements OnInit {
     this.countryView = value;
     for (const country of this.countryList) {
       if (country.value === value) {
+
+        this.countryAllCasesCTX.data.datasets[0].data  = this.evolution.data[value].cases;
+        this.countryAllCasesCTX.data.datasets[1].data = this.evolution.data[value].deaths;
+        this.countryAllCasesCTX.update();
+        
         this.countryCasesChart.data.datasets[0].data = this.evolution.data[value].cases;
         this.countryCasesChart.update();
 
