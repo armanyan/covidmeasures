@@ -280,19 +280,27 @@ export const createStackedBarChart = (
   });
 }
 
-export const createLineChart = (ctx: CanvasRenderingContext2D, labels: string[], dataset: number[]) => {
+export const createLineChart = (
+    ctx: CanvasRenderingContext2D, 
+    labels: string[], 
+    dataset: number[] | object[], // array of numbers for single data & object for multiple data
+    legendDisplay: boolean = false, // Line graph legends
+    responsive: boolean = true, // for responsivensess
+    maintainAspectRatio: boolean = true, // for aspect ratio
+  ) => {
   const data = {
     labels,
-    datasets: [{
+    datasets: typeof dataset[0] === "number" ? [{
         borderColor: "#3399FF",
         data: dataset
-      },
-    ]
+      }] : dataset
   };
-
   const options = {
+    responsive: responsive,
+    maintainAspectRatio: maintainAspectRatio,
+
     legend: {
-      display: false
+      display: legendDisplay
     },
 
     tooltips: {
@@ -339,7 +347,7 @@ export const createLineChart = (ctx: CanvasRenderingContext2D, labels: string[],
         }
       }]
     },
-  }
+  };
 
   return new Chart(ctx, { type: 'line', data, options});
 }

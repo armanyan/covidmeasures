@@ -17,14 +17,9 @@ interface Country {
 })
 export class CountryComponent implements OnInit {
   public isMobile: boolean;
-
   public countryView = "US";
-
-  public countryCasesChart: Chart;
-  public countryDeathsChart: Chart;
-
+  public countryAllCasesCTX: Chart;
   public countryList: Country[];
-
   private evolution: any;
 
   constructor(
@@ -53,24 +48,42 @@ export class CountryComponent implements OnInit {
     // and incoherence would be obvious
     labels.pop()
 
-    // One country cases evolution chart
-    const countryCasesCTX = (document.getElementById("countryChartCases") as any).getContext("2d");
-    this.countryCasesChart = createLineChart(countryCasesCTX, labels, this.evolution.data.US.cases);
-
-    // One country deaths evolution chart
-    const countryDeathsCTX = (document.getElementById("countryChartDeaths") as any).getContext("2d");
-    this.countryDeathsChart = createLineChart(countryDeathsCTX, labels, this.evolution.data.US.deaths);
+    const dataSets = [
+      {
+        label: "Infection Cases",
+        backgroundColor: "#3f51b552",
+        borderColor: "#3399FF",
+        fill: true,
+        data: this.evolution.data.US.cases
+      },
+      {
+        label: "Deaths",
+        backgroundColor: "#f443365c",
+        borderColor: "#f44336",
+        fill: true,
+        data: this.evolution.data.US.deaths
+      }
+    ]
+     // One country cases evolution chart
+     const countryAllCasesCTX = (document.getElementById("countryChartAllCases") as any).getContext("2d");
+     this.countryAllCasesCTX = createLineChart(
+        countryAllCasesCTX, 
+        labels, 
+        dataSets, 
+        true,
+        true,
+        false // we make aspect ratio to false this prevents the chart from growing too much
+       );
   }
 
   public countryChangeView(value: string) {
     this.countryView = value;
     for (const country of this.countryList) {
       if (country.value === value) {
-        this.countryCasesChart.data.datasets[0].data = this.evolution.data[value].cases;
-        this.countryCasesChart.update();
 
-        this.countryDeathsChart.data.datasets[0].data = this.evolution.data[value].deaths;
-        this.countryDeathsChart.update();
+        this.countryAllCasesCTX.data.datasets[0].data  = this.evolution.data[value].cases;
+        this.countryAllCasesCTX.data.datasets[1].data = this.evolution.data[value].deaths;
+        this.countryAllCasesCTX.update();
         return;
       }
     }
