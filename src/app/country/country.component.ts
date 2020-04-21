@@ -17,15 +17,9 @@ interface Country {
 })
 export class CountryComponent implements OnInit {
   public isMobile: boolean;
-
   public countryView = "US";
-
   public countryAllCasesCTX: Chart;
-  public countryCasesChart: Chart;
-  public countryDeathsChart: Chart;
-
   public countryList: Country[];
-
   private evolution: any;
 
   constructor(
@@ -80,14 +74,6 @@ export class CountryComponent implements OnInit {
         true,
         false // we make aspect ratio to false this prevents the chart from growing too much
        );
-
-    // One country cases evolution chart
-    const countryCasesCTX = (document.getElementById("countryChartCases") as any).getContext("2d");
-    this.countryCasesChart = createLineChart(countryCasesCTX, labels, this.evolution.data.US.cases);
-
-    // One country deaths evolution chart
-    const countryDeathsCTX = (document.getElementById("countryChartDeaths") as any).getContext("2d");
-    this.countryDeathsChart = createLineChart(countryDeathsCTX, labels, this.evolution.data.US.deaths);
   }
 
   public countryChangeView(value: string) {
@@ -98,12 +84,6 @@ export class CountryComponent implements OnInit {
         this.countryAllCasesCTX.data.datasets[0].data  = this.evolution.data[value].cases;
         this.countryAllCasesCTX.data.datasets[1].data = this.evolution.data[value].deaths;
         this.countryAllCasesCTX.update();
-        
-        this.countryCasesChart.data.datasets[0].data = this.evolution.data[value].cases;
-        this.countryCasesChart.update();
-
-        this.countryDeathsChart.data.datasets[0].data = this.evolution.data[value].deaths;
-        this.countryDeathsChart.update();
         return;
       }
     }
