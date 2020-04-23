@@ -55,15 +55,17 @@ export class MapSchoolClosureComponent implements OnInit {
 
       const legend = L.control({position: 'bottomright'});
       const getColor = function(status) {
-        return  status == "Closure" ? '#e6595a' : // if status == "Closure"
-                status === "No Closure" ? '#6DB65B' : // if status == ""
-                status == "No Data"  ? '#e3e3e3' : // if statys == "No Data"
+        return  status == "No data" ? '#e3e3e3' : // if status == "Closure"
+                status == "No closure" ? '#28a745' :
+                status == "Closure" ? '#e6595a' :
+                status == "Re-opening" ? '#ff9800' : // if status == ""
+                status == "Re-open"  ? '#ffeb3b' : // if statys == "No Data"
                           '#e3e3e3';
       }
       legend.onAdd = function (map) {
 
           const div = L.DomUtil.create('div', 'info legend'),
-              status = ["Closure",  "No Closure", "No Data",],
+              status = ['No data', 'No closure', 'Closure', 'Re-opening', 'Re-open'],
               labels = [];
 
           // loop through our density intervals and generate a label with a colored square for each interval
@@ -100,9 +102,12 @@ export class MapSchoolClosureComponent implements OnInit {
     private getFillColor(item:{id:string}) {
       const foundCountry = this.countries.find(country => country.alpha3 === item.id)
       if (foundCountry) {
-        if(foundCountry.status == "Closure") return '#e6595a';
-        if(foundCountry.status == "No Data") return '#e3e3e3';
-        else return '#6DB65B'
+        if(foundCountry.status.toLowerCase() == "no data") return '#e3e3e3';
+        if(foundCountry.status.toLowerCase() == "no closure") return '#28a745';
+        if(foundCountry.status.toLowerCase() == "closure") return '#e6595a';
+        if(foundCountry.status.toLowerCase() == "re-opening") return '#ff9800';
+        if(foundCountry.status.toLowerCase() == "re-open") return '#ffeb3b';
+        else return '#e3e3e3'
       }
       return '#e3e3e3';
     }
