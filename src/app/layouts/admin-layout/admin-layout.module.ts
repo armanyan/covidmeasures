@@ -23,6 +23,11 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSortModule } from '@angular/material/sort';
 
+import { MapSchoolClosureComponent } from '../../components/map-school-closure/map-school-closure.component';
+import { MarkerService } from '../../_service/marker.service';
+import { PopUpService } from '../../_service/pop-up.service';
+import { ShapeService } from '../../_service/shape.service';
+
 @NgModule({
   imports: [
     CommonModule,
@@ -36,7 +41,12 @@ import { MatSortModule } from '@angular/material/sort';
     MatSelectModule,
     MatTooltipModule,
     MatSortModule,
-    HttpClientModule
+    HttpClientModule,
+  ],
+  providers: [
+    MarkerService,
+    PopUpService,
+    ShapeService
   ],
   declarations: [
     CountryComponent,
@@ -49,7 +59,8 @@ import { MatSortModule } from '@angular/material/sort';
     SurveillanceComponent,
     BordersComponent,
     MasksComponent,
-    TestingComponent
+    TestingComponent,
+    MapSchoolClosureComponent
   ]
 })
 
