@@ -24,10 +24,9 @@ export class MapSchoolClosureComponent implements OnInit {
       this.countries = this.http.get('https://covidmeasures-data.s3.amazonaws.com/school_closure.json').subscribe((res:{countries: Array<object>}) => {
         this.countries = res.countries
         this.initMap();
-        this.shapeService.getCuntriesShapes().subscribe(country => {
+        this.shapeService.getCountriesShapes().subscribe(country => {
           this.initStatesLayer(country);
         });
-        console.log(this.countries)
 
       // we populate the maps with markers
       // this.markerService.makeStateMarkers(this.map);
@@ -38,7 +37,6 @@ export class MapSchoolClosureComponent implements OnInit {
     ngAfterViewInit(): void {}
 
     private initMap(): void{
-      console.log("init map")
       // we create the map
       this.map = L.map('map', {
         center: [ 40.416775, -3.703790 ],

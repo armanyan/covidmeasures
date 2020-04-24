@@ -2,7 +2,7 @@ export default [
   {
     "impact": "Disruption on children nutrition",
     "desc": "Many children rely on schools to have a healthy lunch meal",
-    "link": "Nutrition programs worldwide uses schools to fight child malnutrition",
+    "link": "Nutrition programs worldwide use schools to fight child malnutrition",
     "countries": "United Kingdom",
     "source_name": "hrw.org",
     "source": "https://www.hrw.org/news/2020/03/12/uk-school-closures-could-leave-children-hungry"

@@ -33,18 +33,12 @@ export class CovidComponent implements OnInit {
   public views = ['Day by Day', 'Total'];
   public casesView = 'Day by Day';
   public deathsView = 'Day by Day';
-  public countryCasesView = "US";
-  public countryDeathsView = "US";
 
   public casesLastUpdate: string;
   public deathsLastUpdate: string;
-  public totalDeathCausesLastUpdate: string;
 
   public casesChart: Chart;
   public deathsChart: Chart;
-
-  public countryCasesChart: Chart;
-  public countryDeathsChart: Chart;
 
   public countryList: Country[];
 
@@ -91,15 +85,6 @@ export class CovidComponent implements OnInit {
         "viewValue": this.evolution.data[alpha].name.split('_').join(' ')
       });
     }
-
-    // One country cases evolution chart
-    const countryCasesCTX = (document.getElementById("countryChartCases") as any).getContext("2d");
-    this.countryCasesChart = createLineChart(countryCasesCTX, labels, this.evolution.data.US.cases);
-
-    // One country deaths evolution chart
-    const countryDeathsCTX = (document.getElementById("countryChartDeaths") as any).getContext("2d");
-    this.countryDeathsChart = createLineChart(countryDeathsCTX, labels, this.evolution.data.US.deaths);
-
 
     // world table
     try {
@@ -236,28 +221,6 @@ export class CovidComponent implements OnInit {
     row.new_deaths = (this.worldStats.map(row => row.new_deaths).reduce(reducer) as any);
     row.recovered = this.worldStats.map(row => row.recovered).reduce(reducer);
     return row;
-  }
-
-  public countryCasesChangeView(value: string) {
-    this.countryCasesView = value;
-    for (const country of this.countryList) {
-      if (country.value === value) {
-        this.countryCasesChart.data.datasets[0].data = this.evolution.data[value].cases;
-        this.countryCasesChart.update();
-        return;
-      }
-    }
-  }
-
-  public countryDeathsChangeView(value: string) {
-    this.countryDeathsView = value;
-    for (const country of this.countryList) {
-      if (country.value === value) {
-        this.countryDeathsChart.data.datasets[0].data = this.evolution.data[value].deaths;
-        this.countryDeathsChart.update();
-        return;
-      }
-    }
   }
 
 }

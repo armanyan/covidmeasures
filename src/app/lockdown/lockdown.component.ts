@@ -101,16 +101,16 @@ export class LockdownComponent implements OnInit {
     let lightRestrictions = 0;
     let noData = 0;
     for (const country of countries) {
-      if (country.end !== "N/A") {
+      if (country.end !== "") {
         removedRestrictions++;
-      } else if (country.restriction_type === "Lockdown") {
+      } else if (country.movement_restrictions === true) {
         lockdown++;
-      } else if (country.restriction_type === "Curfew") {
+      } else if (country.curfew === true) {
         curfew++;
-      } else if (country.restriction_type === "Businesses Shutdown") {
-        lightRestrictions++;
-      } else {
+      } else if (country.status === "No Data") {
         noData++;
+      } else {
+        lightRestrictions++;
       }
     }
     return [lockdown, curfew, removedRestrictions, lightRestrictions, noData];
@@ -127,17 +127,17 @@ export class LockdownComponent implements OnInit {
     let lightRestrictions = 0;
     let noData = 0;
     for (const country of countries) {
-      const population = getCountryPopulation(country["alpha-3"]);
-      if (country.end !== "N/A") {
-        removedRestrictions += Math.floor(population*country.population_affected);
-        lightRestrictions += Math.floor(population*(1-country.population_affected));
-      } else if (country.restriction_type === "Lockdown") {
-        lockdown += Math.floor(population*country.population_affected);
-        lightRestrictions += Math.floor(population*(1-country.population_affected));
-      } else if (country.restriction_type === "Curfew") {
-        curfew += Math.floor(population*country.population_affected);
-        lightRestrictions += Math.floor(population*(1-country.population_affected));
-      } else if (country.restriction_type === "Businesses Shutdown") {
+      const population = getCountryPopulation(country["alpha3"]);
+      if (country.end !== "") {
+        removedRestrictions += Math.floor(population*country.current_population_impacted);
+        lightRestrictions += Math.floor(population*(1-country.current_population_impacted));
+      } else if (country.movement_restrictions === true) {
+        lockdown += Math.floor(population*country.current_population_impacted);
+        lightRestrictions += Math.floor(population*(1-country.current_population_impacted));
+      } else if (country.curfew === true) {
+        curfew += Math.floor(population*country.current_population_impacted);
+        lightRestrictions += Math.floor(population*(1-country.current_population_impacted));
+      } else if (country.status === "Businesses Shutdown") { // TODO redefine "Business Shutdown"
         lightRestrictions += population;
       } else {
         noData += population;
@@ -153,6 +153,7 @@ export class LockdownComponent implements OnInit {
     // 0 - lockdown, 2 - restrictions removed
     this.lockdownImpactedPeople = Math.floor(restrictionData[0]+restrictionData[2]);
     // 1 - curfew
+    
     this.curfewImpactedPeople = Math.floor(restrictionData[1]);
     this.averageDaysMissed = this.getAverageDaysMissedPerRegion(countries);
   }
@@ -190,10 +191,10 @@ export class LockdownComponent implements OnInit {
   private getCountriesByRegion(region: string) {
     let countries;
     if (region === "World") {
-      countries = this.lockdownData;
+      countries = this.lockdownData.countries;
     } else {
-      countries = this.lockdownData.filter(country => {
-        return getRegionByAlpha(country["alpha-3"]) === region ? true : false;
+      countries = this.lockdownData.countries.filter(country => {
+        return getRegionByAlpha(country["alpha3"]) === region ? true : false;
       })
     }
     return countries;
@@ -205,16 +206,16 @@ export class LockdownComponent implements OnInit {
   private setLockdownStatistics() {
     let duration;
     let population;
-    for (const country of this.lockdownData) {
+    for (const country of this.lockdownData.countries) {
       duration = this.getMissedDaysPerCountry(country);
-      population = getCountryPopulation(country['alpha-3'])*country.population_affected;
+      population = getCountryPopulation(country['alpha3'])*country.current_population_impacted;
       this.lockdownTableFull.push({
-        "name": getCountryNameByAlpha(country['alpha-3']),
+        "name": country.name,
         "population": population,
-        "duration": duration === 0 ? '' : duration,
-        "lockdown": this.formatRestriction(country.lockdown),
-        "curfew": this.formatRestriction(country.curfew),
-        "business": this.formatRestriction(country.business),
+        "duration": duration === 0 ? 0 : duration,
+        "lockdown": country.movement_restrictions ? 'Yes' : 'No',
+        "curfew": country.curfew ? 'Yes' : 'No',
+        "business": country.status_business === 'No Data' ? '' : country.status_business,
         "other": this.getOtherMeasures(country),
         "start": this.getDate(country['start']),
         "end": this.getEndDate(country['end'], country['expected_end']),
@@ -245,10 +246,10 @@ export class LockdownComponent implements OnInit {
   }
 
   private getEndDate(end: string, expectedEnd: string) {
-    if (end !== 'N/A') {
+    if (end !== '') {
       return new Date(end).toDateString();
     }
-    return expectedEnd === 'N/A' ? '' : new Date(expectedEnd).toDateString();
+    return expectedEnd === '' ? '' : new Date(expectedEnd).toDateString();
   }
 
   /**
@@ -275,12 +276,12 @@ export class LockdownComponent implements OnInit {
    * @param country a country data
    */
   private getMissedDaysPerCountry(country: any) {
-    if (country.start === '') {
+    if (country.start === '' || country.start === "null") { // no data or no closure
       return 0
     }
     const start = new Date(country.start);
     const today = new Date()
-    const planedEnd = country.end === 'N/A' ? today : new Date(country.end);
+    const planedEnd = country.end === '' ? today : new Date(country.end);
     const end = today < planedEnd ? today : planedEnd;
     return Math.floor((end.getTime()-start.getTime())/(1000*60*60*24));
   }
