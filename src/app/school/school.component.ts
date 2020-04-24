@@ -92,7 +92,7 @@ export class SchoolComponent implements OnInit {
     this.setTexts();
     await this.setCurrentDeathEvolution();
     this.setLockdownImpactStatistics();
-    this.numberChildrenImpacted = Math.floor(this.getContinentChildrenPopulation(this.schoolClosureRegion));
+    this.numberChildrenImpacted = Math.floor(this.getRegionChildrenPopulation(this.schoolClosureRegion));
     this.averageDaysMissed = this.getAverageDaysMissedPerRegion('World');
     this.covidVSSchoolChangeRegion('World');
     this.setSchoolClosure();
@@ -133,19 +133,19 @@ export class SchoolComponent implements OnInit {
    * @param country country data
    */
   private getMissedDaysPerCountry(country: any) {
-    if (country.start === 'N/A') {
+    if (country.start === '' || country.start === null) {
       return 0
     }
     const start = new Date(country.start);
     const today = new Date()
-    const planedEnd = country.end === 'N/A' ? today : new Date(country.end);
+    const planedEnd = country.end === '' ? today : new Date(country.end);
     const end = today < planedEnd ? today : planedEnd;
     return Math.floor((end.getTime()-start.getTime())/(1000*60*60*24));
   }
 
   public schoolClosureChangeLocation(region: string) {
     this.schoolClosureRegion = region;
-    this.numberChildrenImpacted = Math.floor(this.getContinentChildrenPopulation(region));
+    this.numberChildrenImpacted = Math.floor(this.getRegionChildrenPopulation(region));
     this.averageDaysMissed = this.getAverageDaysMissedPerRegion(region)
   }
 
@@ -154,10 +154,10 @@ export class SchoolComponent implements OnInit {
    * @param region which population are we interested in
    * @param ranges which age ranges are we interested in
    */
-  private getContinentChildrenPopulation(region: string) {
+  private getRegionChildrenPopulation(region: string) {
     const countries = this.getCountriesByRegion(region);
     const schoolPopulation = countries.map(
-      country => getChildrenNoSchool(country.alpha3)*country.children_no_school
+      country => getChildrenNoSchool(country.alpha3)*country.current_children_no_school
     );
     const reducer = (acc: number, currVal: number) => { return currVal + acc };
     return schoolPopulation.reduce(reducer);
@@ -185,7 +185,7 @@ export class SchoolComponent implements OnInit {
    */
   public covidVSSchoolChangeRegion(region: string) {
     this.covidVSSchoolRegion = region;
-    this.impactedChildren = this.getContinentChildrenPopulation(region);
+    this.impactedChildren = this.getRegionChildrenPopulation(region);
     const divider = this.perCovidActive ? this.covidByContinent[region].activeCases : this.covidByContinent[region].deaths;
     this.impactedChildrenPer = Math.floor(this.impactedChildren/divider);
     this.schoolYearsMissedPer = Math.floor(

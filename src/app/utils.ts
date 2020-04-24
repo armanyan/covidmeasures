@@ -33,9 +33,10 @@ export const getCountryNameByAlpha = (alpha: string) => {
 export const getChildrenNoSchool = (alpha3: string) => {
   for (const country of countriesData.default) {
     if (country["alpha3"] === alpha3) {
-      return country.population["0-9"] + country.population["10-19"]
+      return country.population["0-9"] + country.population["10-19"];
     }
   }
+  return 0;
 }
 
 export const getCountryPopulation = (alpha3: string) => {
@@ -45,6 +46,7 @@ export const getCountryPopulation = (alpha3: string) => {
       return Math.floor(population.reduce((acc: number, currVal: number) => { return currVal + acc }));
     }
   }
+  return 0; // for the countries with missing data
 }
 
 const standardTooltip = (tooltipItem: any, values = undefined) => {
