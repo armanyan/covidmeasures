@@ -135,14 +135,12 @@ export class CountryComponent implements OnInit {
       ((this.getMissedDaysPerCountry(schoolCountry) / 365) * this.schoolClosure.impacted_children) / this.statsDivider;
 
     const lockdownCountry = this.getCountry(this.lockdownData.countries, alpha3);
-    console.log(lockdownCountry);
     this.lockdown.status = lockdownCountry.status;
     this.lockdown.date = lockdownCountry.status === "Finished" ? lockdownCountry.end : lockdownCountry.start;
 
     this.countryImpactedPeople = Math.floor(getCountryPopulation(alpha3)*lockdownCountry.population_affected);
     this.countryCumulatedYears =
       ((this.getMissedDaysPerCountry(lockdownCountry) / 365) * this.countryImpactedPeople)/this.statsDivider;
-    console.log(this.countryImpactedPeople, this.countryCumulatedYears);
   }
 
   /**
