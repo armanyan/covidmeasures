@@ -30,7 +30,7 @@ export const getCountryNameByAlpha = (alpha: string) => {
   return country.name;
 }
 
-export const getChildrenNoSchoolByAlpha3 = (alpha3: string) => {
+export const getChildrenNoSchool = (alpha3: string) => {
   for (const country of countriesData.default) {
     if (country["alpha3"] === alpha3) {
       return country.population["0-9"] + country.population["10-19"]

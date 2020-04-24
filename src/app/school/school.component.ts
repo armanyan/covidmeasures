@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Title } from "@angular/platform-browser";
 
-import { getRegionByAlpha, getCountryNameByAlpha, getChildrenNoSchoolByAlpha3 } from '../utils';
+import { getRegionByAlpha, getCountryNameByAlpha, getChildrenNoSchool } from '../utils';
 import * as impactData from '../data/school_closure_impact';
 import * as text from '../data/texts/school_closure';
 
@@ -157,7 +157,7 @@ export class SchoolComponent implements OnInit {
   private getContinentChildrenPopulation(region: string) {
     const countries = this.getCountriesByRegion(region);
     const schoolPopulation = countries.map(
-      country => getChildrenNoSchoolByAlpha3(country.alpha3)*country.children_no_school
+      country => getChildrenNoSchool(country.alpha3)*country.children_no_school
     );
     const reducer = (acc: number, currVal: number) => { return currVal + acc };
     return schoolPopulation.reduce(reducer);
@@ -216,7 +216,7 @@ export class SchoolComponent implements OnInit {
   private getCountryChildrenByAlpha(alpha3: string) {
     for (const country of this.schoolClosureData.countries) {
       if (country["alpha3"] === alpha3) {
-        return country.children_no_school*getChildrenNoSchoolByAlpha3(alpha3);
+        return country.children_no_school*getChildrenNoSchool(alpha3);
       }
     }
   }

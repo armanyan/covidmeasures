@@ -4,7 +4,7 @@ import Chart from 'chart.js';
 import { HttpClient } from '@angular/common/http';
 
 import { mobileWidth, monthNames, createLineChart, getCountryNameByAlpha, getAlpha3FromAlpha2,
-         getChildrenNoSchoolByAlpha3, getCountryPopulation } from '../utils';
+         getChildrenNoSchool, getCountryPopulation } from '../utils';
 
 interface Country {
   value: string;
@@ -25,7 +25,7 @@ export class CountryComponent implements OnInit {
   
   public schoolClosure = {status: 'No Data', date: '', impacted_children: 0, years: 0};
   public lockdown = {status: 'No Data', date: ''};
-  public businessClosure = {status: 'No Data', date: ''}; // update when the database is ready
+  public businessClosure = {status: 'No Data', date: ''}; // TODO update when the database is ready
   public countryImpactedPeople: number;
   public countryCumulatedYears: number;
 
@@ -130,7 +130,8 @@ export class CountryComponent implements OnInit {
     const schoolCountry = this.getCountry(this.schoolClosureData.countries, alpha3);
     this.schoolClosure.status = schoolCountry.status;
     this.schoolClosure.date = schoolCountry.status === "Finished" ? schoolCountry.end : schoolCountry.start;
-    this.schoolClosure.impacted_children = Math.floor(getChildrenNoSchoolByAlpha3(alpha3)*schoolCountry.children_no_school);
+    this.schoolClosure.impacted_children =
+      Math.floor((getChildrenNoSchool(alpha3)*schoolCountry.current_children_no_school)/this.statsDivider);
     this.schoolClosure.years =
       ((this.getMissedDaysPerCountry(schoolCountry) / 365) * this.schoolClosure.impacted_children) / this.statsDivider;
 
@@ -138,7 +139,7 @@ export class CountryComponent implements OnInit {
     this.lockdown.status = lockdownCountry.status;
     this.lockdown.date = lockdownCountry.status === "Finished" ? lockdownCountry.end : lockdownCountry.start;
 
-    this.countryImpactedPeople = Math.floor(getCountryPopulation(alpha3)*lockdownCountry.population_affected);
+    this.countryImpactedPeople = Math.floor((getCountryPopulation(alpha3)*lockdownCountry.current_population_impacted)/this.statsDivider);
     this.countryCumulatedYears =
       ((this.getMissedDaysPerCountry(lockdownCountry) / 365) * this.countryImpactedPeople)/this.statsDivider;
   }
@@ -153,7 +154,7 @@ export class CountryComponent implements OnInit {
     }
     const start = new Date(country.start);
     const today = new Date()
-    const planedEnd = country.end === 'N/A' ? today : new Date(country.end);
+    const planedEnd = country.end === '' ? today : new Date(country.end);
     const end = today < planedEnd ? today : planedEnd;
     return Math.floor((end.getTime()-start.getTime())/(1000*60*60*24));
   }
@@ -199,7 +200,6 @@ export class CountryComponent implements OnInit {
 
    public changeViewOption(value: string) {
     this.currentOption = value;
-    console.log(value, this.countryView, this.evolution)
     const reducer = (acc: number, currVal: number) => { return currVal + acc };
     if (value === 'In Total') {
       this.statsDivider = 1.0;
