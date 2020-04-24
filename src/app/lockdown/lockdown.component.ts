@@ -176,7 +176,8 @@ export class LockdownComponent implements OnInit {
    * @param countries an array of country data
    */
   private getAverageDaysMissedPerRegion(countries) {
-    const missedDays = countries.map(country => this.getMissedDaysPerCountry(country));
+    console.log(countries.countries);
+    const missedDays = countries.countries.map(country => this.getMissedDaysPerCountry(country));
     const reducer = (acc: number, currVal: number) => {return currVal + acc};
     return Math.floor(missedDays.reduce(reducer)/missedDays.filter(
       days => { return days > 0 ? true: false }

@@ -8,7 +8,7 @@
 
     <h3 class="mt-md-0 pt-md-0">COVID-19 Evolution Day by Day</h3>
 
-    <div class="card ">
+    <div class="card col-md-4 center">
       <div class="card-body">
         <mat-label><strong>Choose Country</strong></mat-label>
           <mat-select [(value)]="countryView" (selectionChange)="countryChangeView($event.value)">
@@ -18,13 +18,85 @@
           </mat-select>
       </div>
     </div>
+
+    <div class="row">
+
+      <div class="col-md-4">
+        <div class="card">
+          <div class="card-header card-header-success">
+            <h4 class="card-title ">School Closure</h4>
+          </div>
+          
+          <div class="card-body">
+            <table class="table">
+              <thead class="text-primary">
+                <th>Date</th>
+                <th>Status</th>
+              </thead>
+              <tbody>
+                <td class="left">{{schoolClosure.date}}</td>
+                <td class="center">{{schoolClosure.status}}</td>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="card">
+          <div class="card-header card-header-success">
+            <h4 class="card-title ">Movement Restrictions</h4>
+          </div>
+          
+          <div class="card-body">
+            <table class="table">
+              <thead class="text-primary">
+                <th>Date</th>
+                <th>Status</th>
+              </thead>
+              <tbody>
+                <td class="left">{{lockdown.date}}</td>
+                <td class="center">{{lockdown.status}}</td>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="card">
+          <div class="card-header card-header-success">
+            <h4 class="card-title ">Non-Essential Business Closure</h4>
+          </div>
+          
+          <div class="card-body">
+            <table class="table">
+              <thead class="text-primary">
+                <th>Date</th>
+                <th>Status</th>
+              </thead>
+              <tbody>
+                <td class="left">{{businessClosure.date}}</td>
+                <td class="center">{{businessClosure.status}}</td>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+        
+    </div>
+
+  <div>
+    <p class="text-primary"><u><b> Is this not up to date?</b></u></p>
+  </div>
+
+  <hr>
+
+  <h3>How does COVID-19 evolve in the country?</h3>
+
     <div class="card" >
       <div class="card-header card-header-success">
-        <h3 class="card-title">Reported COVID-19 
-          <strong>Infection Cases</strong> 
-          & 
-          <strong>Deaths</strong>
-        </h3>
+        <h4 class="card-title">Reported COVID-19 Infection Cases & Deaths</h4>
       </div>
 
       <div class="card-body p-1">
@@ -34,7 +106,7 @@
       </div>
       <div class="card-footer">
         <div class="stats">
-          Updated on {{casesLastUpdate}}
+          Updated on {{evolutionUpdatedOn}}
         </div>
         <div class="stats">
           Source:
@@ -44,5 +116,154 @@
       </div>
     </div>
     <br>
+
+    <hr>
+
+    <h3>Measures Impacts On Citizens</h3>
+
+      <div class="card center">
+        <div class="card-body">
+
+          <ng-container *ngIf="isMobile">
+            <mat-label>Per</mat-label>
+            <mat-select [(value)]="currentOption" (selectionChange)="changeViewOption($event.value)">
+              <mat-option *ngFor="let option of options" [value]="option">
+                {{option}}
+              </mat-option>
+            </mat-select>
+          </ng-container>
+
+          <div *ngIf="!isMobile" class="center">
+            <ng-container *ngFor="let option of options">
+              <button mat-raised-button *ngIf="currentOption===option"
+                class="float" type="button" color="primary">
+                <span>{{ option }}</span>
+              </button>
+
+              <button mat-button *ngIf="currentOption!==option"
+                class="float" type="button" color="primary"
+                (click)="changeViewOption(option)">
+                <span>{{ option }}</span>
+              </button>
+            </ng-container>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="row">
+
+        <div class="col-md-4">
+          <div class="card">
+            <div class="card-header card-header-success">
+              <h4 class="card-title ">Children Homeschooling</h4>
+            </div>
+            
+            <div class="card-body">
+              <table class="table">
+                <thead class="text-primary">
+                  <th>Number of Impacted Children</th>
+                  <th>Cumulated Years</th>
+                </thead>
+                <tbody>
+                  <td class="left">{{schoolClosure.impacted_children | number}}</td>
+                  <td class="center">{{schoolClosure.years | number}}</td>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+  
+        <div class="col-md-4">
+          <div class="card">
+            <div class="card-header card-header-success">
+              <h4 class="card-title ">People Staying Inside</h4>
+            </div>
+            
+            <div class="card-body">
+              <table class="table">
+                <thead class="text-primary">
+                  <th>Number of Impacted People</th>
+                  <th>Cumulated years</th>
+                </thead>
+                <tbody>
+                  <td class="left">{{countryImpactedPeople | number}}</td>
+                  <td class="center">{{countryCumulatedYears | number}}</td>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+  
+        <div class="col-md-4">
+          <div class="card">
+            <div class="card-header card-header-success">
+              <h4 class="card-title ">Economic Slowdown</h4>
+            </div>
+            
+            <div class="card-body">
+              <table class="table">
+                <thead class="text-primary">
+                  <th>Number of Days</th>
+                </thead>
+                <tbody>
+                  <td class="center">{{123}}</td>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+          
+      </div>
+
+      <hr>
+
+      <h3><u>Tell us about other impacts of those measures in {{currentCountryName}}</u></h3>
+      <p>
+        We want to hear the good and the bad. Vote for the most
+        impactful in your life and the life of other around you.
+      </p>
+
+      <div class="col-md-12">
+        <div class="card">
+  
+          <div class="card-header card-header-success">
+            <h3 class="card-title">List of Impacts in {{currentCountryName}}</h3>
+            <a mat-raised-button class="nav-link float-right" type="button"
+              color="primary" href="https://forms.gle/354eHT52EMNVLWgr8" target="_blank"
+            >
+              <span>Add an Impact</span>
+            </a>
+          </div>
+  
+          <div class="card-body">
+  
+            <div class="content table-responsive table-full-width">
+              <table class="table">
+                <thead>
+                  <th class="text-primary" *ngFor="let row of impactHeaders">
+                    {{ row }}
+                  </th>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let row of impactTable">
+                    <td>{{ row.country }}</td>
+                    <td>{{ row.title }}</td>
+                  </tr>
+                </tbody>
+              </table>
+              </div>
+      
+          </div>
+  
+          <div class="card-footer">
+            <div class="stats">
+              Source: CovidMeasures Community
+            </div>
+          </div>
+  
+        </div>
+      </div>
+
   </div>
 </div>
