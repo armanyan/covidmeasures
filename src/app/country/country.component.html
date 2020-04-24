@@ -6,11 +6,10 @@
       <h2 *ngIf=isMobile><u>{{titleService.getTitle()}}</u></h2>
     </div>
 
-    <h3 class="mt-md-0 pt-md-0">COVID-19 Evolution Day by Day</h3>
 
     <div class="card col-md-4 center">
       <div class="card-body">
-        <mat-label><strong>Choose Country</strong></mat-label>
+        <mat-label><strong>Choose a country</strong></mat-label>
           <mat-select [(value)]="countryView" (selectionChange)="countryChangeView($event.value)">
             <mat-option *ngFor="let country of countryList" [value]="country.value">
               {{ country.viewValue }}
@@ -18,7 +17,7 @@
           </mat-select>
       </div>
     </div>
-
+    <h4 class="mt-md-0 pt-md-0">Governement measures in response to COVID-19</h4>
     <div class="row">
 
       <div class="col-md-4">
@@ -30,8 +29,8 @@
           <div class="card-body">
             <table class="table">
               <thead class="text-primary">
-                <th>Date</th>
-                <th>Status</th>
+                <th>Start Date</th>
+                <th>Current Status</th>
               </thead>
               <tbody>
                 <td class="left">{{schoolClosure.date}}</td>
@@ -51,8 +50,8 @@
           <div class="card-body">
             <table class="table">
               <thead class="text-primary">
-                <th>Date</th>
-                <th>Status</th>
+                <th>Start Date</th>
+                <th>Current Status</th>
               </thead>
               <tbody>
                 <td class="left">{{lockdown.date}}</td>
@@ -66,14 +65,14 @@
       <div class="col-md-4">
         <div class="card">
           <div class="card-header card-header-success">
-            <h4 class="card-title ">Non-Essential Business Closure</h4>
+            <h4 class="card-title ">Non-Essential Businesses Closure</h4>
           </div>
           
           <div class="card-body">
             <table class="table">
               <thead class="text-primary">
-                <th>Date</th>
-                <th>Status</th>
+                <th>Start Date</th>
+                <th>Current Status</th>
               </thead>
               <tbody>
                 <td class="left">{{businessClosure.date}}</td>
@@ -87,12 +86,12 @@
     </div>
 
   <div>
-    <p class="text-primary"><u><b> Is this not up to date?</b></u></p>
+    <p class="text-primary"><u><b> Is the information above not up-to-date?</b></u></p>
   </div>
 
   <hr>
 
-  <h3>How does COVID-19 evolve in the country?</h3>
+  <h3>Evolution of COVID-19 in the country</h3>
 
     <div class="card" >
       <div class="card-header card-header-success">
@@ -119,7 +118,7 @@
 
     <hr>
 
-    <h3>Measures Impacts On Citizens</h3>
+    <h3>Government Measures' Impacts On Citizens</h3>
 
       <div class="card center">
         <div class="card-body">
@@ -162,8 +161,8 @@
             <div class="card-body">
               <table class="table">
                 <thead class="text-primary">
-                  <th>Number of Impacted Children</th>
-                  <th>Cumulated Years</th>
+                  <th>Children Impacted</th>
+                  <th>Cumulated Years At Home</th>
                 </thead>
                 <tbody>
                   <td class="left">{{schoolClosure.impacted_children | number}}</td>
@@ -183,8 +182,8 @@
             <div class="card-body">
               <table class="table">
                 <thead class="text-primary">
-                  <th>Number of Impacted People</th>
-                  <th>Cumulated years</th>
+                  <th>People Impacted</th>
+                  <th>Cumulated Years At Home</th>
                 </thead>
                 <tbody>
                   <td class="left">{{countryImpactedPeople | number}}</td>
