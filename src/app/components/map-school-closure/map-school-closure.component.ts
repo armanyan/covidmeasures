@@ -103,7 +103,9 @@ export class MapSchoolClosureComponent implements OnInit {
         if(foundCountry.status.toLowerCase() == "no data") return '#e3e3e3';
         if(foundCountry.status.toLowerCase() == "no closure") return '#28a745';
         if(foundCountry.status.toLowerCase() == "closure") return '#e6595a';
-        if(foundCountry.status.toLowerCase() == "re-opening") return '#ff9800';
+        if(
+          foundCountry.status.toLowerCase() == "re-openning" || 
+          foundCountry.status.toLowerCase() == "re-opening") return '#ff9800';
         if(foundCountry.status.toLowerCase() == "re-open") return '#ffeb3b';
         else return '#e3e3e3'
       }
