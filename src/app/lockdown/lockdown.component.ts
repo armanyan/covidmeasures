@@ -101,12 +101,12 @@ export class LockdownComponent implements OnInit {
     let lightRestrictions = 0;
     let noData = 0;
     for (const country of countries) {
-      if (country.end !== "") {
+      if (country.curfew === true) {
+        curfew++;
+      } else if (country.end !== "") {
         removedRestrictions++;
       } else if (country.movement_restrictions === true) {
         lockdown++;
-      } else if (country.curfew === true) {
-        curfew++;
       } else if (country.status === "No Data") {
         noData++;
       } else {
@@ -128,16 +128,16 @@ export class LockdownComponent implements OnInit {
     let noData = 0;
     for (const country of countries) {
       const population = getCountryPopulation(country["alpha3"]);
-      if (country.end !== "") {
+      if (country.curfew === true) {
+        curfew += Math.floor(population*country.current_population_impacted);
+        lightRestrictions += Math.floor(population*(1-country.current_population_impacted));
+      } else if (country.end !== "") {
         removedRestrictions += Math.floor(population*country.current_population_impacted);
         lightRestrictions += Math.floor(population*(1-country.current_population_impacted));
       } else if (country.movement_restrictions === true) {
         lockdown += Math.floor(population*country.current_population_impacted);
         lightRestrictions += Math.floor(population*(1-country.current_population_impacted));
-      } else if (country.curfew === true) {
-        curfew += Math.floor(population*country.current_population_impacted);
-        lightRestrictions += Math.floor(population*(1-country.current_population_impacted));
-      } else if (country.status === "Businesses Shutdown") { // TODO redefine "Business Shutdown"
+      } else if (country.start_business_closure !== "") { // TODO add null case
         lightRestrictions += population;
       } else {
         noData += population;
@@ -276,7 +276,8 @@ export class LockdownComponent implements OnInit {
    * @param country a country data
    */
   private getMissedDaysPerCountry(country: any) {
-    if (country.start === '' || country.start === "null") { // no data or no closure
+    // TODO fix the issue of null and "null"
+    if (country.start === '' || country.start === "null" || country.start === null) { // no data or no closure
       return 0
     }
     const start = new Date(country.start);

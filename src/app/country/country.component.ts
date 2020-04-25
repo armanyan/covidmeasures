@@ -25,7 +25,7 @@ export class CountryComponent implements OnInit {
   
   public schoolClosure = {status: 'No Data', date: '', impacted_children: 0, years: 0};
   public lockdown = {status: 'No Data', date: ''};
-  public businessClosure = {status: 'No Data', date: ''}; // TODO update when the database is ready
+  public businessClosure = {status: 'No Data', date: '', days: 0};
   public countryImpactedPeople: number;
   public countryCumulatedYears: number;
 
@@ -139,6 +139,10 @@ export class CountryComponent implements OnInit {
     this.lockdown.status = lockdownCountry.status;
     this.lockdown.date = lockdownCountry.status === "Finished" ? lockdownCountry.end : lockdownCountry.start;
 
+    this.businessClosure.status = lockdownCountry.status_business;
+    this.businessClosure.date = lockdownCountry.start_business_closure;
+    this.businessClosure.days = this.getBusinessClosureDays(lockdownCountry)/this.statsDivider;
+
     this.countryImpactedPeople = Math.floor((getCountryPopulation(alpha3)*lockdownCountry.current_population_impacted)/this.statsDivider);
     this.countryCumulatedYears =
       ((this.getMissedDaysPerCountry(lockdownCountry) / 365) * this.countryImpactedPeople)/this.statsDivider;
@@ -149,12 +153,23 @@ export class CountryComponent implements OnInit {
    * @param country country data
    */
   private getMissedDaysPerCountry(country: any) {
-    if (country.start === 'N/A') {
+    if (country.start === '') {
       return 0
     }
     const start = new Date(country.start);
     const today = new Date()
     const planedEnd = country.end === '' ? today : new Date(country.end);
+    const end = today < planedEnd ? today : planedEnd;
+    return Math.floor((end.getTime()-start.getTime())/(1000*60*60*24));
+  }
+
+  private getBusinessClosureDays(country: any) {
+    if (country.start_business_closure === '') {
+      return 0
+    }
+    const start = new Date(country.start_business_closure);
+    const today = new Date()
+    const planedEnd = country.end_business_closure === '' ? today : new Date(country.end_business_closure);
     const end = today < planedEnd ? today : planedEnd;
     return Math.floor((end.getTime()-start.getTime())/(1000*60*60*24));
   }
