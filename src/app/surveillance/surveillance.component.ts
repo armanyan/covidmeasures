@@ -19,7 +19,7 @@ export class SurveillanceComponent implements OnInit {
   public table = [];
 
   constructor(
-    private titleService: Title
+    public titleService: Title
   ) { }
 
   ngOnInit() {
