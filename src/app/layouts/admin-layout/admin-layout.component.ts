@@ -1,11 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import 'rxjs/add/operator/filter';
-import { Router, Event } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
 import PerfectScrollbar from 'perfect-scrollbar';
 import { Title } from '@angular/platform-browser';
-import { NavigationEnd } from '@angular/router';
 
 @Component({
   selector: 'app-admin-layout',
@@ -20,20 +18,9 @@ export class AdminLayoutComponent implements OnInit {
   public isMobile: boolean;
 
   constructor( 
-    public location: Location, 
-    private router: Router, 
+    public location: Location,
     private titleService: Title 
-    ) {
-        //Router subscriber
-        this.router.events.subscribe((event: Event) => {
-          if (event instanceof NavigationEnd) {
-            // we change the title in the banner
-            setTimeout(()=> {
-              this.title = this.titleService.getTitle()
-            }, 500)
-          }
-      });
-    }
+    ) {}
 
   ngOnInit() {
       
@@ -42,7 +29,7 @@ export class AdminLayoutComponent implements OnInit {
       this.runOnRouteChange();
   }
   ngAfterContentChecked(){
-    this.title = this.titleService.getTitle()
+    this.title = this.titleService.getTitle().split(':')[0]
   }
   isMaps(path){
       var titlee = this.location.prepareExternalUrl(this.location.path());
