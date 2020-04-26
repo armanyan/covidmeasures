@@ -42,6 +42,7 @@ export class CountryComponent implements OnInit {
   private evolution: any;
   private schoolClosureData: any;
   private lockdownData: any;
+  private covidActiveCases = {};
 
   constructor(
     private titleService: Title,
@@ -55,6 +56,7 @@ export class CountryComponent implements OnInit {
     this.evolution = (await this.http.get('https://covidmeasures-data.s3.amazonaws.com/evolution.json').toPromise() as any);
     this.schoolClosureData = (await this.http.get('https://covidmeasures-data.s3.amazonaws.com/school_closure.json').toPromise() as any);
     this.lockdownData = (await this.http.get('https://covidmeasures-data.s3.amazonaws.com/lockdown.json').toPromise() as any);
+    this.setActiveCases();
 
     this.evolutionUpdatedOn = this.evolution.dates[this.evolution.dates.length - 1];
 
@@ -126,14 +128,25 @@ export class CountryComponent implements OnInit {
     return { "cases": shortenCases, "deaths": shortenDeaths, "labels": shortenLabels }
   }
 
+  /**
+   * Sets the number of active cases and deaths for every country in the world.
+   */
+  private async setActiveCases() {
+    const data = await this.http.get('https://api.covid19api.com/summary').toPromise();
+    for (const row of data["Countries"]) {
+      this.covidActiveCases[getAlpha3FromAlpha2(row['CountryCode'])] = row["TotalConfirmed"]-row["TotalRecovered"]-row["TotalDeaths"];
+    }
+  }
+
   private setStatsAndStatuses(alpha3: string) {
     const schoolCountry = this.getCountry(this.schoolClosureData.countries, alpha3);
     this.schoolClosure.status = schoolCountry.status;
     this.schoolClosure.date = schoolCountry.status === "Finished" ? schoolCountry.end : schoolCountry.start;
+
+    const affectedChildren = getChildrenNoSchool(alpha3)*schoolCountry.current_children_no_school;
     this.schoolClosure.impacted_children =
-      Math.floor((getChildrenNoSchool(alpha3)*schoolCountry.current_children_no_school)/this.statsDivider);
-    this.schoolClosure.years =
-      ((this.getMissedDaysPerCountry(schoolCountry) / 365) * this.schoolClosure.impacted_children) / this.statsDivider;
+      Math.floor((affectedChildren)/this.statsDivider);
+    this.schoolClosure.years = (this.getMissedDaysPerCountry(schoolCountry)*affectedChildren) / (365*this.statsDivider);
 
     const lockdownCountry = this.getCountry(this.lockdownData.countries, alpha3);
     this.lockdown.status = lockdownCountry.status;
@@ -141,11 +154,10 @@ export class CountryComponent implements OnInit {
 
     this.businessClosure.status = lockdownCountry.status_business;
     this.businessClosure.date = lockdownCountry.start_business_closure;
-    this.businessClosure.days = this.getBusinessClosureDays(lockdownCountry)/this.statsDivider;
+    this.businessClosure.days = this.getBusinessClosureDays(lockdownCountry);
 
     this.countryImpactedPeople = Math.floor((getCountryPopulation(alpha3)*lockdownCountry.current_population_impacted)/this.statsDivider);
-    this.countryCumulatedYears =
-      ((this.getMissedDaysPerCountry(lockdownCountry) / 365) * this.countryImpactedPeople)/this.statsDivider;
+    this.countryCumulatedYears = (this.getMissedDaysPerCountry(lockdownCountry)*affectedChildren) / (365*this.statsDivider);
   }
 
   /**
@@ -221,7 +233,7 @@ export class CountryComponent implements OnInit {
     } else if (value === 'Per COVID-19 Death') {
       this.statsDivider = this.evolution.data[this.countryView].deaths.reduce(reducer);
     } else {
-      this.statsDivider = this.evolution.data[this.countryView].cases.reduce(reducer)
+      this.statsDivider = this.covidActiveCases[this.countryView];
     }
     this.setStatsAndStatuses(this.countryView);
    }
