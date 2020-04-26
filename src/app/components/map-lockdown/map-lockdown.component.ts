@@ -134,7 +134,7 @@ export class MapLockdownComponent implements OnInit {
     // method that we will use to update the control based on feature properties passed
     this.info.update = function (country:Country) {
         this._div.innerHTML = 
-        '<h4>School Closure Status</h4>' +  (country ?
+        '<h4>Lockdown Status</h4>' +  (country ?
         `<b>${country.name}</b><br />
         <span style="color:${getTextColor(country.status)}">${country.status}</span>`
         : 'Hover over a Country');
