@@ -24,6 +24,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatSortModule } from '@angular/material/sort';
 
 import { MapSchoolClosureComponent } from '../../components/map-school-closure/map-school-closure.component';
+import { MapLockdownComponent } from '../../components/map-lockdown/map-lockdown.component';
 import { MarkerService } from '../../_service/marker.service';
 import { PopUpService } from '../../_service/pop-up.service';
 import { ShapeService } from '../../_service/shape.service';
@@ -60,7 +61,8 @@ import { ShapeService } from '../../_service/shape.service';
     BordersComponent,
     MasksComponent,
     TestingComponent,
-    MapSchoolClosureComponent
+    MapSchoolClosureComponent,
+    MapLockdownComponent
   ]
 })
 
