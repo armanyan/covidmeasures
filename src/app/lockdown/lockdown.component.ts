@@ -50,7 +50,7 @@ export class LockdownComponent implements OnInit {
   public curfewImpactedPeople: number;
   public averageDaysMissed: number;
 
-  public lockdownTableUpdatedOn = 'April 11th, 2020';
+  public lockdownTableUpdatedOn: string;
 
   private lockdownData: any;
 
@@ -66,6 +66,7 @@ export class LockdownComponent implements OnInit {
     this.titleService.setTitle('Lockdown Statistics: Citizens Tracking Lockdown Measures');
     this.isMobile = window.innerWidth > 767 ? false : true;
     this.lockdownData = await this.http.get('https://covidmeasures-data.s3.amazonaws.com/lockdown.json').toPromise();
+    this.lockdownTableUpdatedOn = this.lockdownData.updatedOn;
     this.setTexts();
     this.setLockdownStatistics();
     this.setLockdownImpactStatistics();

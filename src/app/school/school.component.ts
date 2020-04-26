@@ -63,7 +63,7 @@ export class SchoolComponent implements OnInit {
 
   public schoolClosureFull = [];
   public schoolClosure = [];
-  public schoolClosureTableUpdatedOn = "April 9th, 2020";
+  public schoolClosureTableUpdatedOn: string;
 
   private covidByContinent = {
     "Europe": { "activeCases": 0, "deaths": 0 },
@@ -89,6 +89,7 @@ export class SchoolComponent implements OnInit {
     this.titleService.setTitle('School Closure: Citizens Tracking School Closures');
     this.isMobile = window.innerWidth > 767 ? false : true;
     this.schoolClosureData = await this.http.get('https://covidmeasures-data.s3.amazonaws.com/school_closure.json').toPromise();
+    this.schoolClosureTableUpdatedOn = this.schoolClosureData.updatedOn;
     this.setTexts();
     await this.setCurrentDeathEvolution();
     this.setLockdownImpactStatistics();
