@@ -85,14 +85,14 @@ export class CountryComponent implements OnInit {
     const dataSets = [
       {
         label: "Infection Cases",
-        backgroundColor: "rgba(52, 107, 186, 0.5)",
+        backgroundColor: "rgba(52, 107, 186, 0.3)",
         borderColor: "rgb(52, 107, 186)",
         fill: true,
         data: data.cases
       },
       {
         label: "Deaths",
-        backgroundColor: "rgba(206, 43, 51, 0.5)",
+        backgroundColor: "rgba(206, 43, 51, 0.3)",
         borderColor: "rgb(206, 43, 51)",
         fill: true,
         data: data.deaths

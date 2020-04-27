@@ -60,13 +60,10 @@ a:hover{
 }
 /* ----------------------------- CONTENT ------------------------------------*/
 
-/*categories names*/
-.mat-button.mat-primary, .mat-icon-button.mat-primary, .mat-stroked-button.mat-primary {
-  color: #f5f5f5;
-}
+
 /*categories names hover*/
 .mat-button.mat-primary:hover, .mat-icon-button.mat-primary:hover, .mat-stroked-button.mat-primary:hover {
-  color: #8eacd8;
+  color: #7594c2;
 }
 /*columns names*/
 .text-primary {

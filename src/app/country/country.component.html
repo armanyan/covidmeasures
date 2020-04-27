@@ -19,11 +19,11 @@
           </mat-select>
       </div>
     </div>
-  </div>
     <div class="col-md-4"></div>
+  </div>
+
 
     <div class="row">
-
       <div class="col-md-4">
         <div class="card">
           <div class="card-header card-header-success">
@@ -90,7 +90,7 @@
     </div>
 
   <div>
-    <p class="text-primary" style="margin:0"><b><a href="https://forms.gle/e6mXPravJkLtRWPq5" target="_blank">Is this not up to date?</a></b></p>
+    <p class="text-primary" style="margin:0"><b><a href="https://forms.gle/e6mXPravJkLtRWPq5" target="_blank">Is the information above not up-to-date?</a></b></p>
   </div>
 
   <hr>
@@ -130,7 +130,7 @@
           <ng-container *ngIf="isMobile">
             <mat-label>Per</mat-label>
             <mat-select [(value)]="currentOption" (selectionChange)="changeViewOption($event.value)">
-              <mat-option *ngFor="let option of options" [value]="option">
+              <mat-option *ngFor="let option of options" [value]="option" style="color:rgb(52, 107, 186)">
                 {{option}}
               </mat-option>
             </mat-select>
@@ -221,8 +221,8 @@
 
       <hr>
 
-      <h3><u>Tell us about other impacts of those measures in {{currentCountryName}}</u></h3>
-      <p>
+      <h4 style="text-align:center; font-size:1.3em; margin:4% 0;"><u>Tell us about other impacts of those measures in {{currentCountryName}}</u></h4>
+      <p style="margin-bottom:4%;">
         We want to hear both postive and negative impacts of those measures. Vote for the most
         impactful in your life and the life of others around you (coming soon).
       </p>
