@@ -6,83 +6,64 @@
       <h2 *ngIf=isMobile><u>{{titleService.getTitle()}}</u></h2>
     </div>
 
-
-    <div class="card col-md-4 center">
-      <div class="card-body">
-        <mat-label><strong>Choose a country</strong></mat-label>
+    <div class="card">
+      <div class="card-body card-country">
+        <div class="col-md-4 center">
           <mat-select [(value)]="countryView" (selectionChange)="countryChangeView($event.value)">
             <mat-option *ngFor="let country of countryList" [value]="country.value">
               {{ country.viewValue }}
             </mat-option>
           </mat-select>
+        </div>
       </div>
     </div>
-    <h4 class="mt-md-0 pt-md-0">Governement measures in response to COVID-19</h4>
-    <div class="row">
+  
+  <h3 class="mt-md-0 pt-md-0">Government measures in response to COVID-19</h3>
 
-      <div class="col-md-4">
-        <div class="card">
-          <div class="card-header card-header-success">
-            <h4 class="card-title ">School Closure</h4>
-          </div>
-          
-          <div class="card-body">
-            <table class="table">
-              <thead class="text-primary">
-                <th>Start Date</th>
-                <th>Current Status</th>
-              </thead>
-              <tbody>
-                <td class="left">{{schoolClosure.date}}</td>
-                <td class="center">{{schoolClosure.status}}</td>
-              </tbody>
-            </table>
-          </div>
-        </div>
+    <div class="form-row">
+      <div class="col">
+        <mat-form-field appearance="outline">
+          <div class="text-align">
+            <i class="material-icons">school</i>          
+            Educational Facilities Closed On:
+            <br>
+            <strong>{{ schoolClosure.date | date }}</strong>
+            <br>
+            <br>
+            <strong>{{ schoolClosure.status }}</strong>
+          </div>              
+          <input matInput disabled>
+        </mat-form-field>
       </div>
-
-      <div class="col-md-4">
-        <div class="card">
-          <div class="card-header card-header-success">
-            <h4 class="card-title ">Movement Restrictions</h4>
+      <div class="col">
+        <mat-form-field appearance="outline">
+          <div class="text-align">
+            <i class="material-icons">lock</i>
+            Movement Restrictions Started On:
+            <br>
+            <strong>{{ lockdown.date | date }}</strong>
+            <br>
+            <br>
+            <strong>{{ lockdown.status }}</strong>
           </div>
+          <input matInput disabled>
           
-          <div class="card-body">
-            <table class="table">
-              <thead class="text-primary">
-                <th>Start Date</th>
-                <th>Current Status</th>
-              </thead>
-              <tbody>
-                <td class="left">{{lockdown.date}}</td>
-                <td class="center">{{lockdown.status}}</td>
-              </tbody>
-            </table>
-          </div>
-        </div>
+        </mat-form-field>
       </div>
-
-      <div class="col-md-4">
-        <div class="card">
-          <div class="card-header card-header-success">
-            <h4 class="card-title ">Non-Essential Businesses Closure</h4>
+      <div class="col">
+        <mat-form-field appearance="outline">
+          <div class="text-align">
+            <i class="material-icons">store</i>
+            Businesses Closed On:
+            <br>
+            <strong>{{ businessClosure.date | date }}</strong>
+            <br>
+            <br>
+            <strong>{{ businessClosure.status }}</strong>
           </div>
-          
-          <div class="card-body">
-            <table class="table">
-              <thead class="text-primary">
-                <th>Start Date</th>
-                <th>Current Status</th>
-              </thead>
-              <tbody>
-                <td class="left">{{businessClosure.date}}</td>
-                <td class="center">{{businessClosure.status}}</td>
-              </tbody>
-            </table>
-          </div>
-        </div>
+          <input matInput disabled>
+        </mat-form-field>
       </div>
-        
     </div>
 
   <div>
@@ -231,7 +212,8 @@
             <a mat-raised-button class="nav-link float-right" type="button"
               color="primary" href="https://forms.gle/d1n55BQ8k1Lv9TiX8" target="_blank"
             >
-              <span>Add an Impact</span>
+              <i class="material-icons">school</i>
+              <span> Add an Impact</span>
             </a>
             </h3>
           </div>

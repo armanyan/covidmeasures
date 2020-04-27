@@ -76,7 +76,7 @@ export class SchoolComponent implements OnInit {
     "World": { "activeCases": 0, "deaths": 0 }
   }
 
-  public statsHeaders = ["Country", "Impacted Children", "Start", "Expected End", "Duration", "Closure Status"];
+  public statsHeaders = ["Country", "Impacted Children", "Start", "End", "Duration", "Closure Status"];
 
   private schoolClosureData: any;
 
@@ -217,7 +217,7 @@ export class SchoolComponent implements OnInit {
   private getCountryChildrenByAlpha(alpha3: string) {
     for (const country of this.schoolClosureData.countries) {
       if (country["alpha3"] === alpha3) {
-        return country.children_no_school*getChildrenNoSchool(alpha3);
+        return country.current_children_no_school*getChildrenNoSchool(alpha3);
       }
     }
   }
@@ -229,39 +229,22 @@ export class SchoolComponent implements OnInit {
     let children;
     let duration;
     for (const country of this.schoolClosureData.countries) {
-      children = this.getCountryChildrenByAlpha(country['alpha3']) 
+      children = this.getCountryChildrenByAlpha(country['alpha3']);
       duration = this.getMissedDaysPerCountry(country);
       this.schoolClosureFull.push({
         "name": getCountryNameByAlpha(country['alpha3']),
         "children": children === 0 ? '' : Math.floor(children),
         "start": this.getDate(country['start']),
-        "end": country['end'] !== 'N/A' ? this.getDate(country['end']) : this.getDate(country['expected_end']),
+        "end": country['end'] !== '' ? this.getDate(country['end']) : this.getDate(country['expected_end']),
         "duration": duration === 0 ? '' : duration,
-        "status": country['status'] === 'No Closure' ? 'No Closure' : this.getClosureStatus(country['start'], country['end'])
+        "status": country['status']
       })
     }
     this.schoolClosure = this.schoolClosureFull.slice(0, 10);
   }
 
   private getDate(date: string) {
-    return date === 'N/A' ? '' : (new Date(date)).toDateString();
-  }
-
-  private getClosureStatus(start: string, end: string) {
-    if (start === 'N/A') {
-      return 'No Data';
-    }
-    const startDate = new Date(start)
-    const today = new Date()
-    if (today < startDate) {
-      return 'Not Yet Started';
-    }
-
-    if (end === 'N/A') {
-      return 'Ongoing';
-    }
-    
-    return new Date(end) > today ? 'Ongoing' : 'Finished';
+    return date === '' ? '' : (new Date(date)).toDateString();
   }
 
   /**

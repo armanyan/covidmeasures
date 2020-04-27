@@ -13,7 +13,7 @@ export default {
 		"intermediate-region-code": ""
 	},
 	"ALA": {
-		"name": "\\u00c5land Islands",
+		"name": "Åland Islands",
 		"alpha-2": "AX",
 		"alpha-3": "ALA",
 		"country-code": "248",
@@ -689,7 +689,7 @@ export default {
 		"intermediate-region-code": "013"
 	},
 	"CIV": {
-		"name": "C\\u00f4te d'Ivoire",
+		"name": "Côte d'Ivoire",
 		"alpha-2": "CI",
 		"alpha-3": "CIV",
 		"country-code": "384",
@@ -728,7 +728,7 @@ export default {
 		"intermediate-region-code": "029"
 	},
 	"CUW": {
-		"name": "Cura\\u00e7ao",
+		"name": "Curaçao",
 		"alpha-2": "CW",
 		"alpha-3": "CUW",
 		"country-code": "531",
@@ -2340,7 +2340,7 @@ export default {
 		"intermediate-region-code": ""
 	},
 	"REU": {
-		"name": "R\\u00e9union",
+		"name": "Réunion",
 		"alpha-2": "RE",
 		"alpha-3": "REU",
 		"country-code": "638",
@@ -2392,7 +2392,7 @@ export default {
 		"intermediate-region-code": "014"
 	},
 	"BLM": {
-		"name": "Saint Barth\\u00e9lemy",
+		"name": "Saint Barthélemy",
 		"alpha-2": "BL",
 		"alpha-3": "BLM",
 		"country-code": "652",

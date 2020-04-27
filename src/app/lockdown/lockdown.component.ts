@@ -226,13 +226,6 @@ export class LockdownComponent implements OnInit {
     this.lockdownTable = this.lockdownTableFull.slice(0, 10);
   }
 
-  private formatRestriction(lockdown: string | boolean) {
-    if (lockdown === 'N/A') {
-      return '';
-    }
-    return lockdown ? 'Yes' : 'No';
-  }
-
   private setLockdownImpactStatistics() {
     for (const row of lockdownImpactData.default) {
       this.impactTable.push({
@@ -289,7 +282,10 @@ export class LockdownComponent implements OnInit {
   }
 
   private getDate(date: string) {
-    return date === '' ? '' : (new Date(date)).toDateString();
+    if (date === '') {
+      return '';
+    }
+    return date === null ? '' : (new Date(date)).toDateString();
   }
 
   /**
