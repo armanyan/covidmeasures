@@ -210,9 +210,6 @@ export class LockdownComponent implements OnInit {
     for (const country of this.lockdownData.countries) {
       duration = this.getMissedDaysPerCountry(country);
       population = getCountryPopulation(country['alpha3'])*country.current_population_impacted;
-      if (country.alpha3 === "ARM") {
-        console.log(country);
-      }
       this.lockdownTableFull.push({
         "name": country.name,
         "population": population > 0 ? population : '',
@@ -250,6 +247,7 @@ export class LockdownComponent implements OnInit {
   }
 
   private getEndDate(end: string, expectedEnd: string) {
+    // end and expected_end could be equal only to '' or a date
     if (end !== '') {
       return new Date(end).toDateString();
     }
