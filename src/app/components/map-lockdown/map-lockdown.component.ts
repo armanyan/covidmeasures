@@ -101,7 +101,7 @@ export class MapLockdownComponent implements OnInit {
         return this._div;
     };
 
-    const getTextColor = function(text:string) {
+    const getTextColor = function(text:string, curfew:boolean) {
       if (text) {
         const status = text.toLowerCase()
         let color:string;
@@ -110,7 +110,7 @@ export class MapLockdownComponent implements OnInit {
             color = '#66bb6a';
             break;
           case "lockdown":
-            color = '#e6595a';
+            curfew ? color = '#B55007' : color = '#e6595a' ;
             break;
           case "re-opening":
             color = '#ee7f08';
@@ -132,8 +132,10 @@ export class MapLockdownComponent implements OnInit {
     this.info.update = function (country:Country) {
         this._div.innerHTML = 
         '<h4>Lockdown Status</h4>' +  (country ?
-        `<b>${country.name}</b><br />
-        <span style="color:${getTextColor(country.status)}">${country.status}</span>`
+        `<b>${ country.name }</b><br />
+        <span style="color:${ getTextColor(country.status, country.curfew) }">
+          ${ country.curfew ? 'Curfew' : country.status }
+        </span>`
         : 'Hover over a Country');
     };
 
@@ -147,22 +149,20 @@ export class MapLockdownComponent implements OnInit {
       return  status == "No data" ? '#e3e3e3' :
               status == "No Lockdown" ? '#66bb6a' :
               status == "Lockdown" ? '#e6595a' :
+              status == "Curfew" ? '#B55007' :
               status == "Re-opening" ? '#ffeb3b' : 
               status == "Re-open"  ? '#17a2b8' :
                         '#e3e3e3';
     }
-    this.legend.onAdd = function (map) {
+    this.legend.onAdd = function () {
 
-        const div = L.DomUtil.create('div', 'info legend'),
-            status = ['No data', 'No Lockdown', 'Lockdown','Re-opening', 'Re-open'],
-            labels = [];
-
+        const div = L.DomUtil.create('div', 'info legend');
+        const status = ['No data', 'No Lockdown', 'Lockdown','Curfew','Re-opening', 'Re-open'];
         // loop through our density intervals and generate a label with a colored square for each interval
         for (let i = 0; i < status.length; i++) {
             div.innerHTML +=
                 '<i style="background:' + getColor(status[i]) + '"></i>    <strong>' + status[i] + '</strong> <br>';
         }
-
         return div;
     };
 
@@ -189,16 +189,16 @@ export class MapLockdownComponent implements OnInit {
   }
   private getFillColor(country: Country) {
     if (country) {
-      if(country.status.toLowerCase() == "no data") return '#e3e3e3';
-      if(country.status.toLowerCase() == "no lockdown") return '#66bb6a';
-      if(country.status.toLowerCase() == "lockdown") return '#e6595a';
+      const status = country.status.toLowerCase();
+      const curfew = country.curfew;
 
-      if(
-        country.status.toLowerCase() == "re-openning" || 
-        country.status.toLowerCase() == "re-opening"
-        ) return '#ffeb3b';
-      if(country.status.toLowerCase() == "re-open") return '#17a2b8';
-      else return '#e3e3e3'
+      if(status == "no data") return '#e3e3e3';
+      if(status == "no lockdown") return '#66bb6a';
+      if(status == "lockdown" && !curfew) return '#e6595a';
+      if(status == "lockdown" && curfew) return '#B55007';
+      if(status == "re-openning" || status == "re-opening") return '#ffeb3b';
+      if(status == "re-open") return '#17a2b8';
+      else return '#e3e3e3';
     }
     return '#e3e3e3'
   }
