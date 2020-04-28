@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import Chart from 'chart.js';
 import { HttpClient } from '@angular/common/http';
+import { Router, ActivatedRoute } from "@angular/router";
+import {Location} from '@angular/common'; 
 
 import { mobileWidth, monthNames, createLineChart, getCountryNameByAlpha, getAlpha3FromAlpha2,
          getChildrenNoSchool, getCountryPopulation } from '../utils';
@@ -46,7 +48,10 @@ export class CountryComponent implements OnInit {
 
   constructor(
     private titleService: Title,
-    private http: HttpClient
+    private http: HttpClient,
+    private router: Router,
+    private activatedRoute: ActivatedRoute,
+    private location: Location
   ) { }
 
   async ngOnInit() {
@@ -61,11 +66,17 @@ export class CountryComponent implements OnInit {
 
     this.evolutionUpdatedOn = this.evolution.dates[this.evolution.dates.length - 1];
 
-    try {
-      const ip = await this.http.get('https://json.geoiplookup.io/api').toPromise();
-      this.countryView = getAlpha3FromAlpha2((ip as any).country_code);
-    } catch (_err) {
-      this.countryView = 'USA';
+    const alpha3 = this.activatedRoute.snapshot.paramMap.get('alpha3');
+    if (alpha3) {
+      this.countryView = alpha3
+    } else {
+      try {
+        const ip = await this.http.get('https://json.geoiplookup.io/api').toPromise();
+        this.countryView = getAlpha3FromAlpha2((ip as any).country_code);
+      } catch (_err) {
+        this.countryView = 'USA';
+      }
+      this.location.go('/country/'+this.countryView)
     }
     this.currentCountryName = getCountryNameByAlpha(this.countryView);
 
@@ -196,6 +207,7 @@ export class CountryComponent implements OnInit {
   }
 
   public countryChangeView(value: string) {
+    this.location.go('/country/'+value) // we change the url: /country/value:
     this.countryView = value;
     this.currentCountryName = getCountryNameByAlpha(value);
     this.setStatsAndStatuses(value);

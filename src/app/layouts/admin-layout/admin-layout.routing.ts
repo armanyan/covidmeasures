@@ -14,7 +14,8 @@ import { AboutUsComponent } from '../../about-us/about-us.component';
 
 
 export const AdminLayoutRoutes: Routes = [
-  { path: 'country', component: CountryComponent },
+  { path: 'country', component: CountryComponent, pathMatch: 'full' },
+  { path: 'country/:alpha3', component: CountryComponent },
   { path: 'lockdown', component: LockdownComponent },
   { path: 'school', component: SchoolComponent },
   { path: 'covid', component: CovidComponent },
