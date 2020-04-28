@@ -3,6 +3,7 @@ import * as L from 'leaflet';
 import { MarkerService } from '../../_service/marker.service';
 import { ShapeService } from '../../_service/shape.service';
 import { HttpClient } from '@angular/common/http';
+import { MapTilesService } from '../../_service/map-tiles.service';
 
 interface Country{
   name: string,
@@ -51,7 +52,8 @@ export class MapLockdownComponent implements OnInit {
   constructor(
     private markerService: MarkerService, 
     private shapeService: ShapeService,
-    private http: HttpClient
+    private http: HttpClient,
+    private mapTiles: MapTilesService
     ) {
      
     }
@@ -86,12 +88,7 @@ export class MapLockdownComponent implements OnInit {
       zoom: 3
     });
     // we add tiles for our map
-    const tiles = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      maxZoom: 19,
-      attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-    });
-
-    tiles.addTo(this.map);  
+    this.mapTiles.addTiles(this.map)
   }
 
   private addInfoBox(){
@@ -122,7 +119,7 @@ export class MapLockdownComponent implements OnInit {
             color = '#ee7f08';
             break;
           case "re-open":
-            color = '#1898ac';
+            color = '#17a2b8';
             break;
           default:
             color = '#555';
@@ -151,7 +148,7 @@ export class MapLockdownComponent implements OnInit {
               status == "No Lockdown" ? '#66bb6a' :
               status == "Lockdown" ? '#e6595a' :
               status == "Re-opening" ? '#ffeb3b' : 
-              status == "Re-open"  ? '#1898ac' :
+              status == "Re-open"  ? '#17a2b8' :
                         '#e3e3e3';
     }
     this.legend.onAdd = function (map) {
@@ -200,7 +197,7 @@ export class MapLockdownComponent implements OnInit {
         country.status.toLowerCase() == "re-openning" || 
         country.status.toLowerCase() == "re-opening"
         ) return '#ffeb3b';
-      if(country.status.toLowerCase() == "re-open") return '#1898ac';
+      if(country.status.toLowerCase() == "re-open") return '#17a2b8';
       else return '#e3e3e3'
     }
     return '#e3e3e3'

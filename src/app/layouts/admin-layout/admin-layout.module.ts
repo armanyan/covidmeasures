@@ -28,6 +28,7 @@ import { MapLockdownComponent } from '../../components/map-lockdown/map-lockdown
 import { MarkerService } from '../../_service/marker.service';
 import { PopUpService } from '../../_service/pop-up.service';
 import { ShapeService } from '../../_service/shape.service';
+import { MapTilesService } from '../../_service/map-tiles.service';
 
 @NgModule({
   imports: [
@@ -47,7 +48,8 @@ import { ShapeService } from '../../_service/shape.service';
   providers: [
     MarkerService,
     PopUpService,
-    ShapeService
+    ShapeService,
+    MapTilesService
   ],
   declarations: [
     CountryComponent,
