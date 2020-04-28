@@ -229,6 +229,11 @@ export class MapSchoolClosureComponent implements OnInit {
           <h6>
             <strong>${country.name}</strong>
           </h6>
+          <div class="d-flex justify-content-center">
+            <a href="#/country/${country.alpha3}">
+              <button class="mat-raised-button mat-button-base mat-primary text-light">More Details</button>
+            </a>
+          </div>
         </div>
       `;
       }
