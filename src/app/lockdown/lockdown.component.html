@@ -5,13 +5,14 @@
     <div layout-align="end end">
       <h2 *ngIf="isMobile"><u>{{titleService.getTitle()}}</u></h2>
     </div>
-
+<div>
     <p>
       {{ lockdown_intro_1 }}
     </p>
-
-
-    <div class="col-md-7">
+</div>
+<div class="row">
+<div class="col-md-1"></div>
+    <div class="col-md-10">
       <div class="card">
         <div class="card-header card-header-success">
           <h3 class="card-title ">Lockdown Measures Overview</h3>
@@ -83,8 +84,10 @@
 
       </div>
     </div>
+    <div class="col-md-1"></div>
+  </div>
 
-    <p>
+    <p style="margin-top:2%">
       {{ lockdown_tab_1_below }}
     </p>
 
@@ -202,14 +205,14 @@
 
     </div>
 
-    <p>
+    <p style="margin-top:2%">
       {{ lockdown_tab_2_below}}
     </p>
 
 
     <hr>
 
-    <h3>By Countries</h3>
+    <h3 style="margin-bottom:5%">By Countries</h3>
 
     <div class="col-md-12">
       <div class="card">
@@ -217,8 +220,8 @@
         <div class="card-header card-header-success">
           <h3 class="card-title">Detailed View For Each Country</h3>
           <mat-form-field>
-            <mat-label>Search by Country</mat-label>
-            <input matInput (keyup)="applyFilter($event)"
+            <mat-label style="color: rgb(218, 205, 205);">Search by Country</mat-label>
+            <input  matInput (keyup)="applyFilter($event)"
               placeholder="United States of America, France, China..."
             >
           </mat-form-field>
@@ -243,7 +246,7 @@
                   <td>{{ row.other }}</td>
                   <td>{{ row.start }}</td>
                   <td>{{ row.end }}</td>
-                  <td>{{ row.duration }} days</td>
+                  <td>{{ row.duration }}</td>
                   <td>{{ row.status }}</td>
                 </tr>
               </tbody>
@@ -266,7 +269,7 @@
 
     <hr>
 
-    <h3>Lockdown Impacts</h3>
+    <h3 style="margin-bottom:5%">Lockdown Impacts</h3>
 
     <div class="col-md-12">
       <div class="card">
@@ -316,7 +319,7 @@
 
     <hr>
 
-    <p>
+    <p style="margin-top:2%">
       The status of lockdown measures worldwide was made possible thanks to the community of <b>CovidMeasures</b>.
       Please help to keep this database up-to-date. <a href="https://forms.gle/DmmnetQ76by64hF68" target="_blank">Join our team </a>or
       just <a href="https://forms.gle/TuLNu54Xr6vfYedq5" target="_blank">contribute</a>

@@ -315,7 +315,7 @@
         @include set-background-color-button($brand-warning);
     }
     &[data-color="danger"]{
-        @include set-background-color-button($brand-danger);
+        @include set-background-color-button($sidebar-new);
     }
     &[data-color="rose"]{
         @include set-background-color-button($brand-rose);
@@ -327,7 +327,7 @@
     }
 
     &[data-background-color="red"]{
-        @include sidebar-background-color($brand-danger, $white-color);
+        @include sidebar-background-color($sidebar-new, $white-color);
 
         .user,
         .logo,

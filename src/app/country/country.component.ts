@@ -36,7 +36,7 @@ export class CountryComponent implements OnInit {
 
   public evolutionUpdatedOn: string;
 
-  public impactHeaders = [];
+  public impactHeaders = ['Measure', 'Impact', 'Description', 'Source'];
   public impactTable = [];
 
   private evolution: any;
@@ -56,6 +56,7 @@ export class CountryComponent implements OnInit {
     this.evolution = (await this.http.get('https://covidmeasures-data.s3.amazonaws.com/evolution.json').toPromise() as any);
     this.schoolClosureData = (await this.http.get('https://covidmeasures-data.s3.amazonaws.com/school_closure.json').toPromise() as any);
     this.lockdownData = (await this.http.get('https://covidmeasures-data.s3.amazonaws.com/lockdown.json').toPromise() as any);
+    this.setImpactTable();
     this.setActiveCases();
 
     this.evolutionUpdatedOn = this.evolution.dates[this.evolution.dates.length - 1];
@@ -85,15 +86,15 @@ export class CountryComponent implements OnInit {
     const dataSets = [
       {
         label: "Infection Cases",
-        backgroundColor: "#3f51b552",
-        borderColor: "#3399FF",
+        backgroundColor: "rgba(52, 107, 186, 0.3)",
+        borderColor: "rgb(52, 107, 186)",
         fill: true,
         data: data.cases
       },
       {
         label: "Deaths",
-        backgroundColor: "#f443365c",
-        borderColor: "#f44336",
+        backgroundColor: "rgba(206, 43, 51, 0.3)",
+        borderColor: "rgb(206, 43, 51)",
         fill: true,
         data: data.deaths
       }
@@ -237,5 +238,14 @@ export class CountryComponent implements OnInit {
     }
     this.setStatsAndStatuses(this.countryView);
    }
+
+  private async setImpactTable() {
+    const data = (await this.http.get('https://covidmeasures-data.s3.amazonaws.com/country_impacts.json').toPromise() as any);
+    for (const impact of data) {
+      if (impact.alpha3 === 'WRL' || impact.alpha3 === this.countryView) {
+        this.impactTable.push(impact);
+      }
+    }
+  }
 
 }

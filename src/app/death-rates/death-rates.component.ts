@@ -94,16 +94,16 @@ export class DeathRatesComponent implements OnInit {
     this.isMobile = window.innerWidth > mobileWidth ? false : true;
     this.setText();
     await this.setCurrentDeathEvolution()
-    this.since1st.backgroundColor = totalDeaths.default.data.map(() => { return '#1f8ef1'; })
-    this.yesterday.backgroundColor = totalDeaths.default.data.map(() => { return '#1f8ef1'; })
+    this.since1st.backgroundColor = totalDeaths.default.data.map(() => { return '#346bba'; })
+    this.yesterday.backgroundColor = totalDeaths.default.data.map(() => { return '#346bba'; })
     this.composeData();
 
     const totalDeathsCTX = (document.getElementById("DeathCausesChart") as any).getContext("2d");
     this.chart = createBarChart(totalDeathsCTX, this.since1st.labels, this.since1st.data, this.since1st.backgroundColor);
 
     // covid death estimation covidDeathEstimationChart
-    const backgroundColor = ageRanges.map(() => '#1f8ef1')
-    const backgroundColorCovid = ageRanges.map(() => 'red')
+    const backgroundColor = ageRanges.map(() => '#346bba')
+    const backgroundColorCovid = ageRanges.map(() => '#ce2b33')
     const estimatedDeaths = this.estimateCovidDeaths('World', true);
     const deathsEstimationCTX = (document.getElementById("covidDeathEstimationChart") as any).getContext("2d");
     this.deathEstimationChart = createBarChart(
@@ -111,7 +111,7 @@ export class DeathRatesComponent implements OnInit {
     );
 
     // covid-19 deaths vs other death causes
-    const covidBackgroundColor = ageRanges.map(() => 'red')
+    const covidBackgroundColor = ageRanges.map(() => '#ce2b33')
     const deathsCausesCTX = (document.getElementById("deathCausesChart") as any).getContext("2d");
     this.deathCausesChart = createStackedBarChart(
       deathsCausesCTX, ageRanges, this.getAllCausesDeaths(), backgroundColor, "other causes",
@@ -285,7 +285,7 @@ export class DeathRatesComponent implements OnInit {
 
     insertToArray(tolls.data, coronaDeaths, insertIndex);
     insertToArray(tolls.labels, 'COVID-19', insertIndex);
-    insertToArray(tolls.backgroundColor, 'red', insertIndex);
+    insertToArray(tolls.backgroundColor, '#ce2b33', insertIndex);
   }
 
 }
