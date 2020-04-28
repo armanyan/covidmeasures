@@ -9,6 +9,12 @@
   background: $white-color;
   width: 100%;
 
+    .card-country {
+      background: $green-400;
+      font-size: large;
+      font-weight: 500;
+    }
+
     .card-category:not([class*="text-"]) {
         color: $gray-color;
     }

@@ -3,6 +3,7 @@ import * as L from 'leaflet';
 import { MarkerService } from '../../_service/marker.service';
 import { ShapeService } from '../../_service/shape.service';
 import { HttpClient } from '@angular/common/http';
+import { MapTilesService } from '../../_service/map-tiles.service';
 
 interface Country{
   name: string,
@@ -17,7 +18,7 @@ interface Country{
   current_coverage: string,
   historical_population_impacted: number,
   current_population_impacted: number,
-  historical_secerity: string,
+  historical_severity: string,
   current_severity: string,
   movement_restrictions: boolean,
   curfew: boolean,
@@ -30,10 +31,26 @@ interface Country{
   start_reopening_business: string,
   end_business_closure: string,
   status_business: string,
-  experition_date: string,
+  expiration_date: string,
   last_update_date: string,
   source: string,
   comments: string
+}
+
+const colors = {
+  "no_lockdown": "#66bb6a",
+  "lockdown": "#e6595a",
+  "curfew": "#B55007",
+  "re-opening": "#ee7f08",
+  "re-openning": "#ee7f08",
+  "re-open": "#17a2b8",
+  "default": "#555",
+  "No data": "#e3e3e3",
+  "No Lockdown": "#66bb6a",
+  "Lockdown": "#e6595a",
+  "Curfew": "#B55007",
+  "Re-opening": "#ffeb3b",
+  "Re-open": "#17a2b8"
 }
 
 @Component({
@@ -51,7 +68,8 @@ export class MapLockdownComponent implements OnInit {
   constructor(
     private markerService: MarkerService, 
     private shapeService: ShapeService,
-    private http: HttpClient
+    private http: HttpClient,
+    private mapTiles: MapTilesService
     ) {
      
     }
@@ -86,12 +104,7 @@ export class MapLockdownComponent implements OnInit {
       zoom: 3
     });
     // we add tiles for our map
-    const tiles = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      maxZoom: 19,
-      attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-    });
-
-    tiles.addTo(this.map);  
+    this.mapTiles.addTiles(this.map)
   }
 
   private addInfoBox(){
@@ -104,39 +117,20 @@ export class MapLockdownComponent implements OnInit {
         return this._div;
     };
 
-    const getTextColor = function(text:string) {
+    const getTextColor = function(text:string, curfew:boolean) {
       if (text) {
         const status = text.toLowerCase()
-        let color:string;
-        switch (status as any) {
-          case "no lockdown":
-            color = '#66bb6a';
-            break;
-          case "lockdown":
-            color = '#e6595a';
-            break;
-          case "re-opening":
-            color = '#ee7f08';
-            break;
-          case "re-openning":
-            color = '#ee7f08';
-            break;
-          case "re-open":
-            color = '#1898ac';
-            break;
-          default:
-            color = '#555';
-            break;
-        }
-        return color
+        return colors[status];
       }
     };
     // method that we will use to update the control based on feature properties passed
     this.info.update = function (country:Country) {
         this._div.innerHTML = 
         '<h4>Lockdown Status</h4>' +  (country ?
-        `<b>${country.name}</b><br />
-        <span style="color:${getTextColor(country.status)}">${country.status}</span>`
+        `<b>${ country.name }</b><br />
+        <span style="color:${ getTextColor(country.status, country.curfew) }">
+          ${ country.curfew ? 'Curfew' : country.status }
+        </span>`
         : 'Hover over a Country');
     };
 
@@ -147,25 +141,20 @@ export class MapLockdownComponent implements OnInit {
     // we add legends to our map
     this.legend = L.control({position: 'bottomright'});
     const getColor = function(status) {
-      return  status == "No data" ? '#e3e3e3' :
-              status == "No Lockdown" ? '#66bb6a' :
-              status == "Lockdown" ? '#e6595a' :
-              status == "Re-opening" ? '#ffeb3b' : 
-              status == "Re-open"  ? '#1898ac' :
-                        '#e3e3e3';
+      if (colors.hasOwnProperty(status)) {
+        return colors[status]
+      }
+      return colors['No Data'];
     }
-    this.legend.onAdd = function (map) {
+    this.legend.onAdd = function () {
 
-        const div = L.DomUtil.create('div', 'info legend'),
-            status = ['No data', 'No Lockdown', 'Lockdown','Re-opening', 'Re-open'],
-            labels = [];
-
+        const div = L.DomUtil.create('div', 'info legend');
+        const status = ['No data', 'No Lockdown', 'Lockdown','Curfew','Re-opening', 'Re-open'];
         // loop through our density intervals and generate a label with a colored square for each interval
         for (let i = 0; i < status.length; i++) {
             div.innerHTML +=
                 '<i style="background:' + getColor(status[i]) + '"></i>    <strong>' + status[i] + '</strong> <br>';
         }
-
         return div;
     };
 
@@ -192,16 +181,16 @@ export class MapLockdownComponent implements OnInit {
   }
   private getFillColor(country: Country) {
     if (country) {
-      if(country.status.toLowerCase() == "no data") return '#e3e3e3';
-      if(country.status.toLowerCase() == "no lockdown") return '#66bb6a';
-      if(country.status.toLowerCase() == "lockdown") return '#e6595a';
+      const status = country.status.toLowerCase();
+      const curfew = country.curfew;
 
-      if(
-        country.status.toLowerCase() == "re-openning" || 
-        country.status.toLowerCase() == "re-opening"
-        ) return '#ffeb3b';
-      if(country.status.toLowerCase() == "re-open") return '#1898ac';
-      else return '#e3e3e3'
+      if(status == "no data") return '#e3e3e3';
+      if(status == "no lockdown") return '#66bb6a';
+      if(status == "lockdown" && !curfew) return '#e6595a';
+      if(status == "lockdown" && curfew) return '#B55007';
+      if(status == "re-openning" || status == "re-opening") return '#ffeb3b';
+      if(status == "re-open") return '#17a2b8';
+      else return '#e3e3e3';
     }
     return '#e3e3e3'
   }
@@ -236,6 +225,11 @@ export class MapLockdownComponent implements OnInit {
         <h6>
           <strong>${country.name}</strong>
         </h6>
+        <div class="d-flex justify-content-center">
+          <a href="#/country/${country.alpha3}">
+            <button class="mat-raised-button mat-button-base mat-primary text-light">More Details</button>
+          </a>
+        </div>
       </div>
     `;
     }

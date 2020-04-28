@@ -3,7 +3,7 @@ import Chart from 'chart.js';
 import { Title } from '@angular/platform-browser';
 import { HttpClient } from '@angular/common/http';
 
-import { getCountryNameByAlpha, getCountryPopulation, getRegionByAlpha, createPieChart } from '../utils';
+import { mobileWidth, getCountryPopulation, getRegionByAlpha, createPieChart } from '../utils';
 import * as lockdownImpactData from '../data/lockdown_impacts';
 import * as text from '../data/texts/lockdown';
 
@@ -64,7 +64,7 @@ export class LockdownComponent implements OnInit {
 
   async ngOnInit() {
     this.titleService.setTitle('Lockdown Statistics: Citizens Tracking Lockdown Measures');
-    this.isMobile = window.innerWidth > 767 ? false : true;
+    this.isMobile = window.innerWidth > mobileWidth ? false : true;
     this.lockdownData = await this.http.get('https://covidmeasures-data.s3.amazonaws.com/lockdown.json').toPromise();
     this.lockdownTableUpdatedOn = this.lockdownData.updatedOn;
     this.setTexts();
@@ -212,11 +212,11 @@ export class LockdownComponent implements OnInit {
       population = getCountryPopulation(country['alpha3'])*country.current_population_impacted;
       this.lockdownTableFull.push({
         "name": country.name,
-        "population": population,
-        "duration": duration === 0 ? 0 : duration,
-        "lockdown": country.movement_restrictions ? 'Yes' : 'No',
-        "curfew": country.curfew ? 'Yes' : 'No',
-        "business": country.status_business === 'No Data' ? '' : country.status_business,
+        "population": population > 0 ? population : '',
+        "duration": duration === 0 ? "" : duration+" days",
+        "lockdown": this.format_restriction(country.movement_restrictions),
+        "curfew": this.format_restriction(country.curfew),
+        "business": this.format_restriction(country.status_business),
         "other": this.getOtherMeasures(country),
         "start": this.getDate(country['start']),
         "end": this.getEndDate(country['end'], country['expected_end']),
@@ -226,11 +226,11 @@ export class LockdownComponent implements OnInit {
     this.lockdownTable = this.lockdownTableFull.slice(0, 10);
   }
 
-  private formatRestriction(lockdown: string | boolean) {
-    if (lockdown === 'N/A') {
-      return '';
+  private format_restriction(restriction: boolean|string) {
+    if (restriction === '' || restriction === 'No Data') {
+      return ''
     }
-    return lockdown ? 'Yes' : 'No';
+    return restriction ? 'Yes' : 'No';
   }
 
   private setLockdownImpactStatistics() {
@@ -247,6 +247,7 @@ export class LockdownComponent implements OnInit {
   }
 
   private getEndDate(end: string, expectedEnd: string) {
+    // end and expected_end could be equal only to '' or a date
     if (end !== '') {
       return new Date(end).toDateString();
     }
@@ -289,7 +290,10 @@ export class LockdownComponent implements OnInit {
   }
 
   private getDate(date: string) {
-    return date === '' ? '' : (new Date(date)).toDateString();
+    if (date === '') {
+      return '';
+    }
+    return date === null ? '' : (new Date(date)).toDateString();
   }
 
   /**

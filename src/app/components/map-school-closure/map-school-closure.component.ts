@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import * as L from 'leaflet';
 import { MarkerService } from '../../_service/marker.service';
 import { ShapeService } from '../../_service/shape.service';
+import { MapTilesService } from '../../_service/map-tiles.service';
 import { HttpClient } from '@angular/common/http';
 
 interface Country {
@@ -36,7 +37,8 @@ export class MapSchoolClosureComponent implements OnInit {
   constructor(
     private markerService: MarkerService, 
     private shapeService: ShapeService,
-    private http: HttpClient
+    private http: HttpClient,
+    private mapTiles: MapTilesService
     ) {
      
     }
@@ -73,12 +75,7 @@ export class MapSchoolClosureComponent implements OnInit {
         zoom: 3
       });
       // we add tiles for our map
-      const tiles = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        maxZoom: 19,
-        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-      });
-
-      tiles.addTo(this.map);  
+      this.mapTiles.addTiles(this.map)
     }
 
     private addInfoBox(){
@@ -232,6 +229,11 @@ export class MapSchoolClosureComponent implements OnInit {
           <h6>
             <strong>${country.name}</strong>
           </h6>
+          <div class="d-flex justify-content-center">
+            <a href="#/country/${country.alpha3}">
+              <button class="mat-raised-button mat-button-base mat-primary text-light">More Details</button>
+            </a>
+          </div>
         </div>
       `;
       }
