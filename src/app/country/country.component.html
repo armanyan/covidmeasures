@@ -7,7 +7,7 @@
 
     <div class="card">
       <div class="card-body card-country">
-        <div class="col-md-4 center">
+        <div class="col-md-3 center">
           <mat-select [(value)]="countryView" (selectionChange)="countryChangeView($event.value)">
             <mat-option *ngFor="let country of countryList" [value]="country.value">
               {{ country.viewValue }}
