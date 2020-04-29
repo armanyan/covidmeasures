@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
-import Chart from 'chart.js';
+import { Chart } from 'chart.js';
 import { HttpClient } from '@angular/common/http';
 import { Router, ActivatedRoute } from "@angular/router";
-import {Location} from '@angular/common'; 
+import { Location } from '@angular/common'; 
+import { MatSelect } from '@angular/material/select';
 
 import { mobileWidth, monthNames, createLineChart, getCountryNameByAlpha, getAlpha3FromAlpha2,
          getChildrenNoSchool, getCountryPopulation } from '../utils';
@@ -38,8 +39,9 @@ export class CountryComponent implements OnInit {
 
   public evolutionUpdatedOn: string;
 
-  public impactHeaders = [];
+  public impactHeaders = ['Measure', 'Impact', 'Description', 'Source'];
   public impactTable = [];
+  private impactData: any;
 
   private evolution: any;
   private schoolClosureData: any;
@@ -61,23 +63,11 @@ export class CountryComponent implements OnInit {
     this.evolution = (await this.http.get('https://covidmeasures-data.s3.amazonaws.com/evolution.json').toPromise() as any);
     this.schoolClosureData = (await this.http.get('https://covidmeasures-data.s3.amazonaws.com/school_closure.json').toPromise() as any);
     this.lockdownData = (await this.http.get('https://covidmeasures-data.s3.amazonaws.com/lockdown.json').toPromise() as any);
+    this.impactData = (await this.http.get('https://covidmeasures-data.s3.amazonaws.com/country_impacts.json').toPromise() as any);
+    this.setImpactTable();
     this.setActiveCases();
 
     this.evolutionUpdatedOn = this.evolution.dates[this.evolution.dates.length - 1];
-
-    const alpha3 = this.activatedRoute.snapshot.paramMap.get('alpha3');
-    if (alpha3) {
-      this.countryView = alpha3
-    } else {
-      try {
-        const ip = await this.http.get('https://json.geoiplookup.io/api').toPromise();
-        this.countryView = getAlpha3FromAlpha2((ip as any).country_code);
-      } catch (_err) {
-        this.countryView = 'USA';
-      }
-      this.location.go('/country/'+this.countryView)
-    }
-    this.currentCountryName = getCountryNameByAlpha(this.countryView);
 
     this.setStatsAndStatuses(this.countryView);
 
@@ -119,6 +109,21 @@ export class CountryComponent implements OnInit {
         true,
         false // we make aspect ratio to false this prevents the chart from growing too much
        );
+    
+    const alpha3 = this.activatedRoute.snapshot.paramMap.get('alpha3');
+    if (alpha3) {
+      // this.countryView = alpha3;
+      this.countryChangeView(alpha3);
+    } else {
+      try {
+        const ip = await this.http.get('https://json.geoiplookup.io/api').toPromise();
+        this.countryView = getAlpha3FromAlpha2((ip as any).country_code);
+      } catch (_err) {
+        this.countryView = 'USA';
+      }
+      this.location.go('/country/'+this.countryView)
+    }
+    this.currentCountryName = getCountryNameByAlpha(this.countryView);
   }
 
   private getDataSets(activeCases: number[], deaths: number[], labels: string[]) {
@@ -169,6 +174,8 @@ export class CountryComponent implements OnInit {
 
     this.countryImpactedPeople = Math.floor((getCountryPopulation(alpha3)*lockdownCountry.current_population_impacted)/this.statsDivider);
     this.countryCumulatedYears = (this.getMissedDaysPerCountry(lockdownCountry)*affectedChildren) / (365*this.statsDivider);
+
+    this.setImpactTable();
   }
 
   /**
@@ -249,5 +256,14 @@ export class CountryComponent implements OnInit {
     }
     this.setStatsAndStatuses(this.countryView);
    }
+
+  private async setImpactTable() {
+    this.impactTable = [];
+    for (const impact of this.impactData) {
+      if (impact.alpha3 === 'WRL' || impact.alpha3 === this.countryView) {
+        this.impactTable.push(impact);
+      }
+    }
+  }
 
 }

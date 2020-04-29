@@ -18,7 +18,7 @@ interface Country{
   current_coverage: string,
   historical_population_impacted: number,
   current_population_impacted: number,
-  historical_secerity: string,
+  historical_severity: string,
   current_severity: string,
   movement_restrictions: boolean,
   curfew: boolean,
@@ -31,10 +31,26 @@ interface Country{
   start_reopening_business: string,
   end_business_closure: string,
   status_business: string,
-  experition_date: string,
+  expiration_date: string,
   last_update_date: string,
   source: string,
   comments: string
+}
+
+const colors = {
+  "no_lockdown": "#66bb6a",
+  "lockdown": "#e6595a",
+  "curfew": "#B55007",
+  "re-opening": "#ee7f08",
+  "re-openning": "#ee7f08",
+  "re-open": "#17a2b8",
+  "default": "#555",
+  "No data": "#e3e3e3",
+  "No Lockdown": "#66bb6a",
+  "Lockdown": "#e6595a",
+  "Curfew": "#B55007",
+  "Re-opening": "#ffeb3b",
+  "Re-open": "#17a2b8"
 }
 
 @Component({
@@ -104,28 +120,7 @@ export class MapLockdownComponent implements OnInit {
     const getTextColor = function(text:string, curfew:boolean) {
       if (text) {
         const status = text.toLowerCase()
-        let color:string;
-        switch (status as any) {
-          case "no lockdown":
-            color = '#66bb6a';
-            break;
-          case "lockdown":
-            curfew ? color = '#B55007' : color = '#e6595a' ;
-            break;
-          case "re-opening":
-            color = '#ee7f08';
-            break;
-          case "re-openning":
-            color = '#ee7f08';
-            break;
-          case "re-open":
-            color = '#17a2b8';
-            break;
-          default:
-            color = '#555';
-            break;
-        }
-        return color
+        return colors[status];
       }
     };
     // method that we will use to update the control based on feature properties passed
@@ -146,13 +141,10 @@ export class MapLockdownComponent implements OnInit {
     // we add legends to our map
     this.legend = L.control({position: 'bottomright'});
     const getColor = function(status) {
-      return  status == "No data" ? '#e3e3e3' :
-              status == "No Lockdown" ? '#66bb6a' :
-              status == "Lockdown" ? '#e6595a' :
-              status == "Curfew" ? '#B55007' :
-              status == "Re-opening" ? '#ffeb3b' : 
-              status == "Re-open"  ? '#17a2b8' :
-                        '#e3e3e3';
+      if (colors.hasOwnProperty(status)) {
+        return colors[status]
+      }
+      return colors['No Data'];
     }
     this.legend.onAdd = function () {
 
