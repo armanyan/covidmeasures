@@ -25,6 +25,8 @@ export class CountryComponent implements OnInit {
   public currentCountryName = "United States of America";
   public countryAllCasesCTX: Chart;
   public countryList: Country[];
+
+  public range: {from:string, to:string} = {from: 'default', to: 'default'};
   
   public schoolClosure = {status: 'No Data', date: '', impacted_children: 0, years: 0};
   public lockdown = {status: 'No Data', date: ''};
@@ -127,9 +129,9 @@ export class CountryComponent implements OnInit {
   }
 
   private getDataSets(activeCases: number[], deaths: number[], labels: string[]) {
-    const shortenCases = [...activeCases];
-    const shortenDeaths = [...deaths];
-    const shortenLabels = [...labels];
+    let shortenCases = [...activeCases];
+    let shortenDeaths = [...deaths];
+    let shortenLabels = [...labels];
     // remove today's data since in the other parts we use data from different sources,
     // and incoherence would be obvious
     shortenCases.pop(); shortenDeaths.pop(); shortenLabels.pop();
@@ -140,6 +142,15 @@ export class CountryComponent implements OnInit {
       } else {
         break;
       }
+    }
+
+    if (this.range.from === 'default' && this.range.to === 'default') {
+      // get the index of the first death.
+      // the graph will start at the first death
+      const firtDeathIndex = shortenDeaths.findIndex(x => x)
+      shortenCases = shortenCases.slice(firtDeathIndex, shortenCases.length);
+      shortenDeaths = shortenDeaths.slice(firtDeathIndex, shortenDeaths.length);
+      shortenLabels = shortenLabels.slice(firtDeathIndex, shortenLabels.length);
     }
     return { "cases": shortenCases, "deaths": shortenDeaths, "labels": shortenLabels }
   }
