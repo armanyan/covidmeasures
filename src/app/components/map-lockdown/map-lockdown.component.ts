@@ -227,7 +227,7 @@ export class MapLockdownComponent implements OnInit {
         </h6>
         <div class="d-flex justify-content-center">
           <a href="#/country/${country.alpha3}">
-            <button class="mat-raised-button mat-button-base mat-primary text-light">More Details</button>
+            <button class="mat-raised-button mat-button-base mat-primary text-light">Learn More</button>
           </a>
         </div>
       </div>
