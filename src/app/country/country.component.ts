@@ -4,7 +4,9 @@ import { Chart } from 'chart.js';
 import { HttpClient } from '@angular/common/http';
 import { Router, ActivatedRoute } from "@angular/router";
 import { Location } from '@angular/common'; 
-import { MatSelect } from '@angular/material/select';
+import moment from 'moment'
+
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 import { mobileWidth, monthNames, createLineChart, getCountryNameByAlpha, getAlpha3FromAlpha2,
          getChildrenNoSchool, getCountryPopulation } from '../utils';
@@ -20,13 +22,16 @@ interface Country {
   styleUrls: ['./country.component.css']
 })
 export class CountryComponent implements OnInit {
+ 
+  public calendarForm: FormGroup;
+  
   public isMobile: boolean;
   public countryView = "USA";
   public currentCountryName = "United States of America";
   public countryAllCasesCTX: Chart;
   public countryList: Country[];
 
-  public range: {from:string, to:string} = {from: 'default', to: 'default'};
+  public evolutionRange: {from:string, to:string} = {from: 'default', to: 'default'};
   
   public schoolClosure = {status: 'No Data', date: '', impacted_children: 0, years: 0};
   public lockdown = {status: 'No Data', date: ''};
@@ -55,10 +60,15 @@ export class CountryComponent implements OnInit {
     private http: HttpClient,
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private location: Location
+    private location: Location,
+    private formBuilder: FormBuilder
   ) { }
 
   async ngOnInit() {
+    this.calendarForm = this.formBuilder.group({
+      dateRange: null
+    });
+
     this.titleService.setTitle('Country Overview: COVID-19 Statistics and Government Measures');
     this.isMobile = window.innerWidth > mobileWidth ? false : true;
 
@@ -85,6 +95,13 @@ export class CountryComponent implements OnInit {
     const labels = this.evolution.dates.map(date => this.changeDateFormat(date));
 
     const data = this.getDataSets(this.evolution.data.USA.cases, this.evolution.data.USA.deaths, labels);
+
+    // we get start & end date for calendar range
+    const startDate = moment(new Date(data.labels[0])).format('MM/DD/YYYY')
+    const endDate = moment(new Date(data.labels[data.labels.length - 1])).format('MM/DD/YYYY')
+     // we update the value of calendar range
+    this.calendarForm.controls['dateRange'].setValue(`${startDate} - ${endDate}`)
+
     const dataSets = [
       {
         label: "Infection Cases",
@@ -128,6 +145,27 @@ export class CountryComponent implements OnInit {
     this.currentCountryName = getCountryNameByAlpha(this.countryView);
   }
 
+  public evolutionRangeChanged() :void { // if date range picker value is changed
+    if (Array.isArray(this.calendarForm.controls.dateRange.value)) {
+      const start = moment(this.calendarForm.controls.dateRange.value[0]).format('DD/MM/YYYY')
+      const end = moment(this.calendarForm.controls.dateRange.value[1]).format('DD/MM/YYYY')
+      
+      this.evolutionRange.from = this.changeDateFormat(start)
+      this.evolutionRange.to = this.changeDateFormat(end)
+
+      const datasets = this.getDataSets(
+        this.evolution.data[this.countryView].cases,
+        this.evolution.data[this.countryView].deaths,
+        this.evolution.dates.map(date => this.changeDateFormat(date))
+      )
+
+      this.countryAllCasesCTX.data.datasets[0].data  = datasets['cases'];
+      this.countryAllCasesCTX.data.datasets[1].data = datasets['deaths'];
+      this.countryAllCasesCTX.data.labels = datasets['labels'];
+      this.countryAllCasesCTX.update();
+    }
+  }
+
   private getDataSets(activeCases: number[], deaths: number[], labels: string[]) {
     let shortenCases = [...activeCases];
     let shortenDeaths = [...deaths];
@@ -144,13 +182,24 @@ export class CountryComponent implements OnInit {
       }
     }
 
-    if (this.range.from === 'default' && this.range.to === 'default') {
+    if (this.evolutionRange.from === 'default' && this.evolutionRange.to === 'default') {
       // get the index of the first death.
       // the graph will start at the first death
       const firtDeathIndex = shortenDeaths.findIndex(x => x)
       shortenCases = shortenCases.slice(firtDeathIndex, shortenCases.length);
       shortenDeaths = shortenDeaths.slice(firtDeathIndex, shortenDeaths.length);
       shortenLabels = shortenLabels.slice(firtDeathIndex, shortenLabels.length);
+    }else{
+      // if evolutionRange has date. we get the first and last index of labels
+      const findStart = shortenLabels.findIndex(date => date == this.evolutionRange.from);
+      const findEnd = shortenLabels.findIndex(date => date == this.evolutionRange.to);
+      // we chack if the index actualy exists
+      const startIndex = findStart > -1 ? findStart : 0;
+      const endIndex = findEnd > -1 ? findEnd : shortenLabels.length;
+
+      shortenCases = shortenCases.slice(startIndex, endIndex+1);
+      shortenDeaths = shortenDeaths.slice(startIndex, endIndex+1);
+      shortenLabels = shortenLabels.slice(startIndex, endIndex+1);
     }
     return { "cases": shortenCases, "deaths": shortenDeaths, "labels": shortenLabels }
   }
@@ -224,6 +273,7 @@ export class CountryComponent implements OnInit {
   }
 
   public countryChangeView(value: string) {
+    this.evolutionRange = {from: 'default', to: 'default'}; // we make evolutionRange to default
     this.location.go('/country/'+value) // we change the url: /country/value:
     this.countryView = value;
     this.currentCountryName = getCountryNameByAlpha(value);
@@ -233,6 +283,12 @@ export class CountryComponent implements OnInit {
       this.evolution.data[value].deaths,
       this.evolution.dates.map(date => this.changeDateFormat(date))
     )
+    // we get start & end date for calendar range
+    const startDate = moment(new Date(datasets.labels[0])).format('MM/DD/YYYY')
+    const endDate = moment(new Date(datasets.labels[datasets.labels.length - 1])).format('MM/DD/YYYY')
+      // we update the value of calendar range
+    this.calendarForm.controls['dateRange'].setValue(`${startDate} - ${endDate}`)
+
     for (const country of this.countryList) {
       if (country.value === value) {
 
