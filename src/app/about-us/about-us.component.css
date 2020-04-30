@@ -27,7 +27,7 @@ a{
 a:hover{
   color: #c0242c;
 }
-img{
+.team img{
   width:300px;
 }
 
@@ -135,4 +135,12 @@ img{
   color: white;
   font-size: 1em;
   text-align: center;
+}
+
+#logos {
+  justify-content: center;
+}
+
+#logos a {
+  padding-right:2%;
 }
