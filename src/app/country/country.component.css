@@ -96,3 +96,8 @@ div.text-align {
   text-align: center;
   /* font-weight: 600; */
 }
+.card .card-country {
+  background: rgb(219, 213, 215);
+  font-size: large;
+  font-weight: 500;
+}
