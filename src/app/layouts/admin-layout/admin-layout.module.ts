@@ -30,6 +30,8 @@ import { PopUpService } from '../../_service/pop-up.service';
 import { ShapeService } from '../../_service/shape.service';
 import { MapTilesService } from '../../_service/map-tiles.service';
 
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+
 @NgModule({
   imports: [
     CommonModule,
@@ -44,6 +46,8 @@ import { MapTilesService } from '../../_service/map-tiles.service';
     MatTooltipModule,
     MatSortModule,
     HttpClientModule,
+    
+    BsDatepickerModule.forRoot()
   ],
   providers: [
     MarkerService,
