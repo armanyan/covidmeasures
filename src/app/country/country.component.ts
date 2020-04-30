@@ -4,7 +4,6 @@ import { Chart } from 'chart.js';
 import { HttpClient } from '@angular/common/http';
 import { Router, ActivatedRoute } from "@angular/router";
 import { Location } from '@angular/common'; 
-import { MatSelect } from '@angular/material/select';
 
 import { mobileWidth, monthNames, createLineChart, getCountryNameByAlpha, getAlpha3FromAlpha2,
          getChildrenNoSchool, getCountryPopulation } from '../utils';

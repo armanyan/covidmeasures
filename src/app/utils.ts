@@ -287,7 +287,7 @@ export const createLineChart = (
     labels: string[], 
     dataset: number[] | object[], // array of numbers for single data & object for multiple data
     legendDisplay: boolean = false, // Line graph legends
-    responsive: boolean = true, // for responsivensess
+    responsive: boolean = true, // for responsiveness
     maintainAspectRatio: boolean = true, // for aspect ratio
   ) => {
   const data = {

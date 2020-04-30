@@ -8,17 +8,13 @@
 <div class="sidebar-wrapper">
   <ul class="nav">
     <li routerLinkActive="active" *ngFor="let menuItem of menuItems" class="{{menuItem.class}} nav-item">
-      <a *ngIf="!menuItem.soon && !menuItem.join && !menuItem.contribute" class="nav-link" [routerLink]="[menuItem.path]">
+      <a *ngIf="!menuItem.soon && !menuItem.hide" class="nav-link" [routerLink]="[menuItem.path]">
         <i class="material-icons">{{menuItem.icon}}</i>
         <p><b>{{menuItem.title}}</b></p>
       </a>
-      <a *ngIf="menuItem.soon" class="nav-link" [routerLink]="[menuItem.path]">
+      <a *ngIf="menuItem.soon && !menuItem.hide" class="nav-link" [routerLink]="[menuItem.path]">
         <i class="material-icons">{{menuItem.icon}}</i>
         <p style="color: grey;">{{menuItem.title}}</p>
-      </a>
-      <a *ngIf="menuItem.join" class="nav-link" href="https://forms.gle/DmmnetQ76by64hF68" target="_blank">
-        <i class="material-icons">{{menuItem.icon}}</i>
-        <p style="color: black;"><b>{{menuItem.title}}</b></p>
       </a>
     </li>
   </ul>
