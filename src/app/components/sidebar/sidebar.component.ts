@@ -7,6 +7,7 @@ declare interface RouteInfo {
     icon: string;
     class: string;
     soon?: boolean;
+    hide?: boolean;
 }
 export const ROUTES: RouteInfo[] = [
   { path: '/country', title: 'Country Overview',  icon:'outlined_flag', class: '' },
@@ -14,11 +15,11 @@ export const ROUTES: RouteInfo[] = [
   { path: '/school', title: 'School Closure',  icon:'school', class: '' },
   { path: '/covid', title: 'COVID-19 Statistics',  icon: 'dashboard', class: '' },
   { path: '/deathrates', title: 'Death Rates',  icon:'trending_up', class: '' },
-  { path: '/economics', title: 'Economic Stimulus', icon:'monetization_on', class: '' },
+  { path: '/economics', title: 'Economic Stimulus', hide: true, icon:'monetization_on', class: '' },
   { path: '/surveillance', title: 'Surveillance',  icon:'policy', class: '' },
   { path: '/borders', title: 'Border Control',  icon:'location_on', class: '' },
-  { path: '/masks', title: 'Masks', soon: true,  icon:'healing', class: '' },
-  { path: '/testing', title: 'Testing', soon: true,  icon:'local_hospital', class: '' },
+  { path: '/masks', title: 'Masks', soon: true, hide: true, icon:'healing', class: '' },
+  { path: '/testing', title: 'Testing', soon: true, icon:'local_hospital', class: '' },
   { path: '/aboutus', title: 'About Us', icon:'supervisor_account', class: '' },
 ];
 

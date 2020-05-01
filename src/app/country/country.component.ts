@@ -5,7 +5,6 @@ import { HttpClient } from '@angular/common/http';
 import { Router, ActivatedRoute } from "@angular/router";
 import { Location } from '@angular/common'; 
 import moment from 'moment'
-
 import { FormBuilder, FormGroup } from '@angular/forms';
 
 import { mobileWidth, monthNames, createLineChart, getCountryNameByAlpha, getAlpha3FromAlpha2,
