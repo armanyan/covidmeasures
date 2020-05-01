@@ -5,6 +5,16 @@ import { ShapeService } from '../../_service/shape.service';
 import { MapTilesService } from '../../_service/map-tiles.service';
 import { HttpClient } from '@angular/common/http';
 
+const colors = {
+  "No data": "#e3e3e3",
+  "No closure": "#28a745",
+  "Re-openning": "#ffeb3b",
+  "Re-opening": "#ffeb3b",
+  "Re-opened": "#17a2b8",
+  "Nationwide closure": "#e6595a",
+  "Partial closure": "#ee7f08"
+}
+
 interface Country {
   name: string;
   alpha3: string;
@@ -43,7 +53,7 @@ export class MapSchoolClosureComponent implements OnInit {
      
     }
     ngOnInit():void {
-      this.http.get('https://covidmeasures-data.s3.amazonaws.com/school_closure.json').subscribe((res:{countries: Array<Country>}) => {
+      this.http.get('https://covidmeasures-data.s3.amazonaws.com/new_school_closure.json').subscribe((res:{countries: Array<Country>}) => {
         this.countries = res.countries
         this.initMap();
         this.addInfoBox();
@@ -88,24 +98,23 @@ export class MapSchoolClosureComponent implements OnInit {
           return this._div;
       };
 
-      const getTextColor = function(text:string) {
-        if (text) {
-          const status = text.toLowerCase()
+      const getTextColor = function(status: string) {
+        if (status) {
           let color:string;
           switch (status as any) {
-            case "no closure":
+            case "No closure":
               color = '#28a745';
               break;
-            case "closure":
+            case "Closed":
               color = '#e6595a';
               break;
-            case "re-opening":
+            case "Re-opening":
               color = '#ee7f08';
               break;
-            case "re-openning":
+            case "Re-openning":
               color = '#ee7f08';
               break;
-            case "re-open":
+            case "Re-opened":
               color = '#17a2b8';
               break;
             default:
@@ -130,25 +139,16 @@ export class MapSchoolClosureComponent implements OnInit {
     private addLegend(){
       // we add legends to our map
       this.legend = L.control({position: 'bottomright'});
-      const getColor = function(status) {
-        return  status == "No data" ? '#e3e3e3' :
-                status == "No closure" ? '#28a745' :
-                status == "Nationwide Closure" ? '#e6595a' :
-                status == "Partial Closure" ? '#ee7f08' : 
-                status == "Re-opening" ? '#ffeb3b' : 
-                status == "Re-open"  ? '#17a2b8' :
-                          '#e3e3e3';
-      }
       this.legend.onAdd = function (map) {
 
           const div = L.DomUtil.create('div', 'info legend'),
-              status = ['No data', 'No closure', 'Nationwide Closure', 'Partial Closure', 'Re-opening', 'Re-open'],
+              status = ['No data', 'No closure', 'Nationwide closure', 'Partial closure', 'Re-opening', 'Re-opened'],
               labels = [];
 
           // loop through our density intervals and generate a label with a colored square for each interval
           for (let i = 0; i < status.length; i++) {
               div.innerHTML +=
-                  '<i style="background:' + getColor(status[i]) + '"></i>    <strong>' + status[i] + '</strong> <br>';
+                  '<i style="background:' + colors[status[i]] + '"></i>    <strong>' + status[i] + '</strong> <br>';
           }
 
           return div;
@@ -178,25 +178,15 @@ export class MapSchoolClosureComponent implements OnInit {
 
     private getFillColor(country: Country) {
       if (country) {
-        if(country.status.toLowerCase() == "no data") return '#e3e3e3';
-        if(
-          country.status.toLowerCase() == "no closure") return '#28a745';
-        if(
-          country.status.toLowerCase() == "closure" && 
-          country.current_coverage.toLowerCase() == "general"
-          ) return '#e6595a';
-        if(
-          country.status.toLowerCase() == "closure" && 
-          country.current_coverage.toLowerCase() == "partial"
-          ) return '#ee7f08';
-        if(
-          country.status.toLowerCase() == "re-openning" || 
-          country.status.toLowerCase() == "re-opening"
-          ) return '#ffeb3b';
-        if(country.status.toLowerCase() == "re-open") return '#17a2b8';
-        else return '#e3e3e3'
+        if(country.status == "Closed" && country.current_coverage == "General"){
+          return colors['Nationwide closure'];
+        }
+        if(country.status == "Closed" && country.current_coverage == "Partial"){
+          return colors['Partial closure'];
+        }
+        return colors[country.status];
       }
-      return '#e3e3e3'
+      return colors['No data'];
     }
 
     private highlightFeature(e)  {

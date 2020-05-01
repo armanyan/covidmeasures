@@ -73,7 +73,7 @@ export class CountryComponent implements OnInit {
 
     this.evolution = (await this.http.get('https://covidmeasures-data.s3.amazonaws.com/evolution.json').toPromise() as any);
     this.schoolClosureData = (await this.http.get('https://covidmeasures-data.s3.amazonaws.com/school_closure.json').toPromise() as any);
-    this.lockdownData = (await this.http.get('https://covidmeasures-data.s3.amazonaws.com/lockdown.json').toPromise() as any);
+    this.lockdownData = (await this.http.get('https://covidmeasures-data.s3.amazonaws.com/updated_lockdown.json').toPromise() as any);
     this.impactData = (await this.http.get('https://covidmeasures-data.s3.amazonaws.com/country_impacts.json').toPromise() as any);
     this.setImpactTable();
     this.setActiveCases();
@@ -225,7 +225,7 @@ export class CountryComponent implements OnInit {
 
     const lockdownCountry = this.getCountry(this.lockdownData.countries, alpha3);
     this.lockdown.status = lockdownCountry.status;
-    this.lockdown.date = lockdownCountry.status === "Finished" ? lockdownCountry.end : lockdownCountry.start;
+    this.lockdown.date = lockdownCountry.status === "Restrictions removed" ? lockdownCountry.end : lockdownCountry.start;
 
     this.businessClosure.status = lockdownCountry.status_business;
     this.businessClosure.date = lockdownCountry.start_business_closure;
