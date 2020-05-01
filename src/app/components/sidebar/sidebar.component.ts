@@ -19,7 +19,7 @@ export const ROUTES: RouteInfo[] = [
   { path: '/surveillance', title: 'Surveillance',  icon:'policy', class: '' },
   { path: '/borders', title: 'Border Control',  icon:'location_on', class: '' },
   { path: '/masks', title: 'Masks', soon: true, hide: true, icon:'healing', class: '' },
-  { path: '/testing', title: 'Testing', soon: true,  icon:'local_hospital', class: '' },
+  { path: '/testing', title: 'Testing', soon: true, icon:'local_hospital', class: '' },
   { path: '/aboutus', title: 'About Us', icon:'supervisor_account', class: '' },
 ];
 
