@@ -267,8 +267,8 @@ export class CountryComponent implements OnInit {
 
   public countryChangeView(value: string) {
     this.countryView = value;
-    this.totalDeathRate = this.evolution.data[value].cases.reduce((a,b) => a + b) /
-      this.evolution.data[value].deaths.reduce((a,b) => a + b);
+    this.totalDeathRate = this.evolution.data[value].deaths.reduce((a,b) => a + b) /
+      this.evolution.data[value].cases.reduce((a,b) => a + b);
 
     this.evolutionRange = {from: 'default', to: 'default'}; // we make evolutionRange to default
     this.location.go('/country/'+value) // we change the url: /country/value:
