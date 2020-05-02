@@ -36,7 +36,7 @@ interface Country{
 const colors = {
   "No data": "#e3e3e3",
   "No restrictions": "#66bb6a",
-  "Restricted": "#e6595a",
+  "Lockdown": "#e6595a",
   "Curfew": "#B55007",
   "Softening restrictions": "#ffeb3b",
   "Restrictions removed": "#17a2b8"
@@ -106,9 +106,10 @@ export class MapLockdownComponent implements OnInit {
         return this._div;
     };
 
-    const getTextColor = function(text:string, curfew:boolean) {
-      if (text) {
-        const status = text.toLowerCase()
+    const getTextColor = function(status: string, curfew: boolean) {
+      if (status) {
+        if(status == "Restricted" && !curfew) return colors['Lockdown'];
+        if(status == "Restricted" && curfew) return colors['Curfew'];
         return colors[status];
       }
     };
@@ -117,8 +118,8 @@ export class MapLockdownComponent implements OnInit {
         this._div.innerHTML = 
         '<h4>Lockdown Status</h4>' +  (country ?
         `<b>${ country.name }</b><br />
-        <span style="color:${ getTextColor(country.status, country.curfew) }">
-          ${ country.curfew ? 'Curfew' : country.status }
+        <span style="color:${ getTextColor(country.status, country.curfew) }; text-shadow: 1px 1px 1px #37180F;">
+          ${ country.curfew ? 'Curfew' : country.status == 'No data' ? '' : country.status}
         </span>`
         : 'Hover over a Country');
     };
@@ -132,7 +133,7 @@ export class MapLockdownComponent implements OnInit {
     this.legend.onAdd = function () {
 
         const div = L.DomUtil.create('div', 'info legend');
-        const status = ['No data', 'No restrictions', 'Restricted','Curfew','Softening restrictions', 'Restrictions removed'];
+        const status = ['No data', 'No restrictions', 'Lockdown','Curfew','Softening restrictions', 'Restrictions removed'];
         // loop through our density intervals and generate a label with a colored square for each interval
         for (let i = 0; i < status.length; i++) {
             div.innerHTML +=
@@ -204,9 +205,26 @@ export class MapLockdownComponent implements OnInit {
     if (country) {
       return `
       <div>
-        <h6>
+        <h6 class="d-flex justify-content-center">
           <strong>${country.name}</strong>
         </h6>
+        <div class="pb-2">
+          <p class="p-0 m-0">
+            <strong>Current coverage:</strong> ${country.current_coverage}
+          </p>
+          <p class="p-0 m-0">
+            <strong>Type of restrictions:</strong> ${country.restriction_type}
+          </p>
+          <p class="p-0 m-0">
+            <strong>Start date:</strong> ${country.start}
+          </p>
+          <p class="p-0 m-0">
+            <strong>Start softening date:</strong> ${country.start_reopening}
+          </p>
+          <p class="p-0 m-0">
+            <strong>End date:</strong> ${country.end}
+          </p>
+        </div>
         <div class="d-flex justify-content-center">
           <a href="#/country/${country.alpha3}">
             <button class="mat-raised-button mat-button-base mat-primary text-light">Learn More</button>

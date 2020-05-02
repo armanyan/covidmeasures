@@ -98,30 +98,18 @@ export class MapSchoolClosureComponent implements OnInit {
           return this._div;
       };
 
-      const getTextColor = function(status: string) {
+      const getTextColor = function(status: string, coverage: string) {
         if (status) {
-          let color:string;
-          switch (status as any) {
-            case "No closure":
-              color = '#28a745';
-              break;
-            case "Closed":
-              color = '#e6595a';
-              break;
-            case "Re-opening":
-              color = '#ee7f08';
-              break;
-            case "Re-openning":
-              color = '#ee7f08';
-              break;
-            case "Re-opened":
-              color = '#17a2b8';
-              break;
-            default:
-              color = '#555';
-              break;
+          if(status == "Closed" && coverage == "General"){
+            return colors['Nationwide closure'];
           }
-          return color
+          if(status == "Closed" && coverage == "Partial"){
+            return colors['Partial closure'];
+          }
+          if (status == "Re-opening") {
+            return '#ddcb30' // we return a "Darker yellow"(the "lighter yellow" with white background looks wierd)
+          }
+          return colors[status];
         }
       };
       // method that we will use to update the control based on feature properties passed
@@ -129,7 +117,14 @@ export class MapSchoolClosureComponent implements OnInit {
           this._div.innerHTML = 
           '<h4>School Closure Status</h4>' +  (country ?
           `<b>${country.name}</b><br />
-          <span style="color:${getTextColor(country.status)}">${country.status}</span>`
+          <span style="color:${getTextColor(country.status, country.current_coverage)}; text-shadow: 1px 1px 1px #000;">
+            ${
+              country.status == "No data" ? '' : 
+              country.status == "Closed" && country.current_coverage == "General" ? 'Nationwide closure' :
+              country.status == "Closed" && country.current_coverage == "Partial" ? 'Partial closure' :
+              country.status
+            }
+          </span>`
           : 'Hover over a Country');
       };
 
@@ -219,6 +214,20 @@ export class MapSchoolClosureComponent implements OnInit {
           <h6>
             <strong>${country.name}</strong>
           </h6>
+          <div class="pb-2">
+          <p class="p-0 m-0">
+            <strong>Current coverage:</strong> ${country.current_coverage}
+          </p>
+          <p class="p-0 m-0">
+            <strong>Start date:</strong> ${country.start}
+          </p>
+          <p class="p-0 m-0">
+            <strong>Start softening date:</strong> ${country.start_reopening}
+          </p>
+          <p class="p-0 m-0">
+            <strong>End date:</strong> ${country.end}
+          </p>
+        </div>
           <div class="d-flex justify-content-center">
             <a href="#/country/${country.alpha3}">
               <button class="mat-raised-button mat-button-base mat-primary text-light">More Details</button>
