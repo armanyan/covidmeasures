@@ -184,10 +184,10 @@ export class CountryComponent implements OnInit {
     if (this.evolutionRange.from === 'default' && this.evolutionRange.to === 'default') {
       // get the index of the first death.
       // the graph will start at the first death
-      const firtDeathIndex = shortenDeaths.findIndex(x => x)
-      shortenCases = shortenCases.slice(firtDeathIndex, shortenCases.length);
-      shortenDeaths = shortenDeaths.slice(firtDeathIndex, shortenDeaths.length);
-      shortenLabels = shortenLabels.slice(firtDeathIndex, shortenLabels.length);
+      const firstDeathIndex = shortenDeaths.findIndex(x => x)
+      shortenCases = shortenCases.slice(firstDeathIndex, shortenCases.length);
+      shortenDeaths = shortenDeaths.slice(firstDeathIndex, shortenDeaths.length);
+      shortenLabels = shortenLabels.slice(firstDeathIndex, shortenLabels.length);
     }else{
       // if evolutionRange has date. we get the first and last index of labels
       const findStart = shortenLabels.findIndex(date => date == this.evolutionRange.from);

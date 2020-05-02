@@ -164,17 +164,13 @@ export class MapLockdownComponent implements OnInit {
   }
   private getFillColor(country: Country) {
     if (country) {
-      const status = country.status.toLowerCase();
-      const curfew = country.curfew;
-
-      if(status == "no restrictions") return '#66bb6a';
-      if(status == "restricted" && !curfew) return '#e6595a';
-      if(status == "restricted" && curfew) return '#B55007';
-      if(status == "softening restrictions") return '#ffeb3b';
-      if(status == "restrictions removed") return '#17a2b8';
-      else return '#e3e3e3';
+      let status = country.status;
+      if (status === 'Restricted') {
+        status = country.curfew ? 'Curfew': 'Restricted';
+      }
+      return colors[status] ? colors[status] : colors['No data'];
     }
-    return '#e3e3e3'
+    return colors['No data'];
   }
 
   private highlightFeature(e)  {
@@ -182,9 +178,7 @@ export class MapLockdownComponent implements OnInit {
     layer.setStyle({
       weight: 2,
       opacity: 1,
-      // color: '#DFA612',
       fillOpacity: .6,
-      // fillColor: '#FAE042',
     });
     this.info.update(layer.feature.countryData)
   }

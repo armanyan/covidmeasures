@@ -100,6 +100,15 @@
       <div class="card-body" style="height: 80vh;">
         <app-map-lockdown></app-map-lockdown>
       </div>
+      <div class="card-footer ">
+        <div class="stats">
+          Updated on {{ schoolClosureTableUpdatedOn }}
+        </div>
+        <div class="stats">
+          Source: CovidMeasures Community & &nbsp;
+          <a href="https://www.bsg.ox.ac.uk/research/research-projects/coronavirus-government-response-tracker" target="_blank">OxCGRT</a>
+        </div>
+      </div>
     </div>
     <hr>
     <!-- Lockdown Map Ends -->
@@ -260,7 +269,8 @@
             Updated on {{ lockdownTableUpdatedOn }}
           </div>
           <div class="stats">
-            Source: CovidMeasures Community
+            Source: CovidMeasures Community & &nbsp;
+            <a href="https://www.bsg.ox.ac.uk/research/research-projects/coronavirus-government-response-tracker" target="_blank">OxCGRT</a>
           </div>
         </div>
 
@@ -275,12 +285,13 @@
       <div class="card">
 
         <div class="card-header card-header-success">
-          <h3 class="card-title">List of Lockdown Impacts & Solutions</h3>
-          <a mat-raised-button class="nav-link float-right" type="button"
-            color="primary" href="https://forms.gle/kXudzTV9ziS7XHtH9" target="_blank"
-          >
-            <span>Add Your Contribution</span>
-          </a>
+          <h3 class="card-title">List of Lockdown Impacts & Solutions
+            <a mat-raised-button class="nav-link float-right" type="button"
+              color="primary" href="https://forms.gle/kXudzTV9ziS7XHtH9" target="_blank"
+            >
+              <span>Add Your Contribution</span>
+            </a>
+          </h3>
         </div>
 
         <div class="card-body">
