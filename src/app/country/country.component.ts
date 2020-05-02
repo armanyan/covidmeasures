@@ -32,7 +32,7 @@ export class CountryComponent implements OnInit {
 
   public evolutionRange: {from:string, to:string} = {from: 'default', to: 'default'};
   
-  public schoolClosure = {status: 'No Data', date: '', impacted_children: 0, years: 0};
+  public schoolClosure = {status: 'No Data', date: '', impacted_children: 0, years: 0, message: 'Educational Facilities Closed On'};
   public lockdown = {status: 'No Data', date: ''};
   public businessClosure = {status: 'No Data', date: '', days: 0};
   public countryImpactedPeople: number;
@@ -72,7 +72,7 @@ export class CountryComponent implements OnInit {
     this.isMobile = window.innerWidth > mobileWidth ? false : true;
 
     this.evolution = (await this.http.get('https://covidmeasures-data.s3.amazonaws.com/evolution.json').toPromise() as any);
-    this.schoolClosureData = (await this.http.get('https://covidmeasures-data.s3.amazonaws.com/school_closure.json').toPromise() as any);
+    this.schoolClosureData = (await this.http.get('https://covidmeasures-data.s3.amazonaws.com/new_school_closure.json').toPromise() as any);
     this.lockdownData = (await this.http.get('https://covidmeasures-data.s3.amazonaws.com/updated_lockdown.json').toPromise() as any);
     this.impactData = (await this.http.get('https://covidmeasures-data.s3.amazonaws.com/country_impacts.json').toPromise() as any);
     this.setImpactTable();
@@ -216,7 +216,8 @@ export class CountryComponent implements OnInit {
   private setStatsAndStatuses(alpha3: string) {
     const schoolCountry = this.getCountry(this.schoolClosureData.countries, alpha3);
     this.schoolClosure.status = schoolCountry.status;
-    this.schoolClosure.date = schoolCountry.status === "Finished" ? schoolCountry.end : schoolCountry.start;
+    this.schoolClosure.message = schoolCountry.status === 'Re-opened' ? 'Educational Facilities Re-opened Since' : 'Educational Facilities Closed On';
+    this.schoolClosure.date = schoolCountry.status === 'Re-opened' ? schoolCountry.end : schoolCountry.start;
 
     const affectedChildren = getChildrenNoSchool(alpha3)*schoolCountry.current_children_no_school;
     this.schoolClosure.impacted_children =
@@ -231,8 +232,9 @@ export class CountryComponent implements OnInit {
     this.businessClosure.date = lockdownCountry.start_business_closure;
     this.businessClosure.days = this.getBusinessClosureDays(lockdownCountry);
 
-    this.countryImpactedPeople = Math.floor((getCountryPopulation(alpha3)*lockdownCountry.current_population_impacted)/this.statsDivider);
-    this.countryCumulatedYears = (this.getMissedDaysPerCountry(lockdownCountry)*affectedChildren) / (365*this.statsDivider);
+    const affectedPopulation = getCountryPopulation(alpha3)*lockdownCountry.current_population_impacted;
+    this.countryImpactedPeople = Math.floor(affectedPopulation/this.statsDivider);
+    this.countryCumulatedYears = (this.getMissedDaysPerCountry(lockdownCountry)*affectedPopulation) / (365*this.statsDivider);
 
     this.setImpactTable();
   }
