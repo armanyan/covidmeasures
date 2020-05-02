@@ -65,7 +65,7 @@ export class LockdownComponent implements OnInit {
   async ngOnInit() {
     this.titleService.setTitle('Lockdown Statistics: Citizens Tracking Lockdown Measures');
     this.isMobile = window.innerWidth > mobileWidth ? false : true;
-    this.lockdownData = await this.http.get('https://covidmeasures-data.s3.amazonaws.com/updated_lockdown.json').toPromise();
+    this.lockdownData = await this.http.get('https://covidmeasures-data.s3.amazonaws.com/lockdown.json').toPromise();
     this.lockdownTableUpdatedOn = this.lockdownData.updatedOn;
     this.setTexts();
     this.setLockdownStatistics();

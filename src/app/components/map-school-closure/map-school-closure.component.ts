@@ -52,7 +52,7 @@ export class MapSchoolClosureComponent implements OnInit {
      
     }
     ngOnInit():void {
-      this.http.get('https://covidmeasures-data.s3.amazonaws.com/new_school_closure.json').subscribe((res:{countries: Array<Country>}) => {
+      this.http.get('https://covidmeasures-data.s3.amazonaws.com/school_closure.json').subscribe((res:{countries: Array<Country>}) => {
         this.countries = res.countries
         this.initMap();
         this.addInfoBox();

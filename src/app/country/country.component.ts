@@ -38,6 +38,9 @@ export class CountryComponent implements OnInit {
   public countryImpactedPeople: number;
   public countryCumulatedYears: number;
 
+  public currentDeathRate: number;
+  public totalDeathRate: number;
+
   public statsDivider = 1;
 
   public options = ['In Total', 'Per COVID-19 Death', 'Per COVID-19 Active Case'];
@@ -72,19 +75,19 @@ export class CountryComponent implements OnInit {
     this.isMobile = window.innerWidth > mobileWidth ? false : true;
 
     this.evolution = (await this.http.get('https://covidmeasures-data.s3.amazonaws.com/evolution.json').toPromise() as any);
-    this.schoolClosureData = (await this.http.get('https://covidmeasures-data.s3.amazonaws.com/new_school_closure.json').toPromise() as any);
-    this.lockdownData = (await this.http.get('https://covidmeasures-data.s3.amazonaws.com/updated_lockdown.json').toPromise() as any);
+    this.schoolClosureData = (await this.http.get('https://covidmeasures-data.s3.amazonaws.com/school_closure.json').toPromise() as any);
+    this.lockdownData = (await this.http.get('https://covidmeasures-data.s3.amazonaws.com/lockdown.json').toPromise() as any);
     this.impactData = (await this.http.get('https://covidmeasures-data.s3.amazonaws.com/country_impacts.json').toPromise() as any);
     this.setImpactTable();
     this.setActiveCases();
 
-    this.evolutionUpdatedOn = this.evolution.dates[this.evolution.dates.length - 1];
+
+    this.evolutionUpdatedOn = this.changeDateFormat(this.evolution.dates[this.evolution.dates.length - 1]);
 
     this.setStatsAndStatuses(this.countryView);
 
-    const alphas = Object.keys(this.evolution.data);
     this.countryList = [];
-    for (const alpha of alphas) {
+    for (const alpha of Object.keys(this.evolution.data)) {
       this.countryList.push({
         "value": alpha,
         "viewValue": this.evolution.data[alpha].name.split('_').join(' ')
@@ -130,7 +133,6 @@ export class CountryComponent implements OnInit {
     
     const alpha3 = this.activatedRoute.snapshot.paramMap.get('alpha3');
     if (alpha3) {
-      // this.countryView = alpha3;
       this.countryChangeView(alpha3);
     } else {
       try {
@@ -144,7 +146,7 @@ export class CountryComponent implements OnInit {
     this.currentCountryName = getCountryNameByAlpha(this.countryView);
   }
 
-  public evolutionRangeChanged() :void { // if date range picker value is changed
+  public evolutionRangeChanged() { // if date range picker value is changed
     if (Array.isArray(this.calendarForm.controls.dateRange.value)) {
       const start = moment(this.calendarForm.controls.dateRange.value[0]).format('DD/MM/YYYY')
       const end = moment(this.calendarForm.controls.dateRange.value[1]).format('DD/MM/YYYY')
@@ -169,17 +171,6 @@ export class CountryComponent implements OnInit {
     let shortenCases = [...activeCases];
     let shortenDeaths = [...deaths];
     let shortenLabels = [...labels];
-    // remove today's data since in the other parts we use data from different sources,
-    // and incoherence would be obvious
-    shortenCases.pop(); shortenDeaths.pop(); shortenLabels.pop();
-    for (const cases of activeCases) {
-      // TODO try cutting out first 5 percent
-      if (cases === 0) {
-        shortenCases.shift(); shortenDeaths.shift(); shortenLabels.shift();
-      } else {
-        break;
-      }
-    }
 
     if (this.evolutionRange.from === 'default' && this.evolutionRange.to === 'default') {
       // get the index of the first death.
@@ -192,7 +183,7 @@ export class CountryComponent implements OnInit {
       // if evolutionRange has date. we get the first and last index of labels
       const findStart = shortenLabels.findIndex(date => date == this.evolutionRange.from);
       const findEnd = shortenLabels.findIndex(date => date == this.evolutionRange.to);
-      // we chack if the index actualy exists
+      // we check if the index actually exists
       const startIndex = findStart > -1 ? findStart : 0;
       const endIndex = findEnd > -1 ? findEnd : shortenLabels.length;
 
@@ -200,6 +191,7 @@ export class CountryComponent implements OnInit {
       shortenDeaths = shortenDeaths.slice(startIndex, endIndex+1);
       shortenLabels = shortenLabels.slice(startIndex, endIndex+1);
     }
+    this.currentDeathRate = shortenDeaths.reduce((a,b) => a + b)/shortenCases.reduce((a,b) => a + b);
     return { "cases": shortenCases, "deaths": shortenDeaths, "labels": shortenLabels }
   }
 
@@ -274,9 +266,12 @@ export class CountryComponent implements OnInit {
   }
 
   public countryChangeView(value: string) {
+    this.countryView = value;
+    this.totalDeathRate = this.evolution.data[value].cases.reduce((a,b) => a + b) /
+      this.evolution.data[value].deaths.reduce((a,b) => a + b);
+
     this.evolutionRange = {from: 'default', to: 'default'}; // we make evolutionRange to default
     this.location.go('/country/'+value) // we change the url: /country/value:
-    this.countryView = value;
     this.currentCountryName = getCountryNameByAlpha(value);
     this.setStatsAndStatuses(value);
     const datasets = this.getDataSets(

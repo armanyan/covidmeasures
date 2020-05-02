@@ -64,7 +64,7 @@ export class MapLockdownComponent implements OnInit {
     }
 
   ngOnInit(): void {
-    this.http.get('https://covidmeasures-data.s3.amazonaws.com/updated_lockdown.json').subscribe((res:{countries: Array<Country>}) => {
+    this.http.get('https://covidmeasures-data.s3.amazonaws.com/lockdown.json').subscribe((res:{countries: Array<Country>}) => {
       this.countries = res.countries
       this.initMap();
       this.addInfoBox();
