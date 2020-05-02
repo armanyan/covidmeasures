@@ -18,39 +18,28 @@ interface Country{
   current_coverage: string,
   historical_population_impacted: number,
   current_population_impacted: number,
-  historical_severity: string,
-  current_severity: string,
-  movement_restrictions: boolean,
+  // historical_severity: string,
+  // current_severity: string,
+  movement_restrictions: boolean|string,
   curfew: boolean,
-  public_closed: boolean,
-  movement_enforcement: boolean,
-  army: string,
+  public_closed: boolean|string,
+  movement_enforcement: boolean|string,
+  army: boolean|string,
   status: string,
-  comment: string,
+  comments: string,
   start_business_closure: string,
   start_reopening_business: string,
   end_business_closure: string,
   status_business: string,
-  expiration_date: string,
-  last_update_date: string,
-  source: string,
-  comments: string
 }
 
 const colors = {
-  "no_lockdown": "#66bb6a",
-  "lockdown": "#e6595a",
-  "curfew": "#B55007",
-  "re-opening": "#ee7f08",
-  "re-openning": "#ee7f08",
-  "re-open": "#17a2b8",
-  "default": "#555",
   "No data": "#e3e3e3",
-  "No Lockdown": "#66bb6a",
-  "Lockdown": "#e6595a",
+  "No restrictions": "#66bb6a",
+  "Restricted": "#e6595a",
   "Curfew": "#B55007",
-  "Re-opening": "#ffeb3b",
-  "Re-open": "#17a2b8"
+  "Softening restrictions": "#ffeb3b",
+  "Restrictions removed": "#17a2b8"
 }
 
 @Component({
@@ -75,7 +64,7 @@ export class MapLockdownComponent implements OnInit {
     }
 
   ngOnInit(): void {
-    this.http.get('https://covidmeasures-data.s3.amazonaws.com/lockdown.json').subscribe((res:{countries: Array<Country>}) => {
+    this.http.get('https://covidmeasures-data.s3.amazonaws.com/updated_lockdown.json').subscribe((res:{countries: Array<Country>}) => {
       this.countries = res.countries
       this.initMap();
       this.addInfoBox();
@@ -140,20 +129,14 @@ export class MapLockdownComponent implements OnInit {
   private addLegend(){
     // we add legends to our map
     this.legend = L.control({position: 'bottomright'});
-    const getColor = function(status) {
-      if (colors.hasOwnProperty(status)) {
-        return colors[status]
-      }
-      return colors['No Data'];
-    }
     this.legend.onAdd = function () {
 
         const div = L.DomUtil.create('div', 'info legend');
-        const status = ['No data', 'No Lockdown', 'Lockdown','Curfew','Re-opening', 'Re-open'];
+        const status = ['No data', 'No restrictions', 'Restricted','Curfew','Softening restrictions', 'Restrictions removed'];
         // loop through our density intervals and generate a label with a colored square for each interval
         for (let i = 0; i < status.length; i++) {
             div.innerHTML +=
-                '<i style="background:' + getColor(status[i]) + '"></i>    <strong>' + status[i] + '</strong> <br>';
+                '<i style="background:' + colors[status[i]] + '"></i>    <strong>' + status[i] + '</strong> <br>';
         }
         return div;
     };
@@ -184,12 +167,11 @@ export class MapLockdownComponent implements OnInit {
       const status = country.status.toLowerCase();
       const curfew = country.curfew;
 
-      if(status == "no data") return '#e3e3e3';
-      if(status == "no lockdown") return '#66bb6a';
-      if(status == "lockdown" && !curfew) return '#e6595a';
-      if(status == "lockdown" && curfew) return '#B55007';
-      if(status == "re-openning" || status == "re-opening") return '#ffeb3b';
-      if(status == "re-open") return '#17a2b8';
+      if(status == "no restrictions") return '#66bb6a';
+      if(status == "restricted" && !curfew) return '#e6595a';
+      if(status == "restricted" && curfew) return '#B55007';
+      if(status == "softening restrictions") return '#ffeb3b';
+      if(status == "restrictions removed") return '#17a2b8';
       else return '#e3e3e3';
     }
     return '#e3e3e3'

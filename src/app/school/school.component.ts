@@ -88,7 +88,7 @@ export class SchoolComponent implements OnInit {
   async ngOnInit() {
     this.titleService.setTitle('School Closure: Citizens Tracking School Closures');
     this.isMobile = window.innerWidth > 767 ? false : true;
-    this.schoolClosureData = await this.http.get('https://covidmeasures-data.s3.amazonaws.com/school_closure.json').toPromise();
+    this.schoolClosureData = await this.http.get('https://covidmeasures-data.s3.amazonaws.com/new_school_closure.json').toPromise();
     this.schoolClosureTableUpdatedOn = this.schoolClosureData.updatedOn;
     this.setTexts();
     await this.setCurrentDeathEvolution();
