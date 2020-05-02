@@ -25,10 +25,10 @@ import { MatSortModule } from '@angular/material/sort';
 
 import { MapSchoolClosureComponent } from '../../components/map-school-closure/map-school-closure.component';
 import { MapLockdownComponent } from '../../components/map-lockdown/map-lockdown.component';
-import { MarkerService } from '../../_service/marker.service';
-import { PopUpService } from '../../_service/pop-up.service';
-import { ShapeService } from '../../_service/shape.service';
-import { MapTilesService } from '../../_service/map-tiles.service';
+import { MarkerService } from '../../_service/map/marker.service';
+import { PopUpService } from '../../_service/map/pop-up.service';
+import { ShapeService } from '../../_service/map/shape.service';
+import { MapTilesService } from '../../_service/map/map-tiles.service';
 
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 

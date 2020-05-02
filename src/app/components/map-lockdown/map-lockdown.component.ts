@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import * as L from 'leaflet';
-import { MarkerService } from '../../_service/marker.service';
-import { ShapeService } from '../../_service/shape.service';
+import { MarkerService } from '../../_service/map/marker.service';
+import { ShapeService } from '../../_service/map/shape.service';
 import { HttpClient } from '@angular/common/http';
-import { MapTilesService } from '../../_service/map-tiles.service';
+import { MapTilesService } from '../../_service/map/map-tiles.service';
 
 interface Country{
   name: string,
