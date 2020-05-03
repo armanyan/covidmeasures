@@ -208,14 +208,13 @@ export class CovidComponent implements OnInit {
    */
   private getWorldRow() {
     const row = {
-      "country": "World", "total_cases": 0, "new_cases": 0, "total_deaths": 0, "new_deaths": 0, "recovered": 0
+      "country": "World", "total_cases": 0, "new_cases": 0, "total_deaths": 0, "new_deaths": 0
     };
     const reducer = (acc, currVal) => {return currVal + acc};
     row.total_cases = this.worldStats.map(row => row.total_cases).reduce(reducer);
     row.new_cases = (this.worldStats.map(row => row.new_cases).reduce(reducer) as any);
     row.total_deaths = this.worldStats.map(row => row.total_deaths).reduce(reducer);
     row.new_deaths = (this.worldStats.map(row => row.new_deaths).reduce(reducer) as any);
-    row.recovered = this.worldStats.map(row => row.recovered).reduce(reducer);
     return row;
   }
 
