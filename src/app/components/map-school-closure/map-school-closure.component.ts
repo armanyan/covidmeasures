@@ -179,7 +179,7 @@ export class MapSchoolClosureComponent implements OnInit {
         if (status === 'Closed') {
           status = country.current_coverage === 'General' ? 'Nationwide closure' : 'Partial closure';
         }
-        return colors[country.status];
+        return colors[status];
       }
       return colors['No data'];
     }

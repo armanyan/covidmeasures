@@ -36,7 +36,7 @@ interface Country{
 const colors = {
   "No data": "#e3e3e3",
   "No restrictions": "#66bb6a",
-  "Lockdown": "#e6595a",
+  "Restricted": "#e6595a",
   "Curfew": "#B55007",
   "Softening restrictions": "#ffeb3b",
   "Restrictions removed": "#17a2b8"
@@ -108,7 +108,7 @@ export class MapLockdownComponent implements OnInit {
 
     const getTextColor = function(status: string, curfew: boolean) {
       if (status) {
-        if(status == "Restricted" && !curfew) return colors['Lockdown'];
+        if(status == "Restricted" && !curfew) return colors['Restricted'];
         if(status == "Restricted" && curfew) return colors['Curfew'];
         return colors[status];
       }
@@ -133,11 +133,12 @@ export class MapLockdownComponent implements OnInit {
     this.legend.onAdd = function () {
 
         const div = L.DomUtil.create('div', 'info legend');
-        const status = ['No data', 'No restrictions', 'Lockdown','Curfew','Softening restrictions', 'Restrictions removed'];
+        const status = ['No data', 'No restrictions', 'Restricted','Curfew','Softening restrictions', 'Restrictions removed'];
         // loop through our density intervals and generate a label with a colored square for each interval
         for (let i = 0; i < status.length; i++) {
             div.innerHTML +=
-                '<i style="background:' + colors[status[i]] + '"></i>    <strong>' + status[i] + '</strong> <br>';
+                `<i style="background:${colors[status[i]]}"></i>    
+                <strong>${status[i] == 'Restricted' ? 'Lockdown' : status[i] }</strong> <br>`;
         }
         return div;
     };
