@@ -43,7 +43,7 @@ export class CountryComponent implements OnInit {
 
   public statsDivider = 1;
 
-  public options = ['In Total', 'Per COVID-19 Death', 'Per COVID-19 Active Case'];
+  public options = ['In Total', 'Per COVID-19 Death', 'Per COVID-19 Case'];
   public currentOption = this.options[0];
 
   public evolutionUpdatedOn: string;
@@ -80,7 +80,6 @@ export class CountryComponent implements OnInit {
     this.impactData = (await this.http.get('https://covidmeasures-data.s3.amazonaws.com/country_impacts.json').toPromise() as any);
     this.setImpactTable();
     this.setActiveCases();
-
 
     this.evolutionUpdatedOn = this.changeDateFormat(this.evolution.dates[this.evolution.dates.length - 1]);
 
@@ -315,7 +314,7 @@ export class CountryComponent implements OnInit {
     } else if (value === 'Per COVID-19 Death') {
       this.statsDivider = this.evolution.data[this.countryView].deaths.reduce(reducer);
     } else {
-      this.statsDivider = this.covidActiveCases[this.countryView];
+      this.statsDivider = this.evolution.data[this.countryView].cases.reduce(reducer);
     }
     this.setStatsAndStatuses(this.countryView);
    }
@@ -323,7 +322,7 @@ export class CountryComponent implements OnInit {
   private async setImpactTable() {
     this.impactTable = [];
     for (const impact of this.impactData) {
-      if (impact.alpha3 === 'WRL' || impact.alpha3 === this.countryView) {
+      if (impact.alpha3 === 'WRD' || impact.alpha3 === this.countryView) {
         this.impactTable.push(impact);
       }
     }
