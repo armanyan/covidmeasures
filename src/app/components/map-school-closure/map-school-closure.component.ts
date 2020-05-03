@@ -1,18 +1,21 @@
 import { Component, OnInit } from '@angular/core';
 import * as L from 'leaflet';
+
 import { MarkerService } from '../../_service/map/marker.service';
 import { ShapeService } from '../../_service/map/shape.service';
 import { MapTilesService } from '../../_service/map/map-tiles.service';
+
 import { HttpClient } from '@angular/common/http';
 
 const colors = {
   "No data": "#e3e3e3",
   "No closure": "#28a745",
-  "Re-openning": "#ffeb3b",
   "Re-opening": "#ffeb3b",
   "Re-opened": "#17a2b8",
   "Nationwide closure": "#e6595a",
-  "Partial closure": "#ee7f08"
+  "Partial closure": "#ee7f08",
+  "Closed": "#e6595a",
+  "default": "#555"
 }
 
 interface Country {
@@ -45,7 +48,6 @@ export class MapSchoolClosureComponent implements OnInit {
   public countries: Array<Country>;
 
   constructor(
-    private markerService: MarkerService, 
     private shapeService: ShapeService,
     private http: HttpClient,
     private mapTiles: MapTilesService
@@ -53,7 +55,7 @@ export class MapSchoolClosureComponent implements OnInit {
      
     }
     ngOnInit():void {
-      this.http.get('https://covidmeasures-data.s3.amazonaws.com/new_school_closure.json').subscribe((res:{countries: Array<Country>}) => {
+      this.http.get('https://covidmeasures-data.s3.amazonaws.com/school_closure.json').subscribe((res:{countries: Array<Country>}) => {
         this.countries = res.countries
         this.initMap();
         this.addInfoBox();
@@ -112,6 +114,7 @@ export class MapSchoolClosureComponent implements OnInit {
           return colors[status];
         }
       };
+
       // method that we will use to update the control based on feature properties passed
       this.info.update = function (country:Country) {
           this._div.innerHTML = 
@@ -136,9 +139,8 @@ export class MapSchoolClosureComponent implements OnInit {
       this.legend = L.control({position: 'bottomright'});
       this.legend.onAdd = function (map) {
 
-          const div = L.DomUtil.create('div', 'info legend'),
-              status = ['No data', 'No closure', 'Nationwide closure', 'Partial closure', 'Re-opening', 'Re-opened'],
-              labels = [];
+          const div = L.DomUtil.create('div', 'info legend');
+          const status = ['No data', 'No closure', 'Nationwide closure', 'Partial closure', 'Re-opening', 'Re-opened'];
 
           // loop through our density intervals and generate a label with a colored square for each interval
           for (let i = 0; i < status.length; i++) {
@@ -173,11 +175,9 @@ export class MapSchoolClosureComponent implements OnInit {
 
     private getFillColor(country: Country) {
       if (country) {
-        if(country.status == "Closed" && country.current_coverage == "General"){
-          return colors['Nationwide closure'];
-        }
-        if(country.status == "Closed" && country.current_coverage == "Partial"){
-          return colors['Partial closure'];
+        let status = country.status;
+        if (status === 'Closed') {
+          status = country.current_coverage === 'General' ? 'Nationwide closure' : 'Partial closure';
         }
         return colors[country.status];
       }
@@ -189,9 +189,7 @@ export class MapSchoolClosureComponent implements OnInit {
       layer.setStyle({
         weight: 2,
         opacity: 1,
-        // color: '#DFA612',
         fillOpacity: .6,
-        // fillColor: '#FAE042',
       });
       this.info.update(layer.feature.countryData)
     }
@@ -203,7 +201,6 @@ export class MapSchoolClosureComponent implements OnInit {
         opacity: 0.5,
         color: 'aliceblue',
         fillOpacity: 0.8,
-        // fillColor: this.getFillColor(id)
       });
       this.info.update()
     }
