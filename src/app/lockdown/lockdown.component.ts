@@ -35,7 +35,7 @@ export class LockdownComponent implements OnInit {
   ]
 
   public statsHeaders = [
-    'Name', 'Population Impacted', 'Lockdown', 'Curfew', 'Business Closure', 'Other Measures', 'Start', 'End', 'Duration', 'Status'
+    'Name', 'Population Impacted', 'Lockdown', 'Curfew', 'Business Status', 'Other Measures', 'Start', 'End', 'Duration', 'Status'
   ];
   public lockdownTable = [];
   public lockdownTableFull = [];
@@ -216,7 +216,7 @@ export class LockdownComponent implements OnInit {
         "duration": duration === 0 ? "" : duration+" days",
         "lockdown": this.format_restriction(country.movement_restrictions),
         "curfew": this.format_restriction(country.curfew),
-        "business": this.format_restriction(country.status_business),
+        "business": country.status_business === 'No data' ? '' : country.status_business,
         "other": this.getOtherMeasures(country),
         "start": this.getDate(country['start']),
         "end": this.getEndDate(country['end'], country['expected_end']),

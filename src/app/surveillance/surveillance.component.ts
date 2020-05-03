@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 
+import { mobileWidth } from '../utils';
 import * as surveillance from '../data/surveillance';
 
 @Component({
@@ -23,8 +24,8 @@ export class SurveillanceComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.titleService.setTitle('Surveillance: Citizens Tracking Surveillance Related to COVID-19');
-    this.isMobile = window.innerWidth > 991 ? false : true;
+    this.titleService.setTitle('Surveillance');
+    this.isMobile = window.innerWidth > mobileWidth ? false : true;
 
     this.setTable();
   }

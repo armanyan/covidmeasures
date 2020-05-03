@@ -24,7 +24,7 @@ export class BordersComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.titleService.setTitle('Border Control: Citizens Tracking Border Control Related To COVID-19');
+    this.titleService.setTitle('Border Control');
     this.isMobile = window.innerWidth > mobileWidth ? false : true;
 
     this.setTable();

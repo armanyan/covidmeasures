@@ -1,9 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 import * as L from 'leaflet';
-import { MarkerService } from '../../_service/marker.service';
 import { ShapeService } from '../../_service/shape.service';
 import { MapTilesService } from '../../_service/map-tiles.service';
 import { HttpClient } from '@angular/common/http';
+
+const colors = {
+  "No data": "#e3e3e3",
+  "No closure": "#28a745",
+  "Re-opening": "#ffeb3b",
+  "Re-opened": "#17a2b8",
+  "Nationwide closure": "#e6595a",
+  "Partial closure": "#ee7f08",
+  "Closed": "#e6595a",
+  "default": "#555"
+}
 
 interface Country {
   name: string;
@@ -35,7 +45,6 @@ export class MapSchoolClosureComponent implements OnInit {
   public countries: Array<Country>;
 
   constructor(
-    private markerService: MarkerService, 
     private shapeService: ShapeService,
     private http: HttpClient,
     private mapTiles: MapTilesService
@@ -88,33 +97,10 @@ export class MapSchoolClosureComponent implements OnInit {
           return this._div;
       };
 
-      const getTextColor = function(text:string) {
-        if (text) {
-          const status = text.toLowerCase()
-          let color:string;
-          switch (status as any) {
-            case "no closure":
-              color = '#28a745';
-              break;
-            case "closure":
-              color = '#e6595a';
-              break;
-            case "re-opening":
-              color = '#ee7f08';
-              break;
-            case "re-openning":
-              color = '#ee7f08';
-              break;
-            case "re-open":
-              color = '#17a2b8';
-              break;
-            default:
-              color = '#555';
-              break;
-          }
-          return color
-        }
+      const getTextColor = function(status: string) {
+        return colors[status] ? colors[status]: colors['default'];
       };
+
       // method that we will use to update the control based on feature properties passed
       this.info.update = function (country:Country) {
           this._div.innerHTML = 
@@ -130,25 +116,15 @@ export class MapSchoolClosureComponent implements OnInit {
     private addLegend(){
       // we add legends to our map
       this.legend = L.control({position: 'bottomright'});
-      const getColor = function(status) {
-        return  status == "No data" ? '#e3e3e3' :
-                status == "No closure" ? '#28a745' :
-                status == "Nationwide Closure" ? '#e6595a' :
-                status == "Partial Closure" ? '#ee7f08' : 
-                status == "Re-opening" ? '#ffeb3b' : 
-                status == "Re-open"  ? '#17a2b8' :
-                          '#e3e3e3';
-      }
       this.legend.onAdd = function (map) {
 
-          const div = L.DomUtil.create('div', 'info legend'),
-              status = ['No data', 'No closure', 'Nationwide Closure', 'Partial Closure', 'Re-opening', 'Re-open'],
-              labels = [];
+          const div = L.DomUtil.create('div', 'info legend');
+          const status = ['No data', 'No closure', 'Nationwide closure', 'Partial closure', 'Re-opening', 'Re-opened'];
 
           // loop through our density intervals and generate a label with a colored square for each interval
           for (let i = 0; i < status.length; i++) {
               div.innerHTML +=
-                  '<i style="background:' + getColor(status[i]) + '"></i>    <strong>' + status[i] + '</strong> <br>';
+                  '<i style="background:' + colors[status[i]] + '"></i>    <strong>' + status[i] + '</strong> <br>';
           }
 
           return div;
@@ -178,25 +154,13 @@ export class MapSchoolClosureComponent implements OnInit {
 
     private getFillColor(country: Country) {
       if (country) {
-        if(country.status.toLowerCase() == "no data") return '#e3e3e3';
-        if(
-          country.status.toLowerCase() == "no closure") return '#28a745';
-        if(
-          country.status.toLowerCase() == "closure" && 
-          country.current_coverage.toLowerCase() == "general"
-          ) return '#e6595a';
-        if(
-          country.status.toLowerCase() == "closure" && 
-          country.current_coverage.toLowerCase() == "partial"
-          ) return '#ee7f08';
-        if(
-          country.status.toLowerCase() == "re-openning" || 
-          country.status.toLowerCase() == "re-opening"
-          ) return '#ffeb3b';
-        if(country.status.toLowerCase() == "re-open") return '#17a2b8';
-        else return '#e3e3e3'
+        let status = country.status;
+        if (status === 'Closed') {
+          status = country.current_coverage === 'General' ? 'Nationwide closure' : 'Partial closure';
+        }
+        return colors[country.status];
       }
-      return '#e3e3e3'
+      return colors['No data'];
     }
 
     private highlightFeature(e)  {
@@ -204,9 +168,7 @@ export class MapSchoolClosureComponent implements OnInit {
       layer.setStyle({
         weight: 2,
         opacity: 1,
-        // color: '#DFA612',
         fillOpacity: .6,
-        // fillColor: '#FAE042',
       });
       this.info.update(layer.feature.countryData)
     }
@@ -218,7 +180,6 @@ export class MapSchoolClosureComponent implements OnInit {
         opacity: 0.5,
         color: 'aliceblue',
         fillOpacity: 0.8,
-        // fillColor: this.getFillColor(id)
       });
       this.info.update()
     }
