@@ -11,7 +11,6 @@ export interface Stats {
   new_cases: number;
   total_deaths: number;
   new_deaths: number;
-  recovered: number;
 }
 
 interface Country {
@@ -26,7 +25,7 @@ interface Country {
 })
 export class CovidComponent implements OnInit {
   public isMobile: boolean;
-  public statsHeaders = ['Country', 'Total Cases', 'New Cases', 'Total Deaths', 'New Deaths', 'Recovered'];
+  public statsHeaders = ['Country', 'Total Cases', 'New Cases', 'Total Deaths', 'New Deaths'];
   public stats: Stats[];
   public worldStats: Stats[];
   public worldDataUpdatedOn: string;
@@ -91,7 +90,7 @@ export class CovidComponent implements OnInit {
       await this.fetchWorldData();
       this.stats = JSON.parse(JSON.stringify(this.worldStats)).slice(0, 10);
     } catch (e) {
-      throw new Error(`Covid19API Error: ${e.message}`)
+      throw new Error(`AWS Evolution Error: ${e.message}`)
     }
     if (this.stats[this.stats.length-1].country === 'World') {
       return;
@@ -171,26 +170,23 @@ export class CovidComponent implements OnInit {
     this.deathsChart.update();
   }
 
-
-  // world table part
-  private getCountries(data: any) {
-    return data.map(row => {
-      return {
-        "country": getCountryNameByAlpha(row["CountryCode"]), "total_cases": row['TotalConfirmed'],
-        "new_cases": row['NewConfirmed'], "total_deaths": row["TotalDeaths"],
-        "new_deaths": row["NewDeaths"], "recovered": row["TotalRecovered"]
-      }
-    })
-  }
-
   /**
-   * Fetches World COVID-19 data from covid19API that uses Hopkins University reports.
+   * Fetches World COVID-19 data that is made from ECDC reports.
    */
   private async fetchWorldData() {
-    let data = await this.http.get('https://api.covid19api.com/summary').toPromise();
-    this.worldStats = this.getCountries(data['Countries']);
-    const date = new Date(data['Date']);
-    this.worldDataUpdatedOn = monthNames[date.getMonth()]+" "+date.getDate()+"th, "+date.getFullYear();
+    const evolution = (await this.http.get('https://covidmeasures-data.s3.amazonaws.com/evolution.json').toPromise() as any);
+    this.worldStats = [];
+    for (const alpha in evolution.data) {
+      this.worldStats.push({
+        "country": evolution.data[alpha].name.split('_').join(' '),
+        "total_cases": evolution.data[alpha].cases.reduce((a, b) => a+b),
+        "new_cases": evolution.data[alpha].cases[evolution.data[alpha].cases.length-1],
+        "total_deaths": evolution.data[alpha].deaths.reduce((a, b) => a+b),
+        "new_deaths": evolution.data[alpha].deaths[evolution.data[alpha].deaths.length-1]
+      });
+    }
+    const date = evolution.dates[evolution.dates.length - 1].split('/');
+    this.worldDataUpdatedOn = date[0] + " " + monthNames[parseInt(date[1])-1]+" 2020";
   }
 
   /**
