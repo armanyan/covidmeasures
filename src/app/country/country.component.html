@@ -1,36 +1,43 @@
 <div class="main-content pt-md-0">
   <div class="container-fluid">
-
     <div layout-align="end end">
-      <h2 *ngIf=isMobile><u>{{titleService.getTitle()}}</u></h2>
+      <h2 *ngIf="isMobile">
+        <u>{{ titleService.getTitle() }}</u>
+      </h2>
     </div>
 
     <div class="card">
       <div class="card-body card-country">
         <div class="col-md-3 center">
-          <mat-select [(value)]="countryView" (selectionChange)="countryChangeView($event.value)">
-            <mat-option *ngFor="let country of countryList" [value]="country.value">
+          <mat-select
+            [(value)]="countryView"
+            (selectionChange)="countryChangeView($event.value)"
+          >
+            <mat-option
+              *ngFor="let country of countryList"
+              [value]="country.value"
+            >
               {{ country.viewValue }}
             </mat-option>
           </mat-select>
         </div>
       </div>
     </div>
-  
-  <h3 class="mt-md-0 pt-md-0">Government measures in response to COVID-19</h3>
+
+    <h3 class="mt-md-0 pt-md-0">Government measures in response to COVID-19</h3>
     <div class="form-row">
       <div class="col">
         <mat-form-field appearance="outline">
           <div class="text-align">
-            <i class="material-icons">school</i>          
+            <i class="material-icons">school</i>
             {{ schoolClosure.message }}:
-            <br>
+            <br />
             <strong>{{ schoolClosure.date | date }}</strong>
-            <br>
-            <br>
+            <br />
+            <br />
             <strong>{{ schoolClosure.status }}</strong>
-          </div>              
-          <input matInput disabled>
+          </div>
+          <input matInput disabled />
         </mat-form-field>
       </div>
       <div class="col">
@@ -38,14 +45,13 @@
           <div class="text-align">
             <i class="material-icons">lock</i>
             Movement Restrictions Started On:
-            <br>
+            <br />
             <strong>{{ lockdown.date | date }}</strong>
-            <br>
-            <br>
+            <br />
+            <br />
             <strong>{{ lockdown.status }}</strong>
           </div>
-          <input matInput disabled>
-          
+          <input matInput disabled />
         </mat-form-field>
       </div>
       <div class="col">
@@ -53,233 +59,275 @@
           <div class="text-align">
             <i class="material-icons">store</i>
             Businesses Closed On:
-            <br>
+            <br />
             <strong>{{ businessClosure.date | date }}</strong>
-            <br>
-            <br>
+            <br />
+            <br />
             <strong>{{ businessClosure.status }}</strong>
           </div>
-          <input matInput disabled>
+          <input matInput disabled />
         </mat-form-field>
       </div>
     </div>
 
-  <div>
-    <p class="text-primary" style="margin:0"><b><a href="https://forms.gle/e6mXPravJkLtRWPq5" target="_blank">Is the information above not up-to-date?</a></b></p>
-  </div>
+    <div>
+      <p class="text-primary" style="margin: 0;">
+        <b
+          ><a href="https://forms.gle/e6mXPravJkLtRWPq5" target="_blank"
+            >Is the information above not up-to-date?</a
+          ></b
+        >
+      </p>
+    </div>
 
-  <hr>
+    <hr />
 
-  <h3>Evolution of COVID-19 in the country</h3>
+    <h3>Evolution of COVID-19 in the country</h3>
 
-    <div class="card" >
+    <div class="card">
       <div class="card-header card-header-success">
-        <h4 class="card-title">Reported COVID-19 Infection Cases & Deaths Per Day</h4>
+        <h4 class="card-title">
+          Reported COVID-19 Infection Cases & Deaths Per Day
+        </h4>
       </div>
       <!-- Evolution Calendar Range Starts -->
-      <div class="card m-0 p-0  px-sm-2 pt-4"> 
-        <div class="card-body  m-0 p-0">
+      <div class="card m-0 p-0 px-sm-2 pt-4">
+        <div class="card-body m-0 p-0">
           <form [formGroup]="calendarForm">
             <div class="row">
-              <div class="col-lg-2 col-md-4 d-flex justify-content-md-end justify-content-sm-start align-items-center">
+              <div
+                class="col-lg-2 col-md-4 d-flex justify-content-md-end justify-content-sm-start align-items-center"
+              >
                 <h5 class="font-weight-bold">Evolution Range</h5>
               </div>
               <div class="col-lg-4 col-md-6 form-group my-0 py-0">
-                <input 
-                  type="text" class="form-control mb-3" 
-                  laceholder="Dates Picker" 
+                <input
+                  type="text"
+                  class="form-control mb-3"
+                  laceholder="Dates Picker"
                   bsDaterangepicker
                   formControlName="dateRange"
-                  [bsConfig]="{containerClass:'theme-dark-blue'}"
+                  [bsConfig]="{ containerClass: 'theme-dark-blue' }"
                   (ngModelChange)="evolutionRangeChanged()"
-                  />
+                />
               </div>
             </div>
           </form>
         </div>
       </div>
 
-      <div class="card m-0 p-0  px-sm-2"> 
-        <div class="card-body  m-0 p-0">
+      <div class="card m-0 p-0 px-sm-2">
+        <div class="card-body m-0 p-0">
           <h5 class="font-weight-bold">
-            <div class="float-left">Death-Cases Ratio For Current Range: <span class="text-danger">{{ currentDeathRate*100 | number }}%</span></div>
-            <div class="float-right">Total Reported Death-Cases Ratio: <span class="text-danger">{{ totalDeathRate*100 | number }}%</span></div>
+            <div class="float-left">
+              Death-Cases Ratio For Current Range:
+              <span class="text-danger"
+                >{{ currentDeathRate * 100 | number }}%</span
+              >
+            </div>
+            <div class="float-right">
+              Total Reported Death-Cases Ratio:
+              <span class="text-danger"
+                >{{ totalDeathRate * 100 | number }}%</span
+              >
+            </div>
           </h5>
         </div>
       </div>
-       <!-- Evolution Calendar Range Ends -->
+      <!-- Evolution Calendar Range Ends -->
       <div class="card-body p-1">
-        <div id="wrapper" class="pt-2 pt-md-3" style="position: relative; height: 60vh">
-          <canvas id=countryChartAllCases></canvas>
+        <div
+          id="wrapper"
+          class="pt-2 pt-md-3"
+          style="position: relative; height: 60vh;"
+        >
+          <canvas id="countryChartAllCases"></canvas>
         </div>
       </div>
       <div class="card-footer">
-        <div class="stats">
-          Updated on {{evolutionUpdatedOn}}
-        </div>
+        <div class="stats">Updated on {{ evolutionUpdatedOn }}</div>
         <div class="stats">
           Source:
           <a
             href="https://www.ecdc.europa.eu/en/publications-data/download-todays-data-geographic-distribution-covid-19-cases-worldwide"
-          >ECDC</a></div>
+            >ECDC</a
+          >
+        </div>
       </div>
     </div>
-    <br>
+    <br />
 
-    <hr>
+    <hr />
 
     <h3>Government Measures' Impacts On Citizens</h3>
 
-      <div class="card center">
-        <div class="card-body">
+    <div class="card center">
+      <div class="card-body">
+        <ng-container *ngIf="isMobile">
+          <mat-label>Per</mat-label>
+          <mat-select
+            [(value)]="currentOption"
+            (selectionChange)="changeViewOption($event.value)"
+          >
+            <mat-option
+              *ngFor="let option of options"
+              [value]="option"
+              style="color: rgb(52, 107, 186);"
+            >
+              {{ option }}
+            </mat-option>
+          </mat-select>
+        </ng-container>
 
-          <ng-container *ngIf="isMobile">
-            <mat-label>Per</mat-label>
-            <mat-select [(value)]="currentOption" (selectionChange)="changeViewOption($event.value)">
-              <mat-option *ngFor="let option of options" [value]="option" style="color:rgb(52, 107, 186)">
-                {{option}}
-              </mat-option>
-            </mat-select>
+        <div *ngIf="!isMobile" class="center">
+          <ng-container *ngFor="let option of options">
+            <button
+              mat-raised-button
+              *ngIf="currentOption === option"
+              class="float"
+              type="button"
+              color="primary"
+            >
+              <span>{{ option }}</span>
+            </button>
+
+            <button
+              mat-button
+              *ngIf="currentOption !== option"
+              class="float"
+              type="button"
+              color="primary"
+              (click)="changeViewOption(option)"
+            >
+              <span>{{ option }}</span>
+            </button>
           </ng-container>
+        </div>
+      </div>
+    </div>
 
-          <div *ngIf="!isMobile" class="center">
-            <ng-container *ngFor="let option of options">
-              <button mat-raised-button *ngIf="currentOption===option"
-                class="float" type="button" color="primary">
-                <span>{{ option }}</span>
-              </button>
+    <div class="row card-grid">
+      <div class="card">
+        <div class="card-header card-header-success">
+          <h4 class="card-title">Children Homeschooling</h4>
+        </div>
 
-              <button mat-button *ngIf="currentOption!==option"
-                class="float" type="button" color="primary"
-                (click)="changeViewOption(option)">
-                <span>{{ option }}</span>
-              </button>
-            </ng-container>
-          </div>
-
+        <div class="card-body">
+          <table class="table">
+            <thead class="text-primary">
+              <th>Children Impacted</th>
+              <th>Cumulated Years At Home</th>
+            </thead>
+            <tbody>
+              <td class="left">
+                {{ schoolClosure.impacted_children | number }}
+              </td>
+              <td class="center">{{ schoolClosure.years | number }}</td>
+            </tbody>
+          </table>
         </div>
       </div>
 
-      <div class="row">
-
-        <div class="col-md-4">
-          <div class="card">
-            <div class="card-header card-header-success">
-              <h4 class="card-title ">Children Homeschooling</h4>
-            </div>
-            
-            <div class="card-body">
-              <table class="table">
-                <thead class="text-primary">
-                  <th>Children Impacted</th>
-                  <th>Cumulated Years At Home</th>
-                </thead>
-                <tbody>
-                  <td class="left">{{schoolClosure.impacted_children | number}}</td>
-                  <td class="center">{{schoolClosure.years | number}}</td>
-                </tbody>
-              </table>
-            </div>
-          </div>
+      <div class="card">
+        <div class="card-header card-header-success">
+          <h4 class="card-title">People Staying Inside</h4>
         </div>
-  
-        <div class="col-md-4">
-          <div class="card">
-            <div class="card-header card-header-success">
-              <h4 class="card-title ">People Staying Inside</h4>
-            </div>
-            
-            <div class="card-body">
-              <table class="table">
-                <thead class="text-primary">
-                  <th>People Impacted</th>
-                  <th>Cumulated Years At Home</th>
-                </thead>
-                <tbody>
-                  <td class="left">{{ countryImpactedPeople | number }}</td>
-                  <td class="center">{{ countryCumulatedYears | number }}</td>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-  
-        <div class="col-md-4">
-          <div class="card">
-            <div class="card-header card-header-success">
-              <h4 class="card-title ">Economic Slowdown</h4>
-            </div>
-            
-            <div class="card-body">
-              <table class="table">
-                <thead class="text-primary">
-                  <th>Number of Days</th>
-                </thead>
-                <tbody>
-                  <td class="center">{{ businessClosure.days | number }}</td>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-          
-      </div>
 
-      <hr>
-
-      <h4 style="text-align:center; font-size:1.3em; margin:4% 0;"><u>Tell us about other impacts of those measures in {{currentCountryName}}</u></h4>
-      <p style="margin-bottom:4%;">
-        We want to hear both positive and negative impacts of those measures. Vote for the most
-        impactful in your life and the life of others around you (coming soon).
-      </p>
-
-      <div class="col-md-12">
-        <div class="card">
-  
-          <div class="card-header card-header-success">
-            <h3 class="card-title">
-              List of Impacts in {{currentCountryName}}
-              <a mat-raised-button class="nav-link float-right" type="button"
-              color="primary" href="https://forms.gle/d1n55BQ8k1Lv9TiX8" target="_blank"
-              >
-                <i class="material-icons">school</i>
-                <span> Add an Impact</span>
-              </a>
-            </h3>
-          </div>
-  
-          <div class="card-body">
-  
-            <div class="content table-responsive table-full-width">
-              <table class="table">
-                <thead>
-                  <th class="text-primary" *ngFor="let row of impactHeaders">
-                    {{ row }}
-                  </th>
-                </thead>
-                <tbody>
-                  <tr *ngFor="let row of impactTable">
-                    <td>{{ row.measure }}</td>
-                    <td>{{ row.impact }}</td>
-                    <td>{{ row.description }}</td>
-                    <td>
-                      <a href="{{ row.link }}" target="_blank">{{ row.source }}</a>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-              </div>
-      
-          </div>
-  
-          <div class="card-footer">
-            <div class="stats">
-              Source: CovidMeasures Community
-            </div>
-          </div>
-  
+        <div class="card-body">
+          <table class="table">
+            <thead class="text-primary">
+              <th>People Impacted</th>
+              <th>Cumulated Years At Home</th>
+            </thead>
+            <tbody>
+              <td class="left">{{ countryImpactedPeople | number }}</td>
+              <td class="center">{{ countryCumulatedYears | number }}</td>
+            </tbody>
+          </table>
         </div>
       </div>
 
+      <div class="card">
+        <div class="card-header card-header-success">
+          <h4 class="card-title">Economic Slowdown</h4>
+        </div>
+
+        <div class="card-body">
+          <table class="table">
+            <thead class="text-primary">
+              <th>Number of Days</th>
+            </thead>
+            <tbody>
+              <td class="center">{{ businessClosure.days | number }}</td>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <hr />
+
+    <h4 style="text-align: center; font-size: 1.3em; margin: 4% 0;">
+      <u
+        >Tell us about other impacts of those measures in
+        {{ currentCountryName }}</u
+      >
+    </h4>
+    <p style="margin-bottom: 4%;">
+      We want to hear both positive and negative impacts of those measures. Vote
+      for the most impactful in your life and the life of others around you
+      (coming soon).
+    </p>
+
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header card-header-success">
+          <h3 class="card-title">
+            List of Impacts in {{ currentCountryName }}
+            <a
+              mat-raised-button
+              class="nav-link float-right"
+              type="button"
+              color="primary"
+              href="https://forms.gle/d1n55BQ8k1Lv9TiX8"
+              target="_blank"
+            >
+              <i class="material-icons">school</i>
+              <span> Add an Impact</span>
+            </a>
+          </h3>
+        </div>
+
+        <div class="card-body">
+          <div class="content table-responsive table-full-width">
+            <table class="table">
+              <thead>
+                <th class="text-primary" *ngFor="let row of impactHeaders">
+                  {{ row }}
+                </th>
+              </thead>
+              <tbody>
+                <tr *ngFor="let row of impactTable">
+                  <td>{{ row.measure }}</td>
+                  <td>{{ row.impact }}</td>
+                  <td>{{ row.description }}</td>
+                  <td>
+                    <a href="{{ row.link }}" target="_blank">{{
+                      row.source
+                    }}</a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="card-footer">
+          <div class="stats">
+            Source: CovidMeasures Community
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
