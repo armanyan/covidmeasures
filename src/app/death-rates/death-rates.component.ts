@@ -69,8 +69,8 @@ export class DeathRatesComponent implements OnInit {
   private since1st = {"labels": [], "data": [], "backgroundColor": []};
   private yesterday = {"labels": [], "data": [], "backgroundColor": []};
  
-  private deathsSince1st: number;
-  private deathsYesterday: number;
+  private deathsSince1st = 0;
+  private deathsYesterday = 0;
 
   private covidByContinent = {
     "Europe": { "cases": 0, "deaths": 0 },
@@ -155,7 +155,7 @@ export class DeathRatesComponent implements OnInit {
     let res = 0;
     const index = since1sr ? 1 : 2;
     for (const country of countries) {
-      const alpha3 = getAlpha3FromAlpha2(country[0]);
+      const alpha3 = country[0];
       const rates = this.getCountryDeathRates(alpha3, ageRange);
       res += (country[index]*rates[0])/rates[1];
     }
@@ -233,13 +233,17 @@ export class DeathRatesComponent implements OnInit {
    * Sets the death evolution for every continent, both for 'Since 11 Jan' and 'last 24h'
    */
   private async setCurrentDeathEvolution() {
-    const data = await this.http.get('https://api.covid19api.com/summary').toPromise();
-    this.deathsSince1st = data["Global"]["TotalDeaths"];
-    this.deathsYesterday = data["Global"]["NewDeaths"];
-    for (const row of data["Countries"]) {
-      this.covidByContinent[getRegionByAlpha(row["CountryCode"])]["cases"] += row["TotalConfirmed"];
-      this.covidByContinent[getRegionByAlpha(row["CountryCode"])]["deaths"] += row["TotalDeaths"];
-      this.deathsPerCountry.push([row["CountryCode"], row["TotalDeaths"], row["NewDeaths"]]);
+    const evolution = (await this.http.get('https://covidmeasures-data.s3.amazonaws.com/evolution.json').toPromise() as any);
+    for (const alpha in evolution.data) {
+      const deaths = evolution.data[alpha].deaths.reduce((a, b) => a+b);
+      const newDeaths = evolution.data[alpha].deaths[evolution.data[alpha].deaths.length-1];
+
+      this.deathsSince1st += deaths;
+      this.deathsYesterday += newDeaths;
+
+      this.covidByContinent[getRegionByAlpha(alpha)]["cases"] += evolution.data[alpha].cases.reduce((a, b) => a+b);
+      this.covidByContinent[getRegionByAlpha(alpha)]["deaths"] += deaths;
+      this.deathsPerCountry.push([alpha, deaths, newDeaths]);
     }
   }
 
