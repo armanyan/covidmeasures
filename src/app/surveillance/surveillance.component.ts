@@ -24,7 +24,7 @@ export class SurveillanceComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.titleService.setTitle('Surveillance');
+    this.titleService.setTitle('Surveillance: Citizens Tracking Surveillance Measures');
     this.isMobile = window.innerWidth > mobileWidth ? false : true;
 
     this.setTable();

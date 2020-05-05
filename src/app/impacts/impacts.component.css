@@ -4,7 +4,7 @@ td.left, td.center {
 }
 
 .table thead th {
-  font-size: .95rem;
+  font-size: 0.95rem;
   font-weight: 500;
   border-top-width: 0;
   border-bottom-width: 1px;

@@ -1,16 +1,3 @@
-td.left, td.center {
-  font-size: 1.3rem;
-  text-align: left;
-}
-
-.table thead th {
-  font-size: .95rem;
-  font-weight: 500;
-  border-top-width: 0;
-  border-bottom-width: 1px;
-  vertical-align: top;
-}
-
 p{
   margin: 0 6% 4% 6%;
   text-align: justify;
@@ -29,69 +16,6 @@ a:hover{
 }
 .team img{
   width:300px;
-}
-
-/* --------------------------- HEADERS ----------------------------- */
-
-.card .card-header-success .card-icon, .card .card-header-success .card-text, .card .card-header-success:not(.card-header-icon):not(.card-header-text), .card.bg-success, .card.card-rotate.bg-success .front, .card.card-rotate.bg-success .back {
-  background: linear-gradient(90deg, rgba(123,53,69,1) 0%, rgba(107,75,90,1) 49%, rgba(80,61,70,1) 94%, rgba(77,35,37,1) 100%);
-}
-.card .card-header-success .card-icon, .card .card-header-success:not(.card-header-icon):not(.card-header-text), .card .card-header-success .card-text {
-  box-shadow: 0 4px 20px 0px rgba(0, 0, 0, 0.14), 0 7px 10px -5px rgba(115, 56, 68, 0.4);
-}
-
-/* -----------------------------BUTTONS ------------------------------------*/
-
-/*button color*/
-.mat-flat-button.mat-primary, .mat-raised-button.mat-primary, .mat-fab.mat-primary, .mat-mini-fab.mat-primary {
-  background-color: #4271b8;
-}
-/*button color hover*/
-.mat-flat-button.mat-primary:hover, .mat-raised-button.mat-primary:hover, .mat-fab.mat-primary:hover, .mat-mini-fab.mat-primary:hover {
-  background-color: #2d5a9c;
-}
-/*button text*/
-.mat-flat-button.mat-primary, .mat-raised-button.mat-primary, .mat-fab.mat-primary, .mat-mini-fab.mat-primary {
-  color: rgb(243, 243, 243);
-}
-/*button text hover*/
-.mat-flat-button.mat-primary:hover, .mat-raised-button.mat-primary:hover, .mat-fab.mat-primary:hover, .mat-mini-fab.mat-primary:hover {
-  color: rgb(235, 235, 235);
-}
-.card-header a {
-  text-decoration: none;
-}
-/* ----------------------------- CONTENT ------------------------------------*/
-
-/*categories names*/
-.mat-button.mat-primary, .mat-icon-button.mat-primary, .mat-stroked-button.mat-primary {
-  color: #f5f5f5;
-}
-/*categories names hover*/
-.mat-button.mat-primary:hover, .mat-icon-button.mat-primary:hover, .mat-stroked-button.mat-primary:hover {
-  color: #8eacd8;
-}
-/*columns names*/
-.text-primary {
-  color: #da474c !important;
-}
-
-/*search by country*/
-.ng-tns-c73-0 .ng-star-inserted {
-  margin-left: 1%;
-}
-/*search country placeholder*/
-.mat-input-element::placeholder{
-  color: #e7dada;
-}
-/*font-awesome search*/
-.ng-tns-c73-0 .ng-star-inserted:before, .ng-tns-c73-2 .ng-star-inserted:before{ 
-  font-family: FontAwesome;
-  content: "\f002";
-  padding-right:0.7%;
-}
-.mat-input-element{
-  caret-color:white;
 }
 
 /* ----------------------------- PROFILES ------------------------------------*/
