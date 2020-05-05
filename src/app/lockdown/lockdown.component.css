@@ -76,7 +76,7 @@ td.left, td.center {
 
 /*non-active button text*/
 .mat-button.mat-primary, .mat-icon-button.mat-primary, .mat-stroked-button.mat-primary {
-  color: #ed5658;
+  color: #aaa5a5;
 }
 
 /*non-active button text hover*/
