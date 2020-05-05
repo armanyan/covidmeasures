@@ -7,6 +7,7 @@ import { AdminLayoutRoutes } from './admin-layout.routing';
 import { CountryComponent } from '../../country/country.component';
 import { LockdownComponent } from '../../lockdown/lockdown.component';
 import { SchoolComponent } from '../../school/school.component';
+import { ImpactsComponent } from '../../impacts/impacts.component';
 import { CovidComponent } from '../../covid/covid.component';
 import { DeathRatesComponent } from '../../death-rates/death-rates.component';
 import { AboutUsComponent } from '../../about-us/about-us.component';
@@ -25,10 +26,10 @@ import { MatSortModule } from '@angular/material/sort';
 
 import { MapSchoolClosureComponent } from '../../components/map-school-closure/map-school-closure.component';
 import { MapLockdownComponent } from '../../components/map-lockdown/map-lockdown.component';
-import { MarkerService } from '../../_service/marker.service';
-import { PopUpService } from '../../_service/pop-up.service';
-import { ShapeService } from '../../_service/shape.service';
-import { MapTilesService } from '../../_service/map-tiles.service';
+import { MarkerService } from '../../_service/map/marker.service';
+import { PopUpService } from '../../_service/map/pop-up.service';
+import { ShapeService } from '../../_service/map/shape.service';
+import { MapTilesService } from '../../_service/map/map-tiles.service';
 
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { HomeComponent } from 'app/homepage/homepage.component';
@@ -60,6 +61,7 @@ import { HomeComponent } from 'app/homepage/homepage.component';
     CountryComponent,
     LockdownComponent,
     SchoolComponent,
+    ImpactsComponent,
     CovidComponent,
     DeathRatesComponent,
     AboutUsComponent,

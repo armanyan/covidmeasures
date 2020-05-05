@@ -55,7 +55,6 @@ export class CountryComponent implements OnInit {
   private evolution: any;
   private schoolClosureData: any;
   private lockdownData: any;
-  private covidActiveCases = {};
 
   constructor(
     private titleService: Title,
@@ -79,7 +78,6 @@ export class CountryComponent implements OnInit {
     this.lockdownData = (await this.http.get('https://covidmeasures-data.s3.amazonaws.com/lockdown.json').toPromise() as any);
     this.impactData = (await this.http.get('https://covidmeasures-data.s3.amazonaws.com/country_impacts.json').toPromise() as any);
     this.setImpactTable();
-    this.setActiveCases();
 
     this.evolutionUpdatedOn = this.changeDateFormat(this.evolution.dates[this.evolution.dates.length - 1]);
 
@@ -192,16 +190,6 @@ export class CountryComponent implements OnInit {
     }
     this.currentDeathRate = shortenDeaths.reduce((a,b) => a + b)/shortenCases.reduce((a,b) => a + b);
     return { "cases": shortenCases, "deaths": shortenDeaths, "labels": shortenLabels }
-  }
-
-  /**
-   * Sets the number of active cases and deaths for every country in the world.
-   */
-  private async setActiveCases() {
-    const data = await this.http.get('https://api.covid19api.com/summary').toPromise();
-    for (const row of data["Countries"]) {
-      this.covidActiveCases[getAlpha3FromAlpha2(row['CountryCode'])] = row["TotalConfirmed"]-row["TotalRecovered"]-row["TotalDeaths"];
-    }
   }
 
   private setStatsAndStatuses(alpha3: string) {

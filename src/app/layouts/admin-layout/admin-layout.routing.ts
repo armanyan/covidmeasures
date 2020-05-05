@@ -3,6 +3,7 @@ import { Routes } from '@angular/router';
 import { CountryComponent } from '../../country/country.component';
 import { LockdownComponent } from '../../lockdown/lockdown.component';
 import { SchoolComponent } from '../../school/school.component';
+import { ImpactsComponent } from '../../impacts/impacts.component';
 import { CovidComponent } from '../../covid/covid.component';
 import { DeathRatesComponent } from '../../death-rates/death-rates.component';
 import { EconomicsComponent } from '../../economics/economics.component';
@@ -18,6 +19,7 @@ export const AdminLayoutRoutes: Routes = [
   { path: 'country/:alpha3', component: CountryComponent },
   { path: 'lockdown', component: LockdownComponent },
   { path: 'school', component: SchoolComponent },
+  { path: 'impacts', component: ImpactsComponent },
   { path: 'covid', component: CovidComponent },
   { path: 'deathrates', component: DeathRatesComponent },
   { path: 'economics', component: EconomicsComponent },

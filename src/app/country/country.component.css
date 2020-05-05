@@ -43,7 +43,7 @@ td.left, td.center {
 }
 
 .table thead th {
-  font-size: .95rem;
+  font-size: 0.95rem;
   font-weight: 500;
   border-top-width: 0;
   border-bottom-width: 1px;
@@ -138,6 +138,28 @@ td.left, td.center {
   box-shadow: 0 4px 20px 0px rgba(0, 0, 0, 0.14), 0 7px 10px -5px rgba(115, 56, 68, 0.4);
 }
 
-.card-citizens{
+.card-citizen{
   margin: 1% 0;
+}
+/**************************CARD-GRID*****************************/
+.card-grid {
+  display: grid;
+  grid-template-columns: auto auto auto;
+  grid-gap: 0.5em;
+  margin: auto;
+}
+@media all and (max-width: 1180px) and (min-width: 990px) {
+  .card-grid {
+    grid-template-columns: auto auto;
+  }
+}
+@media all and (max-width: 935px) {
+  .card-grid {
+    grid-template-columns: auto auto;
+  }
+}
+@media all and (max-width: 767px) {
+  .card-grid {
+    grid-template-columns: auto;
+  }
 }

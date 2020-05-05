@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import * as L from 'leaflet';
-import { MarkerService } from '../../_service/marker.service';
-import { ShapeService } from '../../_service/shape.service';
+import { MarkerService } from '../../_service/map/marker.service';
+import { ShapeService } from '../../_service/map/shape.service';
 import { HttpClient } from '@angular/common/http';
-import { MapTilesService } from '../../_service/map-tiles.service';
+import { MapTilesService } from '../../_service/map/map-tiles.service';
 
 interface Country{
   name: string,
@@ -106,9 +106,10 @@ export class MapLockdownComponent implements OnInit {
         return this._div;
     };
 
-    const getTextColor = function(text:string, curfew:boolean) {
-      if (text) {
-        const status = text.toLowerCase()
+    const getTextColor = function(status: string, curfew: boolean) {
+      if (status) {
+        if(status == "Restricted" && !curfew) return colors['Restricted'];
+        if(status == "Restricted" && curfew) return colors['Curfew'];
         return colors[status];
       }
     };
@@ -117,8 +118,8 @@ export class MapLockdownComponent implements OnInit {
         this._div.innerHTML = 
         '<h4>Lockdown Status</h4>' +  (country ?
         `<b>${ country.name }</b><br />
-        <span style="color:${ getTextColor(country.status, country.curfew) }">
-          ${ country.curfew ? 'Curfew' : country.status }
+        <span style="color:${ getTextColor(country.status, country.curfew) }; text-shadow: 1px 1px 1px #37180F;">
+          ${ country.curfew ? 'Curfew' : country.status == 'No data' ? '' : country.status}
         </span>`
         : 'Hover over a Country');
     };
@@ -136,7 +137,8 @@ export class MapLockdownComponent implements OnInit {
         // loop through our density intervals and generate a label with a colored square for each interval
         for (let i = 0; i < status.length; i++) {
             div.innerHTML +=
-                '<i style="background:' + colors[status[i]] + '"></i>    <strong>' + status[i] + '</strong> <br>';
+                `<i style="background:${colors[status[i]]}"></i>    
+                <strong>${status[i] == 'Restricted' ? 'Lockdown' : status[i] }</strong> <br>`;
         }
         return div;
     };
@@ -198,9 +200,26 @@ export class MapLockdownComponent implements OnInit {
     if (country) {
       return `
       <div>
-        <h6>
+        <h6 class="d-flex justify-content-center">
           <strong>${country.name}</strong>
         </h6>
+        <div class="pb-2">
+          <p class="p-0 m-0">
+            <strong>Current coverage:</strong> ${country.current_coverage}
+          </p>
+          <p class="p-0 m-0">
+            <strong>Type of restrictions:</strong> ${country.restriction_type}
+          </p>
+          <p class="p-0 m-0">
+            <strong>Start date:</strong> ${country.start}
+          </p>
+          <p class="p-0 m-0">
+            <strong>Start softening date:</strong> ${country.start_reopening}
+          </p>
+          <p class="p-0 m-0">
+            <strong>End date:</strong> ${country.end}
+          </p>
+        </div>
         <div class="d-flex justify-content-center">
           <a href="#/country/${country.alpha3}">
             <button class="mat-raised-button mat-button-base mat-primary text-light">Learn More</button>

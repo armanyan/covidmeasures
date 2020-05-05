@@ -121,58 +121,80 @@
 
     <h3>Government Measures' Impacts On Citizens</h3>
 
-    <div class="card center card-citizens">
+    <div class="card center">
       <div class="card-body">
         <ng-container *ngIf="isMobile">
           <mat-label>Per</mat-label>
-          <mat-select [(value)]="currentOption" (selectionChange)="changeViewOption($event.value)">
-            <mat-option *ngFor="let option of options" [value]="option">
-              {{option}}
+          <mat-select
+            [(value)]="currentOption"
+            (selectionChange)="changeViewOption($event.value)"
+          >
+            <mat-option
+              *ngFor="let option of options"
+              [value]="option"
+              style="color: rgb(52, 107, 186);"
+            >
+              {{ option }}
             </mat-option>
           </mat-select>
         </ng-container>
 
         <div *ngIf="!isMobile" class="center">
           <ng-container *ngFor="let option of options">
-            <button mat-raised-button *ngIf="currentOption===option" class="float" type="button" color="primary">
+            <button
+              mat-raised-button
+              *ngIf="currentOption === option"
+              class="float"
+              type="button"
+              color="primary"
+            >
               <span>{{ option }}</span>
             </button>
 
-            <button mat-button *ngIf="currentOption!==option" class="float" type="button" color="primary"
-              (click)="changeViewOption(option)">
+            <button
+              mat-button
+              *ngIf="currentOption !== option"
+              class="float"
+              type="button"
+              color="primary"
+              (click)="changeViewOption(option)"
+            >
               <span>{{ option }}</span>
             </button>
           </ng-container>
         </div>
-
       </div>
     </div>
 
+    <div class="row card-grid">
+      <div class="card card-border">
+        <div class="card-header card-header-success">
+          <h4 class="card-title">Children Homeschooling</h4>
+        </div>
 
-    <div class="form-row">
-      <div class="col-md-4 text-center">
-        <div class="card card-border" style="min-height:178px;">
-          <div class="card-header card-header-success">
-            <h4 class="card-title">Children Homeschooling</h4>
-          </div>
-          <table class="table gov-measures">
+        <div class="card-body">
+          <table class="table">
             <thead class="text-primary">
               <th>Children Impacted</th>
               <th>Cumulated Years At Home</th>
             </thead>
             <tbody>
-              <td class="left">{{schoolClosure.impacted_children | number}}</td>
-              <td class="center">{{schoolClosure.years | number}}</td>
+              <td class="left">
+                {{ schoolClosure.impacted_children | number }}
+              </td>
+              <td class="center">{{ schoolClosure.years | number }}</td>
             </tbody>
           </table>
         </div>
       </div>
-      <div class="col-md-4 text-center">
-        <div class="card card-border" style="min-height:178px;">
-          <div class="card-header card-header-success">
-            <h4 class="card-title">People Staying Inside</h4>
-          </div>
-          <table class="table gov-measures">
+
+      <div class="card card-border">
+        <div class="card-header card-header-success">
+          <h4 class="card-title">People Staying Inside</h4>
+        </div>
+
+        <div class="card-body">
+          <table class="table">
             <thead class="text-primary">
               <th>People Impacted</th>
               <th>Cumulated Years At Home</th>
@@ -184,12 +206,14 @@
           </table>
         </div>
       </div>
-      <div class="col-md-4 text-center">
-        <div class="card card-border" style="min-height:178px;">
-          <div class="card-header card-header-success">
-            <h4 class="card-title">Economic Slowdown</h4>
-          </div>
-          <table class="table gov-measures">
+
+      <div class="card card-border">
+        <div class="card-header card-header-success">
+          <h4 class="card-title">Economic Slowdown</h4>
+        </div>
+
+        <div class="card-body">
+          <table class="table">
             <thead class="text-primary">
               <th>Number of Days</th>
             </thead>
