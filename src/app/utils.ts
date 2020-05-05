@@ -306,11 +306,9 @@ export const createLineChart = (
     },
 
     tooltips: {
-      callbacks: {
-        label: function(tooltipItem: any) {
-          return tooltipItem.yLabel.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-        }
-      }
+      enabled: true, 
+      mode: 'label',
+      position: 'nearest'
     },
 
     scales: {
