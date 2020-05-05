@@ -7,6 +7,7 @@ import { AdminLayoutRoutes } from './admin-layout.routing';
 import { CountryComponent } from '../../country/country.component';
 import { LockdownComponent } from '../../lockdown/lockdown.component';
 import { SchoolComponent } from '../../school/school.component';
+import { ImpactsComponent } from '../../impacts/impacts.component';
 import { CovidComponent } from '../../covid/covid.component';
 import { DeathRatesComponent } from '../../death-rates/death-rates.component';
 import { AboutUsComponent } from '../../about-us/about-us.component';
@@ -59,6 +60,7 @@ import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
     CountryComponent,
     LockdownComponent,
     SchoolComponent,
+    ImpactsComponent,
     CovidComponent,
     DeathRatesComponent,
     AboutUsComponent,

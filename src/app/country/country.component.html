@@ -18,51 +18,51 @@
     </div>
   
   <h3 class="mt-md-0 pt-md-0">Government measures in response to COVID-19</h3>
-    <div class="form-row">
-      <div class="col">
-        <mat-form-field appearance="outline">
-          <div class="text-align">
-            <i class="material-icons">school</i>          
-            {{ schoolClosure.message }}:
-            <br>
-            <strong>{{ schoolClosure.date | date }}</strong>
-            <br>
-            <br>
-            <strong>{{ schoolClosure.status }}</strong>
-          </div>              
-          <input matInput disabled>
-        </mat-form-field>
-      </div>
-      <div class="col">
-        <mat-form-field appearance="outline">
-          <div class="text-align">
-            <i class="material-icons">lock</i>
-            Movement Restrictions Started On:
-            <br>
-            <strong>{{ lockdown.date | date }}</strong>
-            <br>
-            <br>
-            <strong>{{ lockdown.status }}</strong>
-          </div>
-          <input matInput disabled>
-          
-        </mat-form-field>
-      </div>
-      <div class="col">
-        <mat-form-field appearance="outline">
-          <div class="text-align">
-            <i class="material-icons">store</i>
-            Businesses Closed On:
-            <br>
-            <strong>{{ businessClosure.date | date }}</strong>
-            <br>
-            <br>
-            <strong>{{ businessClosure.status }}</strong>
-          </div>
-          <input matInput disabled>
-        </mat-form-field>
-      </div>
+  <div class="form-row">
+    <div class="col">
+      <mat-form-field appearance="outline">
+        <div class="text-align">
+          <i class="material-icons">school</i>          
+          {{ schoolClosure.message }}:
+          <br>
+          <strong>{{ schoolClosure.date | date }}</strong>
+          <br>
+          <br>
+          <strong>{{ schoolClosure.status }}</strong>
+        </div>              
+        <input matInput disabled>
+      </mat-form-field>
     </div>
+    <div class="col">
+      <mat-form-field appearance="outline">
+        <div class="text-align">
+          <i class="material-icons">lock</i>
+          Movement Restrictions Started On:
+          <br>
+          <strong>{{ lockdown.date | date }}</strong>
+          <br>
+          <br>
+          <strong>{{ lockdown.status }}</strong>
+        </div>
+        <input matInput disabled>
+        
+      </mat-form-field>
+    </div>
+    <div class="col">
+      <mat-form-field appearance="outline">
+        <div class="text-align">
+          <i class="material-icons">store</i>
+          Businesses Closed On:
+          <br>
+          <strong>{{ businessClosure.date | date }}</strong>
+          <br>
+          <br>
+          <strong>{{ businessClosure.status }}</strong>
+        </div>
+        <input matInput disabled>
+      </mat-form-field>
+    </div>
+  </div>
 
   <div>
     <p class="text-primary" style="margin:0"><b><a href="https://forms.gle/e6mXPravJkLtRWPq5" target="_blank">Is the information above not up-to-date?</a></b></p>
