@@ -12,7 +12,8 @@
     z-index: 2;
     width: 260px;
     background: $white-color;
-    @include shadow-big();
+    border-right: 1px solid rgba(0, 0, 0, 0.4);
+
 
     .caret{
       display: inline-block;
@@ -49,6 +50,7 @@
         z-index: 4;
 
         padding-bottom: 30px;
+        border-right: 1px solid rgba(0, 0, 0, 0.4);
 
         .dropdown .dropdown-backdrop{
             display: none !important;
@@ -295,7 +297,6 @@
 
 
     &[data-background-color="black"]{
-        @include sidebar-background-color($gray-base, $white-color);
 
         .nav li .dropdown-menu .dropdown-item{
           color: $white-color;
@@ -416,6 +417,7 @@
     -webkit-transition-timing-function: linear,linear,ease;
     transition-timing-function: linear,linear,ease;
     -webkit-overflow-scrolling: touch;
+    background-color: white;
 }
 
 .visible-on-sidebar-regular{

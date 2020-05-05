@@ -32,6 +32,7 @@ import { ShapeService } from '../../_service/map/shape.service';
 import { MapTilesService } from '../../_service/map/map-tiles.service';
 
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+import { HomeComponent } from 'app/homepage/homepage.component';
 
 @NgModule({
   imports: [
@@ -64,6 +65,7 @@ import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
     CovidComponent,
     DeathRatesComponent,
     AboutUsComponent,
+    HomeComponent,
     EconomicsComponent,
     SurveillanceComponent,
     BordersComponent,
