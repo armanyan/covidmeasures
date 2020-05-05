@@ -11,7 +11,7 @@ import { BordersComponent } from '../../borders/borders.component';
 import { MasksComponent } from '../../masks/masks.component';
 import { TestingComponent } from '../../testing/testing.component';
 import { AboutUsComponent } from '../../about-us/about-us.component';
-
+import { HomeComponent } from '../../homepage/homepage.component';
 
 export const AdminLayoutRoutes: Routes = [
   { path: 'country', component: CountryComponent, pathMatch: 'full' },
@@ -25,5 +25,7 @@ export const AdminLayoutRoutes: Routes = [
   { path: 'borders', component: BordersComponent },
   { path: 'masks', component: MasksComponent },
   { path: 'testing', component: TestingComponent },
-  { path: 'aboutus', component: AboutUsComponent }
+  { path: 'aboutus', component: AboutUsComponent },
+  
+  { path: 'home', component: HomeComponent }
 ];
