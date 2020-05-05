@@ -25,13 +25,47 @@
       <div class="col-md-4 text-center">
         <div class="card card-border">
           <div class="card-header card-header-success">
-            <h4 class="card-title">Educational Facilities</h4>
+            <h4 class="card-title">Educational Facilities Closed</h4>
           </div>
           <div class="text-center" style="text-align:center;">
             <i style="font-size:2.5em; padding:2%;" class="material-icons">school</i>
-            <p style="text-align:center;">Closed on:</p>
-            <p style="text-align:center; font-weight:900; font-size:1.2em;">{{ schoolClosure.date | date }}</p>
-            <p style="text-align:center; font-weight:900; font-size:1.2em;">{{ schoolClosure.status }}</p>
+            <p style="text-align:center; font-weight:900; font-size:1.2em;">
+              Started On {{ schoolClosure.date | date }}
+            </p>
+            <p style="text-align:center; font-weight:900; font-size:1.2em;">
+              Currently {{ schoolClosure.status }}
+            </p>
+            <div class="d-flex justify-content-end">
+              <a data-toggle="collapse" 
+              href="#collapseSchoolClosure" 
+              role="button" 
+              aria-expanded="false" 
+              aria-controls="collapseSchoolClosure"
+              style="text-decoration: none;"
+              >
+                <h4 class="d-flex justify-content-center text-primary px-3" style="font-weight:900;">
+                  More
+                  <i class="material-icons">arrow_drop_down</i>
+                </h4>
+              </a>
+            </div>
+            <div class="collapse" id="collapseSchoolClosure">
+              <div class="bg-light py-3 m-0">
+                <p>
+                  <span style="font-weight: 900;">Current coverage:</span> 
+                   {{schoolClosure.current_coverage}}
+                </p>
+                <p>
+                  <span style="font-weight: 900;">Started reopening on:</span> 
+                   {{schoolClosure.start_reopening}}
+                </p>
+                <p>
+                  <span style="font-weight: 900;">Ended measures on:</span> 
+                   {{schoolClosure.end}}
+                </p>
+                <p>{{schoolClosure.comment}}</p>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -42,21 +76,124 @@
           </div>
           <div class="text-center text-center" style="text-align:center;">
             <i style="font-size:2.5em; padding:2%;" class="material-icons">lock</i>
-            <p style="text-align:center;">Started On:</p>
-            <p style="text-align:center; font-weight:900; font-size:1.2em;">{{ lockdown.date | date }}</p>
-            <p style="text-align:center; font-weight:900; font-size:1.2em;">{{ lockdown.status }}</p>
+            <p style="text-align:center; font-weight:900; font-size:1.2em;">
+              Started on {{ lockdown.date | date }}
+            </p>
+            <p style="text-align:center; font-weight:900; font-size:1.2em;">
+              Currently {{ lockdown.status }}
+            </p>
+            <div class="d-flex justify-content-end">
+              <a data-toggle="collapse" 
+              href="#collapseMovementRestriction" 
+              role="button" 
+              aria-expanded="false" 
+              aria-controls="collapseMovementRestriction"
+              style="text-decoration: none;"
+              >
+                <h4 class="d-flex justify-content-center text-primary px-3" style="font-weight:900;">
+                  More
+                  <i class="material-icons">arrow_drop_down</i>
+                </h4>
+              </a>
+            </div>
+            <div class="collapse" id="collapseMovementRestriction">
+              <div class="bg-light py-3 m-0">
+                <p>
+                  <span style="font-weight: 900;">Current coverage:</span>
+                   {{lockdown.current_coverage}}
+                </p>
+                <p>
+                  <span style="font-weight: 900;">Type of restrictions:</span>
+                   {{lockdown.restriction_type}}
+                </p>
+                <p>
+                  <span style="font-weight: 900;">Started softening measures on:</span>
+                   {{lockdown.start_reopening}}
+                </p>
+                <p>
+                  <span style="font-weight: 900;">Ended measures on:</span>
+                   {{lockdown.end}}
+                 </p>
+                <p>{{lockdown.comment}}</p>
+              </div>
+            </div>
           </div>
         </div>
       </div>
       <div class="col-md-4 text-center">
         <div class="card card-border">
           <div class="card-header card-header-success">
-            <h4 class="card-title">Businesses</h4>
+            <h4 class="card-title">Businesses Closed</h4>
           </div>
           <i style="font-size:2.5em; padding:2%;" class="material-icons">store</i>
-          <p style="text-align:center;">Closed on:</p>
-          <p style="text-align:center; font-weight:900; font-size:1.2em;">{{ businessClosure.date | date }}</p>
-          <p style="text-align:center; font-weight:900; font-size:1.2em;">{{ businessClosure.status }}</p>
+          <p style="text-align:center; font-weight:900; font-size:1.2em;">
+            Started on {{ businessClosure.date | date }}
+          </p>
+          <p style="text-align:center; font-weight:900; font-size:1.2em;">
+            Currently {{ businessClosure.status }}
+          </p>
+          <div class="d-flex justify-content-end">
+            <a data-toggle="collapse" 
+            href="#collapseBusiness" 
+            role="button" 
+            aria-expanded="false" 
+            aria-controls="collapseBusiness"
+            style="text-decoration: none;"
+            >
+              <h4 class="d-flex justify-content-center text-primary px-3" style="font-weight:900;">
+                More
+                <i class="material-icons">arrow_drop_down</i>
+              </h4>
+            </a>
+          </div>
+          <div class="collapse" id="collapseBusiness">
+            <div class="bg-light py-3 m-0">
+              <p>
+                <span style="font-weight: 900;">Start softening date:</span>
+                 {{businessClosure.start_reopening_business}}
+              </p>
+              <p>
+                <span style="font-weight: 900;">Ended measures on:</span>
+                 {{businessClosure.end_business}}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4 text-center">
+        <div class="card card-border">
+          <div class="card-header card-header-success">
+            <h4 class="card-title">Mask Policy</h4>
+          </div>
+          <div class="text-center" style="text-align:center;">
+            <div class="d-flex justify-content-center py-3">
+              <button class="btn btn-primary" style="font-weight: 900;">Add Measure Info</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4 text-center">
+        <div class="card card-border">
+          <div class="card-header card-header-success">
+            <h4 class="card-title">Surveillance</h4>
+          </div>
+          <div class="text-center" style="text-align:center;">
+            <div class="d-flex justify-content-center py-3">
+              <button class="btn btn-primary" style="font-weight: 900;">Add Measure Info</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4 text-center">
+        <div class="card card-border">
+          <div class="card-header card-header-success">
+            <h4 class="card-title">Testing</h4>
+          </div>
+          <div class="text-center" style="text-align:center;">
+            <div class="d-flex justify-content-center py-3">
+              <button class="btn btn-primary" style="font-weight: 900;">Add Measure Info</button>
+            </div>
+          </div>
         </div>
       </div>
     </div>
