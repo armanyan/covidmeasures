@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Location } from '@angular/common';
 import 'rxjs/add/operator/filter';
 import { Subscription } from 'rxjs/Subscription';
@@ -19,7 +20,8 @@ export class AdminLayoutComponent implements OnInit {
 
   constructor( 
     public location: Location,
-    private titleService: Title 
+    private titleService: Title,
+    private router: Router
     ) {}
 
   ngOnInit() {
@@ -54,6 +56,9 @@ export class AdminLayoutComponent implements OnInit {
           bool = true;
       }
       return bool;
+  }
+  isHomePage() {
+    return this.router.url === '/home';
   }
 
 }

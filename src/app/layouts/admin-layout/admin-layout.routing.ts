@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 
+import { HomeComponent } from '../../homepage/homepage.component';
 import { CountryComponent } from '../../country/country.component';
 import { LockdownComponent } from '../../lockdown/lockdown.component';
 import { SchoolComponent } from '../../school/school.component';
@@ -12,9 +13,9 @@ import { BordersComponent } from '../../borders/borders.component';
 import { MasksComponent } from '../../masks/masks.component';
 import { TestingComponent } from '../../testing/testing.component';
 import { AboutUsComponent } from '../../about-us/about-us.component';
-import { HomeComponent } from '../../homepage/homepage.component';
 
 export const AdminLayoutRoutes: Routes = [
+  { path: 'home', component: HomeComponent },
   { path: 'country', component: CountryComponent, pathMatch: 'full' },
   { path: 'country/:alpha3', component: CountryComponent },
   { path: 'lockdown', component: LockdownComponent },
@@ -28,6 +29,4 @@ export const AdminLayoutRoutes: Routes = [
   { path: 'masks', component: MasksComponent },
   { path: 'testing', component: TestingComponent },
   { path: 'aboutus', component: AboutUsComponent },
-  
-  { path: 'home', component: HomeComponent }
 ];
