@@ -10,69 +10,64 @@
       {{ lockdown_intro_1 }}
     </p>
 </div>
-<div class="row">
-<div class="col-md-1"></div>
-    <div class="col-md-10">
-      <div class="card">
-        <div class="card-header card-header-success">
-          <h3 class="card-title ">Lockdown Measures Overview</h3>
 
-          <div *ngIf="isMobile">
-            <mat-label>Choose Region</mat-label>
-            <mat-select [(value)]="lockdownRegion" (selectionChange)="lockdownChangeRegion($event.value)">
-              <mat-option *ngFor="let location of locations" [value]="location.value">
-                {{location.viewValue}}
-              </mat-option>
-            </mat-select>
-          </div>
 
-          <ng-container *ngIf="!isMobile">
-            <ng-container *ngFor="let location of locations">
-              <button mat-raised-button *ngIf="lockdownRegion===location.value"
-                class="float" type="button" color="primary">
-                <span>{{ location.viewValue }}</span>
-              </button>
-
-              <button mat-button *ngIf="lockdownRegion!==location.value"
-                class="float" type="button" color="primary"
-                (click)="lockdownChangeRegion(location.value)">
-                <span>{{ location.viewValue }}</span>
-              </button>
-            </ng-container>
-          </ng-container>
-
+<div class="form-row">
+  <div class="col-md-1"></div>
+  <div class="col-md-10 text-center">
+    <div class="card card-border">
+      <div class="card-header card-header-success">
+        <h3 class="card-title">Lockdown Measures Overview</h3>
+        <div *ngIf="isMobile">
+          <mat-label>Choose Region</mat-label>
+          <mat-select [(value)]="lockdownRegion" (selectionChange)="lockdownChangeRegion($event.value)">
+            <mat-option *ngFor="let location of locations" [value]="location.value">
+              {{location.viewValue}}
+            </mat-option>
+          </mat-select>
         </div>
-          <div class="card-body">
-            <div class="table-responsive">
-              <table class="table">
-                <thead class="text-primary">
-                  <th>
-                    People Impacted By Lockdown
-                  </th>
-                  <th>
-                    Population Impacted By Curfew
-                  </th>
-                  <th>
-                    Average Duration
-                  </th>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td class="left">
-                      {{lockdownImpactedPeople | number}}
-                    </td>
-                    <td class="center">
-                      {{curfewImpactedPeople | number}}
-                    </td>
-                    <td class="center">
-                      {{averageDaysMissed | number}} days
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-              </div>
-          </div>
 
+        <ng-container *ngIf="!isMobile">
+          <ng-container *ngFor="let location of locations">
+            <button mat-raised-button *ngIf="lockdownRegion===location.value"
+              class="float" type="button" color="primary">
+              <span>{{ location.viewValue }}</span>
+            </button>
+
+            <button mat-button *ngIf="lockdownRegion!==location.value"
+              class="float" type="button" color="primary"
+              (click)="lockdownChangeRegion(location.value)">
+              <span>{{ location.viewValue }}</span>
+            </button>
+          </ng-container>
+        </ng-container>
+      </div>
+      <table class="table">
+        <thead class="text-primary">
+          <th>
+            People Impacted By Lockdown
+          </th>
+          <th>
+            Population Impacted By Curfew
+          </th>
+          <th>
+            Average Duration
+          </th>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="table-datas">
+              {{lockdownImpactedPeople | number}}
+            </td>
+            <td class="table-datas">
+              {{curfewImpactedPeople | number}}
+            </td>
+            <td class="table-datas">
+              {{averageDaysMissed | number}} days
+            </td>
+          </tr>
+        </tbody>
+      </table>
           <div class="card-footer ">
             <div class="stats">
               Updated on {{lockdownTableUpdatedOn}}
@@ -87,13 +82,12 @@
     <div class="col-md-1"></div>
   </div>
 
-    <p style="margin-top:2%">
+    <p style="margin-top:2%;">
       {{ lockdown_tab_1_below }}
     </p>
 
-    <hr>
     <!-- Lockdown Map Starts -->
-    <div class="card">
+    <div class="card mt-5 pt-5">
       <div class="card-header card-header-success">
         <h3 class="card-title">Map - Lockdown Status</h3>
       </div>
@@ -110,7 +104,6 @@
         </div>
       </div>
     </div>
-    <hr>
     <!-- Lockdown Map Ends -->
     <h3>What is the status of lockdown measures around the world?</h3>
 
@@ -219,8 +212,6 @@
     </p>
 
 
-    <hr>
-
     <h3 style="margin-bottom:5%">By Countries</h3>
 
     <div class="col-md-12">
@@ -277,8 +268,6 @@
       </div>
     </div>
 
-    <hr>
-
     <h3 style="margin-bottom:5%">Lockdown Impacts</h3>
 
     <div class="col-md-12">
@@ -327,8 +316,6 @@
 
       </div>
     </div>
-
-    <hr>
 
     <p style="margin-top:2%">
       The status of lockdown measures worldwide was made possible thanks to the community of <b>CovidMeasures</b>.
