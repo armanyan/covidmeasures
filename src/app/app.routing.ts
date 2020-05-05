@@ -4,11 +4,12 @@ import { BrowserModule  } from '@angular/platform-browser';
 import { Routes, RouterModule } from '@angular/router';
 
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
+import { mobileWidth } from './utils';
 
 const routes: Routes =[
   {
     path: '',
-    redirectTo: 'home',
+    redirectTo: window.innerWidth > mobileWidth ? 'home' : 'country',
     pathMatch: 'full',
   }, {
     path: '',
