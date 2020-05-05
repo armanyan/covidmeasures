@@ -1,29 +1,39 @@
 export default [
   {
+    "code": 116,
+    "alpha3": "KHM",
     "country": "Cambodia",
     "ban": "Most countries",
     "quarantine": "No",
-    "testing": "Yes",
+    "testing": "No",
     "closed_borders": "Yes",
-    "other": "Visa suspension",
+    "other": "New visa suspension, tourist visa are extended till everybody can fly back home",
     "exceptions": "Nationals",
     "start": "30 March 2020",
     "end": "",
-    "status": "Ongoing"
+    "status": "Ongoing",
+    "source": "www.aljazeera.com",
+    "link": "https://www.aljazeera.com/news/2020/03/coronavirus-travel-restrictions-border-shutdowns-country-200318091505922.html"
   },
   {
+    "code": 120,
+    "alpha3": "CMR",
     "country": "Cameroon",
     "ban": "All countries",
     "quarantine": "",
     "testing": "",
     "closed_borders": "Yes",
     "other": "Airports closed",
-    "exceptions": "Tourist visa are extended till everybody can fly back home",
+    "exceptions": "",
     "start": "17 March 2020",
     "end": "",
-    "status": "Ongoing"
+    "status": "Ongoing",
+    "source": "www.aljazeera.com",
+    "link": "https://www.aljazeera.com/news/2020/03/coronavirus-travel-restrictions-border-shutdowns-country-200318091505922.html"
   },
   {
+    "code": 124,
+    "alpha3": "CAN",
     "country": "Canada",
     "ban": "All countries",
     "quarantine": "",
@@ -33,9 +43,13 @@ export default [
     "exceptions": "Nationals, US citizens",
     "start": "18 March 2020",
     "end": "",
-    "status": "Ongoing"
+    "status": "Ongoing",
+    "source": "www.aljazeera.com",
+    "link": "https://www.aljazeera.com/news/2020/03/coronavirus-travel-restrictions-border-shutdowns-country-200318091505922.html"
   },
   {
+    "code": 170,
+    "alpha3": "COL",
     "country": "Colombia",
     "ban": "All countries",
     "quarantine": "",
@@ -45,9 +59,13 @@ export default [
     "exceptions": "",
     "start": "16 March 2020",
     "end": "",
-    "status": ""
+    "status": "Ongoing",
+    "source": "www.aljazeera.com",
+    "link": "https://www.aljazeera.com/news/2020/03/coronavirus-travel-restrictions-border-shutdowns-country-200318091505922.html"
   },
   {
+    "code": 191,
+    "alpha3": "HRV",
     "country": "Croatia",
     "ban": "Most countries",
     "quarantine": "Yes",
@@ -57,6 +75,8 @@ export default [
     "exceptions": "EU citizens",
     "start": "18 March 2020",
     "end": "",
-    "status": "Ongoing"
+    "status": "Ongoing",
+    "source": "www.dw.com",
+    "link": "https://www.dw.com/en/eu-closes-borders-to-foreigners-to-halt-coronavirus-spread-what-to-know/a-52824499"
   }
 ]
