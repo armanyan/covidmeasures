@@ -69,6 +69,36 @@
         </mat-form-field>
       </div>
     </div>
+    <div class="col">
+      <mat-form-field appearance="outline">
+        <div class="text-align">
+          <i class="material-icons">lock</i>
+          Movement Restrictions Started On:
+          <br>
+          <strong>{{ lockdown.date | date }}</strong>
+          <br>
+          <br>
+          <strong>{{ lockdown.status }}</strong>
+        </div>
+        <input matInput disabled>
+        
+      </mat-form-field>
+    </div>
+    <div class="col">
+      <mat-form-field appearance="outline">
+        <div class="text-align">
+          <i class="material-icons">store</i>
+          Businesses Closed On:
+          <br>
+          <strong>{{ businessClosure.date | date }}</strong>
+          <br>
+          <br>
+          <strong>{{ businessClosure.status }}</strong>
+        </div>
+        <input matInput disabled>
+      </mat-form-field>
+    </div>
+  </div>
 
     <div>
       <p class="text-primary" style="margin: 0;">
