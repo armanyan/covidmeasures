@@ -8,7 +8,7 @@
 <div class="sidebar-wrapper">
   <ul class="nav">
     <li routerLinkActive="active" *ngFor="let menuItem of menuItems" class="{{menuItem.class}} nav-item">
-      <a *ngIf="!menuItem.soon && !menuItem.hide" class="nav-link" [routerLink]="[menuItem.path]">
+      <a *ngIf="!menuItem.soon && !menuItem.hide && !menuItem.collapse" class="nav-link" [routerLink]="[menuItem.path]">
         <i class="material-icons">{{menuItem.icon}}</i>
         <p><b>{{menuItem.title}}</b></p>
       </a>
@@ -16,6 +16,29 @@
         <i class="material-icons">{{menuItem.icon}}</i>
         <p style="color: grey;">{{menuItem.title}}</p>
       </a>
+      <div *ngIf="menuItem.collapse">
+        <a data-toggle="collapse" 
+        href="#{{menuItem.title}}" 
+        role="button" 
+        aria-expanded="false"
+        class="d-flex align-items-center justify-content-between"
+        > 
+          <h4 class="m-0 p-0 font-weight-bolder" >
+            {{ menuItem.title }}
+          </h4>
+        <i class="material-icons" style="font-size: 40px;">arrow_drop_down</i>
+        </a>
+        <div class="collapse m-0 p-0" id="{{menuItem.title}}">
+          <div class="card m-0 pl-3">
+            <li routerLinkActive="active" *ngFor="let menu of menuItem.menus" class="nav-item">
+              <a  class="nav-link" [routerLink]="[menu.path]">
+                <i class="material-icons">{{menu.icon}}</i>
+                <p><b>{{menu.title}}</b></p>
+              </a>
+            </li>
+          </div>
+        </div>
+      </div>
     </li>
   </ul>
 </div>

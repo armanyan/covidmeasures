@@ -32,9 +32,34 @@ export class CountryComponent implements OnInit {
 
   public evolutionRange: {from:string, to:string} = {from: 'default', to: 'default'};
   
-  public schoolClosure = {status: 'No Data', date: '', impacted_children: 0, years: 0, message: 'Educational Facilities Closed On'};
-  public lockdown = {status: 'No Data', date: ''};
-  public businessClosure = {status: 'No Data', date: '', days: 0};
+  public schoolClosure = {
+    status: 'No Data', 
+    date: '', 
+    impacted_children: 0, 
+    years: 0, 
+    message: 'Educational Facilities Closed On',
+    current_coverage: '',
+    start_reopening: '',
+    end: '',
+    comment: ''
+  };
+  public lockdown = {
+    status: 'No Data', 
+    date: '', 
+    current_coverage: '',
+    restriction_type: '', 
+    start_reopening: '', 
+    end: '', 
+    comment:''
+  };
+  public businessClosure = {
+    status: 'No Data', 
+    date: '', 
+    days: 0, 
+    start_reopening_business: '', 
+    end_business: ''
+  };
+
   public countryImpactedPeople: number;
   public countryCumulatedYears: number;
 
@@ -216,6 +241,10 @@ export class CountryComponent implements OnInit {
     this.schoolClosure.status = schoolCountry.status;
     this.schoolClosure.message = schoolCountry.status === 'Re-opened' ? 'Educational Facilities Re-opened Since' : 'Educational Facilities Closed On';
     this.schoolClosure.date = schoolCountry.status === 'Re-opened' ? schoolCountry.end : schoolCountry.start;
+    this.schoolClosure.current_coverage = schoolCountry.current_coverage
+    this.schoolClosure.start_reopening = schoolCountry.start_reopening
+    this.schoolClosure.end = schoolCountry.end
+    this.schoolClosure.comment = schoolCountry.comment
 
     const affectedChildren = getChildrenNoSchool(alpha3)*schoolCountry.current_children_no_school;
     this.schoolClosure.impacted_children =
@@ -225,10 +254,17 @@ export class CountryComponent implements OnInit {
     const lockdownCountry = this.getCountry(this.lockdownData.countries, alpha3);
     this.lockdown.status = lockdownCountry.status;
     this.lockdown.date = lockdownCountry.status === "Restrictions removed" ? lockdownCountry.end : lockdownCountry.start;
+    this.lockdown.current_coverage = lockdownCountry.current_coverage
+    this.lockdown.restriction_type = lockdownCountry.restriction_type
+    this.lockdown.start_reopening = lockdownCountry.start_reopening
+    this.lockdown.end = lockdownCountry.end
+    this.lockdown.comment = lockdownCountry.comments
 
     this.businessClosure.status = lockdownCountry.status_business;
     this.businessClosure.date = lockdownCountry.start_business_closure;
     this.businessClosure.days = this.getBusinessClosureDays(lockdownCountry);
+    this.businessClosure.start_reopening_business = lockdownCountry.start_reopening_business
+    this.businessClosure.end_business = lockdownCountry.end_business
 
     const affectedPopulation = getCountryPopulation(alpha3)*lockdownCountry.current_population_impacted;
     this.countryImpactedPeople = Math.floor(affectedPopulation/this.statsDivider);
