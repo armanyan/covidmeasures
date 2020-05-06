@@ -7,7 +7,7 @@ import { Location } from '@angular/common';
 import moment from 'moment'
 import { FormBuilder, FormGroup } from '@angular/forms';
 
-import { mobileWidth, monthNames, createLineChart, getCountryNameByAlpha, getAlpha3FromAlpha2,
+import { mobileWidth, monthNames, create2YLineChart, getCountryNameByAlpha, getAlpha3FromAlpha2,
          getChildrenNoSchool, getCountryPopulation } from '../utils';
 
 interface Country {
@@ -93,7 +93,9 @@ export class CountryComponent implements OnInit {
 
     const labels = this.evolution.dates.map(date => this.changeDateFormat(date));
 
-    const data = this.getDataSets(this.evolution.data.USA.cases, this.evolution.data.USA.deaths, labels);
+    const data = this.getDataSets(
+      this.evolution.data.USA.cases, this.evolution.data.USA.deaths, this.evolution.data.USA.severity, labels
+    );
 
     // we get start & end date for calendar range
     const startDate = moment(new Date(data.labels[0])).format('MM/DD/YYYY')
@@ -103,6 +105,7 @@ export class CountryComponent implements OnInit {
 
     const dataSets = [
       {
+        yAxisID: 'people',
         label: "Infection Cases",
         backgroundColor: "rgba(52, 107, 186, 0.3)",
         borderColor: "rgb(52, 107, 186)",
@@ -110,16 +113,25 @@ export class CountryComponent implements OnInit {
         data: data.cases
       },
       {
+        yAxisID: 'people',
         label: "Deaths",
         backgroundColor: "rgba(206, 43, 51, 0.3)",
         borderColor: "rgb(206, 43, 51)",
         fill: true,
         data: data.deaths
+      },
+      {
+        yAxisID: 'severity',
+        label: "Severity",
+        backgroundColor: "rgba(217, 217, 217, 0.3)",
+        borderColor: "rgba(153, 153, 153)",
+        fill: true,
+        data: data.severity
       }
     ]
      // One country cases evolution chart
      const countryAllCasesCTX = (document.getElementById("countryChartAllCases") as any).getContext("2d");
-     this.countryAllCasesCTX = createLineChart(
+     this.countryAllCasesCTX = create2YLineChart(
         countryAllCasesCTX, 
         data.labels,
         dataSets,
@@ -141,6 +153,9 @@ export class CountryComponent implements OnInit {
       this.location.go('/country/'+this.countryView)
     }
     this.currentCountryName = getCountryNameByAlpha(this.countryView);
+
+    this.totalDeathRate = this.evolution.data[this.countryView].deaths.reduce((a,b) => a + b) /
+      this.evolution.data[this.countryView].cases.reduce((a,b) => a + b);
   }
 
   public evolutionRangeChanged() { // if date range picker value is changed
@@ -154,6 +169,7 @@ export class CountryComponent implements OnInit {
       const datasets = this.getDataSets(
         this.evolution.data[this.countryView].cases,
         this.evolution.data[this.countryView].deaths,
+        this.evolution.data[this.countryView].severity,
         this.evolution.dates.map(date => this.changeDateFormat(date))
       )
 
@@ -164,9 +180,10 @@ export class CountryComponent implements OnInit {
     }
   }
 
-  private getDataSets(activeCases: number[], deaths: number[], labels: string[]) {
+  private getDataSets(activeCases: number[], deaths: number[], severity: number[], labels: string[]) {
     let shortenCases = [...activeCases];
     let shortenDeaths = [...deaths];
+    let shortenSeverity = [...severity];
     let shortenLabels = [...labels];
 
     if (this.evolutionRange.from === 'default' && this.evolutionRange.to === 'default') {
@@ -175,6 +192,7 @@ export class CountryComponent implements OnInit {
       const firstDeathIndex = shortenDeaths.findIndex(x => x)
       shortenCases = shortenCases.slice(firstDeathIndex, shortenCases.length);
       shortenDeaths = shortenDeaths.slice(firstDeathIndex, shortenDeaths.length);
+      shortenSeverity = shortenSeverity.slice(firstDeathIndex, shortenSeverity.length);
       shortenLabels = shortenLabels.slice(firstDeathIndex, shortenLabels.length);
     }else{
       // if evolutionRange has date. we get the first and last index of labels
@@ -186,10 +204,11 @@ export class CountryComponent implements OnInit {
 
       shortenCases = shortenCases.slice(startIndex, endIndex+1);
       shortenDeaths = shortenDeaths.slice(startIndex, endIndex+1);
+      shortenSeverity = shortenSeverity.slice(startIndex, endIndex+1);
       shortenLabels = shortenLabels.slice(startIndex, endIndex+1);
     }
     this.currentDeathRate = shortenDeaths.reduce((a,b) => a + b)/shortenCases.reduce((a,b) => a + b);
-    return { "cases": shortenCases, "deaths": shortenDeaths, "labels": shortenLabels }
+    return { "cases": shortenCases, "deaths": shortenDeaths, "severity": shortenSeverity, "labels": shortenLabels }
   }
 
   private setStatsAndStatuses(alpha3: string) {
@@ -264,6 +283,7 @@ export class CountryComponent implements OnInit {
     const datasets = this.getDataSets(
       this.evolution.data[value].cases,
       this.evolution.data[value].deaths,
+      this.evolution.data[value].severity,
       this.evolution.dates.map(date => this.changeDateFormat(date))
     )
     // we get start & end date for calendar range
@@ -277,6 +297,7 @@ export class CountryComponent implements OnInit {
 
         this.countryAllCasesCTX.data.datasets[0].data  = datasets['cases'];
         this.countryAllCasesCTX.data.datasets[1].data = datasets['deaths'];
+        this.countryAllCasesCTX.data.datasets[2].data = datasets['severity'];
         this.countryAllCasesCTX.data.labels = datasets['labels'];
         this.countryAllCasesCTX.update();
         return;
