@@ -230,9 +230,9 @@
       <div class="card m-0 p-0  px-sm-2">
         <div class="card-body  m-3 p-0">
           <h5 class="font-weight-bold">
-            <div class="float-left">Death Rate For Current Range: <span
+            <div class="float-left">Death-Cases Ratio For Current Range: <span
                 class="text-danger">{{ currentDeathRate*100 | number }}%</span></div>
-            <div class="float-right">Total Death Rate: <span
+            <div class="float-right">Total Death-Cases Ratio: <span
                 class="text-danger">{{ totalDeathRate*100 | number }}%</span></div>
           </h5>
         </div>
@@ -319,7 +319,7 @@
               <td class="left">
                 {{ schoolClosure.impacted_children | number }}
               </td>
-              <td class="center">{{ schoolClosure.years | number }}</td>
+              <td class="center">{{ schoolClosure.years | number:'.0-0' }}</td>
             </tbody>
           </table>
         </div>
@@ -338,7 +338,7 @@
             </thead>
             <tbody>
               <td class="left">{{ countryImpactedPeople | number }}</td>
-              <td class="center">{{ countryCumulatedYears | number }}</td>
+              <td class="center">{{ countryCumulatedYears | number:'.0-0' }}</td>
             </tbody>
           </table>
         </div>
