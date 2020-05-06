@@ -30,7 +30,7 @@
         </a>
         <div class="collapse m-0 p-0" id="{{menuItem.title}}">
           <div class="card m-0 pl-3">
-            <li *ngFor="let menu of menuItem.menus" class="nav-item">
+            <li routerLinkActive="active" *ngFor="let menu of menuItem.menus" class="nav-item">
               <a  class="nav-link" [routerLink]="[menu.path]">
                 <i class="material-icons">{{menu.icon}}</i>
                 <p><b>{{menu.title}}</b></p>
