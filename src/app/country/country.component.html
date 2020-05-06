@@ -2,7 +2,7 @@
   <div class="container-fluid">
 
     <div layout-align="end end">
-      <h2 style="font-weight:bold" *ngIf=isMobile><u>{{titleService.getTitle()}}</u></h2>
+      <h2 style="font-weight:bold" *ngIf=isMobile><u>{{ titleService.getTitle().split(':')[0] }}</u></h2>
     </div>
 
     <h3>Government measures in response to COVID-19</h3>
