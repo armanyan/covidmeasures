@@ -118,7 +118,9 @@ export class CountryComponent implements OnInit {
 
     const labels = this.evolution.dates.map(date => this.changeDateFormat(date));
 
-    const data = this.getDataSets(this.evolution.data.USA.cases, this.evolution.data.USA.deaths, labels);
+    const data = this.getDataSets(
+      this.evolution.data.USA.cases, this.evolution.data.USA.deaths, labels
+    );
 
     // we get start & end date for calendar range
     const startDate = moment(new Date(data.labels[0])).format('MM/DD/YYYY')
@@ -166,6 +168,9 @@ export class CountryComponent implements OnInit {
       this.location.go('/country/'+this.countryView)
     }
     this.currentCountryName = getCountryNameByAlpha(this.countryView);
+
+    this.totalDeathRate = this.evolution.data[this.countryView].deaths.reduce((a,b) => a + b) /
+      this.evolution.data[this.countryView].cases.reduce((a,b) => a + b);
   }
 
   public evolutionRangeChanged() { // if date range picker value is changed

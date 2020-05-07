@@ -283,76 +283,159 @@ export const createStackedBarChart = (
 }
 
 export const createLineChart = (
-    ctx: CanvasRenderingContext2D, 
-    labels: string[], 
-    dataset: number[] | object[], // array of numbers for single data & object for multiple data
-    legendDisplay: boolean = false, // Line graph legends
-    responsive: boolean = true, // for responsiveness
-    maintainAspectRatio: boolean = true, // for aspect ratio
-  ) => {
-  const data = {
-    labels,
-    datasets: typeof dataset[0] === "number" ? [{
-        borderColor: "#3399FF",
-        data: dataset
-      }] : dataset
-  };
-  const options = {
-    responsive: responsive,
-    maintainAspectRatio: maintainAspectRatio,
+  ctx: CanvasRenderingContext2D, 
+  labels: string[], 
+  dataset: number[] | object[], // array of numbers for single data & object for multiple data
+  legendDisplay: boolean = false, // Line graph legends
+  responsive: boolean = true, // for responsiveness
+  maintainAspectRatio: boolean = true, // for aspect ratio
+) => {
+const data = {
+  labels,
+  datasets: typeof dataset[0] === "number" ? [{
+      borderColor: "#3399FF",
+      data: dataset
+    }] : dataset
+};
+const options = {
+  responsive: responsive,
+  maintainAspectRatio: maintainAspectRatio,
 
-    legend: {
-      display: legendDisplay
-    },
+  legend: {
+    display: legendDisplay
+  },
 
-    tooltips: {
-      enabled: true, 
-      mode: 'label',
-      position: 'nearest',
-      callbacks: {
-        label: function(tooltipItem: any) {
-          return tooltipItem.yLabel.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-        }
+  tooltips: {
+    enabled: true, 
+    mode: 'label',
+    position: 'nearest',
+    callbacks: {
+      label: function(tooltipItem: any) {
+        return tooltipItem.yLabel.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
       }
-    },
+    }
+  },
 
-    scales: {
-      yAxes: [{
+  scales: {
+    yAxes: [{
 
-        ticks: {
-          userCallback: function(value, index, values) {
-            value = value.toString();
-            value = value.split(/(?=(?:...)*$)/);
-            value = value.join(',');
-            return value;
-          },
-          fontColor: "#9f9f9f",
-          beginAtZero: false
+      ticks: {
+        userCallback: function(value, index, values) {
+          value = value.toString();
+          value = value.split(/(?=(?:...)*$)/);
+          value = value.join(',');
+          return value;
         },
-        gridLines: {
-          drawBorder: false,
-          zeroLineColor: "#ccc",
-          color: 'rgba(0,0,0,0.05)'
-        }
+        fontColor: "#9f9f9f",
+        beginAtZero: false
+      },
+      gridLines: {
+        drawBorder: false,
+        zeroLineColor: "#ccc",
+        color: 'rgba(0,0,0,0.05)'
+      }
 
-      }],
+    }],
 
-      xAxes: [{
-        barPercentage: 1.6,
-        gridLines: {
-          drawBorder: false,
-          color: 'rgba(255,255,255,0.1)',
-          zeroLineColor: "transparent",
-          display: true,
+    xAxes: [{
+      barPercentage: 1.6,
+      gridLines: {
+        drawBorder: false,
+        color: 'rgba(255,255,255,0.1)',
+        zeroLineColor: "transparent",
+        display: true,
+      },
+      // label format
+      ticks: {
+        padding: 20,
+        fontColor: "#9f9f9f"
+      }
+    }]
+  },
+};
+
+return new Chart(ctx, { type: 'line', data, options});
+}
+
+export const create2YLineChart = (
+  ctx: CanvasRenderingContext2D, 
+  labels: string[], 
+  dataset: number[] | object[], // array of numbers for single data & object for multiple data
+  legendDisplay: boolean = false, // Line graph legends
+  responsive: boolean = true, // for responsiveness
+  maintainAspectRatio: boolean = true, // for aspect ratio
+) => {
+const data = {
+  labels,
+  datasets: typeof dataset[0] === "number" ? [{
+      borderColor: "#3399FF",
+      data: dataset
+    }] : dataset
+};
+const options = {
+  responsive: responsive,
+  maintainAspectRatio: maintainAspectRatio,
+
+  legend: {
+    display: legendDisplay
+  },
+
+  tooltips: {
+    enabled: true, 
+    mode: 'label',
+    position: 'nearest',
+    callbacks: {
+      label: function(tooltipItem: any) {
+        return tooltipItem.yLabel.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+      }
+    }
+  },
+
+  scales: {
+    yAxes: [{
+      id: 'people',
+      ticks: {
+        userCallback: function(value, index, values) {
+          value = value.toString();
+          value = value.split(/(?=(?:...)*$)/);
+          value = value.join(',');
+          return value;
         },
-        // label format
-        ticks: {
-          padding: 20,
-          fontColor: "#9f9f9f"
-        }
-      }]
-    },
-  };
+        fontColor: "#9f9f9f",
+        beginAtZero: false
+      },
+      gridLines: {
+        drawBorder: false,
+        zeroLineColor: "#ccc",
+        color: 'rgba(0,0,0,0.05)'
+      }
 
-  return new Chart(ctx, { type: 'line', data, options});
+    }, {
+      id: 'severity',
+      type: 'linear',
+      position: 'right',
+      ticks: {
+        max: 9,
+        min: 0
+      }
+    }],
+
+    xAxes: [{
+      barPercentage: 1.6,
+      gridLines: {
+        drawBorder: false,
+        color: 'rgba(255,255,255,0.1)',
+        zeroLineColor: "transparent",
+        display: true,
+      },
+      // label format
+      ticks: {
+        padding: 20,
+        fontColor: "#9f9f9f"
+      }
+    }]
+  },
+};
+
+return new Chart(ctx, { type: 'line', data, options});
 }

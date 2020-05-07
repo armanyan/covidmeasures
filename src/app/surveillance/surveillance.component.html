@@ -2,6 +2,7 @@
   <div class="container-fluid">
 
     <div layout-align="end end">
+      <h2 *ngIf="isMobile"><u>{{ titleService.getTitle().split(':')[0] }}</u></h2>
     </div>
 
     <p>
