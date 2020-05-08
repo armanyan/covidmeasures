@@ -1,14 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { Chart } from 'chart.js';
+// import * as ChartAnnotation from 'chartjs-plugin-annotation';
 import { HttpClient } from '@angular/common/http';
-import { Router, ActivatedRoute } from "@angular/router";
+import { ActivatedRoute } from "@angular/router";
 import { Location } from '@angular/common'; 
 import moment from 'moment'
 import { FormBuilder, FormGroup } from '@angular/forms';
 
-import { mobileWidth, monthNames, createLineChart, getCountryNameByAlpha, getAlpha3FromAlpha2,
-         getChildrenNoSchool, getCountryPopulation } from '../utils';
+import { mobileWidth, monthNames, createEvolutionChart, getCountryNameByAlpha, getAlpha3FromAlpha2,
+   getChildrenNoSchool, getCountryPopulation, createNewEvolutionChart } from '../utils';
 
 interface Country {
   value: string;
@@ -33,10 +34,10 @@ export class CountryComponent implements OnInit {
   public evolutionRange: {from:string, to:string} = {from: 'default', to: 'default'};
   
   public schoolClosure = {
-    status: 'No Data', 
-    date: '', 
-    impacted_children: 0, 
-    years: 0, 
+    status: 'No Data',
+    date: '',
+    impacted_children: 0,
+    years: 0,
     message: 'Educational Facilities Closed On',
     current_coverage: '',
     start_reopening: '',
@@ -44,27 +45,26 @@ export class CountryComponent implements OnInit {
     comment: ''
   };
   public lockdown = {
-    status: 'No Data', 
-    date: '', 
+    status: 'No Data',
+    date: '',
     current_coverage: '',
-    restriction_type: '', 
-    start_reopening: '', 
-    end: '', 
-    comment:''
+    restriction_type: '',
+    start_reopening: '',
+    end: '',
+    comment: ''
   };
   public businessClosure = {
-    status: 'No Data', 
-    date: '', 
-    days: 0, 
+    status: 'No Data',
+    date: '',
+    days: 0,
     start_reopening_business: '', 
     end_business: ''
   };
-
   public countryImpactedPeople: number;
   public countryCumulatedYears: number;
 
-  public currentDeathRate: number;
-  public totalDeathRate: number;
+  public currentDeathRatio: number;
+  public totalDeathRatio: number;
 
   public statsDivider = 1;
 
@@ -81,10 +81,11 @@ export class CountryComponent implements OnInit {
   private schoolClosureData: any;
   private lockdownData: any;
 
+  public severityMeasures: Chart;
+
   constructor(
     private titleService: Title,
     private http: HttpClient,
-    private router: Router,
     private activatedRoute: ActivatedRoute,
     private location: Location,
     private formBuilder: FormBuilder
@@ -98,15 +99,17 @@ export class CountryComponent implements OnInit {
     this.titleService.setTitle('Country Overview: COVID-19 Statistics and Government Measures');
     this.isMobile = window.innerWidth > mobileWidth ? false : true;
 
-    this.evolution = (await this.http.get('https://covidmeasures-data.s3.amazonaws.com/evolution.json').toPromise() as any);
-    this.schoolClosureData = (await this.http.get('https://covidmeasures-data.s3.amazonaws.com/school_closure.json').toPromise() as any);
-    this.lockdownData = (await this.http.get('https://covidmeasures-data.s3.amazonaws.com/lockdown.json').toPromise() as any);
-    this.impactData = (await this.http.get('https://covidmeasures-data.s3.amazonaws.com/country_impacts.json').toPromise() as any);
+    const aws = 'https://covidmeasures-data.s3.amazonaws.com';
+    this.evolution = (await this.http.get(`${aws}/test_evolution.json`).toPromise() as any);
+    this.schoolClosureData = (await this.http.get(`${aws}/school_closure.json`).toPromise() as any);
+    this.lockdownData = (await this.http.get(`${aws}/lockdown.json`).toPromise() as any);
+    this.impactData = (await this.http.get(`${aws}/country_impacts.json`).toPromise() as any);
     this.setImpactTable();
 
     this.evolutionUpdatedOn = this.changeDateFormat(this.evolution.dates[this.evolution.dates.length - 1]);
 
     this.setStatsAndStatuses(this.countryView);
+    this.getLockdownDataset(this.lockdown.date, this.lockdown.start_reopening);
 
     this.countryList = [];
     for (const alpha of Object.keys(this.evolution.data)) {
@@ -117,10 +120,7 @@ export class CountryComponent implements OnInit {
     }
 
     const labels = this.evolution.dates.map(date => this.changeDateFormat(date));
-
-    const data = this.getDataSets(
-      this.evolution.data.USA.cases, this.evolution.data.USA.deaths, labels
-    );
+    const data = this.getDataSets(this.evolution.data.USA.cases, this.evolution.data.USA.deaths, labels);
 
     // we get start & end date for calendar range
     const startDate = moment(new Date(data.labels[0])).format('MM/DD/YYYY')
@@ -130,48 +130,113 @@ export class CountryComponent implements OnInit {
 
     const dataSets = [
       {
-        label: "Infection Cases",
-        backgroundColor: "rgba(52, 107, 186, 0.3)",
-        borderColor: "rgb(52, 107, 186)",
-        fill: true,
-        data: data.cases
+        label: "Cases", backgroundColor: "rgba(52,107,186,0.3)", borderColor: "#346bb6",
+        fill: true, data: data.cases, yAxisID: 'people'
       },
       {
-        label: "Deaths",
-        backgroundColor: "rgba(206, 43, 51, 0.3)",
-        borderColor: "rgb(206, 43, 51)",
-        fill: true,
-        data: data.deaths
+        label: "Deaths", backgroundColor: "rgba(206,43,51,0.3)", borderColor: "#ce2b33",
+        fill: true, data: data.deaths, yAxisID: 'people'
+      },
+      {
+        label: "Lockdown", backgroundColor: "rgba(174, 113, 240, 0.1)", borderColor: "rgba(0,0,0,0)",
+        fill: true, data: data.lockdown, yAxisID: 'severity', pointRadius: 0, pointHoverRadius: 0
       }
     ]
-     // One country cases evolution chart
-     const countryAllCasesCTX = (document.getElementById("countryChartAllCases") as any).getContext("2d");
-     this.countryAllCasesCTX = createLineChart(
-        countryAllCasesCTX, 
-        data.labels,
-        dataSets,
-        true,
-        true,
-        false // we make aspect ratio to false this prevents the chart from growing too much
-       );
+
+    // One country cases evolution chart
+    this.countryAllCasesCTX = createNewEvolutionChart(
+      (document.getElementById("countryChartAllCases") as any).getContext("2d"),
+      data.labels,
+      dataSets,
+      true,
+      true,
+      false, // we make aspect ratio to false this prevents the chart from growing too much
+    );
     
     const alpha3 = this.activatedRoute.snapshot.paramMap.get('alpha3');
     if (alpha3) {
       this.countryChangeView(alpha3);
     } else {
       try {
-        const ip = await this.http.get('https://json.geoiplookup.io/api').toPromise();
-        this.countryView = getAlpha3FromAlpha2((ip as any).country_code);
+  const ip = await this.http.get('https://json.geoiplookup.io/api').toPromise();
+  this.countryView = getAlpha3FromAlpha2((ip as any).country_code);
       } catch (_err) {
-        this.countryView = 'USA';
+  this.countryView = 'USA';
       }
       this.location.go('/country/'+this.countryView)
     }
-    this.currentCountryName = getCountryNameByAlpha(this.countryView);
 
-    this.totalDeathRate = this.evolution.data[this.countryView].deaths.reduce((a,b) => a + b) /
-      this.evolution.data[this.countryView].cases.reduce((a,b) => a + b);
+    this.currentCountryName = getCountryNameByAlpha(this.countryView);
+    this.setTotalDeathRatio();
   }
+
+  /**
+   * Returns the difference of days between two dates
+   * @param day1
+   * @param day2
+   */
+  private getDayDifference(day1: Date, day2: Date) {
+    return Math.floor((day2.getTime()-day1.getTime())/(1000*60*60*24));
+  }
+
+  /**
+   * Returns a dataset to put on evolution graph.
+   * @param startLockdown date of the beginning of lockdown measures.
+   * @param startReopening date of softening the lockdown measures.
+   */
+  private getLockdownDataset(startLockdown: string, startReopening: string) {
+    const firstDay = new Date('12/31/2019');
+    const lastDay = new Date(this.evolutionUpdatedOn);
+    
+    if (!startLockdown) { // no lockdown
+      return new Array(this.getDayDifference(firstDay, lastDay)).fill(0);
+    }
+    
+    const res = [];
+    const start = new Date(startLockdown);
+    res.push(...new Array(this.getDayDifference(firstDay, start)).fill(0)); // before lockdown
+
+    if (startReopening) {
+      const reopening = new Date(startReopening);
+      // +2 for lockdown because of the Math.floor used for before lockdown
+      res.push(...new Array(this.getDayDifference(start, reopening)+1).fill(1)); // lockdown
+      res.push(...new Array(this.getDayDifference(reopening, lastDay)).fill(0)); // after lockdown
+    } else {
+      res.push(...new Array(this.getDayDifference(start, lastDay)+2).fill(1)); // lockdown
+    }
+    return res;
+  }
+
+  // private getAnnotations() {
+  //   if (this.lockdown.date === null || this.schoolClosure.date === null, this.businessClosure.date === null) {
+  //     return undefined;
+  //   }
+
+  //   const composeAnnotation = (value: string, content: string, position: string) => {
+  //     return {
+  //       type: 'line',
+  //       mode: 'vertical',
+  //       scaleID: 'x-axis-0',
+  //       value,
+  //       borderColor: 'black',
+  //       borderWidth: 2,
+  //       label: { enabled: true, content, position }
+  //     }
+  //   }
+
+  //   const lockdown = this.lockdown.date.split('/');
+  //   const school = this.schoolClosure.date.split('/');
+  //   const business = this.businessClosure.date.split('/');
+  //   return {
+  //       drawTime: 'afterDatasetsDraw',
+  //       annotations: [
+  //         composeAnnotation(`${lockdown[1]} ${monthNames[parseInt(lockdown[0])-1]} ${lockdown[2]}`, 'Start Lockdown', 'center'),
+  //         composeAnnotation(`${school[1]} ${monthNames[parseInt(school[0])-1]} ${school[2]}`, 'Start School Closure', 'top'),
+  //         composeAnnotation(`${business[1]} ${monthNames[parseInt(business[0])-1]} ${business[2]}`, 'Start Business Closure', 'bottom')
+  //       ]
+  //     }
+  // }
+
 
   public evolutionRangeChanged() { // if date range picker value is changed
     if (Array.isArray(this.calendarForm.controls.dateRange.value)) {
@@ -182,13 +247,14 @@ export class CountryComponent implements OnInit {
       this.evolutionRange.to = this.changeDateFormat(end)
 
       const datasets = this.getDataSets(
-        this.evolution.data[this.countryView].cases,
-        this.evolution.data[this.countryView].deaths,
-        this.evolution.dates.map(date => this.changeDateFormat(date))
+  this.evolution.data[this.countryView].cases,
+  this.evolution.data[this.countryView].deaths,
+  this.evolution.dates.map(date => this.changeDateFormat(date)),
       )
 
       this.countryAllCasesCTX.data.datasets[0].data  = datasets['cases'];
       this.countryAllCasesCTX.data.datasets[1].data = datasets['deaths'];
+      this.countryAllCasesCTX.data.datasets[2].data = datasets['lockdown'];
       this.countryAllCasesCTX.data.labels = datasets['labels'];
       this.countryAllCasesCTX.update();
     }
@@ -198,6 +264,7 @@ export class CountryComponent implements OnInit {
     let shortenCases = [...activeCases];
     let shortenDeaths = [...deaths];
     let shortenLabels = [...labels];
+    let shortenLockdown = this.getLockdownDataset(this.lockdown.date, this.lockdown.start_reopening);
 
     if (this.evolutionRange.from === 'default' && this.evolutionRange.to === 'default') {
       // get the index of the first death.
@@ -206,7 +273,8 @@ export class CountryComponent implements OnInit {
       shortenCases = shortenCases.slice(firstDeathIndex, shortenCases.length);
       shortenDeaths = shortenDeaths.slice(firstDeathIndex, shortenDeaths.length);
       shortenLabels = shortenLabels.slice(firstDeathIndex, shortenLabels.length);
-    }else{
+      shortenLockdown = shortenLockdown.slice(firstDeathIndex, shortenLockdown.length);
+    } else {
       // if evolutionRange has date. we get the first and last index of labels
       const findStart = shortenLabels.findIndex(date => date == this.evolutionRange.from);
       const findEnd = shortenLabels.findIndex(date => date == this.evolutionRange.to);
@@ -217,9 +285,10 @@ export class CountryComponent implements OnInit {
       shortenCases = shortenCases.slice(startIndex, endIndex+1);
       shortenDeaths = shortenDeaths.slice(startIndex, endIndex+1);
       shortenLabels = shortenLabels.slice(startIndex, endIndex+1);
+      shortenLockdown = shortenLockdown.slice(startIndex, endIndex+1);
     }
-    this.currentDeathRate = shortenDeaths.reduce((a,b) => a + b)/shortenCases.reduce((a,b) => a + b);
-    return { "cases": shortenCases, "deaths": shortenDeaths, "labels": shortenLabels }
+    this.currentDeathRatio = shortenDeaths.reduce((a,b) => a + b)/shortenCases.reduce((a,b) => a + b);
+    return { "cases": shortenCases, "deaths": shortenDeaths, "labels": shortenLabels, "lockdown": shortenLockdown }
   }
 
   private setStatsAndStatuses(alpha3: string) {
@@ -287,25 +356,28 @@ export class CountryComponent implements OnInit {
 
   private getCountry(countries, alpha3) {
     for (const country of countries) {
-      if (country.alpha3 === alpha3 || country["alpha-3"] === alpha3) {
-        return country;
+      if (country.alpha3 === alpha3) {
+  return country;
       }
     }
   }
 
   public countryChangeView(value: string) {
     this.countryView = value;
-    this.totalDeathRate = this.evolution.data[value].deaths.reduce((a,b) => a + b) /
-      this.evolution.data[value].cases.reduce((a,b) => a + b);
-
+    this.setTotalDeathRatio();
+    
     this.evolutionRange = {from: 'default', to: 'default'}; // we make evolutionRange to default
     this.location.go('/country/'+value) // we change the url: /country/value:
     this.currentCountryName = getCountryNameByAlpha(value);
     this.setStatsAndStatuses(value);
+    
+    // this.countryAllCasesCTX.options.annotation = this.getAnnotations();
+    // const namedChartAnnotation = ChartAnnotation;
+
     const datasets = this.getDataSets(
       this.evolution.data[value].cases,
       this.evolution.data[value].deaths,
-      this.evolution.dates.map(date => this.changeDateFormat(date))
+      this.evolution.dates.map(date => this.changeDateFormat(date)),
     )
     // we get start & end date for calendar range
     const startDate = moment(new Date(datasets.labels[0])).format('MM/DD/YYYY')
@@ -316,11 +388,12 @@ export class CountryComponent implements OnInit {
     for (const country of this.countryList) {
       if (country.value === value) {
 
-        this.countryAllCasesCTX.data.datasets[0].data  = datasets['cases'];
-        this.countryAllCasesCTX.data.datasets[1].data = datasets['deaths'];
-        this.countryAllCasesCTX.data.labels = datasets['labels'];
-        this.countryAllCasesCTX.update();
-        return;
+  this.countryAllCasesCTX.data.datasets[0].data  = datasets['cases'];
+  this.countryAllCasesCTX.data.datasets[1].data = datasets['deaths'];
+  this.countryAllCasesCTX.data.datasets[2].data = datasets['lockdown'];
+  this.countryAllCasesCTX.data.labels = datasets['labels'];
+  this.countryAllCasesCTX.update();
+  return;
       }
     }
   }
@@ -337,13 +410,12 @@ export class CountryComponent implements OnInit {
 
    public changeViewOption(value: string) {
     this.currentOption = value;
-    const reducer = (acc: number, currVal: number) => { return currVal + acc };
     if (value === 'In Total') {
       this.statsDivider = 1.0;
     } else if (value === 'Per COVID-19 Death') {
-      this.statsDivider = this.evolution.data[this.countryView].deaths.reduce(reducer);
+      this.statsDivider = this.evolution.data[this.countryView].deaths.reduce((a, b) => a+b);
     } else {
-      this.statsDivider = this.evolution.data[this.countryView].cases.reduce(reducer);
+      this.statsDivider = this.evolution.data[this.countryView].cases.reduce((a, b) => a+b);
     }
     this.setStatsAndStatuses(this.countryView);
    }
@@ -352,9 +424,14 @@ export class CountryComponent implements OnInit {
     this.impactTable = [];
     for (const impact of this.impactData) {
       if (impact.alpha3 === 'WRD' || impact.alpha3 === this.countryView) {
-        this.impactTable.push(impact);
+  this.impactTable.push(impact);
       }
     }
+  }
+
+  private setTotalDeathRatio() {
+    this.totalDeathRatio = this.evolution.data[this.countryView].deaths.reduce((a,b) => a + b) /
+      this.evolution.data[this.countryView].cases.reduce((a,b) => a + b);
   }
 
 }

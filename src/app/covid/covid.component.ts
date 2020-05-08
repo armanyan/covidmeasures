@@ -28,21 +28,18 @@ export class CovidComponent implements OnInit {
   public statsHeaders = ['Country', 'Total Cases', 'New Cases', 'Total Deaths', 'New Deaths'];
   public stats: Stats[];
   public worldStats: Stats[];
-  public worldDataUpdatedOn: string;
+  public dataLastUpdate: string;
   public views = ['Day by Day', 'Total'];
   public casesView = 'Day by Day';
   public deathsView = 'Day by Day';
-
-  public casesLastUpdate: string;
-  public deathsLastUpdate: string;
 
   public casesChart: Chart;
   public deathsChart: Chart;
 
   public countryList: Country[];
 
-  private casesEvolutionData: number[];
-  private deathsEvolutionData: number[];
+  private cases: number[];
+  private deaths: number[];
 
   private evolution: any;
 
@@ -58,27 +55,20 @@ export class CovidComponent implements OnInit {
     const url = 'https://covidmeasures-data.s3.amazonaws.com/evolution.json';
     this.evolution = (await this.http.get(url).toPromise() as any);
 
-    const casesCTX = (document.getElementById("chartCases") as any).getContext("2d");
     const labels = this.evolution.dates.map(date => this.changeDateFormat(date));
-    // remove today's data since in the other parts we use data from different sources,
-    // and incoherence would be obvious
-    labels.pop()
-    this.casesEvolutionData = this.getEvolutionData('cases');
-    this.deathsEvolutionData = this.getEvolutionData('deaths');
-
+    this.cases = this.getEvolutionData('cases');
+    this.deaths = this.getEvolutionData('deaths');
+    
     // World cases evolution chart
-    this.casesChart = createLineChart(casesCTX, labels, this.casesEvolutionData);
-    this.casesLastUpdate = labels[labels.length-1];
+    this.casesChart = createLineChart((document.getElementById("chartCases") as any).getContext("2d"), labels, this.cases);
+    this.dataLastUpdate = labels[labels.length-1];
 
     // World deaths evolution chart
-    const deathsCTX = (document.getElementById("chartDeaths") as any).getContext("2d");
-    this.deathsChart = createLineChart(deathsCTX, labels, this.deathsEvolutionData);
-    this.deathsLastUpdate = labels[labels.length-1];
+    this.deathsChart = createLineChart((document.getElementById("chartDeaths") as any).getContext("2d"), labels, this.deaths);
 
 
-    const alphas = Object.keys(this.evolution.data);
     this.countryList = [];
-    for (const alpha of alphas) {
+    for (const alpha of Object.keys(this.evolution.data)) {
       this.countryList.push({
         "value": alpha,
         "viewValue": this.evolution.data[alpha].name.split('_').join(' ')
@@ -87,7 +77,7 @@ export class CovidComponent implements OnInit {
 
     // world table
     try {
-      await this.fetchWorldData();
+      await this.composeWorldData();
       this.stats = JSON.parse(JSON.stringify(this.worldStats)).slice(0, 10);
     } catch (e) {
       throw new Error(`AWS Evolution Error: ${e.message}`)
@@ -112,9 +102,6 @@ export class CovidComponent implements OnInit {
       }
       data.push(current);
     }
-    // remove today's data since in the other parts we use data from different sources,
-    // and incoherence would be obvious
-    data.pop();
     return data;
   }
 
@@ -143,50 +130,39 @@ export class CovidComponent implements OnInit {
    }
 
   public casesChangeView(view?: string) {
-    if (view) {
-      this.casesView = view;
-    } else {
-      this.casesView = this.casesView === 'Total' ? 'Day by Day' : 'Total';
-    }
-    if (this.casesView === 'Total') {
-      this.casesChart.data.datasets[0].data = this.getTotalData(this.casesEvolutionData);
-    } else {
-      this.casesChart.data.datasets[0].data = this.getEvolutionData('cases');
-    }
+    this.casesView = view ? view :
+      this.casesView === 'Total' ? 'Day by Day' : 'Total';
+
+    this.casesChart.data.datasets[0].data = this.casesView === 'Total' ?
+      this.getTotalData(this.cases) : this.getEvolutionData('cases');
+
     this.casesChart.update();
   }
 
   public deathsChangeView(view?: string) {
-    if (view) {
-      this.deathsView = view;
-    } else {
-      this.deathsView = this.deathsView === 'Total' ? 'Day by Day' : 'Total';
-    }
-    if (this.deathsView === 'Total') {
-      this.deathsChart.data.datasets[0].data = this.getTotalData(this.deathsEvolutionData);
-    } else {
-      this.deathsChart.data.datasets[0].data = this.getEvolutionData('deaths');
-    }
+    this.deathsView = view ? view :
+      this.deathsView === 'Total' ? 'Day by Day' : 'Total';
+    
+    this.deathsChart.data.datasets[0].data = this.deathsView === 'Total' ?
+      this.getTotalData(this.deaths) : this.getEvolutionData('deaths');
+    
     this.deathsChart.update();
   }
 
   /**
-   * Fetches World COVID-19 data that is made from ECDC reports.
+   * Composes World COVID-19 data that is made from ECDC reports.
    */
-  private async fetchWorldData() {
-    const evolution = (await this.http.get('https://covidmeasures-data.s3.amazonaws.com/evolution.json').toPromise() as any);
+  private async composeWorldData() {
     this.worldStats = [];
-    for (const alpha in evolution.data) {
+    for (const alpha in this.evolution.data) {
       this.worldStats.push({
-        "country": evolution.data[alpha].name.split('_').join(' '),
-        "total_cases": evolution.data[alpha].cases.reduce((a, b) => a+b),
-        "new_cases": evolution.data[alpha].cases[evolution.data[alpha].cases.length-1],
-        "total_deaths": evolution.data[alpha].deaths.reduce((a, b) => a+b),
-        "new_deaths": evolution.data[alpha].deaths[evolution.data[alpha].deaths.length-1]
+        "country": this.evolution.data[alpha].name.split('_').join(' '),
+        "total_cases": this.evolution.data[alpha].cases.reduce((a, b) => a+b),
+        "new_cases": this.evolution.data[alpha].cases[this.evolution.data[alpha].cases.length-1],
+        "total_deaths": this.evolution.data[alpha].deaths.reduce((a, b) => a+b),
+        "new_deaths": this.evolution.data[alpha].deaths[this.evolution.data[alpha].deaths.length-1]
       });
     }
-    const date = evolution.dates[evolution.dates.length - 1].split('/');
-    this.worldDataUpdatedOn = date[0] + " " + monthNames[parseInt(date[1])-1]+" 2020";
   }
 
   /**
