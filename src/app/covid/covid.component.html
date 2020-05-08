@@ -106,7 +106,7 @@
           <h3 class="card-title">COVID-19 Worldwide Statistics</h3>
           <mat-form-field>
             <mat-label style="color: rgb(218, 205, 205);">Filter by Country</mat-label>
-            <input matInput (keyup)="applyFilter($event)" placeholder="United States of America, France, China...">
+            <input matInput (keyup)="applyFilter($event)" [(ngModel)]="filterCountry" placeholder="United States of America, France, China...">
           </mat-form-field>
         </div>
 
@@ -115,17 +115,19 @@
           <div class="content table-responsive table-full-width">
             <table class="table">
               <thead>
-                <th class="text-primary" *ngFor="let row of statsHeaders">
-                  {{ row }}
+                <th class="text-primary" *ngFor="let row of statsHeaders" (click)="sortTable(row)">
+                  <div class="d-flex align-items-center" style="cursor: pointer;">
+                    {{ row }} <i class="material-icons" style="font-size: 20px;">arrow_drop_down</i>
+                  </div>
                 </th>
               </thead>
               <tbody>
                 <tr *ngFor="let row of stats">
-                  <td>{{ row.country }}</td>
-                  <td>{{ row.total_cases | number }}</td>
-                  <td>{{ row.new_cases | number }}</td>
-                  <td>{{ row.total_deaths | number }}</td>
-                  <td>{{ row.new_deaths | number }}</td>
+                  <td [ngClass]="{active: sortStatus.country.active}">{{ row.country }}</td>
+                  <td [ngClass]="{active: sortStatus.totalCases.active}">{{ row.total_cases | number }}</td>
+                  <td [ngClass]="{active: sortStatus.newCases.active}">{{ row.new_cases | number }}</td>
+                  <td [ngClass]="{active: sortStatus.totalDeaths.active}">{{ row.total_deaths | number }}</td>
+                  <td [ngClass]="{active: sortStatus.newDeaths.active}">{{ row.new_deaths | number }}</td>
                 </tr>
               </tbody>
             </table>

@@ -32,6 +32,29 @@ export class CovidComponent implements OnInit {
   public views = ['Day by Day', 'Total'];
   public casesView = 'Day by Day';
   public deathsView = 'Day by Day';
+  public filterCountry : string;
+  public sortStatus = {
+    country: {
+      active:true,
+      asc: true
+    },
+    totalCases : {
+      active:false,
+      asc: false
+    },
+    newCases : {
+      active:false,
+      asc: false
+    },
+    totalDeaths : {
+      active:false,
+      asc: false
+    },
+    newDeaths : {
+      active:false,
+      asc: false
+    }
+  };
 
   public casesLastUpdate: string;
   public deathsLastUpdate: string;
@@ -216,6 +239,66 @@ export class CovidComponent implements OnInit {
     row.total_deaths = this.worldStats.map(row => row.total_deaths).reduce(reducer);
     row.new_deaths = (this.worldStats.map(row => row.new_deaths).reduce(reducer) as any);
     return row;
+  }
+
+  public sortTable(sortBy: string) {
+    // 'Country', 'Total Cases', 'New Cases', 'Total Deaths', 'New Deaths'
+    const tableStats = this.filterCountry ? 
+      this.stats.filter(item => item.country != 'World') : JSON.parse(JSON.stringify(this.worldStats));
+
+    for (const key in this.sortStatus) {
+      if (this.sortStatus.hasOwnProperty(key)) {
+        this.sortStatus[key].active = false;
+      }
+    }
+    switch (sortBy) {
+      case 'Country':
+        this.sortStatus.country.asc ?
+          this.stats = tableStats.sort((a, b) => b.country.localeCompare(a.country)).slice(0, 10) :
+          this.stats = tableStats.sort((a, b) => a.country.localeCompare(b.country)).slice(0, 10)
+        this.sortStatus.country.asc = !this.sortStatus.country.asc;
+        this.sortStatus.country.active = true;
+        break;
+
+      case 'Total Cases':
+        this.sortStatus.totalCases.asc ?
+          this.stats = tableStats.sort((a, b) => b.total_cases - a.total_cases).slice(0, 10) :
+          this.stats = tableStats.sort((a, b) => a.total_cases - b.total_cases).slice(0, 10)
+        this.sortStatus.totalCases.asc = !this.sortStatus.totalCases.asc;
+        this.sortStatus.totalCases.active = true;
+      break;
+
+      case 'New Cases':
+        this.sortStatus.newCases.asc ?
+          this.stats = tableStats.sort((a, b) => b.new_cases - a.new_cases).slice(0, 10) :
+          this.stats = tableStats.sort((a, b) => a.new_cases - b.new_cases).slice(0, 10)
+        this.sortStatus.newCases.asc = !this.sortStatus.newCases.asc;
+        this.sortStatus.newCases.active = true;
+        break;
+      
+      case 'Total Deaths':
+        this.sortStatus.totalDeaths.asc ?
+          this.stats = tableStats.sort((a, b) => b.total_deaths - a.total_deaths).slice(0, 10) :
+          this.stats = tableStats.sort((a, b) => a.total_deaths - b.total_deaths).slice(0, 10)
+        this.sortStatus.totalDeaths.asc = !this.sortStatus.totalDeaths.asc;
+        this.sortStatus.totalDeaths.active = true;
+        break;
+      
+      case 'New Deaths':
+        this.sortStatus.newDeaths.asc ?
+          this.stats = tableStats.sort((a, b) => b.new_deaths - a.new_deaths).slice(0, 10) :
+          this.stats = tableStats.sort((a, b) => a.new_deaths - b.new_deaths).slice(0, 10)
+        this.sortStatus.newDeaths.asc = !this.sortStatus.newDeaths.asc;
+        this.sortStatus.newDeaths.active = true;
+        break;
+
+      default:
+        break;
+    }
+    if (this.stats[this.stats.length-1].country !== "World") {
+      this.stats.push(this.getWorldRow());
+    }
+
   }
 
 }
