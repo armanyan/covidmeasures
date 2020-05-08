@@ -1,15 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { Chart } from 'chart.js';
-// import * as ChartAnnotation from 'chartjs-plugin-annotation';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute } from "@angular/router";
 import { Location } from '@angular/common'; 
 import moment from 'moment'
 import { FormBuilder, FormGroup } from '@angular/forms';
 
-import { mobileWidth, monthNames, createEvolutionChart, getCountryNameByAlpha, getAlpha3FromAlpha2,
-   getChildrenNoSchool, getCountryPopulation, createNewEvolutionChart } from '../utils';
+import { mobileWidth, monthNames, getCountryNameByAlpha, getAlpha3FromAlpha2,
+         getChildrenNoSchool, getCountryPopulation, createEvolutionChart, aws } from '../utils';
 
 interface Country {
   value: string;
@@ -99,7 +98,6 @@ export class CountryComponent implements OnInit {
     this.titleService.setTitle('Country Overview: COVID-19 Statistics and Government Measures');
     this.isMobile = window.innerWidth > mobileWidth ? false : true;
 
-    const aws = 'https://covidmeasures-data.s3.amazonaws.com';
     this.evolution = (await this.http.get(`${aws}/test_evolution.json`).toPromise() as any);
     this.schoolClosureData = (await this.http.get(`${aws}/school_closure.json`).toPromise() as any);
     this.lockdownData = (await this.http.get(`${aws}/lockdown.json`).toPromise() as any);
@@ -144,7 +142,7 @@ export class CountryComponent implements OnInit {
     ]
 
     // One country cases evolution chart
-    this.countryAllCasesCTX = createNewEvolutionChart(
+    this.countryAllCasesCTX = createEvolutionChart(
       (document.getElementById("countryChartAllCases") as any).getContext("2d"),
       data.labels,
       dataSets,
@@ -206,37 +204,6 @@ export class CountryComponent implements OnInit {
     }
     return res;
   }
-
-  // private getAnnotations() {
-  //   if (this.lockdown.date === null || this.schoolClosure.date === null, this.businessClosure.date === null) {
-  //     return undefined;
-  //   }
-
-  //   const composeAnnotation = (value: string, content: string, position: string) => {
-  //     return {
-  //       type: 'line',
-  //       mode: 'vertical',
-  //       scaleID: 'x-axis-0',
-  //       value,
-  //       borderColor: 'black',
-  //       borderWidth: 2,
-  //       label: { enabled: true, content, position }
-  //     }
-  //   }
-
-  //   const lockdown = this.lockdown.date.split('/');
-  //   const school = this.schoolClosure.date.split('/');
-  //   const business = this.businessClosure.date.split('/');
-  //   return {
-  //       drawTime: 'afterDatasetsDraw',
-  //       annotations: [
-  //         composeAnnotation(`${lockdown[1]} ${monthNames[parseInt(lockdown[0])-1]} ${lockdown[2]}`, 'Start Lockdown', 'center'),
-  //         composeAnnotation(`${school[1]} ${monthNames[parseInt(school[0])-1]} ${school[2]}`, 'Start School Closure', 'top'),
-  //         composeAnnotation(`${business[1]} ${monthNames[parseInt(business[0])-1]} ${business[2]}`, 'Start Business Closure', 'bottom')
-  //       ]
-  //     }
-  // }
-
 
   public evolutionRangeChanged() { // if date range picker value is changed
     if (Array.isArray(this.calendarForm.controls.dateRange.value)) {
@@ -370,9 +337,6 @@ export class CountryComponent implements OnInit {
     this.location.go('/country/'+value) // we change the url: /country/value:
     this.currentCountryName = getCountryNameByAlpha(value);
     this.setStatsAndStatuses(value);
-    
-    // this.countryAllCasesCTX.options.annotation = this.getAnnotations();
-    // const namedChartAnnotation = ChartAnnotation;
 
     const datasets = this.getDataSets(
       this.evolution.data[value].cases,
