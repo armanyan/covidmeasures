@@ -42,6 +42,10 @@ td.left, td.center {
   text-align: left;
 }
 
+.table{
+  table-layout: fixed;
+}
+
 .table thead th {
   font-size: 0.95rem;
   font-weight: 500;
@@ -140,4 +144,11 @@ tr td.active {
 
 .card-citizens{
   margin: 1% 0;
+}
+
+
+@media (max-width: 1200px) {
+  .table{
+    table-layout: auto;
+  }
 }
