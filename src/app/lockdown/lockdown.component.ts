@@ -336,6 +336,11 @@ export class LockdownComponent implements OnInit {
       row => row.name.toLowerCase().includes(search)
     ).slice(0, 10);
   }
+
+  /***
+   * Sort Table columns
+   * @param string contains value in which column to sort the data by
+   */
   public sortTable(sortBy:string) {
     
     const tableStats = this.filterCountry ? 
