@@ -221,7 +221,7 @@
           <h3 class="card-title">Detailed View For Each Country</h3>
           <mat-form-field>
             <mat-label style="color: rgb(218, 205, 205);">Search by Country</mat-label>
-            <input  matInput (keyup)="applyFilter($event)"
+            <input  matInput (keyup)="applyFilter($event)" [(ngModel)]="filterCountry"
               placeholder="United States of America, France, China..."
             >
           </mat-form-field>
@@ -232,21 +232,23 @@
           <div class="content table-responsive table-full-width">
             <table class="table">
               <thead>
-                <th class="text-primary" *ngFor="let row of statsHeaders">
-                  {{ row }}
+                <th class="text-primary" *ngFor="let row of statsHeaders" (click)="sortTable(row.title)">
+                  <div class="d-flex justify-content-center align-items-center" style="cursor: pointer;">
+                    {{ row.title }} <i *ngIf="row.sortable" class="material-icons" style="font-size: 20px;">arrow_drop_down</i>
+                  </div>
                 </th>
               </thead>
               <tbody>
                 <tr *ngFor="let row of lockdownTable">
-                  <td>{{ row.name }}</td>
-                  <td>{{ row.population | number}}</td>
+                  <td [ngClass]="{active: sortStatus.name.active}">{{ row.name }}</td>
+                  <td [ngClass]="{active: sortStatus.population.active}">{{ row.population | number}}</td>
                   <td>{{ row.lockdown }}</td>
                   <td>{{ row.curfew }}</td>
                   <td>{{ row.business }}</td>
                   <td>{{ row.other }}</td>
-                  <td>{{ row.start }}</td>
-                  <td>{{ row.end }}</td>
-                  <td>{{ row.duration }}</td>
+                  <td [ngClass]="{active: sortStatus.start.active}">{{ row.start }}</td>
+                  <td [ngClass]="{active: sortStatus.end.active}">{{ row.end }}</td>
+                  <td [ngClass]="{active: sortStatus.duration.active}">{{ row.duration }}</td>
                   <td>{{ row.status }}</td>
                 </tr>
               </tbody>
