@@ -241,14 +241,14 @@
               <tbody>
                 <tr *ngFor="let row of lockdownTable">
                   <td [ngClass]="{active: sortStatus.name.active}">{{ row.name }}</td>
-                  <td [ngClass]="{active: sortStatus.population.active}">{{ row.population | number}}</td>
-                  <td>{{ row.lockdown }}</td>
-                  <td>{{ row.curfew }}</td>
-                  <td>{{ row.business }}</td>
-                  <td>{{ row.other }}</td>
-                  <td [ngClass]="{active: sortStatus.start.active}">{{ row.start }}</td>
-                  <td [ngClass]="{active: sortStatus.end.active}">{{ row.end }}</td>
-                  <td [ngClass]="{active: sortStatus.duration.active}">{{ row.duration }}</td>
+                  <td [ngClass]="{active: sortStatus.population.active}" class="text-center">{{ row.population | number}}</td>
+                  <td class="text-center">{{ row.lockdown }}</td>
+                  <td class="text-center">{{ row.curfew }}</td>
+                  <td class="text-center">{{ row.business }}</td>
+                  <td class="text-center">{{ row.other }}</td>
+                  <td [ngClass]="{active: sortStatus.start.active}" class="text-center">{{ row.start }}</td>
+                  <td [ngClass]="{active: sortStatus.end.active}" class="text-center">{{ row.end }}</td>
+                  <td [ngClass]="{active: sortStatus.duration.active}" class="text-center">{{ row.duration }}</td>
                   <td>{{ row.status }}</td>
                 </tr>
               </tbody>

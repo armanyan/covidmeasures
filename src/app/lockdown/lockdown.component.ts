@@ -367,8 +367,9 @@ export class LockdownComponent implements OnInit {
           this.lockdownTable = tableStats.sort((a, b) => b.population - a.population).slice(0, 10);
         }else{
           this.lockdownTable = tableStats.sort((a, b) => {
-            if(a.population == '') return 1
-            if( b.population == 0) return 0
+            if(a.population === "" || a.population === null) return 1;
+            if(b.population === "" || b.population === null) return -1;
+            if(a.population === b.population) return 0;
             return a.population - b.population;
           }).slice(0, 10);
         }
@@ -389,8 +390,9 @@ export class LockdownComponent implements OnInit {
           this.lockdownTable = tableStats.sort((a, b) => {
             const dateA =  a.start ? new Date(a.start).getTime() : 0
             const dateB = b.start ? new Date(b.start).getTime() : 0
-            if(dateA == 0) return 1
-            if(dateB == 0) return 0
+            if(dateA === 0 || dateA === null) return 1;
+            if(dateB === 0 || dateB === null) return -1;
+            if(dateA === dateB) return 0;
             return dateA - dateB;
           }).slice(0, 10);
         }
@@ -412,8 +414,9 @@ export class LockdownComponent implements OnInit {
           this.lockdownTable = tableStats.sort((a, b) => {
             const dateA =  a.end ? new Date(a.end).getTime() : 0
             const dateB = b.end ? new Date(b.end).getTime() : 0
-            if(dateA == 0) return 1
-            if(dateB == 0) return 0
+            if(dateA === 0 || dateA === null) return 1;
+            if(dateB === 0 || dateB === null) return -1;
+            if(dateA === dateB) return 0;
             return dateA - dateB;
           }).slice(0, 10);
         }
@@ -432,8 +435,9 @@ export class LockdownComponent implements OnInit {
           this.lockdownTable = tableStats.sort((a, b) => {
             const durationA = a.duration.split(' ')[0]
             const durationB = b.duration.split(' ')[0]
-            if(durationA == 0) return 1
-            if(durationB == 0) return 0
+            if(durationA === "" || durationA === null) return 1;
+            if(durationB === "" || durationB === null) return -1;
+            if(durationA === durationB) return 0;
             return durationA - durationB;
           }).slice(0, 10);
         }

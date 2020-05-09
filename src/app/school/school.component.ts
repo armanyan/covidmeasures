@@ -329,8 +329,9 @@ export class SchoolComponent implements OnInit {
           this.schoolClosure = tableStats.sort((a, b) => b.children - a.children).slice(0, 10);
         }else{
           this.schoolClosure = tableStats.sort((a, b) => {
-            if(a.children == '') return 1
-            if( b.children == 0) return 0
+            if(a.children === "" || a.children === null) return 1;
+            if(b.children === "" || b.children === null) return -1;
+            if(a.children === b.children) return 0;
             return a.children - b.children;
           }).slice(0, 10);
         }
@@ -349,10 +350,11 @@ export class SchoolComponent implements OnInit {
         } else{
           // if date is not ascending? we sort to ascending
           this.schoolClosure = tableStats.sort((a, b) => {
-            const dateA =  a.start ? new Date(a.start).getTime() : 0
-            const dateB = b.start ? new Date(b.start).getTime() : 0
-            if(dateA == 0) return 1
-            if(dateB == 0) return 0
+            const dateA =  a.start || a.start != 'Thu Jan 01 1970' ? new Date(a.start).getTime() : 0
+            const dateB = b.start || b.start != 'Thu Jan 01 1970' ? new Date(b.start).getTime() : 0
+            if(dateA === 0 || dateA === null) return 1;
+            if(dateB === 0 || dateB === null) return -1;
+            if(dateA === dateB) return 0;
             return dateA - dateB;
           }).slice(0, 10);
         }
@@ -374,8 +376,9 @@ export class SchoolComponent implements OnInit {
           this.schoolClosure = tableStats.sort((a, b) => {
             const dateA =  a.end ? new Date(a.end).getTime() : 0
             const dateB = b.end ? new Date(b.end).getTime() : 0
-            if(dateA == 0) return 1
-            if(dateB == 0) return 0
+            if(dateA === 0 || dateA === null) return 1;
+            if(dateB === 0 || dateB === null) return -1;
+            if(dateA === dateB) return 0;
             return dateA - dateB;
           }).slice(0, 10);
         }
@@ -388,8 +391,9 @@ export class SchoolComponent implements OnInit {
           this.schoolClosure = tableStats.sort((a, b) => b.duration - a.duration).slice(0, 10); 
         }else{
           this.schoolClosure = tableStats.sort((a, b) => {
-            if( a.duration == 0) return 1
-            if( b.duration == 0) return 0
+            if(a.duration === "" || a.duration === null) return 1;
+            if(b.duration === "" || b.duration === null) return -1;
+            if(a.duration === b.duration) return 0;
             return a.duration - b.duration;
           }).slice(0, 10);
         }
