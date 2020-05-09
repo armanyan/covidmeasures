@@ -32,7 +32,7 @@ export class ImpactsComponent implements OnInit {
     this.titleService.setTitle('Impacts: COVID-19 Impacts Worldwide');
     this.isMobile = window.innerWidth > mobileWidth ? false : true;
 
-    const url = 'https://covidmeasures-data.s3.amazonaws.com/impacts.json';
+    const url = 'https://covidmeasures-data.s3.amazonaws.com/new_impacts.json';
     const data = (await this.http.get(url).toPromise() as any);
     for (const entry of data) {
       const impact = (entry as any);

@@ -6,6 +6,8 @@ import * as alpha3 from './data/alpha3';
 
 export const mobileWidth = 767;
 
+export const aws = 'https://covidmeasures-data.s3.amazonaws.com';
+
 export const insertToArray = (arr, element, index) => {
   arr.splice(index, 0, element);
 }
@@ -140,7 +142,7 @@ export const createBarChart = (
 ) => {
   return new Chart(ctx, {
     type: 'horizontalBar',
-    responsive: true,
+    responsive: false,
     legend: {
       display: false
     },
@@ -357,85 +359,87 @@ const options = {
 return new Chart(ctx, { type: 'line', data, options});
 }
 
-export const create2YLineChart = (
+export const createEvolutionChart = (
   ctx: CanvasRenderingContext2D, 
   labels: string[], 
   dataset: number[] | object[], // array of numbers for single data & object for multiple data
-  legendDisplay: boolean = false, // Line graph legends
-  responsive: boolean = true, // for responsiveness
-  maintainAspectRatio: boolean = true, // for aspect ratio
+  legendDisplay = false, // Line graph legends
+  responsive = true, // for responsiveness
+  maintainAspectRatio = true, // for aspect ratio
 ) => {
-const data = {
-  labels,
-  datasets: typeof dataset[0] === "number" ? [{
-      borderColor: "#3399FF",
-      data: dataset
-    }] : dataset
-};
-const options = {
-  responsive: responsive,
-  maintainAspectRatio: maintainAspectRatio,
+  const data = {
+    labels,
+    datasets: typeof dataset[0] === "number" ? [{
+        borderColor: "#3399FF",
+        data: dataset
+      }] : dataset
+  };
+  const options = {
+    responsive: responsive,
+    maintainAspectRatio: maintainAspectRatio,
 
-  legend: {
-    display: legendDisplay
-  },
+    legend: {
+      display: legendDisplay
+    },
 
-  tooltips: {
-    enabled: true, 
-    mode: 'label',
-    position: 'nearest',
-    callbacks: {
-      label: function(tooltipItem: any) {
-        return tooltipItem.yLabel.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    tooltips: {
+      enabled: true, 
+      mode: 'label',
+      position: 'nearest',
+      callbacks: {
+        label: function(tooltipItem: any) {
+          return tooltipItem.yLabel.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        }
       }
-    }
-  },
+    },
 
-  scales: {
-    yAxes: [{
-      id: 'people',
-      ticks: {
-        userCallback: function(value, index, values) {
-          value = value.toString();
-          value = value.split(/(?=(?:...)*$)/);
-          value = value.join(',');
-          return value;
+    scales: {
+      yAxes: [{
+        id: 'people',
+        position: 'left',
+        ticks: {
+          userCallback: function(value, label) {
+            value = value.toString();
+            value = value.split(/(?=(?:...)*$)/);
+            value = value.join(',');
+            return value;
+          },
+          fontColor: "#9f9f9f",
+          beginAtZero: false,
         },
-        fontColor: "#9f9f9f",
-        beginAtZero: false
-      },
-      gridLines: {
-        drawBorder: false,
-        zeroLineColor: "#ccc",
-        color: 'rgba(0,0,0,0.05)'
-      }
+        gridLines: {
+          drawBorder: false,
+          zeroLineColor: "#ccc",
+          color: 'rgba(0,0,0,0.05)'
+        }
 
-    }, {
-      id: 'severity',
-      type: 'linear',
-      position: 'right',
-      ticks: {
-        max: 9,
-        min: 0
-      }
-    }],
+      }, {
+        id: 'severity',
+        position: 'right',
+        display: false,
+        ticks: {
+          max: 1,
+          min: 0
+        }
+      }],
 
-    xAxes: [{
-      barPercentage: 1.6,
-      gridLines: {
-        drawBorder: false,
-        color: 'rgba(255,255,255,0.1)',
-        zeroLineColor: "transparent",
-        display: true,
-      },
-      // label format
-      ticks: {
-        padding: 20,
-        fontColor: "#9f9f9f"
-      }
-    }]
-  },
-};
+      xAxes: [{
+        barPercentage: 1.6,
+        gridLines: {
+          drawBorder: false,
+          color: 'rgba(255,255,255,0.1)',
+          zeroLineColor: "transparent",
+          display: true,
+        },
+        // label format
+        ticks: {
+          padding: 20,
+          fontColor: "#9f9f9f"
+        }
+      }]
+    },
+    annotation: undefined
+  };
 
-return new Chart(ctx, { type: 'line', data, options});
+  return new Chart(ctx, { type: 'line', data, options});
 }
