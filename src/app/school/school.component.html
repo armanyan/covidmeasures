@@ -216,7 +216,7 @@
           <h3 class="card-title">School Closure Status Per Country</h3>
           <mat-form-field>
             <mat-label style="color: rgb(218, 205, 205);">Search by Country</mat-label>
-            <input matInput (keyup)="applyFilter($event)" placeholder="United States of America, France, China...">
+            <input matInput (keyup)="applyFilter($event)" [(ngModel)]="filterCountry" placeholder="United States of America, France, China...">
           </mat-form-field>
         </div>
 
@@ -225,20 +225,19 @@
           <div class="content table-responsive table-full-width">
             <table class="table">
               <thead>
-                <th class="text-primary">{{ statsHeaders[0] }}</th>
-                <th class="text-primary">{{ statsHeaders[1] }}</th>
-                <th class="text-primary">{{ statsHeaders[2] }}</th>
-                <th class="text-primary">{{ statsHeaders[3] }}</th>
-                <th class="text-primary">{{ statsHeaders[4] }}</th>
-                <th class="text-primary">{{ statsHeaders[5] }}</th>
+                <th class="text-primary" *ngFor="let row of statsHeaders" (click)="sortTable(row.title)">
+                  <div class="d-flex justify-content-center align-items-center" style="cursor: pointer;">
+                    {{ row.title }} <i *ngIf="row.sortable" class="material-icons" style="font-size: 20px;">arrow_drop_down</i>
+                  </div>
+                </th>
               </thead>
               <tbody>
                 <tr *ngFor="let row of schoolClosure">
-                  <td>{{ row.name }}</td>
-                  <td>{{ row.children | number }}</td>
-                  <td>{{ row.start }}</td>
-                  <td>{{ row.end }}</td>
-                  <td>{{ row.duration }}</td>
+                  <td [ngClass]="{active: sortStatus.country.active}">{{ row.name }}</td>
+                  <td [ngClass]="{active: sortStatus.children.active}">{{ row.children | number }}</td>
+                  <td [ngClass]="{active: sortStatus.start.active}">{{ row.start }}</td>
+                  <td [ngClass]="{active: sortStatus.end.active}">{{ row.end }}</td>
+                  <td [ngClass]="{active: sortStatus.duration.active}">{{ row.duration }}</td>
                   <td>{{ row.status }}</td>
                 </tr>
               </tbody>
