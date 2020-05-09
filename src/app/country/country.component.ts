@@ -107,7 +107,6 @@ export class CountryComponent implements OnInit {
     this.evolutionUpdatedOn = this.changeDateFormat(this.evolution.dates[this.evolution.dates.length - 1]);
 
     this.setStatsAndStatuses(this.countryView);
-    this.getLockdownDataset(this.lockdown.date, this.lockdown.start_reopening);
 
     this.countryList = [];
     for (const alpha of Object.keys(this.evolution.data)) {
@@ -136,8 +135,12 @@ export class CountryComponent implements OnInit {
         fill: true, data: data.deaths, yAxisID: 'people'
       },
       {
-        label: "Lockdown", backgroundColor: "rgba(174, 113, 240, 0.1)", borderColor: "rgba(0,0,0,0)",
+        label: "Lockdown", backgroundColor: "rgba(174, 113, 240, 0.4)", borderColor: "rgba(0,0,0,0)",
         fill: true, data: data.lockdown, yAxisID: 'severity', pointRadius: 0, pointHoverRadius: 0
+      },
+      {
+        label: "Light Restrictions", backgroundColor: "rgba(174, 113, 240, 0.2)", borderColor: "rgba(0,0,0,0)",
+        fill: true, data: data.light, yAxisID: 'severity', pointRadius: 0, pointHoverRadius: 0
       }
     ]
 
@@ -181,28 +184,54 @@ export class CountryComponent implements OnInit {
    * Returns a dataset to put on evolution graph.
    * @param startLockdown date of the beginning of lockdown measures.
    * @param startReopening date of softening the lockdown measures.
+   * @param end date of removing all the lockdown measures
    */
-  private getLockdownDataset(startLockdown: string, startReopening: string) {
+  private getLockdownDataset(startLockdown: string, startReopening: string, end: string) {
     const firstDay = new Date('12/31/2019');
     const lastDay = new Date(this.evolutionUpdatedOn);
     
     if (!startLockdown) { // no lockdown
-      return new Array(this.getDayDifference(firstDay, lastDay)).fill(0);
+      return {
+        'lockdown': new Array(this.getDayDifference(firstDay, lastDay)).fill(0),
+        'light restrictions': new Array(this.getDayDifference(firstDay, lastDay)).fill(0)
+      };
     }
     
-    const res = [];
+    const lockdownDataset = [];
+    const lightRestrictionsDataset = [];
     const start = new Date(startLockdown);
-    res.push(...new Array(this.getDayDifference(firstDay, start)).fill(0)); // before lockdown
+    lockdownDataset.push(...new Array(this.getDayDifference(firstDay, start)).fill(0)); // before lockdown
+    lightRestrictionsDataset.push(...new Array(this.getDayDifference(firstDay, start)).fill(0)); // before lockdown
 
-    if (startReopening) {
+    if (startReopening && !end) {
       const reopening = new Date(startReopening);
-      // +2 for lockdown because of the Math.floor used for before lockdown
-      res.push(...new Array(this.getDayDifference(start, reopening)+1).fill(1)); // lockdown
-      res.push(...new Array(this.getDayDifference(reopening, lastDay)).fill(0)); // after lockdown
+      // +1 for lockdown because of the Math.floor used for before lockdown
+      lockdownDataset.push(...new Array(this.getDayDifference(start, reopening)+2).fill(1)); // lockdown
+      lockdownDataset.push(...new Array(this.getDayDifference(reopening, lastDay)).fill(0)); // after lockdown
+
+      lightRestrictionsDataset.push(...new Array(this.getDayDifference(start, reopening)+2).fill(1)); // lockdown
+      lightRestrictionsDataset.push(...new Array(this.getDayDifference(reopening, lastDay)).fill(1)); // after lockdown
+    } else if (startReopening && end) {
+      const reopening = new Date(startReopening);
+      const reopen = new Date(end);
+      lockdownDataset.push(...new Array(this.getDayDifference(start, reopening)+2).fill(1)); // lockdown
+      lockdownDataset.push(...new Array(this.getDayDifference(reopening, lastDay)).fill(0)); // after lockdown
+
+      lightRestrictionsDataset.push(...new Array(this.getDayDifference(start, reopening)+2).fill(1)); // lockdown
+      lightRestrictionsDataset.push(...new Array(this.getDayDifference(reopening, reopen)).fill(1)); // light measures
+      lightRestrictionsDataset.push(...new Array(this.getDayDifference(reopen, lastDay)).fill(0)); // after light measures
+    } else if (!startReopening && end) {
+      const reopen = new Date(end);
+
+      lockdownDataset.push(...new Array(this.getDayDifference(start, reopen)+1).fill(1)); // lockdown
+      lockdownDataset.push(...new Array(this.getDayDifference(reopen, lastDay)).fill(0)); // after lockdown
+
+      lightRestrictionsDataset.push(...new Array(this.getDayDifference(start, lastDay)+2).fill(0)); // after light measures
     } else {
-      res.push(...new Array(this.getDayDifference(start, lastDay)+2).fill(1)); // lockdown
+      lockdownDataset.push(...new Array(this.getDayDifference(start, lastDay)+2).fill(1)); // lockdown
+      lightRestrictionsDataset.push(...new Array(this.getDayDifference(start, lastDay)+2).fill(0)); // lockdown
     }
-    return res;
+    return { 'lockdown': lockdownDataset, 'light restrictions': lightRestrictionsDataset };
   }
 
   public evolutionRangeChanged() { // if date range picker value is changed
@@ -214,14 +243,15 @@ export class CountryComponent implements OnInit {
       this.evolutionRange.to = this.changeDateFormat(end)
 
       const datasets = this.getDataSets(
-  this.evolution.data[this.countryView].cases,
-  this.evolution.data[this.countryView].deaths,
-  this.evolution.dates.map(date => this.changeDateFormat(date)),
+        this.evolution.data[this.countryView].cases,
+        this.evolution.data[this.countryView].deaths,
+        this.evolution.dates.map(date => this.changeDateFormat(date)),
       )
 
       this.countryAllCasesCTX.data.datasets[0].data  = datasets['cases'];
       this.countryAllCasesCTX.data.datasets[1].data = datasets['deaths'];
       this.countryAllCasesCTX.data.datasets[2].data = datasets['lockdown'];
+      this.countryAllCasesCTX.data.datasets[3].data = datasets['light'];
       this.countryAllCasesCTX.data.labels = datasets['labels'];
       this.countryAllCasesCTX.update();
     }
@@ -231,7 +261,9 @@ export class CountryComponent implements OnInit {
     let shortenCases = [...activeCases];
     let shortenDeaths = [...deaths];
     let shortenLabels = [...labels];
-    let shortenLockdown = this.getLockdownDataset(this.lockdown.date, this.lockdown.start_reopening);
+    const lockdownDatasets = this.getLockdownDataset(this.lockdown.date, this.lockdown.start_reopening, this.lockdown.end);
+    let shortenLockdown = lockdownDatasets['lockdown'];
+    let shortenLight = lockdownDatasets['light restrictions'];
 
     if (this.evolutionRange.from === 'default' && this.evolutionRange.to === 'default') {
       // get the index of the first death.
@@ -241,6 +273,7 @@ export class CountryComponent implements OnInit {
       shortenDeaths = shortenDeaths.slice(firstDeathIndex, shortenDeaths.length);
       shortenLabels = shortenLabels.slice(firstDeathIndex, shortenLabels.length);
       shortenLockdown = shortenLockdown.slice(firstDeathIndex, shortenLockdown.length);
+      shortenLight = shortenLight.slice(firstDeathIndex, shortenLight.length);
     } else {
       // if evolutionRange has date. we get the first and last index of labels
       const findStart = shortenLabels.findIndex(date => date == this.evolutionRange.from);
@@ -253,9 +286,14 @@ export class CountryComponent implements OnInit {
       shortenDeaths = shortenDeaths.slice(startIndex, endIndex+1);
       shortenLabels = shortenLabels.slice(startIndex, endIndex+1);
       shortenLockdown = shortenLockdown.slice(startIndex, endIndex+1);
+      shortenLight = shortenLight.slice(startIndex, endIndex+1);
     }
     this.currentDeathRatio = shortenDeaths.reduce((a,b) => a + b)/shortenCases.reduce((a,b) => a + b);
-    return { "cases": shortenCases, "deaths": shortenDeaths, "labels": shortenLabels, "lockdown": shortenLockdown }
+
+    return {
+      'cases': shortenCases, 'deaths': shortenDeaths, 'labels': shortenLabels,
+      'lockdown': shortenLockdown, 'light': shortenLight
+    }
   }
 
   private setStatsAndStatuses(alpha3: string) {
@@ -275,7 +313,7 @@ export class CountryComponent implements OnInit {
 
     const lockdownCountry = this.getCountry(this.lockdownData.countries, alpha3);
     this.lockdown.status = lockdownCountry.status;
-    this.lockdown.date = lockdownCountry.status === "Restrictions removed" ? lockdownCountry.end : lockdownCountry.start;
+    this.lockdown.date = lockdownCountry.start;
     this.lockdown.current_coverage = lockdownCountry.current_coverage
     this.lockdown.restriction_type = lockdownCountry.restriction_type
     this.lockdown.start_reopening = lockdownCountry.start_reopening
@@ -346,18 +384,19 @@ export class CountryComponent implements OnInit {
     // we get start & end date for calendar range
     const startDate = moment(new Date(datasets.labels[0])).format('MM/DD/YYYY')
     const endDate = moment(new Date(datasets.labels[datasets.labels.length - 1])).format('MM/DD/YYYY')
-      // we update the value of calendar range
+    // we update the value of calendar range
     this.calendarForm.controls['dateRange'].setValue(`${startDate} - ${endDate}`)
 
     for (const country of this.countryList) {
       if (country.value === value) {
 
-  this.countryAllCasesCTX.data.datasets[0].data  = datasets['cases'];
-  this.countryAllCasesCTX.data.datasets[1].data = datasets['deaths'];
-  this.countryAllCasesCTX.data.datasets[2].data = datasets['lockdown'];
-  this.countryAllCasesCTX.data.labels = datasets['labels'];
-  this.countryAllCasesCTX.update();
-  return;
+        this.countryAllCasesCTX.data.datasets[0].data  = datasets['cases'];
+        this.countryAllCasesCTX.data.datasets[1].data = datasets['deaths'];
+        this.countryAllCasesCTX.data.datasets[2].data = datasets['lockdown'];
+        this.countryAllCasesCTX.data.datasets[3].data = datasets['light'];
+        this.countryAllCasesCTX.data.labels = datasets['labels'];
+        this.countryAllCasesCTX.update();
+        return;
       }
     }
   }
