@@ -98,7 +98,7 @@ export class CountryComponent implements OnInit {
     this.titleService.setTitle('Country Overview: COVID-19 Statistics and Government Measures');
     this.isMobile = window.innerWidth > mobileWidth ? false : true;
 
-    this.evolution = (await this.http.get(`${aws}/test_evolution.json`).toPromise() as any);
+    this.evolution = (await this.http.get(`${aws}/evolution.json`).toPromise() as any);
     this.schoolClosureData = (await this.http.get(`${aws}/school_closure.json`).toPromise() as any);
     this.lockdownData = (await this.http.get(`${aws}/lockdown.json`).toPromise() as any);
     this.impactData = (await this.http.get(`${aws}/country_impacts.json`).toPromise() as any);
