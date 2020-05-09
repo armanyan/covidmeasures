@@ -348,7 +348,6 @@ export class SchoolComponent implements OnInit {
             return dateB - dateA;
           }).slice(0,10);
         } else{
-          console.log(tableStats)
           // if date is not ascending? we sort to ascending
           this.schoolClosure = tableStats.sort((a, b) => {
             const dateA =  a.start && a.start != 'Thu Jan 01 1970' ? new Date(a.start).getTime() : 0
