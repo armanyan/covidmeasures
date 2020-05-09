@@ -41,7 +41,9 @@ td.left, td.center {
   font-size: 1.3rem;
   text-align: left;
 }
-
+.table{
+  table-layout: fixed;
+}
 .table thead th {
   font-size: 0.95rem;
   font-weight: 500;
@@ -52,6 +54,10 @@ td.left, td.center {
 
 .table-datas{
   font-size:1.3em;
+}
+
+tr td.active {
+  color: #d83b40 !important;
 }
 /* --------------------------- BUTTONS ---------------------------------*/
 
@@ -137,4 +143,10 @@ td.left, td.center {
 
 .card-citizens{
   margin: 1% 0;
+}
+
+@media (max-width: 1200px) {
+  .table{
+    table-layout: auto;
+  }
 }

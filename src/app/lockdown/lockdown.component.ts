@@ -34,9 +34,6 @@ export class LockdownComponent implements OnInit {
     {value: 'Latin America and the Caribbean', viewValue: 'Latin America and the Caribbean'},
   ]
 
-  public statsHeaders = [
-    'Name', 'Population Impacted', 'Lockdown', 'Curfew', 'Business Status', 'Other Measures', 'Start', 'End', 'Duration', 'Status'
-  ];
   public lockdownTable = [];
   public lockdownTableFull = [];
 
@@ -56,6 +53,39 @@ export class LockdownComponent implements OnInit {
 
   private lockdownCountriesPieChart: Chart;
   private lockdownPopulationPieChart: Chart;
+
+  public statsHeaders = [
+    {title:'Name', sortable: true}, {title:'Population Impacted', sortable: true}, 
+    {title:'Lockdown', sortable: false}, {title:'Curfew', sortable: false}, 
+    {title:'Business Status', sortable: false}, {title:'Other Measures', sortable: false}, 
+    {title:'Start', sortable: true}, {title:'End', sortable: true}, 
+    {title:'Duration', sortable: true}, {title:'Status', sortable: false}
+  ];
+
+  public filterCountry: string;
+  // 'Name', 'Population Impacted ', 'start', 'end', 'duration'
+  public sortStatus = {
+    name: {
+      active:true,
+      asc: true
+    },
+    population : {
+      active:false,
+      asc: false
+    },
+    start : {
+      active:false,
+      asc: false
+    },
+    end : {
+      active:false,
+      asc: false
+    },
+    duration : {
+      active:false,
+      asc: false
+    }
+  };
 
   constructor(
     private titleService: Title,
@@ -305,5 +335,118 @@ export class LockdownComponent implements OnInit {
     this.lockdownTable = this.lockdownTableFull.filter(
       row => row.name.toLowerCase().includes(search)
     ).slice(0, 10);
+  }
+
+  /***
+   * Sort Table columns
+   * @param string contains value in which column to sort the data by
+   */
+  public sortTable(sortBy:string) {
+    
+    const tableStats = this.filterCountry ? 
+      this.lockdownTable.length ? this.lockdownTable : JSON.parse(JSON.stringify( this.lockdownTableFull))
+      : JSON.parse(JSON.stringify( this.lockdownTableFull));
+
+    for (const key in this.sortStatus) {
+      if (this.sortStatus.hasOwnProperty(key)) {
+        this.sortStatus[key].active = false;
+      }
+    } 
+    // 'Name', 'Population Impacted ', 'start', 'end', 'duration'
+    switch (sortBy) {
+      case 'Name':
+        this.sortStatus.name.asc ?
+          this.lockdownTable = tableStats.sort((a, b) => b.name.localeCompare(a.name)).slice(0, 10) :
+          this.lockdownTable = tableStats.sort((a, b) => a.name.localeCompare(b.name)).slice(0, 10)
+        this.sortStatus.name.asc = !this.sortStatus.name.asc;
+        this.sortStatus.name.active = true;
+        break;
+
+      case 'Population Impacted':
+        if (this.sortStatus.population.asc ) {
+          this.lockdownTable = tableStats.sort((a, b) => b.population - a.population).slice(0, 10);
+        }else{
+          this.lockdownTable = tableStats.sort((a, b) => {
+            if(a.population === "" || a.population === null) return 1;
+            if(b.population === "" || b.population === null) return -1;
+            if(a.population === b.population) return 0;
+            return a.population - b.population;
+          }).slice(0, 10);
+        }
+        this.sortStatus.population.asc = !this.sortStatus.population.asc;
+        this.sortStatus.population.active = true;
+      break;
+
+      case 'Start':
+        if (this.sortStatus.start.asc) { // if Date is already in ascending
+          // we sort it to descending
+          this.lockdownTable = tableStats.sort((a, b) => {
+            const dateA =  a.start ? new Date(a.start).getTime() : 0
+            const dateB = b.start ? new Date(b.start).getTime() : 0
+            return dateB - dateA;
+          }).slice(0,10);
+        } else{
+          // if date is not ascending? we sort to ascending
+          this.lockdownTable = tableStats.sort((a, b) => {
+            const dateA =  a.start ? new Date(a.start).getTime() : 0
+            const dateB = b.start ? new Date(b.start).getTime() : 0
+            if(dateA === 0 || dateA === null) return 1;
+            if(dateB === 0 || dateB === null) return -1;
+            if(dateA === dateB) return 0;
+            return dateA - dateB;
+          }).slice(0, 10);
+        }
+
+        this.sortStatus.start.asc = !this.sortStatus.start.asc;
+        this.sortStatus.start.active = true;
+        break;
+      
+      case 'End':
+        if (this.sortStatus.end.asc) { // if Date is already in ascending
+          // we sort it to descending
+          this.lockdownTable = tableStats.sort((a, b) => {
+            const dateA =  a.end ? new Date(a.end).getTime() : 0
+            const dateB = b.end ? new Date(b.end).getTime() : 0
+            return dateB - dateA;
+          }).slice(0,10);
+        } else{
+          // if date is not ascending? we sort to ascending
+          this.lockdownTable = tableStats.sort((a, b) => {
+            const dateA =  a.end ? new Date(a.end).getTime() : 0
+            const dateB = b.end ? new Date(b.end).getTime() : 0
+            if(dateA === 0 || dateA === null) return 1;
+            if(dateB === 0 || dateB === null) return -1;
+            if(dateA === dateB) return 0;
+            return dateA - dateB;
+          }).slice(0, 10);
+        }
+        this.sortStatus.end.asc = !this.sortStatus.end.asc;
+        this.sortStatus.end.active = true;
+        break;
+      
+      case 'Duration':
+        if (this.sortStatus.duration.asc) {
+          this.lockdownTable = tableStats.sort((a, b) => {
+            const durationA = a.duration.split(' ')[0]
+            const durationB = b.duration.split(' ')[0]
+            return durationB - durationA;
+          }).slice(0, 10); 
+        }else{
+          this.lockdownTable = tableStats.sort((a, b) => {
+            const durationA = a.duration.split(' ')[0]
+            const durationB = b.duration.split(' ')[0]
+            if(durationA === "" || durationA === null) return 1;
+            if(durationB === "" || durationB === null) return -1;
+            if(durationA === durationB) return 0;
+            return durationA - durationB;
+          }).slice(0, 10);
+        }
+        this.sortStatus.duration.asc = !this.sortStatus.duration.asc;
+        this.sortStatus.duration.active = true;
+        break;
+
+      default:
+        break;
+    }
   }
 }

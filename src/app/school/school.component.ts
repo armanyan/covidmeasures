@@ -76,7 +76,35 @@ export class SchoolComponent implements OnInit {
     "World": { "activeCases": 0, "deaths": 0 }
   }
 
-  public statsHeaders = ["Country", "Impacted Children", "Start", "End", "Duration", "Closure Status"];
+  public statsHeaders = [
+    {title:"Country", sortable:true}, {title:"Impacted Children", sortable:true}, 
+    {title:"Start", sortable:true}, {title:"End", sortable:true}, 
+    {title:"Duration", sortable:true}, {title:"Closure Status", sortable:false}];
+
+  public filterCountry: string;
+  // 'Country', 'Impacted Children', 'start', 'end', 'duration'
+  public sortStatus = {
+    country: {
+      active:true,
+      asc: true
+    },
+    children : {
+      active:false,
+      asc: false
+    },
+    start : {
+      active:false,
+      asc: false
+    },
+    end : {
+      active:false,
+      asc: false
+    },
+    duration : {
+      active:false,
+      asc: false
+    }
+  };
 
   private schoolClosureData: any;
 
@@ -271,5 +299,111 @@ export class SchoolComponent implements OnInit {
     }
   }
 
+    /***
+   * Sort Table columns
+   * @param string contains value in which column to sort the data by
+   */
+  public sortTable(sortBy:string) {
+    
+    const tableStats = this.filterCountry ? 
+      this.schoolClosure.length ? this.schoolClosure : JSON.parse(JSON.stringify(this.schoolClosureFull))
+      : JSON.parse(JSON.stringify(this.schoolClosureFull));
+
+    for (const key in this.sortStatus) {
+      if (this.sortStatus.hasOwnProperty(key)) {
+        this.sortStatus[key].active = false;
+      }
+    } 
+    // 'Country', 'Children Impacted ', 'start', 'end', 'duration'
+    switch (sortBy) {
+      case 'Country':
+        this.sortStatus.country.asc ?
+          this.schoolClosure = tableStats.sort((a, b) => b.name.localeCompare(a.name)).slice(0, 10) :
+          this.schoolClosure = tableStats.sort((a, b) => a.name.localeCompare(b.name)).slice(0, 10)
+        this.sortStatus.country.asc = !this.sortStatus.country.asc;
+        this.sortStatus.country.active = true;
+        break;
+
+      case 'Impacted Children':
+        if (this.sortStatus.children.asc ) {
+          this.schoolClosure = tableStats.sort((a, b) => b.children - a.children).slice(0, 10);
+        }else{
+          this.schoolClosure = tableStats.sort((a, b) => {
+            if(a.children === "" || a.children === null) return 1;
+            if(b.children === "" || b.children === null) return -1;
+            if(a.children === b.children) return 0;
+            return a.children - b.children;
+          }).slice(0, 10);
+        }
+        this.sortStatus.children.asc = !this.sortStatus.children.asc;
+        this.sortStatus.children.active = true;
+      break;
+
+      case 'Start':
+        if (this.sortStatus.start.asc) { // if Date is already in ascending
+          // we sort it to descending
+          this.schoolClosure = tableStats.sort((a, b) => {
+            const dateA =  a.start ? new Date(a.start).getTime() : 0
+            const dateB = b.start ? new Date(b.start).getTime() : 0
+            return dateB - dateA;
+          }).slice(0,10);
+        } else{
+          // if date is not ascending? we sort to ascending
+          this.schoolClosure = tableStats.sort((a, b) => {
+            const dateA =  a.start && a.start != 'Thu Jan 01 1970' ? new Date(a.start).getTime() : 0
+            const dateB = b.start && b.start != 'Thu Jan 01 1970' ? new Date(b.start).getTime() : 0
+            if(dateA === 0 || dateA === null) return 1;
+            if(dateB === 0 || dateB === null) return -1;
+            if(dateA === dateB) return 0;
+            return dateA - dateB;
+          }).slice(0, 10);
+        }
+
+        this.sortStatus.start.asc = !this.sortStatus.start.asc;
+        this.sortStatus.start.active = true;
+        break;
+      
+      case 'End':
+        if (this.sortStatus.end.asc) { // if Date is already in ascending
+          // we sort it to descending
+          this.schoolClosure = tableStats.sort((a, b) => {
+            const dateA =  a.end ? new Date(a.end).getTime() : 0
+            const dateB = b.end ? new Date(b.end).getTime() : 0
+            return dateB - dateA;
+          }).slice(0,10);
+        } else{
+          // if date is not ascending? we sort to ascending
+          this.schoolClosure = tableStats.sort((a, b) => {
+            const dateA =  a.end ? new Date(a.end).getTime() : 0
+            const dateB = b.end ? new Date(b.end).getTime() : 0
+            if(dateA === 0 || dateA === null) return 1;
+            if(dateB === 0 || dateB === null) return -1;
+            if(dateA === dateB) return 0;
+            return dateA - dateB;
+          }).slice(0, 10);
+        }
+        this.sortStatus.end.asc = !this.sortStatus.end.asc;
+        this.sortStatus.end.active = true;
+        break;
+      
+      case 'Duration':
+        if (this.sortStatus.duration.asc) {
+          this.schoolClosure = tableStats.sort((a, b) => b.duration - a.duration).slice(0, 10); 
+        }else{
+          this.schoolClosure = tableStats.sort((a, b) => {
+            if(a.duration === "" || a.duration === null) return 1;
+            if(b.duration === "" || b.duration === null) return -1;
+            if(a.duration === b.duration) return 0;
+            return a.duration - b.duration;
+          }).slice(0, 10);
+        }
+        this.sortStatus.duration.asc = !this.sortStatus.duration.asc;
+        this.sortStatus.duration.active = true;
+        break;
+
+      default:
+        break;
+    }
+  }
 }
 
