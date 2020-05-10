@@ -138,3 +138,20 @@ td.left, td.center {
 .card-citizens{
   margin: 1% 0;
 }
+
+/* Iframe */
+
+.responsive-iframe {
+
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+  border-radius: 10px;
+  padding-left: 15px;
+  padding-right: 15px;
+}
