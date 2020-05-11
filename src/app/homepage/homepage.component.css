@@ -1,21 +1,97 @@
-h1{
-  font-weight:bold;
-  font-size:2.5em;
+h1 {
+  font-weight: bold;
+  font-size: 2.5em;
 }
 
-p{
-  font-size:1.2em;
+p {
+  font-size: 1.2em;
 }
 
-button{
+button {
   background: #ed5658;
-  color:black;
+  color: black;
   -webkit-border-radius: 28;
   -moz-border-radius: 28;
   border-radius: 28px;
-  -webkit-box-shadow: 15px 15px 19px -22px rgba(0,0,0,0.83);
-  -moz-box-shadow: 15px 15px 19px -22px rgba(0,0,0,0.83);
-  box-shadow: 15px 15px 19px -22px rgba(0,0,0,0.83);
-  border:none;
-  padding:3% 8%;
+  -webkit-box-shadow: 15px 15px 19px -22px rgba(0, 0, 0, 0.83);
+  -moz-box-shadow: 15px 15px 19px -22px rgba(0, 0, 0, 0.83);
+  box-shadow: 15px 15px 19px -22px rgba(0, 0, 0, 0.83);
+  border: none;
+  padding: 3% 8%;
+}
+.homepage_container {
+  position: relative;
+  overflow-x: hidden;
+}
+.atribution {
+  color: white;
+  font-size: 0.5em;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  padding-right: 2%;
+}
+.top_card {
+  height: 50vh;
+  background-image: url("./../../assets/img/bg-virus.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.top_card h1 {
+  padding: 15% 5% 0 25%;
+}
+.top_card .inner {
+  padding: 9% 10% 0 0;
+}
+.top_card button {
+  margin-top: 2%;
+}
+.bottom_card {
+  height: 50vh;
+  background-color: #81c285;
+}
+.bottom_card .inner {
+  padding: 5% 10% 0 15%;
+}
+.innermost {
+  padding: 0 0.5em;
+}
+.innermost img {
+  height: 60px;
+  width: auto;
+}
+.bottom_card .last {
+  padding: 4% 11% 0 0;
+}
+@media all and (max-width: 767px) {
+  .top_card,
+  .bottom_card {
+    height: auto;
+  }
+  .bottom_card .last {
+    margin: 0;
+    padding: 1.5em;
+  }
+  .top_card .inner {
+    margin: 0;
+    padding: 1em 2em;
+  }
+  .top_card h1 {
+    margin: 0;
+    padding: 1.5em 0.5em 0.5em 0.5em;
+  }
+  .bottom_card .inner {
+    margin: 0;
+    padding: 1em 2em;
+  }
+  .bottom_card button,
+  .top_card button {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0.5em 1em;
+  }
+  .mb-4 * {
+    margin: auto;
+  }
 }
