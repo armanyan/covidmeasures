@@ -29,11 +29,15 @@
         <i class="material-icons" style="font-size: 40px;">arrow_drop_down</i>
         </a>
         <div class="collapse m-0 p-0" id="{{menuItem.title}}">
-          <div class="card m-0 pl-3">
+          <div class="card m-0 pl-3 pb-2">
             <li routerLinkActive="active" *ngFor="let menu of menuItem.menus" class="nav-item">
-              <a  class="nav-link" [routerLink]="[menu.path]">
+              <a *ngIf="!menu.soon && !menu.hide" class="nav-link" [routerLink]="[menu.path]">
                 <i class="material-icons">{{menu.icon}}</i>
                 <p><b>{{menu.title}}</b></p>
+              </a>
+              <a *ngIf="menu.soon && !menu.hide" class="nav-link" [routerLink]="[menu.path]">
+                <i class="material-icons">{{menu.icon}}</i>
+                <p style="color: grey;">{{menu.title}}</p>
               </a>
             </li>
           </div>
