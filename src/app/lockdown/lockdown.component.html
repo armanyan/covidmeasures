@@ -246,8 +246,8 @@
                   <td class="text-center">{{ row.curfew }}</td>
                   <td class="text-center">{{ row.business }}</td>
                   <td class="text-center">{{ row.other }}</td>
-                  <td [ngClass]="{active: sortStatus.start.active}" class="text-center">{{ row.start }}</td>
-                  <td [ngClass]="{active: sortStatus.end.active}" class="text-center">{{ row.end }}</td>
+                  <td [ngClass]="{active: sortStatus.start.active}" class="text-center">{{ row.start | date }}</td>
+                  <td [ngClass]="{active: sortStatus.end.active}" class="text-center">{{ row.end | date }}</td>
                   <td [ngClass]="{active: sortStatus.duration.active}" class="text-center">{{ row.duration }}</td>
                   <td>{{ row.status }}</td>
                 </tr>

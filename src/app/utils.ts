@@ -386,6 +386,9 @@ export const createEvolutionChart = (
       enabled: true, 
       mode: 'label',
       position: 'nearest',
+      filter: function (tooltipItem: any) {
+        return tooltipItem.datasetIndex < 2;
+      },
       callbacks: {
         label: function(tooltipItem: any) {
           return tooltipItem.yLabel.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
