@@ -101,7 +101,7 @@ export class CountryComponent implements OnInit {
     this.evolution = (await this.http.get(`${aws}/evolution.json`).toPromise() as any);
     this.schoolClosureData = (await this.http.get(`${aws}/school_closure.json`).toPromise() as any);
     this.lockdownData = (await this.http.get(`${aws}/lockdown.json`).toPromise() as any);
-    this.impactData = (await this.http.get(`${aws}/country_impacts.json`).toPromise() as any);
+    this.impactData = (await this.http.get(`${aws}/impacts.json`).toPromise() as any);
     this.setImpactTable();
 
     this.evolutionUpdatedOn = this.changeDateFormat(this.evolution.dates[this.evolution.dates.length - 1]);
@@ -427,7 +427,7 @@ export class CountryComponent implements OnInit {
     this.impactTable = [];
     for (const impact of this.impactData) {
       if (impact.alpha3 === 'WRD' || impact.alpha3 === this.countryView) {
-  this.impactTable.push(impact);
+        this.impactTable.push(impact);
       }
     }
   }

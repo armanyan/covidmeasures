@@ -4,7 +4,6 @@ import { Title } from '@angular/platform-browser';
 import { HttpClient } from '@angular/common/http';
 
 import { mobileWidth, getCountryPopulation, getRegionByAlpha, createPieChart, aws } from '../utils';
-import * as lockdownImpactData from '../data/lockdown_impacts';
 import * as text from '../data/texts/lockdown';
 
 interface Location {
@@ -263,14 +262,15 @@ export class LockdownComponent implements OnInit {
     return restriction ? 'Yes' : 'No';
   }
 
-  private setLockdownImpactStatistics() {
-    for (const row of lockdownImpactData.default) {
+  private async setLockdownImpactStatistics() {
+    const data = (await this.http.get(`${aws}/impacts.json`).toPromise() as any);
+    const impactData = data.filter(impact => impact.measure === 'Movement restrictions');
+    for (const row of impactData) {
       this.impactTable.push({
         "impact": row.impact,
-        "desc": row.desc,
+        "desc": row.description,
         "link": row.link,
-        "countries": row.countries,
-        "source_name": row.source_name,
+        "countries": row.location,
         "source": row.source
       });
     }
