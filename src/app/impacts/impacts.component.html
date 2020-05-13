@@ -31,12 +31,15 @@
               </thead>
               <tbody>
                 <tr *ngFor="let row of impacts">
+                  <td>{{ row.location }}</td>
                   <td>{{ row.impact }}</td>
                   <td>{{ row.description }}</td>
-                  <td>{{ row.location }}</td>
                   <td>{{ row.measure }}</td>
-                  <td>
-                    <a href="{{ row.link }}" target="_blank">{{ row.source }}</a>
+                  <td *ngIf="row.source.startsWith('http')">
+                    <a href="{{ row.source }}" target="_blank">{{ row.source.split('/')[2] }}</a>
+                  </td>
+                  <td *ngIf="!row.source.startsWith('http')">
+                    {{ row.source }}
                   </td>
                 </tr>
               </tbody>

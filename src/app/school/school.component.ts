@@ -2,8 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Title } from "@angular/platform-browser";
 
-import { getRegionByAlpha, getCountryNameByAlpha, getChildrenNoSchool } from '../utils';
-import * as impactData from '../data/school_closure_impact';
+import { aws, getRegionByAlpha, getCountryNameByAlpha, getChildrenNoSchool } from '../utils';
 import * as text from '../data/texts/school_closure';
 
 interface Location {
@@ -286,14 +285,15 @@ export class SchoolComponent implements OnInit {
     ).slice(0, 10);
   }
 
-  private setLockdownImpactStatistics() {
-    for (const row of impactData.default) {
+  private async setLockdownImpactStatistics() {
+    const data = (await this.http.get(`${aws}/impacts.json`).toPromise() as any);
+    const impactData = data.filter(impact => impact.measure === 'School Closure');
+    for (const row of impactData) {
       this.impactTable.push({
         "impact": row.impact,
-        "desc": row.desc,
+        "desc": row.description,
         "link": row.link,
-        "countries": row.countries,
-        "source_name": row.source_name,
+        "countries": row.location,
         "source": row.source
       });
     }
