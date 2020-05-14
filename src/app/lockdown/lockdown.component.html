@@ -87,7 +87,7 @@
     </p>
 
     <!-- Lockdown Map Starts -->
-    <div class="card mt-5 pt-5">
+    <div class="card card-border mt-5 pt-5">
       <div class="card-header card-header-success">
         <h3 class="card-title">Map - Lockdown Status</h3>
       </div>
@@ -109,7 +109,7 @@
 
     <div class="row">
       <div class="col-md-6">
-        <div class="card">
+        <div class="card card-border">
 
           <div class="card-header card-header-success">
             <h3 class="card-title ">By Number of Countries</h3>
@@ -158,7 +158,7 @@
       </div>
 
       <div class="col-md-6">
-        <div class="card">
+        <div class="card card-border">
 
           <div class="card-header card-header-success">
             <h3 class="card-title">By Population Impacted</h3>
@@ -211,11 +211,8 @@
       {{ lockdown_tab_2_below}}
     </p>
 
-
-    <h3 style="margin-bottom:5%">By Countries</h3>
-
     <div class="col-md-12">
-      <div class="card">
+      <div class="card card-border">
 
         <div class="card-header card-header-success">
           <h3 class="card-title">Detailed View For Each Country</h3>
@@ -234,21 +231,32 @@
               <thead>
                 <th class="text-primary" *ngFor="let row of statsHeaders" (click)="sortTable(row.title)">
                   <div class="d-flex justify-content-center align-items-center" style="cursor: pointer;">
-                    {{ row.title }} <i *ngIf="row.sortable" class="material-icons" style="font-size: 20px;">arrow_drop_down</i>
+                    {{ row.title }}
+                    <i *ngIf="row.sortable" class="material-icons" style="font-size: 20px;">
+                      arrow_drop_down
+                    </i>
                   </div>
                 </th>
               </thead>
               <tbody>
                 <tr *ngFor="let row of lockdownTable">
                   <td [ngClass]="{active: sortStatus.name.active}">{{ row.name }}</td>
-                  <td [ngClass]="{active: sortStatus.population.active}" class="text-center">{{ row.population | number}}</td>
+                  <td [ngClass]="{active: sortStatus.population.active}" class="text-center">
+                    {{ row.population | number}}
+                  </td>
                   <td class="text-center">{{ row.lockdown }}</td>
                   <td class="text-center">{{ row.curfew }}</td>
                   <td class="text-center">{{ row.business }}</td>
                   <td class="text-center">{{ row.other }}</td>
-                  <td [ngClass]="{active: sortStatus.start.active}" class="text-center">{{ row.start | date }}</td>
-                  <td [ngClass]="{active: sortStatus.end.active}" class="text-center">{{ row.end | date }}</td>
-                  <td [ngClass]="{active: sortStatus.duration.active}" class="text-center">{{ row.duration }}</td>
+                  <td [ngClass]="{active: sortStatus.start.active}" class="text-center">
+                    {{ row.start | date }}
+                  </td>
+                  <td [ngClass]="{active: sortStatus.end.active}" class="text-center">
+                    {{ row.end | date }}
+                  </td>
+                  <td [ngClass]="{active: sortStatus.duration.active}" class="text-center">
+                    {{ row.duration }}
+                  </td>
                   <td>{{ row.status }}</td>
                 </tr>
               </tbody>
@@ -263,7 +271,8 @@
           </div>
           <div class="stats">
             Source: CovidMeasures Community & &nbsp;
-            <a href="https://www.bsg.ox.ac.uk/research/research-projects/coronavirus-government-response-tracker" target="_blank">OxCGRT</a>
+            <a href="https://www.bsg.ox.ac.uk/research/research-projects/coronavirus-government-response-tracker"
+              target="_blank">OxCGRT</a>
           </div>
         </div>
 
@@ -273,7 +282,7 @@
     <h3 style="margin-bottom:5%">Lockdown Impacts</h3>
 
     <div class="col-md-12">
-      <div class="card">
+      <div class="card card-border">
 
         <div class="card-header card-header-success">
           <h3 class="card-title">List of Lockdown Impacts & Solutions
@@ -324,8 +333,10 @@
     </div>
 
     <p style="margin-top:2%">
-      The status of lockdown measures worldwide was made possible thanks to the community of <b>CovidMeasures</b>.
-      Please help to keep this database up-to-date. <a href="https://forms.gle/DmmnetQ76by64hF68" target="_blank">Join our team </a>or
+      The status of lockdown measures worldwide was made possible
+      thanks to the community of <b>CovidMeasures</b>.
+      Please help to keep this database up-to-date.
+      <a href="https://forms.gle/DmmnetQ76by64hF68" target="_blank">Join our team </a>or
       just <a href="https://forms.gle/TuLNu54Xr6vfYedq5" target="_blank">contribute</a>
       by verifying its accuracy in your region.
     </p>
