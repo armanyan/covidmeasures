@@ -27,12 +27,15 @@ button {
   overflow-x: hidden;
 }
 .atribution {
-  color: white;
+  color: #6fb874;
   font-size: 0.5em;
   position: absolute;
   bottom: 0;
   right: 0;
   padding-right: 2%;
+}
+.atribution a {
+  color: inherit;
 }
 .top_card {
   min-height: 50vh;
@@ -122,6 +125,24 @@ button {
   height: 80px;
   display: block;
   margin: auto;
+}
+.footer_card {
+  background-color: #6fb874;
+  color: white;
+  font-size: 0.75em;
+  padding: 0.5em 3em;
+}
+.footer_card p {
+  display: inline-block;
+  vertical-align: middle;
+  margin: 0;
+  padding: 0;
+}
+.footer_card img {
+  display: inline-block;
+  vertical-align: middle;
+  width: 41px;
+  margin: 1em 0;
 }
 @media all and (max-width: 767px) {
   button {
