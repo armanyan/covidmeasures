@@ -4,6 +4,47 @@ p{
   text-align: justify;
 }
 
+p.align-weight{
+  text-align:center;
+  font-weight:900;
+  font-size:1.2em;
+}
+
+p.center{
+  text-align:center;
+}
+
+.weight{
+  font-weight:900;
+}
+
+p.size{
+  font-size:1.2em;
+}
+
+p.left-align {
+  margin:0 0 1% 0;
+  text-align:left;
+}
+
+p.margin-padding {
+  margin:0;
+  padding-bottom: 4%;
+}
+
+span.size {
+  font-size:1.3em;
+}
+
+.bold {
+  font-weight: bold;
+}
+
+i.size-padding {
+  font-size:2.5em;
+  padding:2%;
+}
+
 h3{
   margin:4.5% 3% 0 3%;
 }
@@ -16,6 +57,10 @@ a:hover{
   color: #e03b3e;
 }
 
+a.decor-off {
+  text-decoration: none;
+}
+
 div.center {
   margin-left: auto;
   margin-right: auto;
@@ -23,6 +68,23 @@ div.center {
 
 div.text-align {
   text-align: center;
+}
+
+.select-color {
+  color: rgb(52, 107, 186);
+}
+
+.mb5 {
+  margin-bottom:5%;
+}
+
+.mt3 {  
+  margin-top:3%;
+}
+
+.chart-pos {
+  position: relative;
+  height: 60vh
 }
 
 /* --------------------------- HEADERS ----------------------------- */
