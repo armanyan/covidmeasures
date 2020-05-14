@@ -2,7 +2,7 @@
   <div class="container-fluid">
 
     <div layout-align="end end">
-      <h2 style="font-weight:bold" *ngIf=isMobile><u>{{ titleService.getTitle().split(':')[0] }}</u></h2>
+      <h2 class="bold" *ngIf=isMobile><u>{{ titleService.getTitle().split(':')[0] }}</u></h2>
     </div>
 
     <h3>Government measures in response to COVID-19</h3>
@@ -27,23 +27,23 @@
           <div class="card-header card-header-success">
             <h4 class="card-title">Educational Facilities Closed</h4>
           </div>
-          <div class="text-center" style="text-align:center;">
-            <i style="font-size:2.5em; padding:2%;" class="material-icons">school</i>
-            <p style="text-align:center; font-weight:900; font-size:1.2em;">
+          <div class="text-center">
+            <i class="material-icons size-padding">school</i>
+            <p class="align-weight">
               Started On {{ schoolClosure.date | date }}
             </p>
-            <p style="text-align:center; font-weight:900; font-size:1.2em;">
+            <p class="align-weight">
               Currently {{ schoolClosure.status }}
             </p>
             <div class="d-flex justify-content-end">
-              <a data-toggle="collapse" 
-              href="#collapseSchoolClosure" 
-              role="button" 
-              aria-expanded="false" 
-              aria-controls="collapseSchoolClosure"
-              style="text-decoration: none;"
+              <a class="decor-off"
+                data-toggle="collapse" 
+                href="#collapseSchoolClosure" 
+                role="button" 
+                aria-expanded="false" 
+                aria-controls="collapseSchoolClosure"
               >
-                <h4 class="d-flex justify-content-center text-primary px-3" style="font-weight:900;">
+                <h4 class="d-flex justify-content-center text-primary px-3 weight">
                   More
                   <i class="material-icons">arrow_drop_down</i>
                 </h4>
@@ -52,15 +52,15 @@
             <div class="collapse" id="collapseSchoolClosure">
               <div class="bg-light py-3 m-0">
                 <p>
-                  <span style="font-weight: 900;">Current coverage:</span> 
+                  <span class="weight">Current coverage:</span> 
                    {{schoolClosure.current_coverage}}
                 </p>
                 <p>
-                  <span style="font-weight: 900;">Started reopening on:</span> 
+                  <span class="weight">Started reopening on:</span> 
                    {{schoolClosure.start_reopening}}
                 </p>
                 <p>
-                  <span style="font-weight: 900;">Ended measures on:</span> 
+                  <span class="weight">Ended measures on:</span> 
                    {{schoolClosure.end}}
                 </p>
                 <p>{{schoolClosure.comment}}</p>
@@ -74,23 +74,23 @@
           <div class="card-header card-header-success">
             <h4 class="card-title">Movement Restrictions</h4>
           </div>
-          <div class="text-center text-center" style="text-align:center;">
-            <i style="font-size:2.5em; padding:2%;" class="material-icons">lock</i>
-            <p style="text-align:center; font-weight:900; font-size:1.2em;">
+          <div>
+            <i class="material-icons size-padding">lock</i>
+            <p class="align-weight">
               Started on {{ lockdown.date | date }}
             </p>
-            <p style="text-align:center; font-weight:900; font-size:1.2em;">
+            <p class="align-weight">
               Currently {{ lockdown.status }}
             </p>
             <div class="d-flex justify-content-end">
-              <a data-toggle="collapse" 
-              href="#collapseMovementRestriction" 
-              role="button" 
-              aria-expanded="false" 
-              aria-controls="collapseMovementRestriction"
-              style="text-decoration: none;"
+              <a class="decor-off"
+                data-toggle="collapse" 
+                href="#collapseMovementRestriction" 
+                role="button" 
+                aria-expanded="false" 
+                aria-controls="collapseMovementRestriction"
               >
-                <h4 class="d-flex justify-content-center text-primary px-3" style="font-weight:900;">
+                <h4 class="d-flex justify-content-center text-primary px-3 weight">
                   More
                   <i class="material-icons">arrow_drop_down</i>
                 </h4>
@@ -99,19 +99,19 @@
             <div class="collapse" id="collapseMovementRestriction">
               <div class="bg-light py-3 m-0">
                 <p>
-                  <span style="font-weight: 900;">Current coverage:</span>
+                  <span class="weight">Current coverage:</span>
                    {{lockdown.current_coverage}}
                 </p>
                 <p>
-                  <span style="font-weight: 900;">Type of restrictions:</span>
+                  <span class="weight">Type of restrictions:</span>
                    {{lockdown.restriction_type}}
                 </p>
                 <p>
-                  <span style="font-weight: 900;">Started softening measures on:</span>
+                  <span class="weight">Started softening measures on:</span>
                    {{lockdown.start_reopening}}
                 </p>
                 <p>
-                  <span style="font-weight: 900;">Ended measures on:</span>
+                  <span class="weight">Ended measures on:</span>
                    {{lockdown.end}}
                  </p>
                 <p>{{lockdown.comment}}</p>
@@ -125,22 +125,22 @@
           <div class="card-header card-header-success">
             <h4 class="card-title">Businesses Closed</h4>
           </div>
-          <i style="font-size:2.5em; padding:2%;" class="material-icons">store</i>
-          <p style="text-align:center; font-weight:900; font-size:1.2em;">
+          <i class="material-icons size-padding">store</i>
+          <p class="align-weight">
             Started on {{ businessClosure.date | date }}
           </p>
-          <p style="text-align:center; font-weight:900; font-size:1.2em;">
+          <p class="align-weight">
             Currently {{ businessClosure.status }}
           </p>
           <div class="d-flex justify-content-end">
-            <a data-toggle="collapse" 
-            href="#collapseBusiness" 
-            role="button" 
-            aria-expanded="false" 
-            aria-controls="collapseBusiness"
-            style="text-decoration: none;"
+            <a class="decor-off"
+              data-toggle="collapse" 
+              href="#collapseBusiness" 
+              role="button" 
+              aria-expanded="false" 
+              aria-controls="collapseBusiness"
             >
-              <h4 class="d-flex justify-content-center text-primary px-3" style="font-weight:900;">
+              <h4 class="d-flex justify-content-center text-primary px-3 weight">
                 More
                 <i class="material-icons">arrow_drop_down</i>
               </h4>
@@ -149,97 +149,32 @@
           <div class="collapse" id="collapseBusiness">
             <div class="bg-light py-3 m-0">
               <p>
-                <span style="font-weight: 900;">Start softening date:</span>
+                <span class="weight">Start softening date:</span>
                  {{businessClosure.start_reopening_business}}
               </p>
               <p>
-                <span style="font-weight: 900;">Ended measures on:</span>
+                <span class="weight">Ended measures on:</span>
                  {{businessClosure.end_business}}
               </p>
             </div>
           </div>
         </div>
       </div>
-      <!-- <div class="col-md-4 text-center">
-        <div class="card card-border">
-          <div class="card-header card-header-success">
-            <h4 class="card-title">Mask Policy</h4>
-          </div>
-          <div class="text-center" style="text-align:center;">
-            <div class="d-flex justify-content-center py-3">
-              <button class="btn btn-primary" style="font-weight: 900;">Add Measure Info</button>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-4 text-center">
-        <div class="card card-border">
-          <div class="card-header card-header-success">
-            <h4 class="card-title">Surveillance</h4>
-          </div>
-          <div class="text-center" style="text-align:center;">
-            <div class="d-flex justify-content-center py-3">
-              <button class="btn btn-primary" style="font-weight: 900;">Add Measure Info</button>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-4 text-center">
-        <div class="card card-border">
-          <div class="card-header card-header-success">
-            <h4 class="card-title">Testing</h4>
-          </div>
-          <div class="text-center" style="text-align:center;">
-            <div class="d-flex justify-content-center py-3">
-              <button class="btn btn-primary" style="font-weight: 900;">Add Measure Info</button>
-            </div>
-          </div>
-        </div>
-      </div> -->
     </div>
 
     <div>
-      <p class="text-primary" style="margin:0; padding-bottom:4%;"><b><a href="https://forms.gle/e6mXPravJkLtRWPq5"
+      <p class="text-primary margin-padding"><b><a href="https://forms.gle/e6mXPravJkLtRWPq5"
             target="_blank">Is this information not up-to-date?</a></b></p>
     </div>
 
-    <h3 style="margin-bottom:5%;">Evolution of COVID-19 in the country</h3>
+    <h3 class="mb5">Evolution of COVID-19 in the country</h3>
 
     <div class="card card-border">
       <div class="card-header card-header-success">
         <h3 class="card-title">Reported COVID-19 Infection Cases & Deaths Per Day</h3>
       </div>
-      <!-- Evolution Calendar Range Starts -->
-      <!-- <div class="card m-0 p-0  px-sm-2 pt-4">
-        <div class="card-body  m-0 p-0">
-          <form [formGroup]="calendarForm">
-            <div class="row">
-              <div class="col-lg-2 col-md-4 d-flex justify-content-md-end justify-content-sm-start align-items-center">
-                <h5 class="font-weight-bold">Evolution Range</h5>
-              </div>
-              <div class="col-lg-4 col-md-6 form-group my-0 py-0">
-                <input type="text" class="form-control mb-3" laceholder="Dates Picker" bsDaterangepicker
-                  formControlName="dateRange" [bsConfig]="{containerClass:'theme-dark-blue'}"
-                  (ngModelChange)="evolutionRangeChanged()" />
-              </div>
-            </div>
-          </form>
-        </div>
-      </div>
-
-      <div class="card m-0 p-0  px-sm-2">
-        <div class="card-body m-3 p-0">
-          <h5 class="font-weight-bold">
-            <div class="float-left">Death-Cases Ratio For Current Range: <span
-                class="text-danger">{{ currentDeathRatio*100 | number }}%</span></div>
-            <div class="float-right">Total Death-Cases Ratio: <span
-                class="text-danger">{{ totalDeathRatio*100 | number }}%</span></div>
-          </h5>
-        </div>
-      </div> -->
-      <!-- Evolution Calendar Range Ends -->
       <div class="card-body p-1">
-        <div id="wrapper" class="pt-2 pt-md-3" style="position: relative; height: 60vh">
+        <div id="wrapper" class="pt-2 pt-md-3 chart-pos">
           <canvas id="countryChartAllCases"></canvas>
         </div>
       </div>
@@ -250,7 +185,9 @@
         <div class="stats">
           Source:
           <a
-            href="https://www.ecdc.europa.eu/en/publications-data/download-todays-data-geographic-distribution-covid-19-cases-worldwide">ECDC</a>
+            href="https://www.ecdc.europa.eu/en/publications-data/download-todays-data-geographic-distribution-covid-19-cases-worldwide">
+            ECDC
+          </a>
         </div>
       </div>
     </div>
@@ -261,15 +198,13 @@
     <div class="card center">
       <div class="card-body">
         <ng-container *ngIf="isMobile">
-          <mat-label>Per</mat-label>
           <mat-select
             [(value)]="currentOption"
             (selectionChange)="changeViewOption($event.value)"
           >
-            <mat-option
+            <mat-option class="select-color"
               *ngFor="let option of options"
               [value]="option"
-              style="color: rgb(52, 107, 186);"
             >
               {{ option }}
             </mat-option>
@@ -370,27 +305,31 @@
           </h3>
         </div>
 
-        <div class="row" style="margin-top:3%;">
+        <div class="row mt3">
           <div class="col-md-1"></div>
           <div class="col-md-7">
             <h4>Tell us about other impacts of government measures in {{currentCountryName}}</h4>
-            <p style="margin:0 0 1% 0; text-align:left;">
+            <p class="left-align">
               We want to hear both positive and negative impacts of those measures.<br>
               Vote for the most impactful in your life and the life of others around you (coming soon).<br>
-              <b>An impact can be mental, physical, direct, or indirect - an impact is any change in your life.</b>
+              <b>
+                An impact can be mental, physical, direct, or indirect - an impact is any change in your life.
+              </b>
             </p>
           </div>
           <div class="col-md-3">
-            <a style="text-decoration: none;" mat-raised-button class="nav-link float-right" type="button" color="primary"
+            <a class="decor-off" mat-raised-button class="nav-link float-right"
+              type="button" color="primary"
               href="https://forms.gle/d1n55BQ8k1Lv9TiX8" target="_blank">
-              <span style="font-size:1.3em;"> <i class="fa fa-plus" aria-hidden="true"></i>
-                Add an Impact</span>
+              <span class="span.size">
+                <i class="fa fa-plus" aria-hidden="true"></i>
+                Add an Impact
+              </span>
             </a>
           </div>
           <div class="col-md-1"></div>
         </div>
         <hr>
-        <!-- Evolution Calendar Range Starts -->
         <div class="card m-0 p-0  px-sm-2 pt-2">
           <div class="card-body  m-0 p-0">
 
