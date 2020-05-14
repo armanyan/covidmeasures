@@ -290,8 +290,11 @@
                   <td>{{ row.desc}}</td>
                   <td>{{ row.link }}</td>
                   <td>{{ row.countries }}</td>
-                  <td>
-                    <a href="{{ row.source }}" target="_blank">{{ row.source_name }}</a>
+                  <td *ngIf="row.source.startsWith('http')">
+                    <a href="{{ row.source }}" target="_blank">{{ row.source.split('/')[2] }}</a>
+                  </td>
+                  <td *ngIf="!row.source.startsWith('http')">
+                    {{ row.source }}
                   </td>
                 </tr>
               </tbody>

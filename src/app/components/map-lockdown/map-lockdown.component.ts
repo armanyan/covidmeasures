@@ -20,6 +20,7 @@ interface Country{
   current_population_impacted: number,
   // historical_severity: string,
   // current_severity: string,
+  restriction_type: string,
   movement_restrictions: boolean|string,
   curfew: boolean,
   public_closed: boolean|string,
@@ -36,6 +37,7 @@ interface Country{
 const colors = {
   "No data": "#e3e3e3",
   "No restrictions": "#66bb6a",
+  "Light measures": "#2e6f32",
   "Restricted": "#e6595a",
   "Curfew": "#B55007",
   "Softening restrictions": "#ffeb3b",
@@ -133,7 +135,7 @@ export class MapLockdownComponent implements OnInit {
     this.legend.onAdd = function () {
 
         const div = L.DomUtil.create('div', 'info legend');
-        const status = ['No data', 'No restrictions', 'Restricted','Curfew','Softening restrictions', 'Restrictions removed'];
+        const status = ['No data', 'No restrictions', 'Light measures', 'Restricted', 'Curfew','Softening restrictions', 'Restrictions removed'];
         // loop through our density intervals and generate a label with a colored square for each interval
         for (let i = 0; i < status.length; i++) {
             div.innerHTML +=
@@ -169,6 +171,9 @@ export class MapLockdownComponent implements OnInit {
       let status = country.status;
       if (status === 'Restricted') {
         status = country.curfew ? 'Curfew': 'Restricted';
+      }
+      if (status === 'Restricted') {
+        status = country.restriction_type == "Light measures" ? "Light measures" : "Restricted"
       }
       return colors[status] ? colors[status] : colors['No data'];
     }

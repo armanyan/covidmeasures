@@ -14,7 +14,7 @@
       </a>
       <a *ngIf="menuItem.soon && !menuItem.hide" class="nav-link" [routerLink]="[menuItem.path]">
         <i class="material-icons">{{menuItem.icon}}</i>
-        <p style="color: grey;">{{menuItem.title}}</p>
+        <p class="soon">{{menuItem.title}}</p>
       </a>
       <div *ngIf="menuItem.collapse">
         <a data-toggle="collapse" 
@@ -26,14 +26,18 @@
           <h4 class="m-0 p-0 font-weight-bolder" >
             {{ menuItem.title }}
           </h4>
-        <i class="material-icons" style="font-size: 40px;">arrow_drop_down</i>
+        <i class="material-icons arrow">arrow_drop_down</i>
         </a>
         <div class="collapse m-0 p-0" id="{{menuItem.title}}">
-          <div class="card m-0 pl-3">
+          <div class="card m-0 pl-3 pb-2">
             <li routerLinkActive="active" *ngFor="let menu of menuItem.menus" class="nav-item">
-              <a  class="nav-link" [routerLink]="[menu.path]">
+              <a  *ngIf="!menu.soon" class="nav-link" [routerLink]="[menu.path]">
                 <i class="material-icons">{{menu.icon}}</i>
                 <p><b>{{menu.title}}</b></p>
+              </a>
+              <a *ngIf="menu.soon" class="nav-link" [routerLink]="[menu.path]">
+                <i class="material-icons">{{menu.icon}}</i>
+                <p class="soon">{{menu.title}}</p>
               </a>
             </li>
           </div>
