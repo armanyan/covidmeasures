@@ -55,7 +55,24 @@ button {
   padding: 8em 3em 1em 3em;
 }
 .info_card {
+  display: grid;
+  grid-template-columns: 1.75fr 1fr;
+  grid-template-rows: auto auto;
   padding: 3em;
+}
+.info_card h1 {
+  grid-column: 1 / span 2;
+}
+.info_card .imgdiv {
+  grid-column: 1 / span 1;
+}
+.info_card .inner {
+  grid-column: 2 / span 1;
+}
+.info_card img {
+  margin: auto;
+  width: 90%;
+  height: auto;
 }
 .logo_container {
   display: grid;
@@ -164,10 +181,14 @@ button {
     padding: 1.5em 1em 1em 1em;
   }
   .spare_card,
-  .card_container {
+  .card_container,
+  .info_card {
     grid-template-columns: 1fr;
   }
   .spare_card .pulse_check {
+    grid-column: 1 / span 1;
+  }
+  .info_card .inner {
     grid-column: 1 / span 1;
   }
 }
