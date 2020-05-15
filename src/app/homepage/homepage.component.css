@@ -1,3 +1,6 @@
+/* .homepage_container {
+  color: black;
+} */
 h1 {
   font-weight: bold;
   font-size: 2.5em;
@@ -5,6 +8,15 @@ h1 {
 
 p {
   font-size: 1.2em;
+}
+
+p.space {
+  margin-top: 2rem;
+}
+
+.center {
+  margin-top: auto;
+  margin-bottom: auto;
 }
 
 button {
@@ -23,75 +35,171 @@ button {
   position: relative;
   overflow-x: hidden;
 }
-.atribution {
-  color: white;
+.attribution {
+  color: #6fb874;
   font-size: 0.5em;
   position: absolute;
   bottom: 0;
   right: 0;
   padding-right: 2%;
 }
+.attribution a {
+  color: inherit;
+}
 .top_card {
-  height: 50vh;
-  background-image: url("./../../assets/img/bg-virus.jpg");
+  min-height: 90vh;
+  background-image: url("./../../assets/img/virus_bg.png");
   background-repeat: no-repeat;
-  background-size: cover;
+  background-size: contain;
+  background-position: center;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
 }
-.top_card h1 {
-  padding: 15% 5% 0 25%;
+.white_card {
+  background-color: rgba(255, 255, 255, 0.85);
+  padding: 12em 3em 1em 3em;
 }
-.top_card .inner {
-  padding: 9% 10% 0 0;
+.green_card {
+  background-color: rgba(111, 184, 116, 0.8);
+  padding: 24em 3em 1em 3em;
 }
-.top_card button {
-  margin-top: 2%;
+.info_card {
+  min-height: 90vh;
+  display: grid;
+  grid-template-columns: 1.75fr 1fr;
+  grid-template-rows: auto auto;
+  padding: 3em;
 }
-.bottom_card {
-  height: 50vh;
-  background-color: #81c285;
+.info_card h1 {
+  grid-column: 1 / span 2;
 }
-.bottom_card .inner {
-  padding: 5% 10% 0 15%;
+.info_card .imgdiv {
+  grid-column: 1 / span 1;
 }
-.innermost {
+.info_card .inner {
+  grid-column: 2 / span 1;
+}
+.info_card img {
+  margin: auto;
+  width: 90%;
+  height: auto;
+}
+.logo_container {
+  display: grid;
+  grid-template-columns: auto auto auto;
+  text-align: center;
+}
+.data_source_pic {
   padding: 0 0.5em;
 }
-.innermost img {
-  height: 60px;
+.data_source_pic img {
+  height: 64px;
   width: auto;
+  border-radius: 50%;
 }
-.bottom_card .last {
-  padding: 4% 11% 0 0;
+.spare_card {
+  min-height: 90vh;
+  background-color: rgb(111, 184, 116);
+  padding: 3em;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto auto;
+  row-gap: 1em;
+  column-gap: 1em;
+}
+.spare_card h1 {
+  grid-column: 1 / span 2;
+}
+.spare_card div {
+  grid-column: 1 / span 1;
+}
+.spare_card .pulse_check {
+  grid-column: 2 / span 1;
+  /* background-color: white; */
+}
+.pulse_check,
+.p_card {
+  height: 100%;
+  border: solid 1px black;
+  border-radius: 4px;
+  padding: 1em;
+}
+.pulse_check label,
+.p_card label {
+  background-color: #333b33;
+  color: white;
+  display: block;
+  width: 90%;
+  margin: auto;
+  position: relative;
+  padding: 1em;
+  top: -2.5em;
+  border-radius: 4px;
+  font-size: 0.75em;
+}
+.participate_card {
+  padding: 3em;
+}
+.participate_card h1 {
+  margin-bottom: 1em;
+}
+.card_container {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-gap: 1em;
+}
+.p_card img {
+  width: 80px;
+  height: 80px;
+  display: block;
+  margin: auto;
+}
+.footer_card {
+  background-color: #6fb874;
+  color: white;
+  font-size: 0.75em;
+  padding: 0.5em 3em;
+}
+.footer_card p {
+  display: inline-block;
+  vertical-align: middle;
+  margin: 0;
+  padding: 0;
+}
+.footer_card img {
+  display: inline-block;
+  vertical-align: middle;
+  width: 41px;
+  margin: 1em 0;
 }
 @media all and (max-width: 767px) {
-  .top_card,
-  .bottom_card {
-    height: auto;
-  }
-  .bottom_card .last {
-    margin: 0;
-    padding: 1.5em;
-  }
-  .top_card .inner {
-    margin: 0;
-    padding: 1em 2em;
-  }
-  .top_card h1 {
-    margin: 0;
-    padding: 1.5em 0.5em 0.5em 0.5em;
-  }
-  .bottom_card .inner {
-    margin: 0;
-    padding: 1em 2em;
-  }
-  .bottom_card button,
-  .top_card button {
+  button {
     display: block;
     margin-left: auto;
     margin-right: auto;
     padding: 0.5em 1em;
   }
-  .mb-4 * {
-    margin: auto;
+  .top_card {
+    grid-template-columns: 1fr;
+  }
+  .white_card {
+    padding: 3em 1em 1em 1em;
+  }
+  .green_card,
+  .info_card,
+  .spare_card,
+  .participate_card {
+    padding: 1.5em 1em 1em 1em;
+  }
+  .spare_card,
+  .card_container,
+  .info_card {
+    grid-template-columns: 1fr;
+  }
+  .spare_card .pulse_check {
+    grid-column: 1 / span 1;
+  }
+  .info_card .inner {
+    grid-column: 1 / span 1;
   }
 }
