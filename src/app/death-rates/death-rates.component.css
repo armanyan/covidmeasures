@@ -4,6 +4,10 @@ p{
   text-align: justify;
 }
 
+p.align-right {
+  text-align: right;
+}
+
 h3{
   margin:4.5% 3% 0 3%;
 }

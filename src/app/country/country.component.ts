@@ -59,6 +59,11 @@ export class CountryComponent implements OnInit {
     start_reopening_business: '', 
     end_business: ''
   };
+  public travel = {
+    start: '',
+    end: '',
+    status: 'No Data',
+  };
   public countryImpactedPeople: number;
   public countryCumulatedYears: number;
 
@@ -79,6 +84,7 @@ export class CountryComponent implements OnInit {
   private evolution: any;
   private schoolClosureData: any;
   private lockdownData: any;
+  private travelData: any;
 
   public severityMeasures: Chart;
 
@@ -102,6 +108,7 @@ export class CountryComponent implements OnInit {
     this.schoolClosureData = (await this.http.get(`${aws}/school_closure.json`).toPromise() as any);
     this.lockdownData = (await this.http.get(`${aws}/lockdown.json`).toPromise() as any);
     this.impactData = (await this.http.get(`${aws}/impacts.json`).toPromise() as any);
+    this.travelData = (await this.http.get(`${aws}/international_flights.json`).toPromise() as any);
     this.setImpactTable();
 
     this.evolutionUpdatedOn = this.changeDateFormat(this.evolution.dates[this.evolution.dates.length - 1]);
@@ -326,6 +333,11 @@ export class CountryComponent implements OnInit {
     this.businessClosure.start_reopening_business = lockdownCountry.start_reopening_business
     this.businessClosure.end_business = lockdownCountry.end_business
 
+    const travelCountry = this.getCountry(this.travelData.countries, alpha3);
+    this.travel.start = travelCountry.start;
+    this.travel.end = travelCountry.end;
+    this.travel.status = travelCountry.status;
+
     const affectedPopulation = getCountryPopulation(alpha3)*lockdownCountry.current_population_impacted;
     this.countryImpactedPeople = Math.floor(affectedPopulation/this.statsDivider);
     this.countryCumulatedYears = (this.getMissedDaysPerCountry(lockdownCountry)*affectedPopulation) / (365*this.statsDivider);
@@ -362,7 +374,7 @@ export class CountryComponent implements OnInit {
   private getCountry(countries, alpha3) {
     for (const country of countries) {
       if (country.alpha3 === alpha3) {
-  return country;
+        return country;
       }
     }
   }
