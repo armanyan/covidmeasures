@@ -19,7 +19,7 @@ export const ROUTES: RouteInfo[] = [
   { path: '/deathrates', title: 'Death Rates',  icon:'trending_up', class: '', belongsTo: 'statistics' },
   { path: '/economics', title: 'Economic Stimulus', hide: true, icon:'monetization_on', class: '' },
   { path: '/surveillance', title: 'Surveillance',  icon:'policy', class: '',  belongsTo: 'measures' },
-  { path: '/borders', title: 'International Travel', icon: 'location_on', class: '', belongsTo: 'measures' },
+  { path: '/borders', title: 'International Travel', icon: 'airplanemode_active', class: '', belongsTo: 'measures' },
   { path: '/masks', title: 'Masks', soon: true, hide: true, icon:'healing', class: '',  belongsTo: 'measures' },
   { path: '/testing', title: 'Testing', soon: true, icon:'local_hospital', class: '', belongsTo: 'measures' },
   { path: '/aboutus', title: 'About Us', icon:'supervisor_account', class: '' },
