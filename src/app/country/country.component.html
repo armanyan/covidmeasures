@@ -7,7 +7,7 @@
 
     <h3>Government measures in response to COVID-19</h3>
     <div class="row pl-5">
-      <div class="col-md-4 center">
+      <div class="col-md-5">
         <div class="card">
           <div class="card-body card-country">
             <mat-select [(value)]="countryView" (selectionChange)="countryChangeView($event.value)">
@@ -25,7 +25,7 @@
       <div class="col-md-4 text-center">
         <div class="card card-border">
           <div class="card-header card-header-success">
-            <h4 class="card-title">Educational Facilities Closed</h4>
+            <h4 class="card-title">Educational Facilities Closure</h4>
           </div>
           <div class="text-center">
             <i class="material-icons size-padding">school</i>
@@ -123,7 +123,7 @@
       <div class="col-md-4 text-center">
         <div class="card card-border">
           <div class="card-header card-header-success">
-            <h4 class="card-title">Businesses Closed</h4>
+            <h4 class="card-title">Businesses Closure</h4>
           </div>
           <i class="material-icons size-padding">store</i>
           <p class="align-weight">
@@ -160,6 +160,52 @@
           </div>
         </div>
       </div>
+
+      <div class="col-md-4 text-center">
+        <div class="card card-border">
+          <div class="card-header card-header-success">
+            <h4 class="card-title">International Travel</h4>
+          </div>
+          <i class="material-icons size-padding">flight_land</i>
+          <p class="align-weight">
+            Started on {{ travel.start | date }}
+          </p>
+          <p class="align-weight">
+            Currently {{ travel.status }}
+          </p>
+        </div>
+      </div>
+
+      <div class="col-md-4 text-center">
+        <div class="card card-border">
+          <div class="card-header card-header-success">
+            <h4 class="card-title">Masks</h4>
+          </div>
+          <i class="material-icons size-padding">healing</i>
+          <p class="align-weight">
+            Started on No Data
+          </p>
+          <p class="align-weight">
+            Currently No data
+          </p>
+        </div>
+      </div>
+
+      <div class="col-md-4 text-center">
+        <div class="card card-border">
+          <div class="card-header card-header-success">
+            <h4 class="card-title">Testing</h4>
+          </div>
+          <i class="material-icons size-padding">local_hospital</i>
+          <p class="align-weight">
+            Started on No data
+          </p>
+          <p class="align-weight">
+            Currently No data
+          </p>
+        </div>
+      </div>
+
     </div>
 
     <div>
