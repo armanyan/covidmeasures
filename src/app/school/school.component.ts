@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Title } from "@angular/platform-browser";
 
-import { aws, getRegionByAlpha, getCountryNameByAlpha, getChildrenNoSchool } from '../utils';
+import { aws, mobileWidth, getRegionByAlpha, getCountryNameByAlpha, getChildrenNoSchool } from '../utils';
 import * as text from '../data/texts/school_closure';
 
 interface Location {
@@ -114,8 +114,8 @@ export class SchoolComponent implements OnInit {
 
   async ngOnInit() {
     this.titleService.setTitle('School Closure: Citizens Tracking School Closures');
-    this.isMobile = window.innerWidth > 767 ? false : true;
-    this.schoolClosureData = await this.http.get('https://covidmeasures-data.s3.amazonaws.com/school_closure.json').toPromise();
+    this.isMobile = window.innerWidth > mobileWidth ? false : true;
+    this.schoolClosureData = await this.http.get(`${aws}/school_closure.json`).toPromise();
     this.schoolClosureTableUpdatedOn = this.schoolClosureData.updatedOn;
     this.setTexts();
     await this.setCurrentDeathEvolution();
