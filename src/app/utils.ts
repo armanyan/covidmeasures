@@ -400,8 +400,12 @@ export const createEvolutionChart = (
       yAxes: [{
         id: 'people',
         position: 'left',
+        scaleLabel: {
+          display: true,
+          labelString: 'Number of People'
+        },
         ticks: {
-          userCallback: function(value, label) {
+          userCallback: function(value) {
             value = value.toString();
             value = value.split(/(?=(?:...)*$)/);
             value = value.join(',');
@@ -419,10 +423,24 @@ export const createEvolutionChart = (
       }, {
         id: 'severity',
         position: 'right',
-        display: false,
+        scaleLabel: {
+          display: true,
+          labelString: 'Measure Severity'
+        },
+        display: true,
         ticks: {
-          max: 1,
-          min: 0
+          max: 3,
+          min: 0,
+          display: true,
+          userCallback: function(value) {
+            if (value % 1 === 0) {
+              return value;
+            }
+            return '';
+          }
+        },
+        gridLines: {
+          display: false
         }
       }],
 
