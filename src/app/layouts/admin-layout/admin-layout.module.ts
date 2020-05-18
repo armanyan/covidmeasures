@@ -30,7 +30,7 @@ import { MarkerService } from '../../_service/map/marker.service';
 import { PopUpService } from '../../_service/map/pop-up.service';
 import { ShapeService } from '../../_service/map/shape.service';
 import { MapTilesService } from '../../_service/map/map-tiles.service';
-
+import { NgxPaginationModule } from 'ngx-pagination';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { HomeComponent } from 'app/homepage/homepage.component';
 
@@ -48,7 +48,7 @@ import { HomeComponent } from 'app/homepage/homepage.component';
     MatTooltipModule,
     MatSortModule,
     HttpClientModule,
-    
+    NgxPaginationModule,
     BsDatepickerModule.forRoot()
   ],
   providers: [
