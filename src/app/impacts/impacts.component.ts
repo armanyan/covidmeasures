@@ -39,7 +39,10 @@ export class ImpactsComponent implements OnInit {
     this.impacts = (await this.http.get(url).toPromise() as any);
     this.collection = this.impacts;
   }
-
+  /**
+   * Search filter for the impacts table
+   * @param event object that contains the search word entered by the user.
+   */
   applyFilter(event: Event) {
     const search = (event.target as any).value.toLowerCase();
     this.collection = this.impacts.filter(row => {
