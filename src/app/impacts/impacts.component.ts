@@ -23,6 +23,9 @@ export class ImpactsComponent implements OnInit {
   public impactHeaders = ['Location', 'Impact', 'Description', 'Measure', 'Source'];
   public impacts: Impact[] = [];
 
+  p: number = 1;
+  collection: any[];
+
   constructor(
     private titleService: Title,
     private http: HttpClient
@@ -34,6 +37,17 @@ export class ImpactsComponent implements OnInit {
 
     const url = `${aws}/impacts.json`;
     this.impacts = (await this.http.get(url).toPromise() as any);
+    this.collection = this.impacts;
+  }
+
+  applyFilter(event: Event) {
+    const search = (event.target as any).value.toLowerCase();
+    this.collection = this.impacts.filter(row => {
+      if(row.location.toLowerCase().includes(search)) return row;
+      if(row.impact.toLowerCase().includes(search)) return row;
+      if(row.description.toLowerCase().includes(search)) return row;
+      if(row.measure.toLowerCase().includes(search)) return row;
+    });
   }
 
 }
