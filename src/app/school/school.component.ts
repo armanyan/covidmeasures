@@ -45,6 +45,8 @@ export class SchoolComponent implements OnInit {
 
   public impactHeaders = ['Impact', 'Description', 'Link to Lockdown', 'Countries Impacted', 'Source'];
   public impactTable = [];
+  public p: number = 1;
+  public impactCollection: any[];
 
   public currentCovidCategory = 'COVID-19 Death';
 
@@ -297,6 +299,21 @@ export class SchoolComponent implements OnInit {
         "source": row.source
       });
     }
+    this.impactCollection = this.impactTable;
+  }
+  /**
+   * Search filter for the impacts table
+   * @param event object that contains the search word entered by the user.
+   */
+  applyImpactFilter(event: Event) {
+    const search = (event.target as any).value.toLowerCase();
+    this.impactCollection = this.impactTable.filter(row => {
+      if(row.countries ? row.countries.toLowerCase().includes(search) : false) return row;
+      if(row.impact ? row.impact.toLowerCase().includes(search) : false) return row;
+      if(row.desc ? row.desc.toLowerCase().includes(search) : false) return row;
+      if(row.link ? row.link.toLowerCase().includes(search) : false) return row;
+      if(row.source ? row.source.toLowerCase().includes(search) : false) return row;
+    });
   }
 
     /***

@@ -55,6 +55,10 @@ div.text-align {
 tr td.active {
   color: #d83b40 !important;
 }
+
+.my-pagination /deep/ .ngx-pagination .current {
+  background: #ed5658;
+}
 /* --------------------------- BUTTONS ---------------------------------*/
 
 /*non-active button*/

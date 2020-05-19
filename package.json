@@ -44,6 +44,7 @@
     "leaflet": "^1.6.0",
     "moment": "2.24.0",
     "ngx-bootstrap": "^5.6.1",
+    "ngx-pagination": "^5.0.0",
     "perfect-scrollbar": "1.1.0",
     "popper.js": "1.15.0",
     "rxjs": "6.5.2",
