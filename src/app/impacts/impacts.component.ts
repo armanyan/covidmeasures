@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Title } from "@angular/platform-browser";
+import * as typeformEmbed from '@typeform/embed';
 
 import { aws, mobileWidth } from '../utils';
 
@@ -38,6 +39,7 @@ export class ImpactsComponent implements OnInit {
     const url = `${aws}/impacts.json`;
     this.impacts = (await this.http.get(url).toPromise() as any);
     this.collection = this.impacts;
+    this.setWidget();
   }
   /**
    * Search filter for the impacts table
@@ -50,6 +52,15 @@ export class ImpactsComponent implements OnInit {
       if(row.impact.toLowerCase().includes(search)) return row;
       if(row.description.toLowerCase().includes(search)) return row;
       if(row.measure.toLowerCase().includes(search)) return row;
+    });
+  }
+
+  private setWidget() {
+    typeformEmbed.makeWidget(
+      document.getElementById("addImpact"), "https://admin114574.typeform.com/to/uTHShl", {
+      hideFooter: true,
+      hideHeaders: true,
+      opacity: 0
     });
   }
 

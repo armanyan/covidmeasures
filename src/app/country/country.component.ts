@@ -6,6 +6,7 @@ import { ActivatedRoute } from "@angular/router";
 import { Location } from '@angular/common'; 
 import moment from 'moment'
 import { FormBuilder, FormGroup } from '@angular/forms';
+import * as typeformEmbed from '@typeform/embed';
 
 import { mobileWidth, monthNames, getCountryNameByAlpha, getAlpha3FromAlpha2,
          getChildrenNoSchool, getCountryPopulation, createEvolutionChart, aws } from '../utils';
@@ -179,6 +180,8 @@ export class CountryComponent implements OnInit {
 
     this.currentCountryName = getCountryNameByAlpha(this.countryView);
     this.setTotalDeathRatio();
+
+    this.setWidget();
   }
 
   public evolutionRangeChanged() { // if date range picker value is changed
@@ -390,6 +393,15 @@ export class CountryComponent implements OnInit {
   private setTotalDeathRatio() {
     this.totalDeathRatio = this.evolution.data[this.countryView].deaths.reduce((a,b) => a + b) /
       this.evolution.data[this.countryView].cases.reduce((a,b) => a + b);
+  }
+
+  private setWidget() {
+    typeformEmbed.makeWidget(
+      document.getElementById("addImpact"), "https://admin114574.typeform.com/to/uTHShl", {
+      hideFooter: true,
+      hideHeaders: true,
+      opacity: 0
+    });
   }
 
 }

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import Chart from 'chart.js';
 import { Title } from '@angular/platform-browser';
 import { HttpClient } from '@angular/common/http';
+import * as typeformEmbed from '@typeform/embed';
 
 import { mobileWidth, getCountryPopulation, getRegionByAlpha, createPieChart, aws } from '../utils';
 import * as text from '../data/texts/lockdown';
@@ -96,6 +97,7 @@ export class LockdownComponent implements OnInit {
   async ngOnInit() {
     this.titleService.setTitle('Lockdown Statistics: Citizens Tracking Lockdown Measures');
     this.isMobile = window.innerWidth > mobileWidth ? false : true;
+
     this.lockdownData = await this.http.get(`${aws}/lockdown.json`).toPromise();
     this.lockdownTableUpdatedOn = this.lockdownData.updatedOn;
     this.setTexts();
@@ -114,6 +116,8 @@ export class LockdownComponent implements OnInit {
     const populationDatasets = this.getPopulationData(countries);
     const populationCTX = (document.getElementById("lockdownPopulationPieChart") as any).getContext("2d");
     this.lockdownPopulationPieChart = createPieChart(populationCTX, labels, populationDatasets, backgroundColor, 'People');
+
+    this.setWidget();
   }
 
   private setTexts() {
@@ -465,5 +469,14 @@ export class LockdownComponent implements OnInit {
       default:
         break;
     }
+  }
+
+  private setWidget() {
+    typeformEmbed.makeWidget(
+      document.getElementById("addImpact"), "https://admin114574.typeform.com/to/uTHShl", {
+      hideFooter: true,
+      hideHeaders: true,
+      opacity: 0
+    });
   }
 }

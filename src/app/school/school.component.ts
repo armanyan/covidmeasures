@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Title } from "@angular/platform-browser";
+import * as typeformEmbed from '@typeform/embed';
 
 import { aws, mobileWidth, getRegionByAlpha, getCountryNameByAlpha, getChildrenNoSchool } from '../utils';
 import * as text from '../data/texts/school_closure';
@@ -117,6 +118,7 @@ export class SchoolComponent implements OnInit {
   async ngOnInit() {
     this.titleService.setTitle('School Closure: Citizens Tracking School Closures');
     this.isMobile = window.innerWidth > mobileWidth ? false : true;
+
     this.schoolClosureData = await this.http.get(`${aws}/school_closure.json`).toPromise();
     this.schoolClosureTableUpdatedOn = this.schoolClosureData.updatedOn;
     this.setTexts();
@@ -126,6 +128,7 @@ export class SchoolComponent implements OnInit {
     this.averageDaysMissed = this.getAverageDaysMissedPerRegion('World');
     this.covidVSSchoolChangeRegion('World');
     this.setSchoolClosure();
+    this.setWidget();
   }
 
   private setTexts() {
@@ -421,6 +424,15 @@ export class SchoolComponent implements OnInit {
       default:
         break;
     }
+  }
+
+  private setWidget() {
+    typeformEmbed.makeWidget(
+      document.getElementById("addImpact"), "https://admin114574.typeform.com/to/uTHShl", {
+      hideFooter: true,
+      hideHeaders: true,
+      opacity: 0
+    });
   }
 }
 

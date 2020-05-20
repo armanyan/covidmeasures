@@ -30,6 +30,7 @@
     "@angular/platform-browser-dynamic": "9.0.5",
     "@angular/platform-server": "9.0.5",
     "@angular/router": "9.0.5",
+    "@typeform/embed": "^0.17.0",
     "arrive": "2.4.1",
     "bootstrap": "4.3.1",
     "bootstrap-material-design": "4.1.2",
