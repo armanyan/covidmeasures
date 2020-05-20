@@ -53,6 +53,10 @@ td.left, td.center {
 .table-datas{
   font-size:1.3em;
 }
+
+.my-pagination /deep/ .ngx-pagination .current {
+  background: #ed5658;
+}
 /* --------------------------- BUTTONS ---------------------------------*/
 
 /*non-active button*/

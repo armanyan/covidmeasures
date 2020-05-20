@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Title } from "@angular/platform-browser";
+import * as typeformEmbed from '@typeform/embed';
 
 import { aws, mobileWidth, getRegionByAlpha, getCountryNameByAlpha, getChildrenNoSchool } from '../utils';
 import * as text from '../data/texts/school_closure';
@@ -45,6 +46,8 @@ export class SchoolComponent implements OnInit {
 
   public impactHeaders = ['Impact', 'Description', 'Link to Lockdown', 'Countries Impacted', 'Source'];
   public impactTable = [];
+  public p: number = 1;
+  public impactCollection: any[];
 
   public currentCovidCategory = 'COVID-19 Death';
 
@@ -115,6 +118,7 @@ export class SchoolComponent implements OnInit {
   async ngOnInit() {
     this.titleService.setTitle('School Closure: Citizens Tracking School Closures');
     this.isMobile = window.innerWidth > mobileWidth ? false : true;
+
     this.schoolClosureData = await this.http.get(`${aws}/school_closure.json`).toPromise();
     this.schoolClosureTableUpdatedOn = this.schoolClosureData.updatedOn;
     this.setTexts();
@@ -124,6 +128,7 @@ export class SchoolComponent implements OnInit {
     this.averageDaysMissed = this.getAverageDaysMissedPerRegion('World');
     this.covidVSSchoolChangeRegion('World');
     this.setSchoolClosure();
+    this.setWidget();
   }
 
   private setTexts() {
@@ -297,6 +302,21 @@ export class SchoolComponent implements OnInit {
         "source": row.source
       });
     }
+    this.impactCollection = this.impactTable;
+  }
+  /**
+   * Search filter for the impacts table
+   * @param event object that contains the search word entered by the user.
+   */
+  applyImpactFilter(event: Event) {
+    const search = (event.target as any).value.toLowerCase();
+    this.impactCollection = this.impactTable.filter(row => {
+      if(row.countries ? row.countries.toLowerCase().includes(search) : false) return row;
+      if(row.impact ? row.impact.toLowerCase().includes(search) : false) return row;
+      if(row.desc ? row.desc.toLowerCase().includes(search) : false) return row;
+      if(row.link ? row.link.toLowerCase().includes(search) : false) return row;
+      if(row.source ? row.source.toLowerCase().includes(search) : false) return row;
+    });
   }
 
     /***
@@ -404,6 +424,15 @@ export class SchoolComponent implements OnInit {
       default:
         break;
     }
+  }
+
+  private setWidget() {
+    typeformEmbed.makeWidget(
+      document.getElementById("addImpact"), "https://admin114574.typeform.com/to/uTHShl", {
+      hideFooter: true,
+      hideHeaders: true,
+      opacity: 0
+    });
   }
 }
 

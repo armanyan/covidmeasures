@@ -87,7 +87,7 @@
     </p>
 
     <!-- Lockdown Map Starts -->
-    <div class="card card-border mt-5 pt-5">
+    <div class="card card-border">
       <div class="card-header card-header-success">
         <h3 class="card-title">Map - Lockdown Status</h3>
       </div>
@@ -286,6 +286,10 @@
 
         <div class="card-header card-header-success">
           <h3 class="card-title">List of Lockdown Impacts & Solutions</h3>
+          <mat-form-field>
+            <mat-label style="color: rgb(218, 205, 205);">Search by Country, Measure or key word</mat-label>
+            <input  matInput (keyup)="applyImpactFilter($event)" placeholder="United States of America, France, China...">
+          </mat-form-field>
         </div>
 
         <div class="row pt-3">
@@ -324,7 +328,7 @@
                 </th>
               </thead>
               <tbody>
-                <tr *ngFor="let row of impactTable">
+                <tr *ngFor="let row of impactCollection | paginate: { itemsPerPage: 7, currentPage: p }">
                   <td>{{ row.impact }}</td>
                   <td>{{ row.desc}}</td>
                   <td>{{ row.link }}</td>
@@ -338,7 +342,10 @@
                 </tr>
               </tbody>
             </table>
+            <div class="d-flex justify-content-center">
+              <pagination-controls class="my-pagination" (pageChange)="p = $event"></pagination-controls>
             </div>
+          </div>
     
         </div>
 
@@ -359,6 +366,21 @@
       just <a href="https://forms.gle/TuLNu54Xr6vfYedq5" target="_blank">contribute</a>
       by verifying its accuracy in your region.
     </p>
+
+    <hr>
+
+    <div class="col-md-12">
+      <div class="card card-border">
+
+        <div class="card-header card-header-success">
+          <h3 class="card-title">Add an Impact</h3>
+        </div>
+
+        <div class="card-body">
+          <div id="addImpact" style="width: 100%; height: 500px;"></div>
+        </div>
+      </div>
+    </div>
 
   </div>
 </div>

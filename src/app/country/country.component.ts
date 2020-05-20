@@ -6,6 +6,7 @@ import { ActivatedRoute } from "@angular/router";
 import { Location } from '@angular/common'; 
 import moment from 'moment'
 import { FormBuilder, FormGroup } from '@angular/forms';
+import * as typeformEmbed from '@typeform/embed';
 
 import { mobileWidth, monthNames, getCountryNameByAlpha, getAlpha3FromAlpha2,
          getChildrenNoSchool, getCountryPopulation, createEvolutionChart, aws } from '../utils';
@@ -179,6 +180,8 @@ export class CountryComponent implements OnInit {
 
     this.currentCountryName = getCountryNameByAlpha(this.countryView);
     this.setTotalDeathRatio();
+
+    this.setWidget();
   }
 
   public evolutionRangeChanged() { // if date range picker value is changed
@@ -257,7 +260,9 @@ export class CountryComponent implements OnInit {
     const affectedChildren = getChildrenNoSchool(alpha3)*schoolCountry.current_children_no_school;
     this.schoolClosure.impacted_children =
       Math.floor((affectedChildren)/this.statsDivider);
-    this.schoolClosure.years = (this.getMissedDaysPerCountry(schoolCountry)*affectedChildren) / (365*this.statsDivider);
+    this.schoolClosure.years = (
+      this.getMissedDays(schoolCountry.start, schoolCountry.end)*affectedChildren) / (365*this.statsDivider
+    );
 
     const lockdownCountry = this.getCountry(this.lockdownData.countries, alpha3);
     this.lockdown.status = lockdownCountry.status;
@@ -270,7 +275,8 @@ export class CountryComponent implements OnInit {
 
     this.businessClosure.status = lockdownCountry.status_business;
     this.businessClosure.date = lockdownCountry.start_business_closure;
-    this.businessClosure.days = this.getBusinessClosureDays(lockdownCountry);
+    this.businessClosure.days =
+      this.getMissedDays(lockdownCountry.start_business_closure, lockdownCountry.end_business_closure);
     this.businessClosure.start_reopening_business = lockdownCountry.start_reopening_business
     this.businessClosure.end_business = lockdownCountry.end_business
 
@@ -281,35 +287,26 @@ export class CountryComponent implements OnInit {
 
     const affectedPopulation = getCountryPopulation(alpha3)*lockdownCountry.current_population_impacted;
     this.countryImpactedPeople = Math.floor(affectedPopulation/this.statsDivider);
-    this.countryCumulatedYears = (this.getMissedDaysPerCountry(lockdownCountry)*affectedPopulation) / (365*this.statsDivider);
+    this.countryCumulatedYears =
+      (this.getMissedDays(lockdownCountry.start, lockdownCountry.end)*affectedPopulation) / (365*this.statsDivider);
 
     this.setImpactTable();
   }
 
   /**
-   * computes the school days missed in a specific country
-   * @param country country data
+   * computes days missed
+   * @param start start of the restrictions
+   * @param end end of the restrictions
    */
-  private getMissedDaysPerCountry(country: any) {
-    if (country.start === '') {
+  private getMissedDays(start: string, end: string) {
+    if (start === '') {
       return 0
     }
-    const start = new Date(country.start);
+    const start_data = new Date(start);
     const today = new Date()
-    const planedEnd = country.end === '' ? today : new Date(country.end);
-    const end = today < planedEnd ? today : planedEnd;
-    return Math.floor((end.getTime()-start.getTime())/(1000*60*60*24));
-  }
-
-  private getBusinessClosureDays(country: any) {
-    if (country.start_business_closure === '') {
-      return 0
-    }
-    const start = new Date(country.start_business_closure);
-    const today = new Date()
-    const planedEnd = country.end_business_closure === '' ? today : new Date(country.end_business_closure);
-    const end = today < planedEnd ? today : planedEnd;
-    return Math.floor((end.getTime()-start.getTime())/(1000*60*60*24));
+    const planedEnd = end === '' ? today : new Date(end);
+    const end_date = today < planedEnd ? today : planedEnd;
+    return Math.floor((end_date.getTime()-start_data.getTime())/(1000*60*60*24));
   }
 
   private getCountry(countries, alpha3) {
@@ -390,6 +387,15 @@ export class CountryComponent implements OnInit {
   private setTotalDeathRatio() {
     this.totalDeathRatio = this.evolution.data[this.countryView].deaths.reduce((a,b) => a + b) /
       this.evolution.data[this.countryView].cases.reduce((a,b) => a + b);
+  }
+
+  private setWidget() {
+    typeformEmbed.makeWidget(
+      document.getElementById("addImpact"), "https://admin114574.typeform.com/to/uTHShl", {
+      hideFooter: true,
+      hideHeaders: true,
+      opacity: 0
+    });
   }
 
 }

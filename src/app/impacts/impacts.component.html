@@ -11,6 +11,10 @@
         <div class="card-header card-header-success">
           <h3 class="card-title">
             Impact of Government Covid-19 Measures</h3>
+            <mat-form-field>
+              <mat-label style="color: rgb(218, 205, 205);">Search by Country, Measure or key word</mat-label>
+              <input  matInput (keyup)="applyFilter($event)">
+            </mat-form-field>
         </div>
 
         <div class="row pt-3">
@@ -49,7 +53,7 @@
                 </th>
               </thead>
               <tbody>
-                <tr *ngFor="let row of impacts">
+                <tr *ngFor="let row of collection | paginate: { itemsPerPage: 10, currentPage: p }">
                   <td>{{ row.location }}</td>
                   <td>{{ row.impact }}</td>
                   <td>{{ row.description }}</td>
@@ -63,7 +67,10 @@
                 </tr>
               </tbody>
             </table>
+            <div class="d-flex justify-content-center">
+              <pagination-controls class="my-pagination" (pageChange)="p = $event"></pagination-controls>
             </div>
+          </div>
     
         </div>
 
@@ -76,6 +83,19 @@
           </div>
         </div>
 
+      </div>
+    </div>
+
+    <div class="col-md-12">
+      <div class="card card-border">
+
+        <div class="card-header card-header-success">
+          <h3 class="card-title">Add an Impact</h3>
+        </div>
+
+        <div class="card-body">
+          <div id="addImpact" style="width: 100%; height: 500px;"></div>
+        </div>
       </div>
     </div>
 
