@@ -216,8 +216,9 @@
     <h3 class="mb5">Evolution of COVID-19 in the country</h3>
 
     <div class="card card-border">
-      <div class="card-header card-header-success">
+      <div class="card-header card-header-success d-flex justify-content-between">
         <h3 class="card-title">Reported COVID-19 Infection Cases & Deaths Per Day</h3>
+        <button class="btn btn-primary" data-toggle="modal" data-target="#compareModal">Compare Country</button>
       </div>
       <div class="card-body p-1">
         <div id="wrapper" class="pt-2 pt-md-3 chart-pos">
@@ -435,3 +436,45 @@
     </div>
     
   </div>
+  <!-- Modal -->
+  <div class="modal fade" id="compareModal" tabindex="-1" role="dialog" aria-labelledby="compareModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header  pb-0">
+          <h5 class="modal-title" id="compareModalLabel" class="font-weight-bold">Search Country:</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group d-flex align-items-center">
+            <span class="material-icons text-primary">
+              search
+            </span>
+            <input type="text" 
+            class="form-control" 
+            id="compareCountry" 
+            placeholder="United States, Canada, etc..."
+            (keyup)="filterCompared($event)"
+            >
+          </div>
+          <ul class="list-group">
+            <li class="list-group-item"
+            style="cursor: pointer;"
+            *ngFor="let country of searchedCountry"
+            (click)="setComparedCountry(country.value)"
+            [ngClass]="{'active': country.value == comparedCountry}"
+            data-dismiss="modal" aria-label="Close"
+            >{{country.viewValue}}</li>
+            <!-- <li class="list-group-item"*ngFor="let country of countryList"></li> -->
+          </ul>
+        </div>
+        <!-- <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Save changes</button>
+        </div> -->
+      </div>
+    </div>
+  </div>
+</div>
+

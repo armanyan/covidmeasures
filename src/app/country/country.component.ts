@@ -88,6 +88,8 @@ export class CountryComponent implements OnInit {
   private travelData: any;
 
   public severityMeasures: Chart;
+  public comparedCountry: string;
+  public searchedCountry: Array<any>;
 
   constructor(
     private titleService: Title,
@@ -123,6 +125,7 @@ export class CountryComponent implements OnInit {
         "viewValue": this.evolution.data[alpha].name.split('_').join(' ')
       });
     }
+    this.searchedCountry = this.countryList.slice(0, 5);
 
     const labels = this.evolution.dates.map(date => this.changeDateFormat(date));
     const data = this.getDataSets(
@@ -347,6 +350,7 @@ export class CountryComponent implements OnInit {
         this.countryAllCasesCTX.data.datasets[2].data = datasets['lockdown'];
         this.countryAllCasesCTX.data.datasets[3].data = datasets['school'];
         this.countryAllCasesCTX.data.labels = datasets['labels'];
+        this.countryAllCasesCTX.data.datasets.push(datasets['school'])
         this.countryAllCasesCTX.update();
         return;
       }
@@ -398,4 +402,16 @@ export class CountryComponent implements OnInit {
     });
   }
 
+  public setComparedCountry(alpha3: string){
+    this.comparedCountry = alpha3;
+    console.log(alpha3);
+  }
+
+  public filterCompared(event: Event){
+    const search = (event.target as any).value.toLowerCase();
+    this.searchedCountry = this.countryList.filter(row => {
+      if(row.value.toLowerCase().includes(search)) return row;
+      if(row.viewValue.toLowerCase().includes(search)) return row;
+    }).slice(0,5);
+  }
 }
