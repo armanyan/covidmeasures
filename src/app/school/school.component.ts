@@ -291,14 +291,19 @@ export class SchoolComponent implements OnInit {
   }
 
   private async setLockdownImpactStatistics() {
-    const data = (await this.http.get(`${aws}/impacts.json`).toPromise() as any);
+    const data = (await this.http.get(`${aws}/community_impacts.json`).toPromise() as any);
     const impactData = data.filter(impact => impact.measure === 'School Closure');
     for (const row of impactData) {
+
+      if (row.alpha3 === undefined) {
+        continue;
+      }
+
       this.impactTable.push({
         "impact": row.impact,
         "desc": row.description,
         "link": row.link,
-        "countries": row.location,
+        "countries": row.alpha3[0] === 'WRD' ? 'World' : getCountryNameByAlpha(row.alpha3[0]),
         "source": row.source
       });
     }
