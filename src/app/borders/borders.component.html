@@ -25,6 +25,11 @@
        
       </div>
     </div>
+    <br>
+    <hr>
+    <div *ngIf="travelData">
+      <app-travel-comments [countriesTravel]="travelData.countries"></app-travel-comments>
+    </div>
     <hr>
 
     <br>

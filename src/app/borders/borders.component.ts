@@ -3,6 +3,8 @@ import { Title } from '@angular/platform-browser';
 
 import * as border_control from '../data/border_control';
 import { mobileWidth } from 'app/utils';
+import {aws } from '../utils';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-borders',
@@ -11,7 +13,7 @@ import { mobileWidth } from 'app/utils';
 })
 export class BordersComponent implements OnInit {
   public isMobile: boolean;
-
+  public travelData: any;
   public headers = [
     "Country", "Foreigners Ban", "Home Quarantine", "COVID-19 Testing", "Closed Borders", "Other Measures",
     "Exceptions", "Start", "End", "Status"
@@ -20,12 +22,14 @@ export class BordersComponent implements OnInit {
   public table = [];
 
   constructor(
+    private http: HttpClient,
     private titleService: Title,
   ) { }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.titleService.setTitle('International Travel: Citizens Tracking Travel Restrictions Worldwide');
     this.isMobile = window.innerWidth > mobileWidth ? false : true;
+    this.travelData = (await this.http.get(`${aws}/international_flights.json`).toPromise() as any);
 
     this.setTable();
   }
