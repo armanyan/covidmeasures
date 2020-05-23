@@ -480,7 +480,8 @@ export class LockdownComponent implements OnInit {
       typeformEmbed.makePopup('https://admin114574.typeform.com/to/uTHShl', {
         hideFooter: true,
         hideHeaders: true,
-        opacity: 0
+        opacity: 0,
+        autoClose: 3000
       }).open();
     })
   }

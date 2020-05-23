@@ -219,6 +219,29 @@
       <div class="card-header card-header-success">
         <h3 class="card-title">Reported COVID-19 Infection Cases & Deaths Per Day</h3>
       </div>
+      <!-- Evolution Calendar Range Starts -->
+      <div class="card m-0 p-0  px-sm-2 pt-4">
+        <div class="card-body  m-0 p-0">
+          <form [formGroup]="calendarForm">
+            <div class="row">
+              <div class="col-lg-2 col-md-4 d-flex justify-content-md-end justify-content-sm-start align-items-center">
+                <h5 class="font-weight-bold">Evolution Range</h5>
+              </div>
+              <div class="col-lg-4 col-md-6 form-group my-0 py-0">
+                <input
+                  type="text" class="form-control mb-3"
+                  laceholder="Dates Picker"
+                  bsDaterangepicker
+                  formControlName="dateRange"
+                  [bsConfig]="{containerClass:'theme-dark-blue'}"
+                  (ngModelChange)="evolutionRangeChanged()"
+                  />
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+       <!-- Evolution Calendar Range Ends -->
       <div class="card-body p-1">
         <div id="wrapper" class="pt-2 pt-md-3 chart-pos">
           <canvas id="countryChartAllCases"></canvas>
