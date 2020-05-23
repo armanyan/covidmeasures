@@ -432,12 +432,13 @@ export class SchoolComponent implements OnInit {
   }
 
   private setWidget() {
-    typeformEmbed.makeWidget(
-      document.getElementById("addImpact"), "https://admin114574.typeform.com/to/uTHShl", {
-      hideFooter: true,
-      hideHeaders: true,
-      opacity: 0
-    });
+    document.getElementById('addImpact').addEventListener('click', function () {
+      typeformEmbed.makePopup('https://admin114574.typeform.com/to/uTHShl', {
+        hideFooter: true,
+        hideHeaders: true,
+        opacity: 0
+      }).open();
+    })
   }
 }
 
