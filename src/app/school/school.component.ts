@@ -230,7 +230,7 @@ export class SchoolComponent implements OnInit {
    * Sets the number of active cases and deaths for every country in the world.
    */
   private async setCurrentDeathEvolution() {
-    const data = await this.http.get('https://api.covid19api.com/summary').toPromise();
+    const data = await this.http.get('https://covidmeasures-data.s3.amazonaws.com/covid19api.json').toPromise();
     let region: string;
     for (const row of data["Countries"]) {
       region = getRegionByAlpha(row["CountryCode"]);
