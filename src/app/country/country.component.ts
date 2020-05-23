@@ -108,7 +108,7 @@ export class CountryComponent implements OnInit {
     this.evolution = (await this.http.get(`${aws}/evolution.json`).toPromise() as any);
     this.schoolClosureData = (await this.http.get(`${aws}/school_closure.json`).toPromise() as any);
     this.lockdownData = (await this.http.get(`${aws}/lockdown.json`).toPromise() as any);
-    this.impactData = (await this.http.get(`${aws}/impacts.json`).toPromise() as any);
+    this.impactData = (await this.http.get(`${aws}/community_impacts.json`).toPromise() as any);
     this.travelData = (await this.http.get(`${aws}/international_flights.json`).toPromise() as any);
     this.setImpactTable();
 
@@ -378,7 +378,11 @@ export class CountryComponent implements OnInit {
   private async setImpactTable() {
     this.impactTable = [];
     for (const impact of this.impactData) {
-      if (impact.alpha3 === 'WRD' || impact.alpha3 === this.countryView) {
+      if (impact.alpha3 === undefined) {
+        continue;
+      }
+
+      if (impact.alpha3[0] === 'WRD' || impact.alpha3[0] === this.countryView) {
         this.impactTable.push(impact);
       }
     }
@@ -390,12 +394,13 @@ export class CountryComponent implements OnInit {
   }
 
   private setWidget() {
-    typeformEmbed.makeWidget(
-      document.getElementById("addImpact"), "https://admin114574.typeform.com/to/uTHShl", {
-      hideFooter: true,
-      hideHeaders: true,
-      opacity: 0
-    });
+    document.getElementById('addImpact').addEventListener('click', function () {
+      typeformEmbed.makePopup('https://admin114574.typeform.com/to/uTHShl', {
+        hideFooter: true,
+        hideHeaders: true,
+        opacity: 0
+      }).open();
+    })
   }
 
 }

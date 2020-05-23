@@ -4,7 +4,7 @@ import { Title } from '@angular/platform-browser';
 import { HttpClient } from '@angular/common/http';
 import * as typeformEmbed from '@typeform/embed';
 
-import { mobileWidth, getCountryPopulation, getRegionByAlpha, createPieChart, aws } from '../utils';
+import { mobileWidth, getCountryPopulation, getRegionByAlpha, getCountryNameByAlpha, createPieChart, aws } from '../utils';
 import * as text from '../data/texts/lockdown';
 
 interface Location {
@@ -269,14 +269,18 @@ export class LockdownComponent implements OnInit {
   }
 
   private async setLockdownImpactStatistics() {
-    const data = (await this.http.get(`${aws}/impacts.json`).toPromise() as any);
+    const data = (await this.http.get(`${aws}/community_impacts.json`).toPromise() as any);
     const impactData = data.filter(impact => impact.measure === 'Movement restrictions');
     for (const row of impactData) {
+      if (row.alpha3 === undefined) {
+        continue; // in the case of an empty row
+      }
+
       this.impactTable.push({
         "impact": row.impact,
         "desc": row.description,
         "link": row.link,
-        "countries": row.location,
+        "countries": row.alpha3[0] === 'WRD' ? 'World' : getCountryNameByAlpha(row.alpha3[0]),
         "source": row.source
       });
     }
@@ -472,11 +476,13 @@ export class LockdownComponent implements OnInit {
   }
 
   private setWidget() {
-    typeformEmbed.makeWidget(
-      document.getElementById("addImpact"), "https://admin114574.typeform.com/to/uTHShl", {
-      hideFooter: true,
-      hideHeaders: true,
-      opacity: 0
-    });
+    document.getElementById('addImpact').addEventListener('click', function () {
+      typeformEmbed.makePopup('https://admin114574.typeform.com/to/uTHShl', {
+        hideFooter: true,
+        hideHeaders: true,
+        opacity: 0,
+        autoClose: 3000
+      }).open();
+    })
   }
 }
