@@ -230,7 +230,7 @@ export class SchoolComponent implements OnInit {
    * Sets the number of active cases and deaths for every country in the world.
    */
   private async setCurrentDeathEvolution() {
-    const data = await this.http.get('https://api.covid19api.com/summary').toPromise();
+    const data = await this.http.get('https://covidmeasures-data.s3.amazonaws.com/covid19api.json').toPromise();
     let region: string;
     for (const row of data["Countries"]) {
       region = getRegionByAlpha(row["CountryCode"]);
@@ -291,14 +291,19 @@ export class SchoolComponent implements OnInit {
   }
 
   private async setLockdownImpactStatistics() {
-    const data = (await this.http.get(`${aws}/impacts.json`).toPromise() as any);
+    const data = (await this.http.get(`${aws}/community_impacts.json`).toPromise() as any);
     const impactData = data.filter(impact => impact.measure === 'School Closure');
     for (const row of impactData) {
+
+      if (row.alpha3 === undefined) {
+        continue;
+      }
+
       this.impactTable.push({
         "impact": row.impact,
         "desc": row.description,
         "link": row.link,
-        "countries": row.location,
+        "countries": row.alpha3[0] === 'WRD' ? 'World' : getCountryNameByAlpha(row.alpha3[0]),
         "source": row.source
       });
     }
@@ -427,12 +432,14 @@ export class SchoolComponent implements OnInit {
   }
 
   private setWidget() {
-    typeformEmbed.makeWidget(
-      document.getElementById("addImpact"), "https://admin114574.typeform.com/to/uTHShl", {
-      hideFooter: true,
-      hideHeaders: true,
-      opacity: 0
-    });
+    document.getElementById('addImpact').addEventListener('click', function () {
+      typeformEmbed.makePopup('https://admin114574.typeform.com/to/uTHShl', {
+        hideFooter: true,
+        hideHeaders: true,
+        opacity: 0,
+        autoClose: 3000
+      }).open();
+    })
   }
 }
 

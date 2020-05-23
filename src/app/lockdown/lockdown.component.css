@@ -25,6 +25,13 @@ div.text-align {
   text-align: center;
 }
 
+/* --- color of the mat-select text -- */
+
+:host /deep/ .mat-select-value-text {
+  color: white !important;
+  font-size: large;
+}
+
 /* --------------------------- HEADERS ----------------------------- */
 
 .card .card-header-success .card-icon, .card .card-header-success .card-text, .card .card-header-success:not(.card-header-icon):not(.card-header-text), .card.bg-success, .card.card-rotate.bg-success .front, .card.card-rotate.bg-success .back {
