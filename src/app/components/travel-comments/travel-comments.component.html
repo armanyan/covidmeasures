@@ -19,21 +19,24 @@
                 </div>
             </div>
         </div>
-        <div class="d-flex flex-column justify-content-center align-items-center">
-            <i class="material-icons size-padding" style="font-size: 150px;">flight_land</i>
-            <p class="align-weight font-weight-bold">
-              Started on: 
-              <span *ngIf="travel.start" style="font-weight: 900;">{{ travel.start | date }}</span>
-              <span *ngIf="!travel.start" style="font-weight: 900;">UNAVAILABLE</span>
-            </p>
-            <p class="align-weight font-weight-bold">
-              Currently <span style="font-weight: 900;">{{ travel.status }}</span>
-            </p>
+        <div class="d-flex align-items-center">
+            <div class="pl-5">
+              <i class="material-icons size-padding" style="font-size: 150px;">flight_land</i>
+            </div>
+            <div>
+              <p class="align-weight font-weight-bold">
+                Started on: 
+                <span *ngIf="travel.start" style="font-weight: 900;">{{ travel.start | date }}</span>
+                <span *ngIf="!travel.start" style="font-weight: 900;">UNAVAILABLE</span>
+              </p>
+              <p class="align-weight font-weight-bold">
+                Currently <span style="font-weight: 900;">{{ travel.status }}</span>
+              </p>
+            </div>
         </div>
       </div>
     </div>
     <hr>
-    {{pageID}}
     <div class="row justify-content-center">
         <div class="col-md-11" >
           <disqus [identifier]="pageID" [url]="url"></disqus>

@@ -23,7 +23,7 @@ export class TravelCommentsComponent implements OnInit {
   @Input() countriesTravel: any;
 
   public pageID:string = "";
-  public url: string = ""
+  public url: string = "";
 
   constructor(private activatedRoute: ActivatedRoute, private router:Router) {}
 
@@ -62,7 +62,7 @@ export class TravelCommentsComponent implements OnInit {
   
       // this.url = window.location.href;
       this.url = `https://covidmeasures.info/borders/${alpha3}`
-      console.log(travelCountry)
+      // console.log(travelCountry)
       this.pageID = `/${travelCountry.code}${this.checkPageID(alpha3)}`;
     });
   }

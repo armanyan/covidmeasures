@@ -24,7 +24,7 @@ import { DISQUS_SHORTNAME } from 'ngx-disqus';
     AppComponent,
     AdminLayoutComponent
   ],
-  providers: [{ provide: DISQUS_SHORTNAME, useValue: 'tester360' }],
+  providers: [{ provide: DISQUS_SHORTNAME, useValue: 'www-covidmeasures-info' }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
