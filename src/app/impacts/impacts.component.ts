@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Title } from "@angular/platform-browser";
 import * as typeformEmbed from '@typeform/embed';
 
-import { aws, mobileWidth } from '../utils';
+import { aws, mobileWidth, getCountryNameByAlpha } from '../utils';
 
 export interface Impact {
   impact: string,
@@ -36,11 +36,30 @@ export class ImpactsComponent implements OnInit {
     this.titleService.setTitle('Impacts: COVID-19 Impacts Worldwide');
     this.isMobile = window.innerWidth > mobileWidth ? false : true;
 
-    const url = `${aws}/impacts.json`;
-    this.impacts = (await this.http.get(url).toPromise() as any);
+    const url = `${aws}/community_impacts.json`;
+    const rawData = (await this.http.get(url).toPromise() as any);
+    this.impacts = this.formatImpactsData(rawData);
     this.collection = this.impacts;
     this.setWidget();
   }
+
+  private formatImpactsData(impactData: any[]) {
+    const impacts = [];
+    for (const row of impactData) {
+      if (row.alpha3 === undefined) {
+        continue
+      }
+      impacts.push({
+        location: row.alpha3[0] === 'WRD' ? 'World' : getCountryNameByAlpha(row.alpha3[0]),
+        impact: row.impact,
+        description: row.description,
+        measure: row.measure,
+        source: row.source
+      });
+    }
+    return impacts;
+  }
+
   /**
    * Search filter for the impacts table
    * @param event object that contains the search word entered by the user.
@@ -56,12 +75,13 @@ export class ImpactsComponent implements OnInit {
   }
 
   private setWidget() {
-    typeformEmbed.makeWidget(
-      document.getElementById("addImpact"), "https://admin114574.typeform.com/to/uTHShl", {
-      hideFooter: true,
-      hideHeaders: true,
-      opacity: 0
-    });
+    document.getElementById('addImpact').addEventListener('click', function () {
+      typeformEmbed.makePopup('https://admin114574.typeform.com/to/uTHShl', {
+        hideFooter: true,
+        hideHeaders: true,
+        opacity: 0
+      }).open();
+    })
   }
 
 }
