@@ -89,8 +89,8 @@
       <div class="card-header card-header-success">
         <h3 class="card-title">Map - School Closure</h3>
       </div>
-      <div class="card-body" style="height: 80vh;">
-        <app-map-school-closure></app-map-school-closure>
+      <div class="card-body" style="height: 80vh;" *ngIf="schoolClosureData">
+        <app-map-school-closure [countries]="schoolClosureData.countries"></app-map-school-closure>
       </div>
       <div class="card-footer ">
         <div class="stats">
