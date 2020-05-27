@@ -9,7 +9,7 @@ import { ComponentsModule } from './components/components.module';
 
 import { AppComponent } from './app.component';
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
-
+import { DISQUS_SHORTNAME } from 'ngx-disqus';
 @NgModule({
   imports: [
     BrowserAnimationsModule,
@@ -24,7 +24,7 @@ import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.compon
     AppComponent,
     AdminLayoutComponent
   ],
-  providers: [],
+  providers: [{ provide: DISQUS_SHORTNAME, useValue: 'www-covidmeasures-info' }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

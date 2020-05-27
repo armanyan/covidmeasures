@@ -1,11 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import * as L from 'leaflet';
 
 import { MarkerService } from '../../_service/map/marker.service';
 import { ShapeService } from '../../_service/map/shape.service';
 import { MapTilesService } from '../../_service/map/map-tiles.service';
 
-import { HttpClient } from '@angular/common/http';
 
 const colors = {
   "No data": "#e3e3e3",
@@ -45,37 +44,34 @@ export class MapSchoolClosureComponent implements OnInit {
   public map: L.map;
   public info: L.control;
   public legend: L.control;
-  public countries: Array<Country>;
+  @Input() countries: Array<Country>;
 
   constructor(
     private shapeService: ShapeService,
-    private http: HttpClient,
     private mapTiles: MapTilesService
     ) {
      
     }
     ngOnInit():void {
-      this.http.get('https://covidmeasures-data.s3.amazonaws.com/school_closure.json').subscribe((res:{countries: Array<Country>}) => {
-        this.countries = res.countries
-        this.initMap();
-        this.addInfoBox();
-        this.addLegend();
-        this.shapeService.getCountriesShapes().subscribe(country => {
-          country.features.forEach(item => {
-            const foundCountry = this.countries.find(country => country.alpha3 === item.id)
-            if (foundCountry) {
-              // we add data from apit to each country
-              item.countryData = foundCountry
-            }else{
-              item.countryData = null
-            }
-          })
-          this.initStatesLayer(country);
-        });
-      // we populate the maps with markers
-      // this.markerService.makeStateMarkers(this.map);
-      // this.markerService.makeStateCircleMarkers(this.map);
-      })
+      this.initMap();
+      this.addInfoBox();
+      this.addLegend();
+      this.shapeService.getCountriesShapes().subscribe(country => {
+        country.features.forEach(item => {
+          const foundCountry = this.countries.find(country => country.alpha3 === item.id)
+          if (foundCountry) {
+            // we add data from apit to each country
+            item.countryData = foundCountry
+          }else{
+            item.countryData = null
+          }
+        })
+        this.initStatesLayer(country);
+      });
+    // we populate the maps with markers
+    // this.markerService.makeStateMarkers(this.map);
+    // this.markerService.makeStateCircleMarkers(this.map);
+
     }
 
     ngAfterViewInit(): void {}
