@@ -51,7 +51,7 @@ export class LockdownComponent implements OnInit {
 
   public lockdownTableUpdatedOn: string;
 
-  private lockdownData: any;
+  public lockdownData: any;
 
   private lockdownCountriesPieChart: Chart;
   private lockdownPopulationPieChart: Chart;
