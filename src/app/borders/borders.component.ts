@@ -31,7 +31,7 @@ export class BordersComponent implements OnInit {
     this.isMobile = window.innerWidth > mobileWidth ? false : true;
     this.travelData = (await this.http.get(`${aws}/international_flights.json`).toPromise() as any);
 
-    this.setTable();
+    // this.setTable();
   }
 
   private setTable() {
