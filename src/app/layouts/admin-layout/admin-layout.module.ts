@@ -33,7 +33,8 @@ import { MapTilesService } from '../../_service/map/map-tiles.service';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { HomeComponent } from 'app/homepage/homepage.component';
-
+import { TravelCommentsComponent } from '../../components/travel-comments/travel-comments.component';
+import { DisqusModule } from 'ngx-disqus';
 @NgModule({
   imports: [
     CommonModule,
@@ -49,7 +50,8 @@ import { HomeComponent } from 'app/homepage/homepage.component';
     MatSortModule,
     HttpClientModule,
     NgxPaginationModule,
-    BsDatepickerModule.forRoot()
+    BsDatepickerModule.forRoot(),
+    DisqusModule
   ],
   providers: [
     MarkerService,
@@ -72,7 +74,8 @@ import { HomeComponent } from 'app/homepage/homepage.component';
     MasksComponent,
     TestingComponent,
     MapSchoolClosureComponent,
-    MapLockdownComponent
+    MapLockdownComponent,
+    TravelCommentsComponent
   ]
 })
 
