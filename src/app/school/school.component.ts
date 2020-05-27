@@ -108,7 +108,7 @@ export class SchoolComponent implements OnInit {
     }
   };
 
-  private schoolClosureData: any;
+  public schoolClosureData: any;
 
   constructor(
     private titleService: Title,
