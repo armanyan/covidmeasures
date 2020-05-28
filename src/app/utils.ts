@@ -363,9 +363,10 @@ export const createEvolutionChart = (
   ctx: CanvasRenderingContext2D, 
   labels: string[], 
   dataset: number[] | object[], // array of numbers for single data & object for multiple data
-  legendDisplay = false, // Line graph legends
-  responsive = true, // for responsiveness
-  maintainAspectRatio = true, // for aspect ratio
+  legendDisplay: boolean = false, // Line graph legends
+  responsive: boolean = true, // for responsiveness
+  maintainAspectRatio: boolean = true, // for aspect ratio,
+  yAxesLabel:string = 'Number of People'
 ) => {
   const data = {
     labels,
@@ -402,7 +403,7 @@ export const createEvolutionChart = (
         position: 'left',
         scaleLabel: {
           display: true,
-          labelString: 'Number of People'
+          labelString: yAxesLabel
         },
         ticks: {
           userCallback: function(value) {

@@ -218,8 +218,8 @@
     <div class="card card-border">
       <div class="card-header card-header-success d-flex justify-content-between">
         <h3 class="card-title">Reported COVID-19 Infection Cases & Deaths Per Day</h3>
-        <button class="btn btn-primary d-flex align-items-center" data-toggle="modal" data-target="#compareModal">
-          <i class="material-icons font-weight-bold">add</i>
+        <button class="btn btn-success d-flex align-items-center" data-toggle="modal" data-target="#compareModal">
+          <i class="fa fa-plus mr-1" aria-hidden="true"></i>
           Add a Country
         </button>
       </div>
@@ -247,7 +247,11 @@
       </div>
        <!-- Evolution Calendar Range Ends -->
       <div class="card-body p-1">
-        <div id="wrapper" class="pt-2 pt-md-3 chart-pos">
+        <div class="d-flex p-0 m-0 pl-md-4">
+          <button class="btn" [ngClass]="{'btn-success': !isPerMillion}" (click)="showTotalCases()">Total</button>
+          <button class="btn" [ngClass]="{'btn-success': isPerMillion}" (click)="showPerMillion()">Per 1 Million</button>
+        </div>
+        <div id="wrapper" class="m-0 pt-1 chart-pos">
           <canvas id="countryChartAllCases"></canvas>
         </div>
       </div>
@@ -449,7 +453,7 @@
   </div>
   <!-- Modal -->
   <div class="modal fade" id="compareModal" tabindex="-1" role="dialog" aria-labelledby="compareModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
         <div class="modal-header  pb-0">
           <h5 class="modal-title" id="compareModalLabel" class="font-weight-bold">Search Country:</h5>
