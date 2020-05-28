@@ -218,7 +218,10 @@
     <div class="card card-border">
       <div class="card-header card-header-success d-flex justify-content-between">
         <h3 class="card-title">Reported COVID-19 Infection Cases & Deaths Per Day</h3>
-        <button class="btn btn-primary" data-toggle="modal" data-target="#compareModal">Compare Country</button>
+        <button class="btn btn-primary d-flex align-items-center" data-toggle="modal" data-target="#compareModal">
+          <i class="material-icons font-weight-bold">add</i>
+          Add a Country
+        </button>
       </div>
       <!-- Evolution Calendar Range Starts -->
       <div class="card m-0 p-0  px-sm-2 pt-4">
@@ -470,8 +473,8 @@
             <li class="list-group-item"
             style="cursor: pointer;"
             *ngFor="let country of searchedCountry"
-            (click)="setComparedCountry(country.value)"
-            [ngClass]="{'active': country.value == comparedCountry}"
+            (click)="setComparedCountry(country.value, country.viewValue)"
+            [ngClass]="{'active': country.value == comparedCountry.name }"
             data-dismiss="modal" aria-label="Close"
             >{{country.viewValue}}</li>
             <!-- <li class="list-group-item"*ngFor="let country of countryList"></li> -->
