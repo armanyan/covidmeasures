@@ -22,7 +22,7 @@ export class AdminLayoutComponent implements OnInit {
     public location: Location,
     private titleService: Title,
     private router: Router
-    ) {}
+  ) {}
 
   ngOnInit() {
       
