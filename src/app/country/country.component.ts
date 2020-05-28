@@ -132,8 +132,8 @@ export class CountryComponent implements OnInit {
 
     const labels = this.evolution.dates.map(date => this.changeDateFormat(date));
     const data = this.getDataSets(
-      this.evolution.data.USA.cases, this.evolution.data.USA.deaths, labels,
-      this.evolution.data.USA.lockdown, this.evolution.data.USA.school_closure
+      this.evolution.data[this.countryView].cases, this.evolution.data[this.countryView].deaths, labels,
+      this.evolution.data[this.countryView].lockdown, this.evolution.data[this.countryView].school_closure
     );
 
     // we get start & end date for calendar range
@@ -148,19 +148,23 @@ export class CountryComponent implements OnInit {
     if (alpha3) {
       this.countryChangeView(alpha3);
     } else {
-      try {
-        const ip = await this.http.get('https://json.geoiplookup.io/api').toPromise();
-        this.countryView = getAlpha3FromAlpha2((ip as any).country_code);
-      } catch (_err) {
-        this.countryView = 'USA';
-      }
+      this.countryView = await this.getUserCountry();
       this.location.go('/country/'+this.countryView)
     }
 
     this.currentCountryName = getCountryNameByAlpha(this.countryView);
+    
     this.setTotalDeathRatio();
-
     this.setWidget();
+  }
+
+  private async getUserCountry() {
+    try {
+      const ip = await this.http.get('http://ip-api.com/json/?fields=countryCode').toPromise();
+      return getAlpha3FromAlpha2((ip as any).countryCode);
+    } catch (_err) {
+      return 'USA';
+    }
   }
 
   public evolutionRangeChanged() { // if date range picker value is changed

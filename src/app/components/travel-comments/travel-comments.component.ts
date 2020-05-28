@@ -1,7 +1,10 @@
 import { Component, OnInit, Input, NgModule } from "@angular/core";
 import alpha3 from "../../data/alpha3";
+import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute, Router } from "@angular/router";
-import {Location} from '@angular/common'; 
+import { Location } from '@angular/common'; 
+
+import { getAlpha3FromAlpha2 } from '../../utils';
 
 interface Country {
   value: string;
@@ -15,7 +18,7 @@ interface Country {
   styleUrls: ["./travel-comments.component.css"],
 })
 export class TravelCommentsComponent implements OnInit {
-  public countryView: string = "USA";
+  public countryView: string;
   public countriesList: Country[] = [];
   public travel = {
     start: "",
@@ -30,17 +33,14 @@ export class TravelCommentsComponent implements OnInit {
   constructor(
     private activatedRoute: ActivatedRoute, 
     private router:Router,
+    private http: HttpClient,
     private location: Location
-    ) {}
+  ) {}
 
   async ngOnInit() {
 
-    const routeParam = this.activatedRoute.snapshot.paramMap.get('alpha3');
-    if (routeParam) {
-      this.getCountryView(routeParam);
-    }else{
-      this.getCountryView(this.countryView);
-    }
+    this.countryView = await this.getUserCountry();
+    this.getCountryView(this.countryView);
 
     for (const key in alpha3) {
       if (alpha3.hasOwnProperty(key)) {
@@ -53,6 +53,7 @@ export class TravelCommentsComponent implements OnInit {
       }``
     }
   }
+
   ngAfterViewInit(){
 
   }
@@ -68,9 +69,17 @@ export class TravelCommentsComponent implements OnInit {
   
       // this.url = window.location.href;
       this.url = `https://covidmeasures.info/borders/${alpha3}`
-      // console.log(travelCountry)
       this.pageID = `/${travelCountry.code}${this.checkPageID(alpha3)}`;
     });
+  }
+
+  private async getUserCountry() {
+    try {
+      const ip = await this.http.get('http://ip-api.com/json/?fields=countryCode').toPromise();
+      return getAlpha3FromAlpha2((ip as any).countryCode);
+    } catch (_err) {
+      return 'USA';
+    }
   }
 
   public changeCountryView(alpha3){
@@ -84,7 +93,6 @@ export class TravelCommentsComponent implements OnInit {
 
     // this.url = window.location.href;
     this.url = `https://covidmeasures.info/borders/${alpha3}`
-    // console.log(travelCountry)
     this.pageID = `/${travelCountry.code}${this.checkPageID(alpha3)}`;
   }
 
