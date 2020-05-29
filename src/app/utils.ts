@@ -388,11 +388,16 @@ export const createEvolutionChart = (
       mode: 'label',
       position: 'nearest',
       filter: function (tooltipItem: any) {
-        return tooltipItem.datasetIndex < 2;
+        const allowed_tooltip = [0,1,4,5]
+        return allowed_tooltip.includes(tooltipItem.datasetIndex);
+        // return tooltipItem.datasetIndex < 2 || tooltipItem.datasetIndex > 3 || ;
       },
       callbacks: {
-        label: function(tooltipItem: any) {
-          return tooltipItem.yLabel.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        label: function(tooltipItem: any, data: any) {
+          const value = tooltipItem.yLabel;
+          const formattedValue = value % 1 === 0 ? value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") : Number(value).toFixed(2);
+          const name = data.datasets[tooltipItem.datasetIndex].label;
+          return `${name}: ${formattedValue}`;
         }
       }
     },
