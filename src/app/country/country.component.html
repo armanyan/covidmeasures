@@ -248,8 +248,8 @@
        <!-- Evolution Calendar Range Ends -->
       <div class="card-body p-1">
         <div class="d-flex p-0 m-0 pl-md-4">
-          <button class="btn" [ngClass]="{'btn-success': !isPerMillion}" (click)="changePresentedNumber()">Total</button>
-          <button class="btn" [ngClass]="{'btn-success': isPerMillion}" (click)="changePresentedNumber()">Per 1 Million</button>
+          <button class="btn" [ngClass]="{'btn-success': !isPerMillion}" [disabled]="!isPerMillion" (click)="toPerMillion(false)">Total</button>
+          <button class="btn" [ngClass]="{'btn-success': isPerMillion}" [disabled]="isPerMillion" (click)="toPerMillion(true)">Per 1 Million</button>
         </div>
         <div id="wrapper" class="m-0 pt-1 chart-pos">
           <canvas id="countryChartAllCases"></canvas>

@@ -100,13 +100,15 @@ export class CountryComponent implements OnInit {
   private travelData: any;
 
   public severityMeasures: Chart;
+
+  private countryPopulation:number = 0;
   public comparedCountry: {
     alpha3: string;
     name: string;
     population?: number;
   } = {alpha3: "", name: "", population: 0}; // holds compared country
   public searchedCountry: Array<any>;
-  private isPerMillion: boolean = false;
+  public isPerMillion: boolean = false;
 
   constructor(
     private titleService: Title,
@@ -210,7 +212,7 @@ export class CountryComponent implements OnInit {
       this.countryAllCasesCTX.update();
       if (this.isPerMillion) {
         this.isPerMillion=false;
-        this.changePresentedNumber();
+        this.toPerMillion(true);
       }
     }
   }
@@ -317,7 +319,8 @@ export class CountryComponent implements OnInit {
     this.travel.end = travelCountry.end;
     this.travel.status = travelCountry.status;
 
-    const affectedPopulation = getCountryPopulation(alpha3)*lockdownCountry.current_population_impacted;
+    this.countryPopulation = getCountryPopulation(alpha3);
+    const affectedPopulation = this.countryPopulation * lockdownCountry.current_population_impacted;
     this.countryImpactedPeople = Math.floor(affectedPopulation/this.statsDivider);
     this.countryCumulatedYears =
       (this.getMissedDays(lockdownCountry.start, lockdownCountry.end)*affectedPopulation) / (365*this.statsDivider);
@@ -530,9 +533,7 @@ export class CountryComponent implements OnInit {
       name: name,
     };
 
-    const lockdownCountry = this.getCountry(this.lockdownData.countries, alpha3);
-    const affectedPopulation = getCountryPopulation(alpha3)*lockdownCountry.current_population_impacted;
-    this.comparedCountry.population = Math.floor(affectedPopulation/this.statsDivider);
+    this.comparedCountry.population = getCountryPopulation(alpha3);
 
     const data = this.getDataSets(
       this.evolution.data[this.countryView].cases,
@@ -557,18 +558,19 @@ export class CountryComponent implements OnInit {
    * we set countries cases and deaths value to per million or number of people
    * Ex: (cases / population) * 1,000,000)
    */
-  public changePresentedNumber(): void{
-    this.isPerMillion = !this.isPerMillion;
+  public toPerMillion(value:boolean): void{
+    this.isPerMillion = value;
     const IS_COMPARED = this.comparedCountry.alpha3 ? true : false;
+
     const allCases: EvolutionChart = {
       labels: this.countryAllCasesCTX.data.labels,
 
       cases: this.countryAllCasesCTX.data.datasets[0].data.map((x:number)=> {
-        return this.isPerMillion ? (x / this.countryImpactedPeople) * 1000000 : (x / 1000000) * this.countryImpactedPeople
+        return this.isPerMillion ? (x / this.countryPopulation) * 1000000 : (x / 1000000) * this.countryPopulation
       }),
 
       deaths: this.countryAllCasesCTX.data.datasets[1].data.map((x:number)=> {
-        return this.isPerMillion ? (x / this.countryImpactedPeople) * 1000000 : (x / 1000000) * this.countryImpactedPeople
+        return this.isPerMillion ? (x / this.countryPopulation) * 1000000 : (x / 1000000) * this.countryPopulation
       }),
 
       lockdown: this.countryAllCasesCTX.data.datasets[2].data,
@@ -585,6 +587,7 @@ export class CountryComponent implements OnInit {
       comparedLockdown: IS_COMPARED ? this.countryAllCasesCTX.data.datasets[6].data : [],
       comparedSchool: IS_COMPARED ? this.countryAllCasesCTX.data.datasets[7].data : [],
     };
+    
     this.countryAllCasesCTX.destroy();
     this.initEvolutionChart(allCases, this.isPerMillion ? "Number Per Million" : "Number of People");
   }
