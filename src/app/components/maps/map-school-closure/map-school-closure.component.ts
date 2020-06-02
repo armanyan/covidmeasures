@@ -1,9 +1,9 @@
 import { Component, OnInit, Input } from '@angular/core';
 import * as L from 'leaflet';
 
-import { MarkerService } from '../../_service/map/marker.service';
-import { ShapeService } from '../../_service/map/shape.service';
-import { MapTilesService } from '../../_service/map/map-tiles.service';
+import { MarkerService } from '../../../_service/map/marker.service';
+import { ShapeService } from '../../../_service/map/shape.service';
+import { MapTilesService } from '../../../_service/map/map-tiles.service';
 
 
 const colors = {
@@ -41,9 +41,9 @@ interface Country {
 
 export class MapSchoolClosureComponent implements OnInit {
 
-  public map: L.map;
-  public info: L.control;
-  public legend: L.control;
+  private map: L.map;
+  private info: L.control;
+  private legend: L.control;
   @Input() countries: Array<Country>;
 
   constructor(

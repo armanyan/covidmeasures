@@ -24,8 +24,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSortModule } from '@angular/material/sort';
 
-import { MapSchoolClosureComponent } from '../../components/map-school-closure/map-school-closure.component';
-import { MapLockdownComponent } from '../../components/map-lockdown/map-lockdown.component';
+import { MapSchoolClosureComponent } from '../../components/maps/map-school-closure/map-school-closure.component';
+import { MapLockdownComponent } from '../../components/maps/map-lockdown/map-lockdown.component';
 import { MarkerService } from '../../_service/map/marker.service';
 import { PopUpService } from '../../_service/map/pop-up.service';
 import { ShapeService } from '../../_service/map/shape.service';
