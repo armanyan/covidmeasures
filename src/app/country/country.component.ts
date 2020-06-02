@@ -16,6 +16,18 @@ interface Country {
   viewValue: string;
 }
 
+interface EvolutionChart {
+  cases: number[]; 
+  deaths: number[]; 
+  labels: string[];
+  lockdown: any[]; 
+  school: any[];
+  comparedCases: number[];
+  comparedDeaths: number[];
+  comparedLockdown: any[]; 
+  comparedSchool: any[];
+}
+
 @Component({
   selector: 'app-country',
   templateUrl: './country.component.html',
@@ -89,6 +101,15 @@ export class CountryComponent implements OnInit {
 
   public severityMeasures: Chart;
 
+  private countryPopulation:number = 0;
+  public comparedCountry: {
+    alpha3: string;
+    name: string;
+    population?: number;
+  } = {alpha3: "", name: "", population: 0}; // holds compared country
+  public searchedCountry: Array<any>;
+  public isPerMillion: boolean = false;
+
   constructor(
     private titleService: Title,
     private http: HttpClient,
@@ -123,6 +144,7 @@ export class CountryComponent implements OnInit {
         "viewValue": this.evolution.data[alpha].name.split('_').join(' ')
       });
     }
+    this.searchedCountry = this.countryList.slice(0, 5);
 
     const labels = this.evolution.dates.map(date => this.changeDateFormat(date));
     const data = this.getDataSets(
@@ -136,35 +158,8 @@ export class CountryComponent implements OnInit {
      // we update the value of calendar range
     this.calendarForm.controls['dateRange'].setValue(`${startDate} - ${endDate}`)
 
-    const dataSets = [
-      {
-        label: "Cases", backgroundColor: "rgba(52,107,186,0.3)", borderColor: "#346bb6",
-        fill: true, data: data.cases, yAxisID: 'people'
-      },
-      {
-        label: "Deaths", backgroundColor: "rgba(206,43,51,0.3)", borderColor: "#ce2b33",
-        fill: true, data: data.deaths, yAxisID: 'people'
-      },
-      {
-        label: "Lockdown", backgroundColor: "rgba(174, 113, 240, 0.4)", borderColor: "rgba(174, 113, 240, 0)",
-        fill: true, data: data.lockdown, yAxisID: 'severity', pointRadius: 0, pointHoverRadius: 0
-      },
-      {
-        label: "School Closure", backgroundColor: "rgba(166, 230, 154, 0.2)", borderColor: "rgba(166, 230, 154, 0)",
-        fill: true, data: data.school, yAxisID: 'severity', pointRadius: 0, pointHoverRadius: 0
-      }
-    ]
+    this.initEvolutionChart(data); // we initialize evolution charts
 
-    // One country cases evolution chart
-    this.countryAllCasesCTX = createEvolutionChart(
-      (document.getElementById("countryChartAllCases") as any).getContext("2d"),
-      data.labels,
-      dataSets,
-      true,
-      true,
-      false, // we make aspect ratio to false this prevents the chart from growing too much
-    );
-    
     const alpha3 = this.activatedRoute.snapshot.paramMap.get('alpha3');
     if (alpha3) {
       this.countryChangeView(alpha3);
@@ -201,24 +196,38 @@ export class CountryComponent implements OnInit {
         this.evolution.data[this.countryView].deaths,
         this.evolution.dates.map(date => this.changeDateFormat(date)),
         this.evolution.data[this.countryView].lockdown,
-        this.evolution.data[this.countryView].school_closure
+        this.evolution.data[this.countryView].school_closure,
+        this.comparedCountry.alpha3 ? true : false
       )
 
       this.countryAllCasesCTX.data.datasets[0].data  = datasets['cases'];
       this.countryAllCasesCTX.data.datasets[1].data = datasets['deaths'];
       this.countryAllCasesCTX.data.datasets[2].data = datasets['lockdown'];
       this.countryAllCasesCTX.data.datasets[3].data = datasets['school'];
+      if (this.comparedCountry.alpha3) {
+        this.countryAllCasesCTX.data.datasets[4].data = datasets['comparedCases'];
+        this.countryAllCasesCTX.data.datasets[5].data = datasets['comparedDeaths'];
+      }
       this.countryAllCasesCTX.data.labels = datasets['labels'];
       this.countryAllCasesCTX.update();
+      if (this.isPerMillion) {
+        this.isPerMillion=false;
+        this.toPerMillion(true);
+      }
     }
   }
 
-  private getDataSets(activeCases: number[], deaths: number[], labels: string[], lockdown: number[], school_closure: number[]) {
+  private getDataSets(activeCases: number[], deaths: number[], labels: string[], lockdown: number[], school_closure: number[], toCompareCountry: boolean = false) {
     let shortenCases = [...activeCases];
     let shortenDeaths = [...deaths];
     let shortenLabels = [...labels];
     let shortenLockdown = [...lockdown];
     let shortenSchool = [...school_closure];
+
+    let comparedCases = toCompareCountry ?  this.evolution.data[this.comparedCountry.alpha3].cases : [];
+    let comparedDeaths = toCompareCountry ? this.evolution.data[this.comparedCountry.alpha3].deaths : [];
+    let comparedLockdown = toCompareCountry ? this.evolution.data[this.comparedCountry.alpha3].lockdown : [];
+    let comparedSchool = toCompareCountry ? this.evolution.data[this.comparedCountry.alpha3].school_closure : [];
 
     if (this.evolutionRange.from === 'default' && this.evolutionRange.to === 'default') {
       // get the index of the first death.
@@ -229,6 +238,12 @@ export class CountryComponent implements OnInit {
       shortenLabels = shortenLabels.slice(firstDeathIndex, shortenLabels.length);
       shortenLockdown = shortenLockdown.slice(firstDeathIndex, shortenLockdown.length);
       shortenSchool = shortenSchool.slice(firstDeathIndex, shortenSchool.length);
+      if (toCompareCountry) {
+        comparedCases = comparedCases.slice(firstDeathIndex, comparedCases.length);
+        comparedDeaths = comparedDeaths.slice(firstDeathIndex, comparedDeaths.length);
+        comparedLockdown = comparedLockdown.slice(firstDeathIndex, comparedLockdown.length);
+        comparedSchool = comparedSchool.slice(firstDeathIndex, comparedSchool.length);
+      }
     } else {
       // if evolutionRange has date. we get the first and last index of labels
       const findStart = shortenLabels.findIndex(date => date == this.evolutionRange.from);
@@ -242,12 +257,27 @@ export class CountryComponent implements OnInit {
       shortenLabels = shortenLabels.slice(startIndex, endIndex+1);
       shortenLockdown = shortenLockdown.slice(startIndex, endIndex+1);
       shortenSchool = shortenSchool.slice(startIndex, endIndex+1);
+
+      if (toCompareCountry) {
+        comparedCases = comparedCases.slice(startIndex, endIndex+1);
+        comparedDeaths = comparedDeaths.slice(startIndex, endIndex+1);
+        comparedLockdown = comparedLockdown.slice(startIndex, endIndex+1);
+        comparedSchool = comparedSchool.slice(startIndex, endIndex+1);
+      }
+
     }
     this.currentDeathRatio = shortenDeaths.reduce((a,b) => a + b)/shortenCases.reduce((a,b) => a + b);
 
     return {
-      'cases': shortenCases, 'deaths': shortenDeaths, 'labels': shortenLabels,
-      'lockdown': shortenLockdown, 'school': shortenSchool
+      'cases': shortenCases, 
+      'deaths': shortenDeaths, 
+      'labels': shortenLabels,
+      'lockdown': shortenLockdown, 
+      'school': shortenSchool,
+      'comparedCases': comparedCases,
+      'comparedDeaths': comparedDeaths,
+      'comparedLockdown': comparedLockdown, 
+      'comparedSchool': comparedSchool,
     }
   }
 
@@ -289,7 +319,8 @@ export class CountryComponent implements OnInit {
     this.travel.end = travelCountry.end;
     this.travel.status = travelCountry.status;
 
-    const affectedPopulation = getCountryPopulation(alpha3)*lockdownCountry.current_population_impacted;
+    this.countryPopulation = getCountryPopulation(alpha3);
+    const affectedPopulation = this.countryPopulation * lockdownCountry.current_population_impacted;
     this.countryImpactedPeople = Math.floor(affectedPopulation/this.statsDivider);
     this.countryCumulatedYears =
       (this.getMissedDays(lockdownCountry.start, lockdownCountry.end)*affectedPopulation) / (365*this.statsDivider);
@@ -322,6 +353,8 @@ export class CountryComponent implements OnInit {
   }
 
   public countryChangeView(value: string) {
+    this.isPerMillion = false;
+    this.comparedCountry = { alpha3: "", name: "", population: 0 };
     this.countryView = value;
     this.setTotalDeathRatio();
     
@@ -346,12 +379,8 @@ export class CountryComponent implements OnInit {
     for (const country of this.countryList) {
       if (country.value === value) {
 
-        this.countryAllCasesCTX.data.datasets[0].data  = datasets['cases'];
-        this.countryAllCasesCTX.data.datasets[1].data = datasets['deaths'];
-        this.countryAllCasesCTX.data.datasets[2].data = datasets['lockdown'];
-        this.countryAllCasesCTX.data.datasets[3].data = datasets['school'];
-        this.countryAllCasesCTX.data.labels = datasets['labels'];
-        this.countryAllCasesCTX.update();
+        this.countryAllCasesCTX.destroy();
+        this.initEvolutionChart(datasets);
         return;
       }
     }
@@ -406,5 +435,160 @@ export class CountryComponent implements OnInit {
       }).open();
     })
   }
+  /**
+   * Initialize EvolutionCharts
+   * Ex: cases, deaths
+   * @param data to bind on the chart
+   */
+  private initEvolutionChart(data:EvolutionChart, yAxisLabel?: string){
 
+    const IS_COMPARED = this.comparedCountry.alpha3 ? true : false;
+
+    let dataSets: Array<{
+      label: string;
+      backgroundColor: string;
+      borderColor: string;
+      fill: boolean;
+      data: number[];
+      yAxisID: string;
+      pointRadius?: number;
+      pointHoverRadius?:number;
+      borderDash?: number[];
+      borderWidth?: number;
+      hidden?:boolean;
+    }> = [
+      {
+        label: IS_COMPARED ? `${this.currentCountryName} Cases` : "Cases", 
+        backgroundColor: "rgba(52,107,186,0.3)", borderColor: "#346bb6",
+        fill: !IS_COMPARED, 
+        data: data.cases, yAxisID: 'people'
+      },
+      {
+        label: IS_COMPARED ? `${this.currentCountryName} Deaths` : "Deaths", 
+        backgroundColor: "rgba(206,43,51,0.3)", borderColor: "#ce2b33",
+        fill: !IS_COMPARED, 
+        data: data.deaths, yAxisID: 'people'
+      },
+      {
+        label: IS_COMPARED ? `${this.currentCountryName} Lockdown`: "Lockdown", 
+        backgroundColor: "rgba(174, 113, 240, 0.4)", borderColor: "rgba(174, 113, 240, 0)",
+        fill: true, data: data.lockdown, yAxisID: 'severity', pointRadius: 0, pointHoverRadius: 0, 
+        hidden : IS_COMPARED,
+      },
+      {
+        label: IS_COMPARED ? `${this.currentCountryName} School Closure`: "School Closure", 
+        backgroundColor: "rgba(166, 230, 154, 0.2)", borderColor: "rgba(166, 230, 154, 0)",
+        fill: true, data: data.school, yAxisID: 'severity', pointRadius: 0, pointHoverRadius: 0, 
+        hidden : IS_COMPARED,
+      }
+    ];
+    if (IS_COMPARED) {
+      dataSets = [
+        ...dataSets, 
+        ...
+        [
+          {
+            label: `${this.comparedCountry.name} Cases`, backgroundColor: "aliceblue", borderColor: "#7FFFD4",
+            fill: false, data: data.comparedCases, yAxisID: 'people', borderDash: [10,5], borderWidth: 4
+          },
+          {
+            label: `${this.comparedCountry.name} Deaths`, backgroundColor: "aliceblue", borderColor: "#FF1493",
+            fill: false, data: data.comparedDeaths, yAxisID: 'people', borderDash: [10,5], borderWidth: 4
+          },
+          {
+            label: `${this.comparedCountry.name} Lockdown`, 
+            backgroundColor: "rgb(240,240,240)", borderColor: "#DCDCDC",
+            fill: true, data: data.comparedLockdown, yAxisID: 'severity', borderDash: [10,5], pointRadius: 0, pointHoverRadius: 0, 
+            hidden : IS_COMPARED,
+          },
+          {
+            label: `${this.comparedCountry.name} School Closure`, 
+            backgroundColor: "#fbfbd09e", borderColor: "#ffffb29e",
+            fill: true, data: data.comparedSchool, yAxisID: 'severity',  borderDash: [10,5], pointRadius: 0, pointHoverRadius: 0, 
+            hidden : IS_COMPARED,
+          }
+        ]
+      ];
+    }
+    // One country cases evolution chart
+    this.countryAllCasesCTX = createEvolutionChart(
+      (document.getElementById("countryChartAllCases") as any).getContext("2d"),
+      data.labels,
+      dataSets,
+      true,
+      true,
+      false, // we make aspect ratio to false this prevents the chart from growing too much
+      yAxisLabel
+    );
+  }
+  /**
+   * we set compared countries variables
+   * Ex: alpha, name, population
+   * @param data to bind on the chart
+   */
+  public setComparedCountry(alpha3: string, name: string){
+    this.isPerMillion = false;
+    this.comparedCountry = {
+      alpha3: alpha3,
+      name: name,
+    };
+
+    this.comparedCountry.population = getCountryPopulation(alpha3);
+
+    const data = this.getDataSets(
+      this.evolution.data[this.countryView].cases,
+      this.evolution.data[this.countryView].deaths,
+      this.evolution.dates.map(date => this.changeDateFormat(date)),
+      this.evolution.data[this.countryView].lockdown,
+      this.evolution.data[this.countryView].school_closure,
+      true // we enable to Compare Country
+    );
+    this.countryAllCasesCTX.destroy();
+    this.initEvolutionChart(data);
+  }
+
+  public filterCompared(event: Event){
+    const search = (event.target as any).value.toLowerCase();
+    this.searchedCountry = this.countryList.filter(row => {
+      if(row.value.toLowerCase().includes(search)) return row;
+      if(row.viewValue.toLowerCase().includes(search)) return row;
+    }).slice(0,5);
+  }
+  /**
+   * we set countries cases and deaths value to per million or number of people
+   * Ex: (cases / population) * 1,000,000)
+   */
+  public toPerMillion(value:boolean): void{
+    this.isPerMillion = value;
+    const IS_COMPARED = this.comparedCountry.alpha3 ? true : false;
+
+    const allCases: EvolutionChart = {
+      labels: this.countryAllCasesCTX.data.labels,
+
+      cases: this.countryAllCasesCTX.data.datasets[0].data.map((x:number)=> {
+        return this.isPerMillion ? (x / this.countryPopulation) * 1000000 : (x / 1000000) * this.countryPopulation
+      }),
+
+      deaths: this.countryAllCasesCTX.data.datasets[1].data.map((x:number)=> {
+        return this.isPerMillion ? (x / this.countryPopulation) * 1000000 : (x / 1000000) * this.countryPopulation
+      }),
+
+      lockdown: this.countryAllCasesCTX.data.datasets[2].data,
+      school: this.countryAllCasesCTX.data.datasets[3].data,
+
+      comparedCases: IS_COMPARED ? this.countryAllCasesCTX.data.datasets[4].data.map((x:number)=> {
+          return this.isPerMillion ? (x / this.comparedCountry.population) * 1000000 : (x / 1000000) * this.comparedCountry.population
+        }) : [],
+
+      comparedDeaths: IS_COMPARED ? this.countryAllCasesCTX.data.datasets[5].data.map((x:number)=> {
+          return this.isPerMillion ? (x / this.comparedCountry.population) * 1000000 : (x / 1000000) * this.comparedCountry.population
+        }) : [],
+      
+      comparedLockdown: IS_COMPARED ? this.countryAllCasesCTX.data.datasets[6].data : [],
+      comparedSchool: IS_COMPARED ? this.countryAllCasesCTX.data.datasets[7].data : [],
+    };
+    
+    this.countryAllCasesCTX.destroy();
+    this.initEvolutionChart(allCases, this.isPerMillion ? "Number Per Million" : "Number of People");
+  }
 }

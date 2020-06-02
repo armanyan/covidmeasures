@@ -363,9 +363,10 @@ export const createEvolutionChart = (
   ctx: CanvasRenderingContext2D, 
   labels: string[], 
   dataset: number[] | object[], // array of numbers for single data & object for multiple data
-  legendDisplay = false, // Line graph legends
-  responsive = true, // for responsiveness
-  maintainAspectRatio = true, // for aspect ratio
+  legendDisplay: boolean = false, // Line graph legends
+  responsive: boolean = true, // for responsiveness
+  maintainAspectRatio: boolean = true, // for aspect ratio,
+  yAxesLabel:string = 'Number of People'
 ) => {
   const data = {
     labels,
@@ -387,11 +388,16 @@ export const createEvolutionChart = (
       mode: 'label',
       position: 'nearest',
       filter: function (tooltipItem: any) {
-        return tooltipItem.datasetIndex < 2;
+        const allowed_tooltip = [0,1,4,5]
+        return allowed_tooltip.includes(tooltipItem.datasetIndex);
+        // return tooltipItem.datasetIndex < 2 || tooltipItem.datasetIndex > 3 || ;
       },
       callbacks: {
-        label: function(tooltipItem: any) {
-          return tooltipItem.yLabel.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        label: function(tooltipItem: any, data: any) {
+          const value = tooltipItem.yLabel;
+          const formattedValue = value % 1 === 0 ? value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") : Number(value).toFixed(2);
+          const name = data.datasets[tooltipItem.datasetIndex].label;
+          return `${name}: ${formattedValue}`;
         }
       }
     },
@@ -402,7 +408,7 @@ export const createEvolutionChart = (
         position: 'left',
         scaleLabel: {
           display: true,
-          labelString: 'Number of People'
+          labelString: yAxesLabel
         },
         ticks: {
           userCallback: function(value) {
