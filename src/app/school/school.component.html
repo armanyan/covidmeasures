@@ -346,6 +346,16 @@
       just <a href="https://forms.gle/TuLNu54Xr6vfYedq5" target="_blank">contribute</a>
       by verifying its accuracy in your region.
     </p>
-
+    <hr>
+    <div *ngIf="schoolClosureData">
+      <app-disqus-comments 
+      [countryData]="schoolClosureData.countries"
+      [baseUrl]="'https://covidmeasures.info'"
+      [page]="'school'"
+      [uniqueString]="'x!zId'"
+      [icon]="'school'"
+      [uniqueAll]="true"
+      ></app-disqus-comments>
+    </div>
   </div>
 </div>

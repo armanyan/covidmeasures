@@ -28,7 +28,7 @@ div.text-align {
 /* --- color of the mat-select text -- */
 
 :host /deep/ .mat-select-value-text {
-  color: white !important;
+  color: black !important;
   font-size: large;
 }
 
