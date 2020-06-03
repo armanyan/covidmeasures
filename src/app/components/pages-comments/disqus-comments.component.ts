@@ -13,19 +13,26 @@ interface Country {
 }
 
 @Component({
-  selector: "app-travel-comments",
-  templateUrl: "./travel-comments.component.html",
-  styleUrls: ["./travel-comments.component.css"],
+  selector: "app-disqus-comments",
+  templateUrl: "./disqus-comments.component.html",
+  styleUrls: ["./disqus-comments.component.css"],
 })
-export class TravelCommentsComponent implements OnInit {
+export class DisqusCommentsComponent implements OnInit {
   public countryView: string;
   public countriesList: Country[] = [];
-  public travel = {
+  public topic = {
     start: "",
     end: "",
     status: "No Data",
   };
-  @Input() countriesTravel: any;
+  @Input() countryData: any;
+  @Input() baseUrl: string;
+  @Input() page: string;
+  @Input() uniqueString: string;
+  @Input() uniqueAll?: boolean;
+  @Input() duplicatesID?: string[] = [];
+  @Input() icon: string;
+  @Input() enableUrlNavigation?: boolean;
 
   public pageID:string = "";
   public url: string = "";
@@ -58,19 +65,21 @@ export class TravelCommentsComponent implements OnInit {
 
   }
 
-  public getCountryView(alpha3: string) {
-    this.router.navigateByUrl(`borders/${alpha3}`).then(() => {
-      const travelCountry = this.getCountry(this.countriesTravel, alpha3);
+  public async getCountryView(alpha3: string) {
+      if(this.enableUrlNavigation) {
+        await this.router.navigateByUrl(`${this.page}/${alpha3}`);
+      }
+      const countries = this.getCountry(this.countryData, alpha3);
 
-      this.travel.start = travelCountry.start;
-      this.travel.end = travelCountry.end;
-      this.travel.status = travelCountry.status;
+      this.topic.start = countries.start;
+      this.topic.end = countries.end;
+      this.topic.status = countries.status;
       this.countryView = alpha3;
   
       // this.url = window.location.href;
-      this.url = `https://covidmeasures.info/borders/${alpha3}`
-      this.pageID = `/${travelCountry.code}${this.checkPageID(alpha3)}`;
-    });
+      this.url = `${this.baseUrl}/${this.page}/${alpha3}`;
+      this.pageID = `/${countries.code}${this.checkPageID(alpha3)}`;
+   
   }
 
   private async getUserCountry() {
@@ -83,17 +92,20 @@ export class TravelCommentsComponent implements OnInit {
   }
 
   public changeCountryView(alpha3){
-    this.location.replaceState(`/borders/${alpha3}`);
-    const travelCountry = this.getCountry(this.countriesTravel, alpha3);
+    
+    if (this.enableUrlNavigation) {
+      this.location.replaceState(`/${this.page}/${alpha3}`);
+    }
+    const countries = this.getCountry(this.countryData, alpha3);
 
-    this.travel.start = travelCountry.start;
-    this.travel.end = travelCountry.end;
-    this.travel.status = travelCountry.status;
+    this.topic.start = countries.start;
+    this.topic.end = countries.end;
+    this.topic.status = countries.status;
     this.countryView = alpha3;
 
     // this.url = window.location.href;
-    this.url = `https://covidmeasures.info/borders/${alpha3}`
-    this.pageID = `/${travelCountry.code}${this.checkPageID(alpha3)}`;
+    this.url = `${this.baseUrl}/${this.page}/${alpha3}`
+    this.pageID = `/${countries.code}${this.checkPageID(alpha3)}`;
   }
 
   private getCountry(countries, alpha3) {
@@ -105,12 +117,13 @@ export class TravelCommentsComponent implements OnInit {
   }
 
   private checkPageID(alpha3){
-    // ALPHA3 that can cause duplicates
-    const duplicates = ['GBR'];
-    if(duplicates.includes(alpha3)){
-      // we generate Different ID
-      return `c!Id${alpha3.charCodeAt(0)}${alpha3}`;
-    }
+    // if uniques ID is required to all pages
+    if (this.uniqueAll) return `${this.uniqueString}${alpha3.charCodeAt(0)}${alpha3}`;
+    
+    // if unique ID have duplicate
+    const duplicates = this.duplicatesID;
+    if (duplicates.includes(alpha3)) return `${this.uniqueString}${alpha3.charCodeAt(0)}${alpha3}`;
+    
     return alpha3;
   }
 }
