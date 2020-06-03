@@ -29,8 +29,10 @@ export class DisqusCommentsComponent implements OnInit {
   @Input() baseUrl: string;
   @Input() page: string;
   @Input() uniqueString: string;
-  @Input() duplicatesID?: string[];
+  @Input() uniqueAll?: boolean;
+  @Input() duplicatesID?: string[] = [];
   @Input() icon: string;
+  @Input() enableUrlNavigation?: boolean;
 
   public pageID:string = "";
   public url: string = "";
@@ -63,8 +65,10 @@ export class DisqusCommentsComponent implements OnInit {
 
   }
 
-  public getCountryView(alpha3: string) {
-    this.router.navigateByUrl(`borders/${alpha3}`).then(() => {
+  public async getCountryView(alpha3: string) {
+      if(this.enableUrlNavigation) {
+        await this.router.navigateByUrl(`${this.page}/${alpha3}`);
+      }
       const countries = this.getCountry(this.countryData, alpha3);
 
       this.topic.start = countries.start;
@@ -75,7 +79,7 @@ export class DisqusCommentsComponent implements OnInit {
       // this.url = window.location.href;
       this.url = `${this.baseUrl}/${this.page}/${alpha3}`;
       this.pageID = `/${countries.code}${this.checkPageID(alpha3)}`;
-    });
+   
   }
 
   private async getUserCountry() {
@@ -88,7 +92,10 @@ export class DisqusCommentsComponent implements OnInit {
   }
 
   public changeCountryView(alpha3){
-    this.location.replaceState(`/borders/${alpha3}`);
+    
+    if (this.enableUrlNavigation) {
+      this.location.replaceState(`/${this.page}/${alpha3}`);
+    }
     const countries = this.getCountry(this.countryData, alpha3);
 
     this.topic.start = countries.start;
@@ -110,14 +117,13 @@ export class DisqusCommentsComponent implements OnInit {
   }
 
   private checkPageID(alpha3){
-    // ALPHA3 that can cause duplicates
-    if (this.duplicatesID) {
-      const duplicates = this.duplicatesID;
-      if(duplicates.includes(alpha3)){
-        // we generate Different ID
-        return `${this.uniqueString}${alpha3.charCodeAt(0)}${alpha3}`;
-      }
-      return alpha3;
-    }
+    // if uniques ID is required to all pages
+    if (this.uniqueAll) return `${this.uniqueString}${alpha3.charCodeAt(0)}${alpha3}`;
+    
+    // if unique ID have duplicate
+    const duplicates = this.duplicatesID;
+    if (duplicates.includes(alpha3)) return `${this.uniqueString}${alpha3.charCodeAt(0)}${alpha3}`;
+    
+    return alpha3;
   }
 }
