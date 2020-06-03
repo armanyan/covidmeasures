@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TravelCommentsComponent } from './travel-comments.component';
+import { DisqusCommentsComponent } from './disqus-comments.component';
 
-describe('TravelCommentsComponent', () => {
-  let component: TravelCommentsComponent;
-  let fixture: ComponentFixture<TravelCommentsComponent>;
+describe('DisqusCommentsComponent', () => {
+  let component: DisqusCommentsComponent;
+  let fixture: ComponentFixture<DisqusCommentsComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ TravelCommentsComponent ]
+      declarations: [ DisqusCommentsComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(TravelCommentsComponent);
+    fixture = TestBed.createComponent(DisqusCommentsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

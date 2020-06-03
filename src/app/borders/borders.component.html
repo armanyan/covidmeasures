@@ -28,7 +28,14 @@
     <br>
     <hr>
     <div *ngIf="travelData">
-      <app-travel-comments [countriesTravel]="travelData.countries"></app-travel-comments>
+      <app-disqus-comments 
+      [countryData]="travelData.countries"
+      [baseUrl]="'https://covidmeasures.info'"
+      [page]="'borders'"
+      [uniqueString]="'c!Id'"
+      [duplicatesID]="['GBR']"
+      [icon]="'airplanemode_inactive'"
+      ></app-disqus-comments>
     </div>
     <hr>
 
