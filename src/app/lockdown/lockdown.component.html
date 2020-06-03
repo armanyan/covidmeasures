@@ -366,6 +366,18 @@
       just <a href="https://forms.gle/TuLNu54Xr6vfYedq5" target="_blank">contribute</a>
       by verifying its accuracy in your region.
     </p>
+    <hr>
+
+    <div *ngIf="lockdownData">
+      <app-disqus-comments 
+      [countryData]="lockdownData.countries"
+      [baseUrl]="'https://covidmeasures.info'"
+      [page]="'lockdown'"
+      [uniqueString]="'k!kId'"
+      [icon]="'lock'"
+      [uniqueAll]="true"
+      ></app-disqus-comments>
+    </div>
 
     <!-- <hr>
 
@@ -381,6 +393,5 @@
         </div>
       </div>
     </div> -->
-
   </div>
 </div>
