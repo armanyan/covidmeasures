@@ -1,54 +1,5 @@
 <div class="row justify-content-center">
-    <div class="col-md-8 col-lg-6">
-      <div class="card card-border">
-        <div class="card-header card-header-success">
-          <h3 class="card-title">
-            International Travel Measures - Citizen Forum
-          </h3>
-        </div>
-        <div class="card-body">
-          <div class="row justify-content-center">
-              <div class="col-md-8">
-                  <div class="card">
-                      <div class="card-body card-country">
-                          <mat-select [(value)]="countryView" (selectionChange)="changeCountryView($event.value)">
-                              <mat-option *ngFor="let country of countriesList" [value]="country.value">
-                                  {{ country.viewValue }}
-                              </mat-option>
-                          </mat-select>
-                      </div>
-                  </div>
-              </div>
-          </div>
-          <div class="d-flex justify-content-center align-items-center">
-              <div class="pr-md-5 pr-sm-2">
-                <span class="material-icons size-padding" style="font-size: 150px;" *ngIf="icon">{{ icon }}</span>
-              </div>
-              <div>
-                <p class="align-weight font-weight-bold">
-                  Started on: 
-                  <span *ngIf="topic.start" style="font-weight: 900;">{{ topic.start | date }}</span>
-                  <span *ngIf="!topic.start" style="font-weight: 900;">UNAVAILABLE</span>
-                </p>
-                <p class="align-weight font-weight-bold">
-                  Expected to End: 
-                  <span *ngIf="topic.end" style="font-weight: 900;">{{ topic.end | date }}</span>
-                  <span *ngIf="!topic.end" style="font-weight: 900;">UNAVAILABLE</span>
-                </p>
-                <p class="align-weight font-weight-bold">
-                  Currently <span style="font-weight: 900;">{{ topic.status }}</span>
-                </p>
-              </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-11">
-      <hr>
-      <div class="row justify-content-center">
-          <div class="col-md-11" >
-            <disqus [identifier]="pageID" [url]="url"></disqus>
-          </div>
-      </div>
-    </div>
+  <div class="col-md-11" >
+    <disqus [identifier]="pageID" [url]="url"></disqus>
+  </div>
 </div>
