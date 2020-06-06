@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { Chart } from 'chart.js';
 import { HttpClient } from '@angular/common/http';
@@ -31,7 +31,7 @@ interface EvolutionChart {
 @Component({
   selector: 'app-country',
   templateUrl: './country.component.html',
-  styleUrls: ['./country.component.css']
+  styleUrls: ['./country.component.css'],
 })
 export class CountryComponent implements OnInit {
  
@@ -110,12 +110,15 @@ export class CountryComponent implements OnInit {
   public searchedCountry: Array<any>;
   public isPerMillion: boolean = false;
 
+  public isClientReady: boolean = false;
+
   constructor(
     private titleService: Title,
     private http: HttpClient,
     private activatedRoute: ActivatedRoute,
     private location: Location,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private changeDetector: ChangeDetectorRef
   ) { }
 
   async ngOnInit() {
@@ -172,6 +175,9 @@ export class CountryComponent implements OnInit {
     
     this.setTotalDeathRatio();
     this.setWidget();
+
+    this.isClientReady = true;
+    this.changeDetector.detectChanges();
   }
 
   private async getUserCountry() {
@@ -520,6 +526,7 @@ export class CountryComponent implements OnInit {
       false, // we make aspect ratio to false this prevents the chart from growing too much
       yAxisLabel
     );
+    this.changeDetector.detectChanges();
   }
   /**
    * we set compared countries variables

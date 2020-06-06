@@ -3,15 +3,15 @@
         <app-sidebar></app-sidebar>
         <div class="sidebar-background"></div>
     </div>
-    <div class="main-panel">
+    <div class="main-panel" style="min-height: 100vh;">
         <app-navbar></app-navbar>
-        <div *ngIf="!isHomePage()" class="card bg-dark text-white d-none d-md-block mt-0" style="border-radius:0; box-shadow:none;">
+        <div *ngIf="!isHomePage()" class="card bg-dark text-white d-none d-md-block my-0" style="border-radius:0; box-shadow:none;">
             <img class="card-img" style="border-radius:0;" src="../../../assets/img/banner.png" alt="Card image">
             <div class="card-img-overlay d-flex flex-column justify-content-center">
               <h5 class="text-capitalize">Citizens Tracker of Government COVID-19 Measures</h5>
               <h2 class="font-weight-bold">{{title}}</h2>
             </div>
-          </div>
+        </div>
         <router-outlet></router-outlet>
     </div>
 </div>

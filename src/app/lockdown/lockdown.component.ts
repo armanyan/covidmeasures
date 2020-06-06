@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import Chart from 'chart.js';
 import { Title } from '@angular/platform-browser';
 import { HttpClient } from '@angular/common/http';
@@ -97,6 +97,7 @@ export class LockdownComponent implements OnInit {
       asc: false
     }
   };
+  public isClientReady: boolean = false;
 
   public countryView: string;
   public countriesList: Country[] = [];
@@ -109,7 +110,8 @@ export class LockdownComponent implements OnInit {
 
   constructor(
     private titleService: Title,
-    private http: HttpClient
+    private http: HttpClient,
+    private changeDetector: ChangeDetectorRef
   ) { }
 
   async ngOnInit() {
@@ -137,6 +139,7 @@ export class LockdownComponent implements OnInit {
 
     this.setWidget();
 
+
     this.countryView = await this.getUserCountry();
     this.changeCountryView(this.countryView);
 
@@ -150,6 +153,10 @@ export class LockdownComponent implements OnInit {
         });
       }``
     }
+
+    this.isClientReady = true;
+    this.changeDetector.detectChanges();
+
   }
 
   private setTexts() {

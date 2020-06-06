@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Title } from "@angular/platform-browser";
 import * as typeformEmbed from '@typeform/embed';
@@ -128,9 +128,12 @@ export class SchoolComponent implements OnInit {
     status: "No Data",
   };
 
+  public isClientReady: boolean = false;
+
   constructor(
     private titleService: Title,
-    private http: HttpClient
+    private http: HttpClient,
+    private changeDetector: ChangeDetectorRef
   ) { }
 
   async ngOnInit() {
@@ -161,6 +164,8 @@ export class SchoolComponent implements OnInit {
         });
       }``
     }
+    this.isClientReady = true;
+    this.changeDetector.detectChanges();
   }
 
   private setTexts() {
