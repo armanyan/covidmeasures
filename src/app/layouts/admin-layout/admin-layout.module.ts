@@ -35,6 +35,9 @@ import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { HomeComponent } from 'app/homepage/homepage.component';
 import { DisqusCommentsComponent } from '../../components/pages-comments/disqus-comments.component';
 import { DisqusModule } from 'ngx-disqus';
+import { PageLoadersComponent } from '../../components/page-loaders/page-loaders.component';
+
+
 @NgModule({
   imports: [
     CommonModule,
@@ -75,7 +78,8 @@ import { DisqusModule } from 'ngx-disqus';
     TestingComponent,
     MapSchoolClosureComponent,
     MapLockdownComponent,
-    DisqusCommentsComponent
+    DisqusCommentsComponent,
+    PageLoadersComponent
   ]
 })
 

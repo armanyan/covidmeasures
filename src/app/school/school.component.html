@@ -1,4 +1,5 @@
-<div class="main-content">
+<app-page-loaders [hidden]="isClientReady"></app-page-loaders>
+<div class="main-content" [hidden]="!isClientReady">
   <div class="container-fluid">
 
     <div layout-align="end end">
