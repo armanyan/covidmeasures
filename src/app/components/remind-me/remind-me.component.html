@@ -1,0 +1,21 @@
+<div mat-dialog-content>
+  <h3>When do you want to be reminded?</h3>
+  <p>
+    We will send you an email when the traveling condition in
+    <b>{{ data.country }}</b> will be in the condition you choose.
+  </p>
+  <mat-form-field>
+    <mat-label>Your Email</mat-label>
+    <input matInput [(ngModel)]="data.email">
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Condition</mat-label>
+    <mat-select (selectionChange)="data.condition = $event.value">
+      <mat-option *ngFor="let condition of conditions" [value]="condition">{{ condition }}</mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Cancel</button>
+  <button mat-button [mat-dialog-close]="data" cdkFocusInitial>Remind Me!</button>
+</div>

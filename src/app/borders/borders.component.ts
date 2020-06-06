@@ -1,15 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
-
-import * as border_control from '../data/border_control';
-import { mobileWidth } from 'app/utils';
-import {aws } from '../utils';
 import { HttpClient } from '@angular/common/http';
-
-import { Router } from '@angular/router';
-import alpha3 from "../data/alpha3";
-import { getAlpha3FromAlpha2 } from '../utils';
+import { MatDialog } from '@angular/material/dialog';
 import { Location } from '@angular/common'; 
+import { Router } from '@angular/router';
+
+import { RemindMeComponent } from 'app/components/remind-me/remind-me.component';
+import { aws, mobileWidth, getAlpha3FromAlpha2, getCountryNameByAlpha } from 'app/utils';
+import alpha3 from "../data/alpha3";
 
 interface Country {
   value: string;
@@ -45,15 +43,14 @@ export class BordersComponent implements OnInit {
     private http: HttpClient,
     private titleService: Title,
     private router: Router,
-    private location: Location
+    private location: Location,
+    private dialog: MatDialog
   ) { }
 
   async ngOnInit() {
     this.titleService.setTitle('International Travel: Citizens Tracking Travel Restrictions Worldwide');
     this.isMobile = window.innerWidth > mobileWidth ? false : true;
     this.travelData = (await this.http.get(`${aws}/international_flights.json`).toPromise() as any);
-
-    // this.setTable();
 
     this.countryView = await this.getUserCountry();
     this.getCountryView(this.countryView);
@@ -70,22 +67,6 @@ export class BordersComponent implements OnInit {
     }
   }
 
-  private setTable() {
-    for (const row of border_control.default) {
-      this.table.push({
-        "country": row.country,
-        "ban": row.ban,
-        "quarantine": row.quarantine,
-        "testing": row.testing,
-        "borders": row.closed_borders,
-        "other": row.other,
-        "except": row.exceptions,
-        "start": row.start,
-        "end": row.end,
-        "status": row.status
-      });
-    }
-  }
   public async getCountryView(alpha3: string) {
 
       await this.router.navigateByUrl(`borders/${alpha3}`);
@@ -122,6 +103,21 @@ export class BordersComponent implements OnInit {
         return country;
       }
     }
+  }
+
+  public openRemindMe() {
+    let email: string;
+    let condition: string;
+
+    const dialogRef = this.dialog.open(RemindMeComponent, {
+      width: '500px',
+      data: {email, country: getCountryNameByAlpha(this.countryView), condition}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      console.log(result);
+    });
   }
 
 }
