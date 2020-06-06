@@ -4,12 +4,21 @@ import { Title } from '@angular/platform-browser';
 import { HttpClient } from '@angular/common/http';
 import * as typeformEmbed from '@typeform/embed';
 
+import alpha3 from "../data/alpha3";
+import { getAlpha3FromAlpha2 } from '../utils';
+
 import { mobileWidth, getCountryPopulation, getRegionByAlpha, getCountryNameByAlpha, createPieChart, aws } from '../utils';
 import * as text from '../data/texts/lockdown';
 
 interface Location {
   value: string;
   viewValue: string;
+}
+
+interface Country {
+  value: string;
+  viewValue: string;
+  "sub-region": string;
 }
 
 @Component({
@@ -89,6 +98,15 @@ export class LockdownComponent implements OnInit {
     }
   };
 
+  public countryView: string;
+  public countriesList: Country[] = [];
+
+  public topic = {
+    start: "",
+    end: "",
+    status: "No Data",
+  };
+
   constructor(
     private titleService: Title,
     private http: HttpClient
@@ -118,6 +136,20 @@ export class LockdownComponent implements OnInit {
     this.lockdownPopulationPieChart = createPieChart(populationCTX, labels, populationDatasets, backgroundColor, 'People');
 
     this.setWidget();
+
+    this.countryView = await this.getUserCountry();
+    this.changeCountryView(this.countryView);
+
+    for (const key in alpha3) {
+      if (alpha3.hasOwnProperty(key)) {
+        const element = alpha3[key];
+        this.countriesList.push({
+          value: element["alpha-3"],
+          viewValue: element.name,
+          "sub-region": element["sub-region"],
+        });
+      }``
+    }
   }
 
   private setTexts() {
@@ -484,5 +516,31 @@ export class LockdownComponent implements OnInit {
         autoClose: 3000
       }).open();
     })
+  }
+
+  private async getUserCountry() {
+    try {
+      const ip = await this.http.get('http://ip-api.com/json/?fields=countryCode').toPromise();
+      return getAlpha3FromAlpha2((ip as any).countryCode);
+    } catch (_err) {
+      return 'USA';
+    }
+  }
+
+  public changeCountryView(alpha3){
+    const countries = this.getCountry(this.lockdownData.countries, alpha3);
+
+    this.topic.start = countries.start;
+    this.topic.end = countries.end;
+    this.topic.status = countries.status;
+    this.countryView = alpha3;
+  }
+
+  private getCountry(countries, alpha3) {
+    for (const country of countries) {
+      if (country.alpha3 === alpha3) {
+        return country;
+      }
+    }
   }
 }
