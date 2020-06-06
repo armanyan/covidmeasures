@@ -1,16 +1,4 @@
-import { Component, OnInit, Input, NgModule } from "@angular/core";
-import alpha3 from "../../data/alpha3";
-import { HttpClient } from '@angular/common/http';
-import { ActivatedRoute, Router } from "@angular/router";
-import { Location } from '@angular/common'; 
-
-import { getAlpha3FromAlpha2 } from '../../utils';
-
-interface Country {
-  value: string;
-  viewValue: string;
-  "sub-region": string;
-}
+import { Component, OnInit, Input } from "@angular/core";
 
 @Component({
   selector: "app-disqus-comments",
@@ -18,98 +6,30 @@ interface Country {
   styleUrls: ["./disqus-comments.component.css"],
 })
 export class DisqusCommentsComponent implements OnInit {
-  public countryView: string;
-  public countriesList: Country[] = [];
-  public topic = {
-    start: "",
-    end: "",
-    status: "No Data",
-  };
-  @Input() countryData: any;
+
+  public pageID:string = "";
+  public url: string = "";
+
+  @Input() countriesData: any;
   @Input() baseUrl: string;
   @Input() page: string;
   @Input() uniqueString: string;
   @Input() uniqueAll?: boolean;
   @Input() duplicatesID?: string[] = [];
-  @Input() icon: string;
-  @Input() enableUrlNavigation?: boolean;
-
-  public pageID:string = "";
-  public url: string = "";
-
-  constructor(
-    private activatedRoute: ActivatedRoute, 
-    private router:Router,
-    private http: HttpClient,
-    private location: Location
-  ) {}
-
-  async ngOnInit() {
-
-    this.countryView = await this.getUserCountry();
-    this.getCountryView(this.countryView);
-
-    for (const key in alpha3) {
-      if (alpha3.hasOwnProperty(key)) {
-        const element = alpha3[key];
-        this.countriesList.push({
-          value: element["alpha-3"],
-          viewValue: element.name,
-          "sub-region": element["sub-region"],
-        });
-      }``
-    }
-  }
-
-  ngAfterViewInit(){
-
-  }
-
-  public async getCountryView(alpha3: string) {
-      if(this.enableUrlNavigation) {
-        await this.router.navigateByUrl(`${this.page}/${alpha3}`);
-      }
-      const countries = this.getCountry(this.countryData, alpha3);
-
-      this.topic.start = countries.start;
-      this.topic.end = countries.end;
-      this.topic.status = countries.status;
-      this.countryView = alpha3;
-  
-      // this.url = window.location.href;
-      this.url = `${this.baseUrl}/${this.page}/${alpha3}`;
+  @Input() set countryAlpha3(alpha3: string){
+    const countries = this.getCountry(alpha3);
+    if (countries) {
+      this.url = `${this.baseUrl}/${this.page}/${alpha3}`
       this.pageID = `/${countries.code}${this.checkPageID(alpha3)}`;
-   
-  }
-
-  private async getUserCountry() {
-    try {
-      const ip = await this.http.get('http://ip-api.com/json/?fields=countryCode').toPromise();
-      return getAlpha3FromAlpha2((ip as any).countryCode);
-    } catch (_err) {
-      return 'USA';
     }
   }
 
-  public changeCountryView(alpha3){
-    
-    if (this.enableUrlNavigation) {
-      this.location.replaceState(`/${this.page}/${alpha3}`);
-    }
-    const countries = this.getCountry(this.countryData, alpha3);
+  constructor() {}
 
-    this.topic.start = countries.start;
-    this.topic.end = countries.end;
-    this.topic.status = countries.status;
-    this.countryView = alpha3;
+  async ngOnInit() {}
 
-    // this.url = window.location.href;
-    this.url = `${this.baseUrl}/${this.page}/${alpha3}`
-    this.pageID = `/${countries.code}${this.checkPageID(alpha3)}`;
-  }
-
-  private getCountry(countries, alpha3) {
-    for (const country of countries) {
+  private getCountry(alpha3: string) {
+    for (const country of this.countriesData) {
       if (country.alpha3 === alpha3) {
         return country;
       }

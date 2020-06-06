@@ -3,6 +3,9 @@ import { HttpClient } from '@angular/common/http';
 import { Title } from "@angular/platform-browser";
 import * as typeformEmbed from '@typeform/embed';
 
+import alpha3 from "../data/alpha3";
+import { getAlpha3FromAlpha2 } from '../utils';
+
 import { aws, mobileWidth, getRegionByAlpha, getCountryNameByAlpha, getChildrenNoSchool } from '../utils';
 import * as text from '../data/texts/school_closure';
 
@@ -13,6 +16,12 @@ interface Location {
 
 interface CovidCategories {
   value: string;
+}
+
+interface Country {
+  value: string;
+  viewValue: string;
+  "sub-region": string;
 }
 
 @Component({
@@ -109,7 +118,18 @@ export class SchoolComponent implements OnInit {
   };
 
   public schoolClosureData: any;
+
+  public countryView: string;
+  public countriesList: Country[] = [];
+
+  public topic = {
+    start: "",
+    end: "",
+    status: "No Data",
+  };
+
   public isClientReady: boolean = false;
+
   constructor(
     private titleService: Title,
     private http: HttpClient,
@@ -130,6 +150,20 @@ export class SchoolComponent implements OnInit {
     this.covidVSSchoolChangeRegion('World');
     this.setSchoolClosure();
     this.setWidget();
+
+    this.countryView = await this.getUserCountry();
+    this.changeCountryView(this.countryView);
+
+    for (const key in alpha3) {
+      if (alpha3.hasOwnProperty(key)) {
+        const element = alpha3[key];
+        this.countriesList.push({
+          value: element["alpha-3"],
+          viewValue: element.name,
+          "sub-region": element["sub-region"],
+        });
+      }``
+    }
     this.isClientReady = true;
     this.changeDetector.detectChanges();
   }
@@ -443,6 +477,32 @@ export class SchoolComponent implements OnInit {
         autoClose: 3000
       }).open();
     })
+  }
+
+  private async getUserCountry() {
+    try {
+      const ip = await this.http.get('http://ip-api.com/json/?fields=countryCode').toPromise();
+      return getAlpha3FromAlpha2((ip as any).countryCode);
+    } catch (_err) {
+      return 'USA';
+    }
+  }
+
+  public changeCountryView(alpha3){
+    const countries = this.getCountry(this.schoolClosureData.countries, alpha3);
+
+    this.topic.start = countries.start;
+    this.topic.end = countries.end;
+    this.topic.status = countries.status;
+    this.countryView = alpha3;
+  }
+
+  private getCountry(countries, alpha3) {
+    for (const country of countries) {
+      if (country.alpha3 === alpha3) {
+        return country;
+      }
+    }
   }
 }
 
