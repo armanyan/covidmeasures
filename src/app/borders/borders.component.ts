@@ -106,17 +106,18 @@ export class BordersComponent implements OnInit {
   }
 
   public openRemindMe() {
-    let email: string;
-    let condition: string;
 
     const dialogRef = this.dialog.open(RemindMeComponent, {
       width: '500px',
-      data: {email, country: getCountryNameByAlpha(this.countryView), condition}
+      data: {email: undefined, country: getCountryNameByAlpha(this.countryView), condition: undefined}
     });
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
       console.log(result);
+      if (result !== undefined) {
+        console.log(result.email, result.condition);
+      }
     });
   }
 
