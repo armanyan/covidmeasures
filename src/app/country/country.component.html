@@ -1,5 +1,5 @@
 <app-page-loaders [hidden]="isClientReady"></app-page-loaders>
-<div class="main-content pt-md-0" [hidden]="!isClientReady">
+<div class="main-content pt-md-0">
   <div class="container-fluid">
     <div layout-align="end end">
       <h2 class="bold" *ngIf=isMobile><u>{{ titleService.getTitle().split(':')[0] }}</u></h2>

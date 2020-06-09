@@ -1,3 +1,25 @@
+.loader-container{
+  z-index: 99999; 
+  position: fixed; 
+  height: calc(100% - 55px); 
+  width: 100%;
+  left: 0;
+  right:0; 
+  /* top: 0;  */
+  bottom: 0;
+  background: #000000b0;
+}
+
+.loader-container .inner-container{
+  position: absolute; 
+  top: 0; 
+  right: 0; 
+  bottom: 0; 
+  /* background-color: #e9eef2;  */
+  height: 100vh;
+}
+
+/*  LOADER STARTS */
 .lds-grid {
     display: inline-block;
     position: relative;
@@ -66,3 +88,13 @@
     }
   }
   
+  @media (min-width: 991px) {
+    .loader-container{
+      width: calc(100% - 260px);
+      height: 100%;
+      right: 0;
+      top: 0;
+      left: auto;
+      background: #e9eef2;
+    }
+  }
