@@ -96,7 +96,7 @@ export class CountryComponent implements OnInit {
 
   private evolution: any;
   private schoolClosureData: any;
-  private lockdownData: any;
+  public lockdownData: any;
   private travelData: any;
 
   public severityMeasures: Chart;
