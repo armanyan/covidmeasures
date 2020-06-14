@@ -138,7 +138,16 @@ export class MapMasksComponent implements OnInit {
   }
 
   private getFillColor(survey) {
-    if (survey.length > 1) return colors['Variable responses'];
+    if (survey.length > 1) {
+      const percents = survey.map(x => parseFloat(x.percent))
+      const largest = Math.max.apply(Math, percents);
+      if (largest > 50) {
+        const answerName = survey.find(x => parseFloat(x.percent) == largest);
+        return colors[answerName.answer]
+      }else {
+        return colors['Variable responses'];
+      }
+    }
     if (survey.length > 0) return colors[survey[0].answer];
   }
 
