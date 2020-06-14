@@ -1,9 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import * as L from 'leaflet';
 import { MarkerService } from '../../../_service/map/marker.service';
 import { ShapeService } from '../../../_service/map/shape.service';
 import { MapTilesService } from '../../../_service/map/map-tiles.service';
-import countries from '../../../data/countries';
 
 const colors = {
   "No, NOT required or recommended": "#66bb6a",
@@ -11,7 +10,16 @@ const colors = {
   "Yes, in SOME public places": "#e6595a",
   "Yes, in ALL public places": "#B55007",
   "NA": "#e3e3e3"
-}
+};
+
+interface MasksData {
+  "Q1 - Rule" : string;
+  "Q2 - People Compliance": string;
+  "Q3 - Efficient": string;
+  "Q4 - Country or State": string;
+  alpha3: string;
+  "Submition Date": string
+};
 
 @Component({
   selector: 'app-map-masks',
@@ -23,7 +31,7 @@ export class MapMasksComponent implements OnInit {
   private map: L.map;
   private info: L.control;
   private legend: L.control;
-  // @Input() countries: Array<Country>;
+  @Input() countryMasksData: Array<MasksData>;
 
   constructor(
     private markerService: MarkerService, 
@@ -35,25 +43,35 @@ export class MapMasksComponent implements OnInit {
 
   ngOnInit(): void {
     this.initMap();
-    this.addInfoBox();
     this.addLegend();
     this.shapeService.getCountriesShapes().subscribe(country => {
       country.features.forEach(item => {
-        const foundCountry = countries.find(country => country.alpha3 === item.id)
-        if (foundCountry) {
-          // we add data from apit to each country
-          item.countryData = foundCountry
-        }else{
-          item.countryData = null
-        }
+        const allSurveys = this.countryMasksData.filter(mask => mask.alpha3 == item.id);
+
+        const q1Count = {}; // will hold the counts of survey answers
+        allSurveys.forEach( question => {
+          if(q1Count[question['Q1 - Rule']]){
+            q1Count[question['Q1 - Rule']].number = q1Count[question['Q1 - Rule']].number + 1;
+            q1Count[question['Q1 - Rule']].percent = 
+              ((q1Count[question['Q1 - Rule']].number / allSurveys.length) * 100).toFixed(2);
+          }else {
+            q1Count[question['Q1 - Rule']] = {
+              answer: question['Q1 - Rule'],
+              number: 1,
+              percent: ((1 / allSurveys.length) * 100).toFixed(2)
+            };
+          }
+        });
+        const survey  = Object.keys( q1Count ).map( key => q1Count[key]);
+        item.survey = survey;
+        item.totalSurvey = allSurveys.length;
+        // console.log("survey values", survey);
       })
       this.initStatesLayer(country);
     });
-    // we populate the maps with markers
-    // this.markerService.makeStateMarkers(this.map);
-    // this.markerService.makeStateCircleMarkers(this.map);
-
+    // console.log("masks data starts", this.countryMasksData);
   }
+
   private initMap(): void{
     // we create the map
     this.map = L.map('map', {
@@ -62,37 +80,6 @@ export class MapMasksComponent implements OnInit {
     });
     // we add tiles for our map
     this.mapTiles.addTiles(this.map)
-  }
-
-  private addInfoBox(){
-    // we add info box
-    this.info = L.control();
-
-    this.info.onAdd = function (map) {
-        this._div = L.DomUtil.create('div', 'info'); // create a div with a class "info"
-        // this.update();
-        return this._div;
-    };
-
-    const getTextColor = function(status: string, curfew: boolean) {
-      if (status) {
-        if(status == "Restricted" && !curfew) return colors['Restricted'];
-        if(status == "Restricted" && curfew) return colors['Curfew'];
-        return colors[status];
-      }
-    };
-    // method that we will use to update the control based on feature properties passed
-    // this.info.update = function (country) {
-    //     this._div.innerHTML = 
-    //     '<h4>Lockdown Status</h4>' +  (country ?
-    //     `<b>${ country.name }</b><br />
-    //     <span style="color:${ getTextColor(country.status, country.curfew) }; text-shadow: 1px 1px 1px #37180F;">
-    //       ${ country.curfew ? 'Curfew' : country.status == 'No data' ? '' : country.status}
-    //     </span>`
-    //     : 'Hover over a Country');
-    // };
-
-    this.info.addTo(this.map);
   }
 
   private addLegend(){
@@ -116,8 +103,8 @@ export class MapMasksComponent implements OnInit {
         for (let i = 0; i < status.length; i++) {
             div.innerHTML +=
                 `<div class="legend-align-center">
-                <i style="background:${colors[status[i]]}"></i>    
-                <span>${ status[i] }.</span>
+                  <i style="background:${colors[status[i]]}"></i>    
+                  <span>${ status[i] }.</span>
                 </div>`;
         }
         return div;
@@ -133,34 +120,35 @@ export class MapMasksComponent implements OnInit {
         opacity: 0.5,
         color: 'aliceblue',
         fillOpacity: 0.8,
-        fillColor: this.getFillColor(feature.countryData)
+        fillColor: this.getFillColor(feature)
       }),
-    });
+      onEachFeature: (feature, layer) => (
+        layer.bindTooltip(this.tooltipContent(feature.survey), {
+          sticky: true,
+          direction: 'top'
+        }).openTooltip().on({
+          mouseover: (e) => (this.highlightFeature(e)),
+          mouseout: (e) => (this.resetFeature(e))
+        })
+      )
+    })
     this.map.addLayer(stateLayer);
   }
 
   private getFillColor(country) {
-    if (country) {
-      let status = country.status;
-      if (status === 'Restricted') {
-        status = country.curfew ? 'Curfew': 'Restricted';
-      }
-      if (status === 'Restricted') {
-        status = country.restriction_type == "Light measures" ? "Light measures" : "Restricted"
-      }
-      return colors[status] ? colors[status] : colors['No data'];
+    if (country.totalSurvey) {
+      return 'red';
     }
-    return 'red';
   }
 
   private highlightFeature(e)  {
     const layer = e.target;
     layer.setStyle({
-      weight: 2,
+      weight: 4,
       opacity: 1,
+      color: "orange",
       fillOpacity: .6,
     });
-    this.info.update(layer.feature.countryData)
   }
 
   private resetFeature(e)  {
@@ -172,7 +160,22 @@ export class MapMasksComponent implements OnInit {
       fillOpacity: 0.8,
       // fillColor: this.getFillColor(id)
     });
-    this.info.update()
   }
 
+  private tooltipContent(survey) {
+
+    const $div = document.createElement('div'); 
+    for (let i = 0; i < survey.length; i++) {
+      const sur = survey[i];
+      $div.innerHTML += `
+        <div>
+          <span>
+            ${sur.answer} 
+            <strong> ${sur.percent}%</strong>
+          </span>
+        </div>
+      `;
+    }
+    return $div;
+  }
 }
