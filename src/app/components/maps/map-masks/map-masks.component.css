@@ -31,6 +31,7 @@
 ::ng-deep .legend {
   line-height: 24px;
   color: #555;
+  background: rgb(238, 238, 238);
 }
 ::ng-deep .legend i {
   width: 18px;

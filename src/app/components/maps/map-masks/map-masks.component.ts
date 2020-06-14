@@ -5,10 +5,11 @@ import { ShapeService } from '../../../_service/map/shape.service';
 import { MapTilesService } from '../../../_service/map/map-tiles.service';
 
 const colors = {
-  "No, NOT required or recommended": "#66bb6a",
-  "No, NOT required, but recommended": "#ffeb3b",
-  "Yes, in SOME public places": "#e6595a",
-  "Yes, in ALL public places": "#B55007",
+  "No, NOT required or recommended": "#D8DD3E",
+  "No, NOT required, but recommended": "#FFB566",
+  "Variable responses": '#D95F0E',
+  "Yes, in SOME public places": "#F44008",
+  "Yes, in ALL public places": "#c80303",
   "NA": "#e3e3e3"
 };
 
@@ -91,6 +92,7 @@ export class MapMasksComponent implements OnInit {
         const status = [
           "No, NOT required or recommended",
           "No, NOT required, but recommended",
+          "Variable responses",
           "Yes, in SOME public places",
           "Yes, in ALL public places",
           "NA"
@@ -120,10 +122,10 @@ export class MapMasksComponent implements OnInit {
         opacity: 0.5,
         color: 'aliceblue',
         fillOpacity: 0.8,
-        fillColor: this.getFillColor(feature)
+        fillColor: this.getFillColor(feature.survey)
       }),
       onEachFeature: (feature, layer) => (
-        layer.bindTooltip(this.tooltipContent(feature.survey), {
+        layer.bindTooltip(this.tooltipContent(feature.survey, feature.properties.name), {
           sticky: true,
           direction: 'top'
         }).openTooltip().on({
@@ -135,10 +137,9 @@ export class MapMasksComponent implements OnInit {
     this.map.addLayer(stateLayer);
   }
 
-  private getFillColor(country) {
-    if (country.totalSurvey) {
-      return 'red';
-    }
+  private getFillColor(survey) {
+    if (survey.length > 1) return colors['Variable responses'];
+    if (survey.length > 0) return colors[survey[0].answer];
   }
 
   private highlightFeature(e)  {
@@ -162,19 +163,23 @@ export class MapMasksComponent implements OnInit {
     });
   }
 
-  private tooltipContent(survey) {
-
+  private tooltipContent(survey, countryName) {
     const $div = document.createElement('div'); 
-    for (let i = 0; i < survey.length; i++) {
-      const sur = survey[i];
-      $div.innerHTML += `
-        <div>
-          <span>
-            ${sur.answer} 
-            <strong> ${sur.percent}%</strong>
-          </span>
-        </div>
-      `;
+    $div.innerHTML = `<h5 style="font-weight:bold" class="p-0 m-0">${ countryName }</h5>`;
+    if (survey.length) {
+      for (let i = 0; i < survey.length; i++) {
+        const sur = survey[i];
+        $div.innerHTML += `
+          <div>
+            <span>
+              ${sur.answer} 
+              <strong> ${sur.percent}%</strong>
+            </span>
+          </div>
+        `;
+      }
+    }else{
+      $div.innerHTML += `<strong>No Data</strong>`;
     }
     return $div;
   }
