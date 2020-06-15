@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { MatDialog } from '@angular/material/dialog';
 import { Location } from '@angular/common'; 
 import { Router } from '@angular/router';
@@ -14,6 +14,9 @@ interface Country {
   viewValue: string;
   "sub-region": string;
 }
+
+const corsURL = 'https://still-plateau-79204.herokuapp.com/';
+const reminderURL = 'https://amm2uwbmja.execute-api.eu-west-3.amazonaws.com/remindMe/add';
 
 @Component({
   selector: 'app-borders',
@@ -113,10 +116,13 @@ export class BordersComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-      console.log(result);
       if (result !== undefined) {
-        console.log(result.email, result.condition);
+        result.condition.forEach(async condition => {
+          await this.http.post(
+            `${corsURL}${reminderURL}`,
+            { 'email': result.email, 'conditions': condition },
+          ).toPromise();
+        });
       }
     });
   }
