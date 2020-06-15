@@ -5,6 +5,24 @@
       <h2 *ngIf="isMobile"><u>{{ titleService.getTitle().split(':')[0] }}</u></h2>
     </div>
 
+    <div class="card card-border">
+      <div class="card-header card-header-success">
+        <h3 class="card-title">Map - Masks</h3>
+      </div>
+      <div class="card-body" style="height: 80vh;" *ngIf="countryMasksData">
+        <app-map-masks [countryMasksData]="countryMasksData"></app-map-masks>
+      </div>
+      <div class="card-footer ">
+        <div class="stats">
+          Updated on [Date]
+        </div>
+        <div class="stats">
+          Source: CovidMeasures Community & &nbsp;
+          <a href="https://www.bsg.ox.ac.uk/research/research-projects/coronavirus-government-response-tracker" target="_blank">OxCGRT</a>
+        </div>
+      </div>
+    </div>
+
     <h3>Have a few seconds to spare?</h3>
     <br>
     <h4 style="padding-left: 4rem;"><b>Press play</b> below to start the 30-second survey, and let us know about masks in your area.</h4>
@@ -19,6 +37,6 @@
       >
       </iframe>
     </div>
-
+    
   </div>
 </div>
