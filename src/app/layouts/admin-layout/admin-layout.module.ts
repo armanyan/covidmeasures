@@ -26,6 +26,7 @@ import { MatSortModule } from '@angular/material/sort';
 
 import { MapSchoolClosureComponent } from '../../components/maps/map-school-closure/map-school-closure.component';
 import { MapLockdownComponent } from '../../components/maps/map-lockdown/map-lockdown.component';
+import { MapMasksComponent } from '../../components/maps/map-masks/map-masks.component';
 import { MarkerService } from '../../_service/map/marker.service';
 import { PopUpService } from '../../_service/map/pop-up.service';
 import { ShapeService } from '../../_service/map/shape.service';
@@ -78,6 +79,7 @@ import { PageLoadersComponent } from '../../components/page-loaders/page-loaders
     TestingComponent,
     MapSchoolClosureComponent,
     MapLockdownComponent,
+    MapMasksComponent,
     DisqusCommentsComponent,
     PageLoadersComponent
   ]

@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 
-import { mobileWidth } from '../utils';
+import { HttpClient } from '@angular/common/http';
+import { mobileWidth, aws } from '../utils';
 
 @Component({
   selector: 'app-masks',
@@ -10,14 +11,17 @@ import { mobileWidth } from '../utils';
 })
 export class MasksComponent implements OnInit {
   public isMobile: boolean;
+  public countryMasksData: any;
 
   constructor(
-    private titleService: Title
+    private titleService: Title,
+    private http: HttpClient
   ) { }
 
-  ngOnInit(): void {
+  async ngOnInit() {
     this.isMobile = window.innerWidth > mobileWidth ? false : true;
     this.titleService.setTitle('Masks: Citizens Tracking Masks Issues Related to COVID-19');
+    this.countryMasksData = await this.http.get(`${aws}/masks_survey.json`).toPromise();
   }
 
 }
