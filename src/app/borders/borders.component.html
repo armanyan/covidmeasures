@@ -51,23 +51,28 @@
             </div>
             <div class="d-flex justify-content-center align-items-center">
                 <div class="pr-md-5 pr-sm-2">
-                  <span class="material-icons size-padding" style="font-size: 150px;">airplanemode_inactive</span>
+                  <span class="material-icons size-padding s150">airplanemode_inactive</span>
                 </div>
                 <div>
                   <p class="align-weight font-weight-bold">
                     Started on: 
-                    <span *ngIf="topic.start" style="font-weight: 900;">{{ topic.start | date }}</span>
-                    <span *ngIf="!topic.start" style="font-weight: 900;">UNAVAILABLE</span>
+                    <span *ngIf="topic.start" class="w900">{{ topic.start | date }}</span>
+                    <span *ngIf="!topic.start" class="w900">UNAVAILABLE</span>
                   </p>
                   <p class="align-weight font-weight-bold">
                     Expected to End: 
-                    <span *ngIf="topic.end" style="font-weight: 900;">{{ topic.end | date }}</span>
-                    <span *ngIf="!topic.end" style="font-weight: 900;">UNAVAILABLE</span>
+                    <span *ngIf="topic.end" class="w900">{{ topic.end | date }}</span>
+                    <span *ngIf="!topic.end" class="w900">UNAVAILABLE</span>
                   </p>
                   <p class="align-weight font-weight-bold">
-                    Currently <span style="font-weight: 900;">{{ topic.status }}</span>
+                    Currently <span class="w900">{{ topic.status }}</span>
                   </p>
                 </div>
+            </div>
+            <div class="reminder">
+              <button class="remind-button" (click)="openRemindMe()" mat-raised-button>
+                Notify me when restrictions change
+              </button>
             </div>
           </div>
         </div>
@@ -76,70 +81,15 @@
         <hr>
         <div *ngIf="travelData">
           <app-disqus-comments 
-          [countriesData]="travelData.countries"
-          [baseUrl]="'https://covidmeasures.info'"
-          [page]="'borders'"
-          [uniqueString]="'c!Id'"
-          [duplicatesID]="['GBR']"
-          [countryAlpha3]="countryView"
+            [countriesData]="travelData.countries"
+            [baseUrl]="'https://covidmeasures.info'"
+            [page]="'borders'"
+            [uniqueString]="'c!Id'"
+            [duplicatesID]="['GBR']"
+            [countryAlpha3]="countryView"
           ></app-disqus-comments>
         </div>
       </div>
     </div>
-    <hr>
-    <br>
-
-    <!-- <div class="col-md-12">
-      <div class="card card-border">
-
-        <div class="card-header card-header-success">
-          <h3 class="card-title">
-            International Travel Measures Per Country
-            <a mat-raised-button class="nav-link float-right" type="button"
-              color="primary" href="https://forms.gle/dqXtKeWAfjUj66hX8" target="_blank"
-            >
-            <i class="material-icons">airplanemode_active</i>
-              <span>Add Your Contribution</span>
-            </a>
-          </h3>
-        </div>
-
-        <div class="card-body">
-
-          <div class="content table-responsive table-full-width">
-            <table class="table">
-              <thead>
-                <th class="text-primary" *ngFor="let row of headers">
-                  {{ row }}
-                </th>
-              </thead>
-              <tbody>
-                <tr *ngFor="let row of table">
-                  <td>{{ row.country }}</td>
-                  <td>{{ row.ban }}</td>
-                  <td>{{ row.quarantine}}</td>
-                  <td>{{ row.testing }}</td>
-                  <td>{{ row.boarders }}</td>
-                  <td>{{ row.other }}</td>
-                  <td>{{ row.except }}</td>
-                  <td>{{ row.start }}</td>
-                  <td>{{ row.end }}</td>
-                  <td>{{ row.status }}</td>
-                </tr>
-              </tbody>
-            </table>
-            </div>
-    
-        </div>
-
-        <div class="card-footer">
-          <div class="stats">
-            Source: CovidMeasures Community
-          </div>
-        </div>
-
-      </div>
-    </div> -->
-
   </div>
 </div>

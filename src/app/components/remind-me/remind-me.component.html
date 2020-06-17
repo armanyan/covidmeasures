@@ -1,0 +1,30 @@
+<div class="container-fluid">
+  <form [formGroup]="remindMeForm">
+    <h3>When do you want to be reminded?</h3>
+    <p>
+      We will send you an automatic email when the traveling condition in
+      <b>{{ data.country }}</b> will be in the condition you choose.
+    </p>
+    <div class="form-group">
+      <label>Email:</label>
+      <input [class.is-invalid] = "email.invalid && email.touched" (change)="data.email = email.value"
+        type="email" class="form-control" formControlName="email" />
+      <div *ngIf="(email.invalid && email.touched) || email.dirty">
+        <small *ngIf="email.errors?.required" class="text-danger">Email is required</small>
+        <small *ngIf="email.errors?.pattern" class="text-danger">Please provide a valid email address</small>
+      </div>
+    </div>
+    <div class="form-group">
+      <mat-form-field>
+        <mat-label>Condition</mat-label>
+        <mat-select multiple (selectionChange)="data.condition = $event.value" formControlName="condition">
+          <mat-option *ngFor="let condition of conditions" [value]="condition">{{ condition }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div mat-dialog-actions>
+      <button mat-raised-button (click)="onNoClick()">Cancel</button>
+      <button mat-raised-button [mat-dialog-close]="data" [disabled]='remindMeForm.invalid'>Remind Me!</button>
+    </div>
+  </form>
+  </div>

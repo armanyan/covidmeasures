@@ -23,6 +23,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSortModule } from '@angular/material/sort';
+import { MatDialogModule } from '@angular/material/dialog';
 
 import { MapSchoolClosureComponent } from '../../components/maps/map-school-closure/map-school-closure.component';
 import { MapLockdownComponent } from '../../components/maps/map-lockdown/map-lockdown.component';
@@ -37,7 +38,7 @@ import { HomeComponent } from 'app/homepage/homepage.component';
 import { DisqusCommentsComponent } from '../../components/pages-comments/disqus-comments.component';
 import { DisqusModule } from 'ngx-disqus';
 import { PageLoadersComponent } from '../../components/page-loaders/page-loaders.component';
-
+import { RemindMeComponent } from '../../components/remind-me/remind-me.component';
 
 @NgModule({
   imports: [
@@ -52,6 +53,7 @@ import { PageLoadersComponent } from '../../components/page-loaders/page-loaders
     MatSelectModule,
     MatTooltipModule,
     MatSortModule,
+    MatDialogModule,
     HttpClientModule,
     NgxPaginationModule,
     BsDatepickerModule.forRoot(),
@@ -81,7 +83,8 @@ import { PageLoadersComponent } from '../../components/page-loaders/page-loaders
     MapLockdownComponent,
     MapMasksComponent,
     DisqusCommentsComponent,
-    PageLoadersComponent
+    PageLoadersComponent,
+    RemindMeComponent
   ]
 })
 

@@ -20,6 +20,23 @@ div.text-align {
   text-align: center;
 }
 
+.w900 {
+  font-weight: 900;
+}
+
+.s150 {
+  font-size: 150px;
+}
+
+.reminder {
+  margin-top: 25px;
+}
+
+.remind-button {
+  display: flex;
+  margin: auto;
+}
+
 /* --------------------------- HEADERS ----------------------------- */
 
 .card .card-header-success .card-icon, .card .card-header-success .card-text, .card .card-header-success:not(.card-header-icon):not(.card-header-text), .card.bg-success, .card.card-rotate.bg-success .front, .card.card-rotate.bg-success .back {
