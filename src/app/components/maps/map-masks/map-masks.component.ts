@@ -66,11 +66,9 @@ export class MapMasksComponent implements OnInit {
         const survey  = Object.keys( q1Count ).map( key => q1Count[key]);
         item.survey = survey;
         item.totalSurvey = allSurveys.length;
-        // console.log("survey values", survey);
       })
       this.initStatesLayer(country);
     });
-    // console.log("masks data starts", this.countryMasksData);
   }
 
   private initMap(): void{

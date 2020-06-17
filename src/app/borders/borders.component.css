@@ -28,8 +28,13 @@ div.text-align {
   font-size: 150px;
 }
 
-.remind {
+.reminder {
   margin-top: 25px;
+}
+
+.remind-button {
+  display: flex;
+  margin: auto;
 }
 
 /* --------------------------- HEADERS ----------------------------- */
