@@ -182,8 +182,8 @@ export class CountryComponent implements OnInit {
 
   private async getUserCountry() {
     try {
-      const ip = await this.http.get(`https://ipinfo.io?token=999cc9c2d29155`).toPromise();
-      return getAlpha3FromAlpha2((ip as any).country);
+      const ip = await this.http.get('http://ip-api.com/json/?fields=countryCode').toPromise();
+      return getAlpha3FromAlpha2((ip as any).countryCode);
     } catch (_err) {
       return 'USA';
     }
