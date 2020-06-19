@@ -1,7 +1,7 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 
-import { HttpClient } from '@angular/common/http';
+// import { HttpClient } from '@angular/common/http';
 import { mobileWidth, aws } from '../utils';
 
 @Component({
@@ -12,10 +12,9 @@ import { mobileWidth, aws } from '../utils';
 export class MasksComponent implements OnInit {
   public isMobile: boolean;
   public countryMasksData: any;
-  public mapReady: boolean = false;
   constructor(
     private titleService: Title,
-    private http: HttpClient,
+    // private http: HttpClient,
     private changeDetector: ChangeDetectorRef
   ) { }
 
@@ -26,9 +25,11 @@ export class MasksComponent implements OnInit {
   }
 
   async ngAfterViewInit(){
-    this.countryMasksData = await this.http.get(`${aws}/masks_survey.json`).toPromise();
-    this.mapReady = true;
-    this.changeDetector.detectChanges()
+    // this.countryMasksData = await this.http.get(`${aws}/masks_survey.json`).toPromise();
+    fetch(`${aws}/masks_survey.json`).then(res => res.json()).then(data => {
+      this.countryMasksData = data
+      this.changeDetector.detectChanges()
+    })
   }
 
 }
