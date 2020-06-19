@@ -71,14 +71,17 @@ export class BordersComponent implements OnInit {
   }
 
   public async getCountryView(alpha3: string) {
-
+    const url = this.router.url;
+    const inBorders = url.split('/').includes("borders");
+    // if user are still in borders route we proceed
+    if (inBorders) {
       await this.router.navigateByUrl(`borders/${alpha3}`);
       const countries = this.getCountry(this.travelData.countries, alpha3);
-
       this.topic.start = countries.start;
       this.topic.end = countries.end;
       this.topic.status = countries.status;
       this.countryView = alpha3; 
+    }
   }
 
   private async getUserCountry() {
