@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, NgZone } from '@angular/core';
+import { Router } from '@angular/router';
 
 declare const $: any;
 declare interface RouteInfo {
@@ -33,7 +34,10 @@ export const ROUTES: RouteInfo[] = [
 export class SidebarComponent implements OnInit {
   menuItems: any[];
 
-  constructor() { }
+  constructor(
+    private router: Router,
+    private ngZone: NgZone
+  ) { }
 
   ngOnInit() {
     const statistics = { title: "Statistics", collapse: true, icon: 'arrow_drop_down', menus : []};
@@ -53,4 +57,16 @@ export class SidebarComponent implements OnInit {
       }
       return true;
   };
+
+  public navigateToROute(path: string){
+    // seems a problem in firefox to navigate twice
+    this.router.navigateByUrl(path).then(()=> {
+      // console.log("navigated once")
+      this.ngZone.run(()=> {
+        this.router.navigateByUrl(path).then(()=> {
+          // console.log("navigated twice")
+        })
+      })
+    })
+  }
 }
