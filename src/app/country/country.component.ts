@@ -22,10 +22,14 @@ interface EvolutionChart {
   labels: string[];
   lockdown: any[]; 
   school: any[];
+  business: any[];
+  travel: any[];
   comparedCases: number[];
   comparedDeaths: number[];
   comparedLockdown: any[]; 
   comparedSchool: any[];
+  comparedBusiness: any[];
+  comparedTravel: any[];
 }
 
 @Component({
@@ -151,8 +155,13 @@ export class CountryComponent implements OnInit {
 
     const labels = this.evolution.dates.map(date => this.changeDateFormat(date));
     const data = this.getDataSets(
-      this.evolution.data[this.countryView].cases, this.evolution.data[this.countryView].deaths, labels,
-      this.evolution.data[this.countryView].lockdown, this.evolution.data[this.countryView].school_closure
+      this.evolution.data[this.countryView].cases, 
+      this.evolution.data[this.countryView].deaths, 
+      labels,
+      this.evolution.data[this.countryView].lockdown, 
+      this.evolution.data[this.countryView].school_closure,
+      this.evolution.data[this.countryView].business_closure, 
+      this.evolution.data[this.countryView].international_travel
     );
 
     // we get start & end date for calendar range
@@ -203,6 +212,8 @@ export class CountryComponent implements OnInit {
         this.evolution.dates.map(date => this.changeDateFormat(date)),
         this.evolution.data[this.countryView].lockdown,
         this.evolution.data[this.countryView].school_closure,
+        this.evolution.data[this.countryView].business_closure,
+        this.evolution.data[this.countryView].international_travel,
         this.comparedCountry.alpha3 ? true : false
       )
 
@@ -223,17 +234,30 @@ export class CountryComponent implements OnInit {
     }
   }
 
-  private getDataSets(activeCases: number[], deaths: number[], labels: string[], lockdown: number[], school_closure: number[], toCompareCountry: boolean = false) {
+  private getDataSets(
+    activeCases: number[], 
+    deaths: number[], 
+    labels: string[], 
+    lockdown: number[], 
+    school_closure: number[], 
+    business_closure: number[], 
+    international_travel: number[],
+    toCompareCountry: boolean = false
+    ) {
     let shortenCases = [...activeCases];
     let shortenDeaths = [...deaths];
     let shortenLabels = [...labels];
     let shortenLockdown = [...lockdown];
     let shortenSchool = [...school_closure];
+    let shortenBusiness = [...business_closure];
+    let shortenTravel = [...international_travel];
 
     let comparedCases = toCompareCountry ?  this.evolution.data[this.comparedCountry.alpha3].cases : [];
     let comparedDeaths = toCompareCountry ? this.evolution.data[this.comparedCountry.alpha3].deaths : [];
     let comparedLockdown = toCompareCountry ? this.evolution.data[this.comparedCountry.alpha3].lockdown : [];
     let comparedSchool = toCompareCountry ? this.evolution.data[this.comparedCountry.alpha3].school_closure : [];
+    let comparedBusiness = toCompareCountry ? this.evolution.data[this.comparedCountry.alpha3].business_closure : [];
+    let comparedTravel = toCompareCountry ? this.evolution.data[this.comparedCountry.alpha3].international_travel : [];
 
     if (this.evolutionRange.from === 'default' && this.evolutionRange.to === 'default') {
       // get the index of the first death.
@@ -244,11 +268,15 @@ export class CountryComponent implements OnInit {
       shortenLabels = shortenLabels.slice(firstDeathIndex, shortenLabels.length);
       shortenLockdown = shortenLockdown.slice(firstDeathIndex, shortenLockdown.length);
       shortenSchool = shortenSchool.slice(firstDeathIndex, shortenSchool.length);
+      shortenBusiness = shortenBusiness.slice(firstDeathIndex, shortenBusiness.length);
+      shortenTravel = shortenTravel.slice(firstDeathIndex, shortenTravel.length);
       if (toCompareCountry) {
         comparedCases = comparedCases.slice(firstDeathIndex, comparedCases.length);
         comparedDeaths = comparedDeaths.slice(firstDeathIndex, comparedDeaths.length);
         comparedLockdown = comparedLockdown.slice(firstDeathIndex, comparedLockdown.length);
         comparedSchool = comparedSchool.slice(firstDeathIndex, comparedSchool.length);
+        comparedBusiness = comparedBusiness.slice(firstDeathIndex, comparedBusiness.length);
+        comparedTravel = comparedTravel.slice(firstDeathIndex, comparedTravel.length);
       }
     } else {
       // if evolutionRange has date. we get the first and last index of labels
@@ -263,12 +291,15 @@ export class CountryComponent implements OnInit {
       shortenLabels = shortenLabels.slice(startIndex, endIndex+1);
       shortenLockdown = shortenLockdown.slice(startIndex, endIndex+1);
       shortenSchool = shortenSchool.slice(startIndex, endIndex+1);
-
+      shortenBusiness = shortenBusiness.slice(startIndex, endIndex+1);
+      shortenTravel = shortenTravel.slice(startIndex, endIndex+1);
       if (toCompareCountry) {
         comparedCases = comparedCases.slice(startIndex, endIndex+1);
         comparedDeaths = comparedDeaths.slice(startIndex, endIndex+1);
         comparedLockdown = comparedLockdown.slice(startIndex, endIndex+1);
         comparedSchool = comparedSchool.slice(startIndex, endIndex+1);
+        comparedBusiness = comparedBusiness.slice(startIndex, endIndex+1);
+        comparedTravel = comparedTravel.slice(startIndex, endIndex+1);
       }
 
     }
@@ -280,10 +311,14 @@ export class CountryComponent implements OnInit {
       'labels': shortenLabels,
       'lockdown': shortenLockdown, 
       'school': shortenSchool,
+      'business': shortenBusiness,
+      'travel': shortenTravel,
       'comparedCases': comparedCases,
       'comparedDeaths': comparedDeaths,
       'comparedLockdown': comparedLockdown, 
       'comparedSchool': comparedSchool,
+      'comparedBusiness': comparedBusiness,
+      'comparedTravel': comparedTravel,
     }
   }
 
@@ -374,7 +409,9 @@ export class CountryComponent implements OnInit {
       this.evolution.data[value].deaths,
       this.evolution.dates.map(date => this.changeDateFormat(date)),
       this.evolution.data[value].lockdown,
-      this.evolution.data[value].school_closure
+      this.evolution.data[value].school_closure,
+      this.evolution.data[value].business_closure,
+      this.evolution.data[value].international_travel
     )
     // we get start & end date for calendar range
     const startDate = moment(new Date(datasets.labels[0])).format('MM/DD/YYYY')
@@ -486,6 +523,18 @@ export class CountryComponent implements OnInit {
         backgroundColor: "rgba(166, 230, 154, 0.2)", borderColor: "rgba(166, 230, 154, 0)",
         fill: true, data: data.school, yAxisID: 'severity', pointRadius: 0, pointHoverRadius: 0, 
         hidden : IS_COMPARED,
+      },
+      {
+        label: IS_COMPARED ? `${this.currentCountryName} Business Closure`: "Business Closure", 
+        backgroundColor: "rgba(255, 214, 153, 0.53)", borderColor: "rgba(255, 214, 153, 0.53)",
+        fill: true, data: data.business, yAxisID: 'severity', pointRadius: 0, pointHoverRadius: 0, 
+        hidden : IS_COMPARED,
+      },
+      {
+        label: IS_COMPARED ? `${this.currentCountryName} International Travel`: "International Travel", 
+        backgroundColor: "rgba(245, 214, 235, 0.39)", borderColor: "rgba(245, 214, 235, 0.39)",
+        fill: true, data: data.travel, yAxisID: 'severity', pointRadius: 0, pointHoverRadius: 0, 
+        hidden : IS_COMPARED,
       }
     ];
     if (IS_COMPARED) {
@@ -508,9 +557,21 @@ export class CountryComponent implements OnInit {
             hidden : IS_COMPARED,
           },
           {
-            label: `${this.comparedCountry.name} School Closure`, 
+            label: `${this.comparedCountry.name} School`, 
             backgroundColor: "#fbfbd09e", borderColor: "#ffffb29e",
             fill: true, data: data.comparedSchool, yAxisID: 'severity',  borderDash: [10,5], pointRadius: 0, pointHoverRadius: 0, 
+            hidden : IS_COMPARED,
+          },
+          {
+            label: `${this.comparedCountry.name} Business`, 
+            backgroundColor: "rgba(255, 179, 255, 0.52)", borderColor: "#ffccff",
+            fill: true, data: data.comparedBusiness, yAxisID: 'severity',  borderDash: [10,5], pointRadius: 0, pointHoverRadius: 0, 
+            hidden : IS_COMPARED,
+          },
+          {
+            label: `${this.comparedCountry.name} Travel`, 
+            backgroundColor: "rgba(153, 255, 153, 0.53)", borderColor: "#99ff99",
+            fill: true, data: data.comparedTravel, yAxisID: 'severity',  borderDash: [10,5], pointRadius: 0, pointHoverRadius: 0, 
             hidden : IS_COMPARED,
           }
         ]
@@ -548,6 +609,8 @@ export class CountryComponent implements OnInit {
       this.evolution.dates.map(date => this.changeDateFormat(date)),
       this.evolution.data[this.countryView].lockdown,
       this.evolution.data[this.countryView].school_closure,
+      this.evolution.data[this.countryView].business_closure,
+      this.evolution.data[this.countryView].international_travel,
       true // we enable to Compare Country
     );
     this.countryAllCasesCTX.destroy();
@@ -582,17 +645,21 @@ export class CountryComponent implements OnInit {
 
       lockdown: this.countryAllCasesCTX.data.datasets[2].data,
       school: this.countryAllCasesCTX.data.datasets[3].data,
+      business: this.countryAllCasesCTX.data.datasets[4].data,
+      travel: this.countryAllCasesCTX.data.datasets[5].data,
 
-      comparedCases: IS_COMPARED ? this.countryAllCasesCTX.data.datasets[4].data.map((x:number)=> {
+      comparedCases: IS_COMPARED ? this.countryAllCasesCTX.data.datasets[6].data.map((x:number)=> {
           return this.isPerMillion ? (x / this.comparedCountry.population) * 1000000 : (x / 1000000) * this.comparedCountry.population
         }) : [],
 
-      comparedDeaths: IS_COMPARED ? this.countryAllCasesCTX.data.datasets[5].data.map((x:number)=> {
+      comparedDeaths: IS_COMPARED ? this.countryAllCasesCTX.data.datasets[7].data.map((x:number)=> {
           return this.isPerMillion ? (x / this.comparedCountry.population) * 1000000 : (x / 1000000) * this.comparedCountry.population
         }) : [],
       
-      comparedLockdown: IS_COMPARED ? this.countryAllCasesCTX.data.datasets[6].data : [],
-      comparedSchool: IS_COMPARED ? this.countryAllCasesCTX.data.datasets[7].data : [],
+      comparedLockdown: IS_COMPARED ? this.countryAllCasesCTX.data.datasets[8].data : [],
+      comparedSchool: IS_COMPARED ? this.countryAllCasesCTX.data.datasets[9].data : [],
+      comparedBusiness: IS_COMPARED ? this.countryAllCasesCTX.data.datasets[10].data : [],
+      comparedTravel: IS_COMPARED ? this.countryAllCasesCTX.data.datasets[11].data : [],
     };
     
     this.countryAllCasesCTX.destroy();
