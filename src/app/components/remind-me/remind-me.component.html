@@ -1,12 +1,11 @@
 <div class="container-fluid">
   <form [formGroup]="remindMeForm">
-    <h3>When do you want to be reminded?</h3>
+    <h3>When do you want to be notified?</h3>
     <p>
-      We will send you an automatic email when the traveling condition in
-      <b>{{ data.country }}</b> will be in the condition you choose.
+      Select below the border status in <b>{{ data.country }}</b> for which you want to be notified?
     </p>
     <div class="form-group">
-      <label>Email:</label>
+      <label>Email</label>
       <input [class.is-invalid] = "email.invalid && email.touched" (change)="data.email = email.value"
         type="email" class="form-control" formControlName="email" />
       <div *ngIf="(email.invalid && email.touched) || email.dirty">
@@ -16,11 +15,16 @@
     </div>
     <div class="form-group">
       <mat-form-field>
-        <mat-label>Condition</mat-label>
+        <mat-label>Border Status</mat-label>
         <mat-select multiple (selectionChange)="data.condition = $event.value" formControlName="condition">
           <mat-option *ngFor="let condition of conditions" [value]="condition">{{ condition }}</mat-option>
         </mat-select>
       </mat-form-field>
+    </div>
+    <div class="small-text">
+      <small>
+        We can’t always guarantee the accuracy of our sources. We recommend you to check the official government website regularly.
+      </small>
     </div>
     <div mat-dialog-actions>
       <button mat-raised-button (click)="onNoClick()">Cancel</button>
