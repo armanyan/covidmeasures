@@ -48,7 +48,15 @@ box-shadow: 0 4px 20px 0px rgba(0, 0, 0, 0.14), 0 7px 10px -5px rgba(115, 56, 68
     height: 60vh
   }
   
-
+/* --------------------------- MODAL ----------------------------------*/
+.list-group-item:hover{
+    background-color: #ed5658;
+    color: aliceblue;
+  }
+  .list-group-item.active{
+    background-color: #e03b3e;
+  }
+  
 /**************************CARD-GRID*****************************/
 .card-grid {
     display: grid;
