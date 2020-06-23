@@ -1,6 +1,5 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { Title } from '@angular/platform-browser';
-import { Chart } from 'chart.js';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute } from "@angular/router";
 import { Location } from '@angular/common'; 
@@ -14,22 +13,6 @@ import { mobileWidth, monthNames, getCountryNameByAlpha, getAlpha3FromAlpha2,
 interface Country {
   value: string;
   viewValue: string;
-}
-
-interface EvolutionChart {
-  cases: number[]; 
-  deaths: number[]; 
-  labels: string[];
-  lockdown: any[]; 
-  school: any[];
-  business: any[];
-  travel: any[];
-  comparedCases: number[];
-  comparedDeaths: number[];
-  comparedLockdown: any[]; 
-  comparedSchool: any[];
-  comparedBusiness: any[];
-  comparedTravel: any[];
 }
 
 @Component({
@@ -101,7 +84,6 @@ export class CountryComponent implements OnInit {
   public lockdownData: any;
   private travelData: any;
 
-  public severityMeasures: Chart;
   private countryPopulation:number = 0;
   public isClientReady: boolean = false;
 

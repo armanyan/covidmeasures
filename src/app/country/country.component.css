@@ -170,14 +170,6 @@ td.left, td.center {
 .card-header a {
   text-decoration: none;
 }
-/* --------------------------- MODAL ----------------------------------*/
-.list-group-item:hover{
-  background-color: #ed5658;
-  color: aliceblue;
-}
-.list-group-item.active{
-  background-color: #e03b3e;
-}
 
 /* --------------------------- CONTENT ----------------------------------*/
 
