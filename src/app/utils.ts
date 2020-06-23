@@ -388,7 +388,7 @@ export const createEvolutionChart = (
       mode: 'label',
       position: 'nearest',
       filter: function (tooltipItem: any) {
-        const allowed_tooltip = [0,1,4,5]
+        const allowed_tooltip = [0,1,6,7]
         return allowed_tooltip.includes(tooltipItem.datasetIndex);
         // return tooltipItem.datasetIndex < 2 || tooltipItem.datasetIndex > 3 || ;
       },
