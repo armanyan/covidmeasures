@@ -214,7 +214,7 @@
     </div>
 
     <h3 class="mb5">Evolution of COVID-19 in the country</h3>
-
+<!-- 
     <div class="card card-border">
       <div class="card-header card-header-success d-flex justify-content-between">
         <h3 class="card-title">Reported COVID-19 Infection Cases & Deaths Per Day</h3>
@@ -223,7 +223,7 @@
           Add a Country
         </button>
       </div>
-      <!-- Evolution Calendar Range Starts -->
+
       <div class="card m-0 p-0  px-sm-2 pt-4">
         <div class="card-body  m-0 p-0">
           <form [formGroup]="calendarForm">
@@ -245,7 +245,7 @@
           </form>
         </div>
       </div>
-       <!-- Evolution Calendar Range Ends -->
+      
       <div class="card-body p-1">
         <div class="d-flex p-0 m-0 pl-md-4">
           <button class="btn" [ngClass]="{'btn-success': !isPerMillion}" [disabled]="!isPerMillion" (click)="toPerMillion(false)">Total</button>
@@ -267,7 +267,13 @@
           </a>
         </div>
       </div>
-    </div>
+    </div> -->
+    <app-evolution-country
+    [countryView]="countryView"
+    [countryList]="countryList"
+    [evolution]="evolution"
+    *ngIf="isClientReady"
+    ></app-evolution-country>
     <br>
 
     <h3>Government Measures' Impacts On Citizens</h3>
