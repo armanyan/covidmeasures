@@ -1,0 +1,99 @@
+<div>
+  <div class="card card-border">
+
+    <div class="card-header card-header-success d-flex justify-content-between">
+        <h3 class="card-title">Reported COVID-19 Infection Cases & Deaths Per Day</h3>
+        <button class="btn btn-success d-flex align-items-center" data-toggle="modal" data-target="#compareEvolutionModal">
+        <i class="fa fa-plus mr-1" aria-hidden="true"></i>
+        Add a Country
+        </button>
+    </div>
+    <!-- Evolution Calendar Range Starts -->
+    <div class="card m-0 p-0  px-sm-2 pt-4">
+      <div class="card-body  m-0 p-0">
+        <form [formGroup]="calendarForm">
+          <div class="row">
+            <div class="col-lg-2 col-md-4 d-flex justify-content-md-end justify-content-sm-start align-items-center">
+              <h5 class="font-weight-bold">Evolution Range</h5>
+            </div>
+            <div class="col-lg-4 col-md-6 form-group my-0 py-0">
+              <input
+                type="text" class="form-control mb-3"
+                laceholder="Dates Picker"
+                
+                bsDaterangepicker
+                formControlName="dateRange"
+                [bsConfig]="{containerClass:'theme-dark-blue', isAnimated: true }"
+                (ngModelChange)="evolutionRangeChanged()"
+                />
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+      <!-- Evolution Calendar Range Ends -->
+    <div class="card-body p-1">
+        <div class="d-flex p-0 m-0 pl-md-4">
+        <button class="btn" [ngClass]="{'btn-success': !isPerMillion}" [disabled]="!isPerMillion" (click)="toPerMillion(false)">Total</button>
+        <button class="btn" [ngClass]="{'btn-success': isPerMillion}" [disabled]="isPerMillion" (click)="toPerMillion(true)">Per 1 Million</button>
+    </div>
+        <div id="wrapper" class="m-0 pt-1 chart-pos">
+          <canvas id="countryChartCases"></canvas>
+        </div>
+    </div>
+    <div class="card-footer">
+        <div class="stats">
+        Updated on 
+        {{ evolutionUpdatedOn }}
+        </div>
+        <div class="stats">
+        Source:
+        <a
+            href="https://www.ecdc.europa.eu/en/publications-data/download-todays-data-geographic-distribution-covid-19-cases-worldwide">
+            ECDC
+        </a>
+        </div>
+    </div>
+  </div>
+
+ <!-- Modal -->
+ <div class="modal fade" id="compareEvolutionModal" tabindex="-1" role="dialog" aria-labelledby="compareEvolutionModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header  pb-0">
+          <h5 class="modal-title" id="compareEvolutionModalLabel" class="font-weight-bold">Search Country:</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group d-flex align-items-center">
+            <span class="material-icons text-primary">
+              search
+            </span>
+            <input type="text" 
+            class="form-control" 
+            id="compareCountry" 
+            placeholder="United States, Canada, etc..."
+            (keyup)="filterCompared($event)"
+            >
+          </div>
+          <ul class="list-group">
+            <li class="list-group-item"
+            style="cursor: pointer;"
+            *ngFor="let country of searchedCountry"
+            (click)="setComparedCountry(country.value, country.viewValue)"
+            [ngClass]="{'active': country.value == comparedCountry.name }"
+            data-dismiss="modal" aria-label="Close"
+            >{{country.viewValue}}</li>
+            <!-- <li class="list-group-item"*ngFor="let country of countryList"></li> -->
+          </ul>
+        </div>
+        <!-- <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Save changes</button>
+        </div> -->
+      </div>
+    </div>
+  </div>
+</div>
