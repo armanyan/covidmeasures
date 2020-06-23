@@ -1,7 +1,6 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 
-// import { HttpClient } from '@angular/common/http';
 import { mobileWidth, aws } from '../utils';
 
 @Component({
@@ -14,7 +13,6 @@ export class MasksComponent implements OnInit {
   public countryMasksData: any;
   constructor(
     private titleService: Title,
-    // private http: HttpClient,
     private changeDetector: ChangeDetectorRef
   ) { }
 
