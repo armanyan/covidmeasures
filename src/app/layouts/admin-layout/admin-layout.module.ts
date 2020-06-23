@@ -39,6 +39,7 @@ import { DisqusCommentsComponent } from '../../components/pages-comments/disqus-
 import { DisqusModule } from 'ngx-disqus';
 import { PageLoadersComponent } from '../../components/page-loaders/page-loaders.component';
 import { RemindMeComponent } from '../../components/remind-me/remind-me.component';
+import { EvolutionCountryComponent } from '../../components/charts/evolution-country/evolution-country.component';
 
 @NgModule({
   imports: [
@@ -84,7 +85,8 @@ import { RemindMeComponent } from '../../components/remind-me/remind-me.componen
     MapMasksComponent,
     DisqusCommentsComponent,
     PageLoadersComponent,
-    RemindMeComponent
+    RemindMeComponent,
+    EvolutionCountryComponent
   ]
 })
 
