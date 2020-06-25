@@ -54,6 +54,11 @@ div.text-align {
   font-size:1.3em;
 }
 
+.mobile-table-text {
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
 tr td.active {
   color: #d83b40 !important;
 }

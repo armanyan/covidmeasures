@@ -50,6 +50,11 @@ td.left, td.center {
   vertical-align: top;
 }
 
+.mobile-table-text {
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
 .table-datas{
   font-size:1.3em;
 }
