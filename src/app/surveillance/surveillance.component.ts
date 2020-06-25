@@ -11,6 +11,7 @@ import * as surveillance from '../data/surveillance';
 })
 export class SurveillanceComponent implements OnInit {
   public isMobile: boolean;
+  public readMore = false;
 
   public headers = [
     "Country", "Name", "Description", "Release Date", "Device", "Target",

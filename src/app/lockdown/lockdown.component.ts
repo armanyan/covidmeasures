@@ -19,6 +19,7 @@ interface Location {
 })
 export class LockdownComponent implements OnInit {
   public isMobile: boolean;
+  public readMore = false;
   
   public lockdown_intro_1: string;
   public lockdown_tab_1_below: string;

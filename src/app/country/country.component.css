@@ -4,10 +4,22 @@ p{
   text-align: justify;
 }
 
+p.question {
+  margin-top: 15px;
+  margin-left: 0px;
+  margin-bottom: 15px;
+  margin-right: 0px;
+}
+
 p.align-weight{
   text-align:center;
   font-weight:900;
   font-size:1.2em;
+}
+
+div.question {
+  margin-left: 80px;
+  margin-top: 45px;
 }
 
 p.center{

@@ -5,6 +5,41 @@
       <h2 *ngIf="isMobile"><u>{{ titleService.getTitle().split(':')[0] }}</u></h2>
     </div>
 
+    <!-- <div>
+      <img src="../../assets/img/questioned-face.png" align="left">
+      <div class="question">
+        <p class="question">
+          Should citizens be geo-tracked and surveyed? Join the discussion.
+        </p>
+        <button mat-button *ngIf="!readMore" (click)="readMore=!readMore">Read More</button>
+        <div *ngIf="readMore">
+          <p class="question">
+            As new tracking and surveillance technologies arise, we are examining their necessity,
+            effectiveness, and (potential) consequences.
+          </p>
+          <p class="question">
+            To answer this question seriously, we need to understand first:
+          </p>
+          <ul>
+            <li>The specificities of the technology implement.</li>
+            <li>How is this information being collected?</li>
+            <li>Who is being watched?</li>
+            <li>Who has access to the data?</li>
+            <li>How is the information being used?</li>
+            <li>For how long are individuals being tracked?</li>
+          </ul>
+          <p class="question">
+            CovidMeasures aim to provide some facts and perspectives to help your thinking.
+            Feel free to contribute to the debate.
+          </p>
+          <button mat-button *ngIf="readMore" (click)="readMore=!readMore">Read Less</button>
+        </div>
+      </div>
+    </div>
+
+    <br>
+    <hr> -->
+
     <p>
       This page is currently being written. We need your help to gather relevant data from around the world. Please add your contribution.
     </p>

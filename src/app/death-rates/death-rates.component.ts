@@ -27,6 +27,7 @@ interface DateIntervale {
 })
 export class DeathRatesComponent implements OnInit {
   public isMobile: boolean;
+  public readMore = false;
 
   public death_intro_1: string;
   public death_intro_2: string;

@@ -10,7 +10,9 @@ import { mobileWidth, aws } from '../utils';
 })
 export class MasksComponent implements OnInit {
   public isMobile: boolean;
+  public readMore = false;
   public countryMasksData: any;
+
   constructor(
     private titleService: Title,
     private changeDetector: ChangeDetectorRef

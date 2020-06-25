@@ -25,6 +25,17 @@ div.text-align {
   text-align: center;
 }
 
+p.question {
+  margin-top: 15px;
+  margin-left: 0px;
+  margin-bottom: 15px;
+  margin-right: 0px;
+}
+
+div.question {
+  margin-left: 80px;
+}
+
 /* --------------------------- HEADERS ----------------------------- */
 
 .card .card-header-success .card-icon, .card .card-header-success .card-text, .card .card-header-success:not(.card-header-icon):not(.card-header-text), .card.bg-success, .card.card-rotate.bg-success .front, .card.card-rotate.bg-success .back {

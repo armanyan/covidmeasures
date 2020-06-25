@@ -54,6 +54,17 @@ td.left, td.center {
   vertical-align: top;
 }
 
+p.question {
+  margin-top: 15px;
+  margin-left: 0px;
+  margin-bottom: 15px;
+  margin-right: 0px;
+}
+
+div.question {
+  margin-left: 80px;
+}
+
 .mobile-table-text {
   padding-left: 20px;
   padding-right: 20px;

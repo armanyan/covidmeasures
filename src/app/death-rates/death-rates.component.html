@@ -5,12 +5,50 @@
       <h2 *ngIf="isMobile"><u>{{ titleService.getTitle().split(':')[0] }}</u></h2>
     </div>
 
-    <p>
+    <div>
+      <img src="../../assets/img/questioned-face.png" align="left">
+      <div class="question">
+        <p class="question">
+          Is COVID-19 as lethal as the media depicts? Join the discussion.
+        </p>
+        <button mat-button *ngIf="!readMore" (click)="readMore=!readMore">Read More</button>
+        <div *ngIf="readMore">
+          <p class="question">
+            Compared to other diseases and causes of death throughout human history, how does COVID-19 compare?
+          </p>
+          <p class="question">
+            CovidMeasures aim to provide some facts and perspectives to help your thinking.
+            Feel free to contribute to the debate.
+          </p>
+
+          <p>
+            <i>
+              During the COVID-19 crisis, it is probably good to remind everyone that COVID-19, as scary as it sounds,
+              is only one of many causes of death. The graphs below show the COVID-19 death rate as incremental rather
+              than the sole focus of the analysis. We are also providing an overview by age range which highlights
+              the age effect of the virus compared to the usual death rates.
+            </i>
+          </p>
+          <p>
+            <i>
+              We hope that this page can inform individuals on how COVID-19 has become a threat for themselves and their
+              loved ones compared to all the other death causes that we normally face in our day-to-day life.
+            </i>
+          </p>
+          <button mat-button *ngIf="readMore" (click)="readMore=!readMore">Read Less</button>
+        </div>
+      </div>
+    </div>
+
+    <br>
+    <hr>
+
+    <!-- <p>
       {{ death_intro_1 }}
     </p>
     <p>
       {{ death_intro_2 }}
-    </p>
+    </p> -->
 
     <div class=" row">
       <div class="col-lg-12">

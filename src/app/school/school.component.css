@@ -59,6 +59,17 @@ div.text-align {
   padding-right: 20px;
 }
 
+p.question {
+  margin-top: 15px;
+  margin-left: 0px;
+  margin-bottom: 15px;
+  margin-right: 0px;
+}
+
+div.question {
+  margin-left: 80px;
+}
+
 :host /deep/ .mat-select-value-text {
   color: white !important;
 }

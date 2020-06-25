@@ -21,7 +21,7 @@ interface Country {
   styleUrls: ['./country.component.css'],
 })
 export class CountryComponent implements OnInit {
- 
+  public readMore = false;
   public calendarForm: FormGroup;
   
   public isMobile: boolean;

@@ -21,6 +21,7 @@ export interface Impact {
 })
 export class ImpactsComponent implements OnInit {
   public isMobile: boolean;
+  public readMore = false;
   public impactHeaders = ['Location', 'Impact', 'Description', 'Measure', 'Source'];
   public impacts: Impact[] = [];
 

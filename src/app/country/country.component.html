@@ -5,6 +5,33 @@
       <h2 class="bold" *ngIf=isMobile><u>{{ titleService.getTitle().split(':')[0] }}</u></h2>
     </div>
 
+    <div>
+      <img src="../../assets/img/questioned-face.png" align="left">
+      <div class="question">
+        <p class="question">
+          When did governments start taking action, and what were the effects? Join the discussion.
+        </p>
+        <button mat-button *ngIf="!readMore" (click)="readMore=!readMore">Read More</button>
+        <div *ngIf="readMore">
+          <p class="question">
+            Witnessing the effects within our own countries, we are examining the timing, duration,
+            and severity of the measures taken by our governments in response to the COVID-19 outbreak.
+          </p>
+          <p class="question">
+            To answer this question seriously, we need to understand first:
+          </p>
+          <ul>
+            <li>What led government to set those measures at those times.</li>
+            <li>How did other countries and how effective it was compared to ours.</li>
+          </ul>
+          <button mat-button *ngIf="readMore" (click)="readMore=!readMore">Read Less</button>
+        </div>
+      </div>
+    </div>
+
+    <br *ngIf="!readMore">
+    <hr>
+
     <h3>Government measures in response to COVID-19</h3>
     <div class="row pl-5">
       <div class="col-md-5">

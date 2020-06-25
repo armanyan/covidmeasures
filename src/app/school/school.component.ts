@@ -22,6 +22,7 @@ interface CovidCategories {
 })
 export class SchoolComponent implements OnInit {
   public isMobile: boolean;
+  public readMore = false;
 
   public school_intro_1: string;
   public school_graph_1_below: string;
