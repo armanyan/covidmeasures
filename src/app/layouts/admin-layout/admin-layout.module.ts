@@ -39,7 +39,9 @@ import { DisqusCommentsComponent } from '../../components/pages-comments/disqus-
 import { DisqusModule } from 'ngx-disqus';
 import { PageLoadersComponent } from '../../components/page-loaders/page-loaders.component';
 import { RemindMeComponent } from '../../components/remind-me/remind-me.component';
+// charts & graphs
 import { EvolutionCountryComponent } from '../../components/charts/evolution-country/evolution-country.component';
+import { PieChartComponent } from '../../components/charts/pie-chart/pie-chart.component';
 
 @NgModule({
   imports: [
@@ -86,7 +88,9 @@ import { EvolutionCountryComponent } from '../../components/charts/evolution-cou
     DisqusCommentsComponent,
     PageLoadersComponent,
     RemindMeComponent,
-    EvolutionCountryComponent
+    // charts & graphs
+    EvolutionCountryComponent,
+    PieChartComponent
   ]
 })
 
