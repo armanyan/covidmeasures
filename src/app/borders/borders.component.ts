@@ -25,6 +25,7 @@ const reminderURL = 'https://amm2uwbmja.execute-api.eu-west-3.amazonaws.com/remi
 })
 export class BordersComponent implements OnInit {
   public isMobile: boolean;
+  public readMore = false;
   public travelData: any;
   public headers = [
     "Country", "Foreigners Ban", "Home Quarantine", "COVID-19 Testing", "Closed Borders", "Other Measures",

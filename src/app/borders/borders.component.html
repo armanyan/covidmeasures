@@ -5,9 +5,31 @@
       <h2 *ngIf="isMobile"><u>{{ titleService.getTitle().split(':')[0] }}</u></h2>
     </div>
 
-    <p>
-      This page presents the International Travel status worldwide.
-    </p>
+    <img src="../../assets/img/questioned-face.png" align="left">
+    <div style="margin-left: 80px;">
+      <p>
+        Were the border closings enough to prevent the spread of COVID-19,
+        or did they only inder our mobility? Join the discussion.
+      </p>
+      <button mat-button *ngIf="!readMore" (click)="readMore=!readMore">Read More</button>
+      <div *ngIf="readMore">
+        <p>
+          Looking at the timing, effectiveness, and consequences of border controls around the world,
+          we are examining their role in preventing the spread and resurgence of COVID-19.
+        </p>
+        <p>
+          To answer this question seriously, we need to first understand:
+        </p>
+        <ul>
+          <li>The rules in place around the world.</li>
+          <li>How cases emerge as countries reopen.</li>
+        </ul>
+        <button mat-button *ngIf="readMore" (click)="readMore=!readMore">Read Less</button>
+      </div>
+    </div>
+
+    <br *ngIf="!readMore">
+    <hr>
 
     <h3>Have a few seconds to spare?</h3>
     <br>
