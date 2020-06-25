@@ -112,6 +112,11 @@ td.left, td.center {
   vertical-align: top;
 }
 
+.mobile-table-text {
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
 .gov-measures td {
   text-align: center;
 }

@@ -54,6 +54,10 @@ td.left, td.center {
   vertical-align: top;
 }
 
+:host /deep/ .mat-select-value-text {
+  color: white !important;
+}
+
 .table-datas{
   font-size:1.3em;
 }

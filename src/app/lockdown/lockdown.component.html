@@ -22,7 +22,7 @@
           <mat-label>Choose Region</mat-label>
           <mat-select [(value)]="lockdownRegion" (selectionChange)="lockdownChangeRegion($event.value)">
             <mat-option *ngFor="let location of locations" [value]="location.value">
-              {{location.viewValue}}
+              {{ location.viewValue }}
             </mat-option>
           </mat-select>
         </div>

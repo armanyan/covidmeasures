@@ -59,6 +59,10 @@ div.text-align {
   padding-right: 20px;
 }
 
+:host /deep/ .mat-select-value-text {
+  color: white !important;
+}
+
 tr td.active {
   color: #d83b40 !important;
 }
