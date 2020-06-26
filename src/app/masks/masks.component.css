@@ -148,3 +148,8 @@ td.left, td.center {
 .card-citizens{
   margin: 1% 0;
 }
+/* ********************CHARTS ***************************** */
+.chart-pos {
+  position: relative;
+  height: 60vh
+}

@@ -46,9 +46,33 @@
         </div>
       </div>
     </div>
-    
-    <app-pie-chart></app-pie-chart>
-    
+    <div class="row" *ngIf="answers_label && answers_value">
+      <div class="col-sm-7 m-0 pt-1 chart-pos">
+        <app-pie-chart
+        [data]="answers_value"
+        [labels]="answers_label"
+        [backgroundColor]="backgroundColor"
+        [maintainAspectRatio]="false"
+        [lagendPosition]="'bottom'"
+        [legendAlign]="'center'"
+        ></app-pie-chart>
+      </div>
+      <div class="col-sm-5">
+        <h3>Citizen opinion on mask effectiveness against coronavirus.</h3>
+        <ul style="list-style: none;">
+          <li *ngFor="let survey of survey_answers; let i = index" class="d-flex align-items-center  pr-3 pt-4">
+            <div 
+            style="width: 50px; height: 50px; border-radius: 50%;" 
+            [ngStyle]="{'background': backgroundColor[i]}" 
+            class="d-flex justify-content-center align-items-center mr-3">
+              <span style="background-color: rgba(240, 248, 255, 0.171); font-weight: 900;">{{ survey.percent }}%</span>
+            </div>
+            <span>{{survey.answer}}</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+
     <h3>Have a few seconds to spare?</h3>
     <br>
     <h4 style="padding-left: 4rem;"><b>Press play</b> below to start the 30-second survey, and let us know about masks in your area.</h4>
