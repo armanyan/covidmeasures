@@ -12,6 +12,7 @@ export class MasksComponent implements OnInit {
   public isMobile: boolean;
   public readMore = false;
   public countryMasksData: any;
+  public isClientReady: boolean = false;
 
   constructor(
     private titleService: Title,
@@ -28,7 +29,8 @@ export class MasksComponent implements OnInit {
     // this.countryMasksData = await this.http.get(`${aws}/masks_survey.json`).toPromise();
     fetch(`${aws}/masks_survey.json`).then(res => res.json()).then(data => {
       this.countryMasksData = data
-      this.changeDetector.detectChanges()
+      this.changeDetector.detectChanges();
+      this.isClientReady = true;
     })
   }
 

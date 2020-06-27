@@ -19,7 +19,7 @@ export class SurveillanceComponent implements OnInit {
   ];
 
   public table = [];
-
+  public isClientReady: boolean = false;
   constructor(
     public titleService: Title
   ) { }
@@ -29,6 +29,7 @@ export class SurveillanceComponent implements OnInit {
     this.isMobile = window.innerWidth > mobileWidth ? false : true;
 
     this.setTable();
+    setTimeout(()=> this.isClientReady = true, 500);
   }
 
   private setTable() {
