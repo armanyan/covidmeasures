@@ -225,17 +225,7 @@ export class CountryComponent implements OnInit {
     this.setStatsAndStatuses(value);
   }
 
-  /**
-   * Transforms a european format date to universal
-   * Ex: 15/01/2020 to 15 January 2020
-   * @param date to change
-   */
-  private changeDateFormat(date: string) {
-    const data = date.split('/');
-    return `${data[0]} ${monthNames[parseInt(data[1])-1]} ${data[2]}` 
-   }
-
-   public changeViewOption(value: string) {
+  public changeViewOption(value: string) {
     this.currentOption = value;
     if (value === 'In Total') {
       this.statsDivider = 1.0;
@@ -245,7 +235,7 @@ export class CountryComponent implements OnInit {
       this.statsDivider = this.evolution.data[this.countryView].cases.reduce((a, b) => a+b);
     }
     this.setStatsAndStatuses(this.countryView);
-   }
+  }
 
   private async setImpactTable() {
     this.impactTable = [];
