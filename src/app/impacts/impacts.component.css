@@ -16,6 +16,43 @@ a:hover{
   color: #e03b3e;
 }
 
+td.eco {
+    border: 1px solid #333;
+    padding: 10px;
+    text-align: center;
+    vertical-align: middle;
+}
+
+th.header1 {
+  border: 1px solid #fff;
+  text-align: center;
+  vertical-align: middle;
+}
+th.header2 {
+  border: 1px solid #333;
+  padding-left: 20px;
+  padding-right: 20px;
+  text-align: center;
+  vertical-align: middle;
+}
+
+td.thick {
+  font-weight: bold;
+}
+
+tr.primary-header {
+  background-color: #333;
+  color: #fff;
+}
+
+tr.secondary-header {
+  color: rgb(0, 0, 0);
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+
 div.center {
   margin-left: auto;
   margin-right: auto;

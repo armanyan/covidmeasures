@@ -55,6 +55,7 @@ export class ImpactsComponent implements OnInit {
 
   private async processData(evolution: any) {
     this.countries = Object.keys(gdp.default);
+    this.countries.sort();
     let dates;
     for (const country of this.countries) {
       this.countriesData[country] = {
@@ -66,58 +67,62 @@ export class ImpactsComponent implements OnInit {
       };
 
       const stringencies = this.getStringency(country, evolution);
-      this.countriesData[country].stringency['score'] = stringencies.reduce((a, b) => a+b);
-      this.countriesData[country].stringency['last'] = stringencies[stringencies.length-1];
+      if (stringencies.length > 1) {
+        this.countriesData[country].stringency.score = stringencies.reduce((a, b) => a+b);
+        this.countriesData[country].stringency.last = stringencies[stringencies.length-1];
+      } else {
+        this.countriesData[country].stringency.score = 'No data';
+        this.countriesData[country].stringency.last = 'No data';
+      }
 
       dates = Object.keys(gdp.default[country]);
-      this.countriesData[country].gdp['last'] = gdp.default[country][dates[dates.length-1]];
-      this.countriesData[country].gdp['average'] = dates.map(date => gdp.default[country][date]).reduce((a, b) => a+b)/dates.length;
+      this.countriesData[country].gdp.last = gdp.default[country][dates[dates.length-1]];
+      this.countriesData[country].gdp.average = dates.map(date => gdp.default[country][date]).reduce((a, b) => a+b)/dates.length;
 
-      dates = Object.keys(unemployement.default[country]);
-      const dates2019 = dates.filter(date => date.startsWith('2019'));
-      const average2019 = dates2019.map(date => unemployement.default[country][date]).reduce((a, b) => a+b)/dates2019.length;
-      this.countriesData[country].unemployement['last'] = unemployement.default[country][dates[dates.length-1]]
-      this.countriesData[country].unemployement['average'] = dates.map(date => unemployement.default[country][date] - average2019).reduce((a, b) => a+b)/dates.length;
-    
-      dates = Object.keys(import_impacts.default[country]);
-      const importaDates2019 = dates.filter(date => date.startsWith('2019'));
-      const importsAverage2019 = importaDates2019.map(date => import_impacts.default[country][date]).reduce((a, b) => a+b)/importaDates2019.length;
-      this.countriesData[country].imports['last'] = import_impacts.default[country][dates[dates.length-1]];
-      this.countriesData[country].imports['average'] = dates.map(date => import_impacts.default[country][date] - importsAverage2019).reduce((a, b) => a+b)/dates.length;
-      
-      dates = Object.keys(export_impacts.default[country]);
-      const exportDates2019 = dates.filter(date => date.startsWith('2019'));
-      const exportAverage2019 = importaDates2019.map(date => export_impacts.default[country][date]).reduce((a, b) => a+b)/exportDates2019.length;
-      this.countriesData[country].exports['last'] = export_impacts.default[country][dates[dates.length-1]];
-      this.countriesData[country].exports['average'] = dates.map(date => export_impacts.default[country][date] - exportAverage2019).reduce((a, b) => a+b)/dates.length;
+      const datasets = { "unemployement": unemployement, "imports": import_impacts, "exports": export_impacts };
+      for (const key of Object.keys(datasets)) {
+        dates = Object.keys(datasets[key].default[country]);
+        const dates2019 = dates.filter(date => date.startsWith('2019'));
+        const average2019 = dates2019.map(date => datasets[key].default[country][date]).reduce((a, b) => a+b)/dates2019.length;
+        this.countriesData[country][key].last = datasets[key].default[country][dates[dates.length-1]]
+        this.countriesData[country][key].average = dates.map(date => datasets[key].default[country][date] - average2019).reduce((a, b) => a+b)/dates.length;
+      }
     }
   }
 
+  /**
+   * Returns an array containing the stringency index for each day
+   * since 1st January 2020 to the last day of the previous month.
+   * @param country the name of the country of interest. 
+   * @param evolution the evolution matrix for all countries.
+   */
   private getStringency (country: string, evolution: any) {
     const alpha3 = this.getAlpha3FromName(country, evolution);
     if (!alpha3) {
       return [0];
     }
 
+    // since we want the days between 1 Jan to last day of the previous month
+    // we just need to look on the month of the date string.
     const months = [];
     for (let i = 1; i <= new Date().getMonth(); i++) {
       months.push(i < 10 ? `0${i}` : i.toString());
     }
 
-    const res = [];
+    const stringencies = [];
     for (const i in evolution.dates) {
+      // dates are in euro format - month is at position 1
       if (months.includes(evolution.dates[i].split('/')[1])) {
-        const datasets = evolution.data[alpha3];
-        res.push(datasets.school_closure[i] - datasets.international_travel[i] + datasets.public_information[i]);
+        const data = evolution.data[alpha3];
+        stringencies.push(data.school_closure[i] - data.international_travel[i] + data.public_information[i]);
       }
     }
-
-    return res;
+    return stringencies;
   }
 
   private getAlpha3FromName(name: string, evolution: any) {
     for (const country of Object.keys(evolution.data)) {
-      if (evolution.data[country].name === name) {
+      if (evolution.data[country].name === name || evolution.data[country].name.replace(/_/g, ' ') === name) {
         return country;
       }
     }

@@ -39,6 +39,45 @@
     <br>
     <hr>
 
+    <div style="overflow-x:auto;">
+      <table style="margin-left:auto; margin-right:auto;">
+        <thead>
+          <tr class="primary-header">
+            <th class="header1" rowspan="2">Country</th>
+            <th class="header1" colspan="2">Stringency</th>
+            <th class="header1" colspan="2">GDP</th>
+            <th class="header1" colspan="2">Uneployement</th>
+            <th class="header1" colspan="2">Imports</th>
+            <th class="header1" colspan="2">Exports</th>
+          </tr>
+          <tr class="secondary-header">
+            <th class="header2">last</th><th class="header2">score</th>
+            <th class="header2">last</th><th class="header2">average</th>
+            <th class="header2">last</th><th class="header2">average</th>
+            <th class="header2">last</th><th class="header2">average</th>
+            <th class="header2">last</th><th class="header2">average</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let country of countries">
+            <td class="eco thick">{{ country }}</td>
+            <td class="eco">{{ countriesData[country].stringency.last }}</td>
+            <td class="eco">{{ countriesData[country].stringency.score }}</td>
+            <td class="eco">{{ countriesData[country].gdp.last | number}}</td>
+            <td class="eco">{{ countriesData[country].gdp.average | number}}</td>
+            <td class="eco">{{ countriesData[country].unemployement.last | number}}</td>
+            <td class="eco">{{ countriesData[country].unemployement.average | number}}</td>
+            <td class="eco">{{ countriesData[country].imports.last | number}}</td>
+            <td class="eco">{{ countriesData[country].imports.average | number}}</td>
+            <td class="eco">{{ countriesData[country].exports.last | number}}</td>
+            <td class="eco">{{ countriesData[country].exports.average | number}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <hr>
+
     <div class="col-md-12">
       <div class="card card-border">
 
