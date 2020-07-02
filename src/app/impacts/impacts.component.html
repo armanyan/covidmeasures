@@ -39,41 +39,99 @@
     <br>
     <hr>
 
-    <div style="overflow-x:auto;">
-      <table style="margin-left:auto; margin-right:auto;">
-        <thead>
-          <tr class="primary-header">
-            <th class="header1" rowspan="2">Country</th>
-            <th class="header1" colspan="2">Stringency</th>
-            <th class="header1" colspan="2">GDP</th>
-            <th class="header1" colspan="2">Uneployement</th>
-            <th class="header1" colspan="2">Imports</th>
-            <th class="header1" colspan="2">Exports</th>
-          </tr>
-          <tr class="secondary-header">
-            <th class="header2">last</th><th class="header2">score</th>
-            <th class="header2">last</th><th class="header2">average</th>
-            <th class="header2">last</th><th class="header2">average</th>
-            <th class="header2">last</th><th class="header2">average</th>
-            <th class="header2">last</th><th class="header2">average</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let country of countries">
-            <td class="eco thick">{{ country }}</td>
-            <td class="eco">{{ countriesData[country].stringency.last }}</td>
-            <td class="eco">{{ countriesData[country].stringency.score }}</td>
-            <td class="eco">{{ countriesData[country].gdp.last | number}}</td>
-            <td class="eco">{{ countriesData[country].gdp.average | number}}</td>
-            <td class="eco">{{ countriesData[country].unemployement.last | number}}</td>
-            <td class="eco">{{ countriesData[country].unemployement.average | number}}</td>
-            <td class="eco">{{ countriesData[country].imports.last | number}}</td>
-            <td class="eco">{{ countriesData[country].imports.average | number}}</td>
-            <td class="eco">{{ countriesData[country].exports.last | number}}</td>
-            <td class="eco">{{ countriesData[country].exports.average | number}}</td>
-          </tr>
-        </tbody>
-      </table>
+    <div class="col-md-12">
+      <div class="card card-border">
+
+        <div class="card-header card-header-success">
+          <h3 class="card-title">Economic Impacts since COVID-19 outbreak</h3>
+        </div>
+
+        <div class="card-body">
+
+          <div class="content table-responsive table-full-width">
+            <table class="table">
+              <thead>
+                <th
+                  *ngFor="let header of economicImpactHeaders"
+                  class="text-primary center-align"
+                >
+                <button (click)="sortTable(header)" mat-button>
+                  {{ header }} <i class="material-icons" style="font-size: 20px;">sort</i>
+                </button>
+                </th>
+              </thead>
+              <tbody>
+                <tr class="center-align" *ngFor="let row of countriesData">
+                  <td class="thick">
+                    <a href="#/country/{{row['Country'].alpha3}}">{{ row['Country'].name }}</a>
+                  </td>
+                  <td class="center-align">
+                    <div *ngIf="row['Stringency Score'].avg !== undefined"
+                      title="Last update: {{ row['Stringency Score'].last }}"
+                    >
+                      {{ row['Stringency Score'].avg }}
+                    </div>
+                    <div *ngIf="row['Stringency Score'].avg === undefined">
+                      N/A
+                    </div>
+                  </td>
+                  <td class="center-align">
+                    <div *ngIf="row['GDP'].avg !== undefined"
+                      title="Last update: {{ row['GDP'].last }}"
+                      [ngClass]="{'positive': row['GDP'].avg > 0, 'negative': row['GDP'].avg < 0}"
+                    >
+                      {{ row['GDP'].avg }}%
+                    </div>
+                    <div *ngIf="row['GDP'].avg === undefined">
+                      No data
+                    </div>
+                  </td>
+                  <td class="center-align">
+                    <div *ngIf="row['Unemployment Rate'].avg !== undefined"
+                      title="Last update: {{ row['Unemployment Rate'].last }}"
+                      [ngClass]="{'positive': row['Unemployment Rate'].avg < 0, 'negative': row['Unemployment Rate'].avg >= 0}"
+                    >
+                      {{ row['Unemployment Rate'].avg | number }}%
+                    </div>
+                    <div *ngIf="row['Unemployment Rate'].avg === undefined">
+                      No data
+                    </div>
+                  </td>
+                  <td class="center-align">
+                    <div *ngIf="row['Imports'].avg !== undefined"
+                      title="Last update: {{ row['Imports'].last }}"
+                      [ngClass]="{'positive': row['Imports'].avg >= 0, 'negative': row['Imports'].avg < 0}"
+                    >
+                      {{ row['Imports'].avg | number }} %
+                    </div>
+                    <div *ngIf="row['Imports'].avg === undefined">No data</div>
+                  </td>
+                  <td class="center-align">
+                    <div *ngIf="row['Exports'].avg !== undefined"
+                      title="Last update: {{ row['Exports'].last}}" 
+                      [ngClass]="{'positive': row['Exports'].avg >= 0, 'negative': row['Exports'].avg < 0}"
+                    >
+                      {{ row['Exports'].avg | number }} %
+                    </div>
+                    <div *ngIf="row['Exports'].avg === undefined">No data</div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+    
+        </div>
+
+        <div class="card-footer">
+          <div class="stats">
+            <!-- Put Updated On date -->
+          </div>
+          <div class="stats">
+            Source: Trading Economics & CovidMeasures Community
+          </div>
+        </div>
+
+      </div>
     </div>
 
     <hr>
@@ -82,8 +140,7 @@
       <div class="card card-border">
 
         <div class="card-header card-header-success">
-          <h3 class="card-title">
-            Impact of Government Covid-19 Measures</h3>
+          <h3 class="card-title">Impact of Government COVID-19 Measures</h3>
             <mat-form-field>
               <mat-label style="color: rgb(218, 205, 205);">Search by Country, Measure or key word</mat-label>
               <input  matInput (keyup)="applyFilter($event)">

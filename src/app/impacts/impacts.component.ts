@@ -5,9 +5,10 @@ import * as typeformEmbed from '@typeform/embed';
 
 import { aws, mobileWidth, getCountryNameByAlpha } from '../utils';
 import * as gdp from '../data/gdp';
-import * as unemployement from '../data/unemployement';
+import * as unemployment from '../data/unemployment';
 import * as import_impacts from '../data/imports';
 import * as export_impacts from '../data/exports';
+import { NONE_TYPE } from '@angular/compiler';
 
 export interface Impact {
   impact: string,
@@ -27,9 +28,11 @@ export class ImpactsComponent implements OnInit {
   public isMobile: boolean;
   public readMore = false;
   public impactHeaders = ['Location', 'Impact', 'Description', 'Measure', 'Source'];
+  public economicImpactHeaders = ['Country', 'Stringency Score', 'GDP', 'Unemployment Rate', 'Imports', 'Exports'];
   public impacts: Impact[] = [];
-  public countriesData = {};
+  public countriesData = [];
   public countries = [];
+  public sortingOrder = true; // true for des
 
   p: number = 1;
   collection: any[];
@@ -50,43 +53,55 @@ export class ImpactsComponent implements OnInit {
     this.setWidget();
 
     const evolution = (await this.http.get(`${aws}/evolution.json`).toPromise() as any);
-    this.processData(evolution);
+    this.processEconomicData(evolution);
   }
 
-  private async processData(evolution: any) {
+  private async processEconomicData(evolution: any) {
     this.countries = Object.keys(gdp.default);
     this.countries.sort();
     let dates;
+    let value;
     for (const country of this.countries) {
-      this.countriesData[country] = {
-        stringency: {},
-        gdp: {},
-        unemployement: {},
-        imports: {},
-        exports: {}
+      const current = {
+        'Country': { name: country, alpha3: '' },
+        'Stringency Score': { last: '', avg: '' }, // use avg instead of score for convenience
+        'GDP': { last: '', avg: '' },
+        'Unemployment Rate': { last: '', avg: '' },
+        'Imports': { last: '', avg: '' },
+        'Exports': { last: '', avg: '' },
       };
 
       const stringencies = this.getStringency(country, evolution);
       if (stringencies.length > 1) {
-        this.countriesData[country].stringency.score = stringencies.reduce((a, b) => a+b);
-        this.countriesData[country].stringency.last = stringencies[stringencies.length-1];
+        current['Country'].alpha3 = this.getAlpha3FromName(country, evolution);
+        current['Stringency Score'].last = evolution.dates[evolution.dates.length-1];
+        current['Stringency Score'].avg = stringencies.reduce((a, b) => a+b);
       } else {
-        this.countriesData[country].stringency.score = 'No data';
-        this.countriesData[country].stringency.last = 'No data';
+        current['Stringency Score'].last = undefined;
+        current['Stringency Score'].avg = undefined;
       }
 
-      dates = Object.keys(gdp.default[country]);
-      this.countriesData[country].gdp.last = gdp.default[country][dates[dates.length-1]];
-      this.countriesData[country].gdp.average = dates.map(date => gdp.default[country][date]).reduce((a, b) => a+b)/dates.length;
-
-      const datasets = { "unemployement": unemployement, "imports": import_impacts, "exports": export_impacts };
+      const datasets = { "GDP": gdp, "Unemployment Rate": unemployment, "Imports": import_impacts, "Exports": export_impacts };
       for (const key of Object.keys(datasets)) {
-        dates = Object.keys(datasets[key].default[country]);
-        const dates2019 = dates.filter(date => date.startsWith('2019'));
-        const average2019 = dates2019.map(date => datasets[key].default[country][date]).reduce((a, b) => a+b)/dates2019.length;
-        this.countriesData[country][key].last = datasets[key].default[country][dates[dates.length-1]]
-        this.countriesData[country][key].average = dates.map(date => datasets[key].default[country][date] - average2019).reduce((a, b) => a+b)/dates.length;
+        value = 0;
+        dates = Object.keys(datasets[key].default[country]).filter(date => date.startsWith('2020'));
+        const dates2019 = Object.keys(datasets[key].default[country]).filter(date => date.startsWith('2019'));
+        const average2019 = key === "GDP" ? 0 : dates2019.map(date => datasets[key].default[country][date]).reduce((a, b) => a+b)/dates2019.length;
+
+        value = 0;
+        for (const date of dates) {
+          value += value + datasets[key].default[country][date] - average2019;
+        }
+        if (value !== 0) {
+          value = ['Imports', 'Exports'].includes(key) ? (value / dates.length) / average2019 : value / dates.length;
+          current[key].last = dates[dates.length-1];
+          current[key].avg = value;
+        } else {
+          current[key].last = undefined;
+          current[key].avg = undefined;
+        }
       }
+      this.countriesData.push(current);
     }
   }
 
@@ -114,7 +129,11 @@ export class ImpactsComponent implements OnInit {
       // dates are in euro format - month is at position 1
       if (months.includes(evolution.dates[i].split('/')[1])) {
         const data = evolution.data[alpha3];
-        stringencies.push(data.school_closure[i] - data.international_travel[i] + data.public_information[i]);
+        stringencies.push(
+          data.lockdown[i] + data.school_closure[i] + data.business_closure[i] +
+          data.international_travel[i] + data.public_events[i] + data.gatherings_restriction[i] +
+          data.public_transport[i] + data.domestic_travel[i] + data.public_information[i]
+        );
       }
     }
     return stringencies;
@@ -168,6 +187,14 @@ export class ImpactsComponent implements OnInit {
         opacity: 0
       }).open();
     })
+  }
+
+  public sortTable(header: string) {
+    const subheader = header === 'Country' ? 'name' : 'avg';
+    this.sortingOrder ?
+      this.countriesData.sort((a, b) => (a[header][subheader] === undefined) ? 1 :(a[header][subheader] > b[header][subheader]) ? -1 : 1) :
+      this.countriesData.sort((a, b) => (a[header][subheader] === undefined) ? 1 :(a[header][subheader] > b[header][subheader]) ? 1 : -1);
+    this.sortingOrder = !this.sortingOrder;
   }
 
 }
