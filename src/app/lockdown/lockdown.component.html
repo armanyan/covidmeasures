@@ -1,42 +1,32 @@
 <app-page-loaders [hidden]="isClientReady"></app-page-loaders>
-<div class="main-content">
+<div class="main-content pt-md-0">
   <div class="container-fluid">
 
     <div layout-align="end end">
       <h2 *ngIf="isMobile"><u>{{ titleService.getTitle().split(':')[0] }}</u></h2>
     </div>
 
-    <div>
-      <img src="../../assets/img/questioned-face.png" align="left">
-      <div class="question">
-        <p class="question">
-          How are lockdowns and their affects taking shape around the world? Join the discussion.
-        </p>
-        <button mat-button *ngIf="!readMore" (click)="readMore=!readMore">Read More</button>
-        <div *ngIf="readMore">
-          <p class="question">
-            As citizens, we are examining the need for restricting movement and business activities
-            to keep the spread of COVID-19 under control, as well as the side effects on society.
-          </p>
-          <p class="question">
-            To answer this question seriously, we need to understand first:
-          </p>
-          <ul>
-            <li>The rules in place around the world.</li>
-            <li>The costs of those measures to society and people moral, happiness and health.</li>
-          </ul>
-          <p class="question">
-            CovidMeasures aim to provide some facts and perspectives to help your thinking.
-            Feel free to contribute to the debate.
-          </p>
-          <button mat-button *ngIf="readMore" (click)="readMore=!readMore">Read Less</button>
-        </div>
-      </div>
+    <app-page-question
+    [questionHeader]="'Lockdowns are meant to prevent the spread of covid-19 and alleviate hospitals, but how else have they affected society? Join the discussion.'"
+    >
+    <div class="readMore">
+      <p class="question">
+        As citizens, we are examining the need for restricting movement and business activities
+        to keep the spread of COVID-19 under control, as well as the side effects on society.
+      </p>
+      <p class="question">
+        To answer this question seriously, we need to understand first:
+      </p>
+      <ul>
+        <li>The lockdown measures in place around the world.</li>
+        <li>The costs of those measures to society and individuals’ moral, happiness, and health.</li>
+        <li>The many impacts of lockdown measures.</li>
+      </ul>
+      <p class="question">
+        CovidMeasures aims to provide facts and perspectives to enrich your reflections. We encourage you to contribute to the debate.
+      </p>
     </div>
-
-    <br>
-    <hr>
-
+    </app-page-question>
     <!-- <div>
         <p>
           {{ lockdown_intro_1 }}

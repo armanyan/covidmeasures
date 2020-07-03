@@ -1,42 +1,32 @@
 <app-page-loaders [hidden]="isClientReady"></app-page-loaders>
-<div class="main-content">
+<div class="main-content  pt-md-0">
   <div class="container-fluid">
 
     <div layout-align="end end">
       <h2 *ngIf="isMobile"><u>{{ titleService.getTitle().split(':')[0] }}</u></h2>
     </div>
 
-    <div>
-      <img src="../../assets/img/questioned-face.png" align="left">
-      <div class="question">
-        <p class="question">
-          Do the benefits of school closures outweigh the toll on education? Join the discussion.
-        </p>
-        <button mat-button *ngIf="!readMore" (click)="readMore=!readMore">Read More</button>
-        <div *ngIf="readMore">
+    <app-page-question
+    [questionHeader]="'Do the benefits of school closures outweigh the toll on education? Join the discussion.'"
+    >
+      <div class="readMore">
           <p class="question">
-            We are examining the trade-offs of disrupting children's education with the (perceived) reduction of spreading covid-19.
+            We are examining the trade-offs of disrupting children's education with the (perceived) reduction of spreading COVID-19.
           </p>
           <p class="question">
             To answer this question seriously, we need to understand first:
           </p>
           <ul>
-            <li>The rules in place around the world.</li>
-            <li>The potential toll on education and the impacts on children and their families.</li>
-            <li>Education institutions strategies to mitigate school closure impacts.</li>
-            <li>The danger of COVID-19 exposure on children and their parents.</li>
+              <li>The rules in place around the world.</li>
+              <li>The potential toll on education and the impacts on children and their families.</li>
+              <li>The strategies of educational institutions to mitigate the affects of school closures.</li>
+              <li>The danger of COVID-19 exposure to children and their parents.</li>
           </ul>
           <p class="question">
-            CovidMeasures aim to provide some facts and perspectives to help your thinking.
-            Feel free to contribute to the debate.
+            CovidMeasures aims to provide facts and perspectives to enrich your reflections. We encourage you to contribute to the debate.
           </p>
-          <button mat-button *ngIf="readMore" (click)="readMore=!readMore">Read Less</button>
-        </div>
       </div>
-    </div>
-
-    <br>
-    <hr>
+    </app-page-question>
 
     <!-- <p style="padding-bottom:1%;">
       {{ school_intro_1 }}
