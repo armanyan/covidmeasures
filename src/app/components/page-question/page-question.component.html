@@ -1,0 +1,17 @@
+<div class="d-flex">
+    <div>
+        <img src="../../assets/img/questioned-face.png">
+    </div>
+    <div class="question">
+        <p class="question">
+            {{ questionHeader }}
+        </p>
+        <button mat-button *ngIf="!readMore" (click)="readMore=!readMore">Read More</button>
+        
+        <ng-content select=".readMore" *ngIf="readMore"></ng-content>
+        <button mat-button *ngIf="readMore" (click)="readMore=!readMore">Read Less</button>
+    </div>
+</div>
+
+<br *ngIf="!readMore">
+<hr>
