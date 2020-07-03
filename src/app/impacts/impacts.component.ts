@@ -90,10 +90,10 @@ export class ImpactsComponent implements OnInit {
 
         value = 0;
         for (const date of dates) {
-          value += value + datasets[key].default[country][date] - average2019;
+          value += datasets[key].default[country][date] - average2019;
         }
         if (value !== 0) {
-          value = ['Imports', 'Exports'].includes(key) ? (value / dates.length) / average2019 : value / dates.length;
+          value = ['Imports', 'Exports'].includes(key) ? ((value / dates.length) / average2019)*100 : value / dates.length;
           current[key].last = dates[dates.length-1];
           current[key].avg = value;
         } else {
