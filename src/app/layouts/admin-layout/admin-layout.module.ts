@@ -40,6 +40,7 @@ import { DisqusModule } from 'ngx-disqus';
 import { PageLoadersComponent } from '../../components/page-loaders/page-loaders.component';
 import { RemindMeComponent } from '../../components/remind-me/remind-me.component';
 import { EvolutionCountryComponent } from '../../components/charts/evolution-country/evolution-country.component';
+import { PageQuestionComponent } from '../../components/page-question/page-question.component'
 
 @NgModule({
   imports: [
@@ -86,7 +87,8 @@ import { EvolutionCountryComponent } from '../../components/charts/evolution-cou
     DisqusCommentsComponent,
     PageLoadersComponent,
     RemindMeComponent,
-    EvolutionCountryComponent
+    EvolutionCountryComponent,
+    PageQuestionComponent
   ]
 })
 
