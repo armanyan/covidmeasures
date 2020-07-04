@@ -8,17 +8,6 @@ h3{
   margin:4.5% 3% 0 3%;
 }
 
-p.question {
-  margin-top: 15px;
-  margin-left: 0px;
-  margin-bottom: 15px;
-  margin-right: 0px;
-}
-
-div.question {
-  margin-left: 80px;
-}
-
 a{
   color: #ed5658;
   text-decoration: underline;

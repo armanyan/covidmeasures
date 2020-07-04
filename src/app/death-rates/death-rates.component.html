@@ -1,26 +1,17 @@
-<div class="main-content">
+<div class="main-content pt-md-0">
   <div class="container-fluid">
 
     <div layout-align="end end">
       <h2 *ngIf="isMobile"><u>{{ titleService.getTitle().split(':')[0] }}</u></h2>
     </div>
 
-    <div>
-      <img src="../../assets/img/questioned-face.png" align="left">
-      <div class="question">
-        <p class="question">
-          Is COVID-19 as lethal as the media depicts? Join the discussion.
-        </p>
-        <button mat-button *ngIf="!readMore" (click)="readMore=!readMore">Read More</button>
-        <div *ngIf="readMore">
+    <app-page-question
+    [questionHeader]="'Is COVID-19 as lethal as we\'ve come to think? How did we arrive at this perception? Join the discussion.'"
+    >
+      <div class="readMore">
           <p class="question">
             Compared to other diseases and causes of death throughout human history, how does COVID-19 compare?
           </p>
-          <p class="question">
-            CovidMeasures aim to provide some facts and perspectives to help your thinking.
-            Feel free to contribute to the debate.
-          </p>
-
           <p>
             <i>
               During the COVID-19 crisis, it is probably good to remind everyone that COVID-19, as scary as it sounds,
@@ -35,13 +26,18 @@
               loved ones compared to all the other death causes that we normally face in our day-to-day life.
             </i>
           </p>
-          <button mat-button *ngIf="readMore" (click)="readMore=!readMore">Read Less</button>
-        </div>
+          <p class="question">
+            To answer this question seriously, we need to understand first:
+          </p>
+          <ul>
+            <li>The actual death rate of COVID-19 patients.</li>
+            <li>Death rates of other diseases through human history.</li>
+          </ul>
+          <p class="question">
+              CovidMeasures aims to provide facts and perspectives to enrich your reflections. We encourage you to contribute to the debate.
+          </p>
       </div>
-    </div>
-
-    <br>
-    <hr>
+    </app-page-question>
 
     <!-- <p>
       {{ death_intro_1 }}

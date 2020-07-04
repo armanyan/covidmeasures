@@ -4,7 +4,7 @@ div.question {
     margin-top: 10px;
 }
 
-::ng-deep p.question, ::ng-deep h4.question  {
+:host ::ng-deep p.question, :host ::ng-deep h4.question  {
     margin-top: 15px;
     margin-left: 0px;
     margin-bottom: 15px;
