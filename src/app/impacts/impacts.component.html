@@ -1,43 +1,31 @@
-<div class="main-content">
+<div class="main-content pt-md-0">
   <div class="container-fluid">
 
     <div layout-align="end end">
       <h2 *ngIf="isMobile"><u>{{ titleService.getTitle().split(':')[0] }}</u></h2>
     </div>
-
-    <div>
-      <img src="../../assets/img/questioned-face.png" align="left">
-      <div class="question">
+    <app-page-question
+    [questionHeader]="'For better or for worse, how has your life changed during this pandemic? Join the discussion.'"
+    >
+      <div class="readMore">
         <p class="question">
-          How has your life changed during this pandemic? Join the discussion.
+          As each country responds to COVID-19 through different government measures, we're asking
+          how society has been affected by these measures, and what we can learn.
         </p>
-        <button mat-button *ngIf="!readMore" (click)="readMore=!readMore">Read More</button>
-        <div *ngIf="readMore">
-          <p class="question">
-            As each country responds to COVID-19 through different government measures, we're asking
-            how society has been affected by these measures, and what we can learn.
-          </p>
-          <p class="question">
-            To answer this question seriously, we need to understand first:
-          </p>
-          <ul>
-            <li>Understand how individuals have been affected around the world.</li>
-            <li>See the positive and negative effects of each government measure.</li>
-            <li>See the long term effects of these measures.</li>
-            <li>Weigh the goal of the measure against its effectiveness and consequences.</li>
-            <li>Document learnings/key take aways?</li>
-          </ul>
-          <p class="question">
-            CovidMeasures aim to provide some facts and perspectives to help your thinking.
-            Feel free to contribute to the debate.
-          </p>
-          <button mat-button *ngIf="readMore" (click)="readMore=!readMore">Read Less</button>
-        </div>
+        <p class="question">
+          To answer this question seriously, we need to understand first:
+        </p>
+        <ul>
+          <li>How have individuals been affected around the world?</li>
+          <li>The positive and negative effects of each government measure.</li>
+          <li>The long term effects of these measures.</li>
+          <li>The effectiveness and consequences of each measure compared to its original goal.</li>
+        </ul>
+        <p class="question">
+          CovidMeasures aims to provide facts and perspectives to enrich your reflections. We encourage you to contribute to the debate.
+        </p>
       </div>
-    </div>
-
-    <br>
-    <hr>
+    </app-page-question>
 
     <div class="col-md-12">
       <div class="card card-border">

@@ -1,44 +1,32 @@
-<div class="main-content">
+<div class="main-content pt-md-0">
   <div class="container-fluid">
 
     <div layout-align="end end">
       <h2 *ngIf="isMobile"><u>{{ titleService.getTitle().split(':')[0] }}</u></h2>
     </div>
 
-    <div>
-      <img src="../../assets/img/questioned-face.png" align="left">
-      <div class="question">
-        <p class="question">
-          Should citizens be geo-tracked and surveyed? Join the discussion.
-        </p>
-        <button mat-button *ngIf="!readMore" (click)="readMore=!readMore">Read More</button>
-        <div *ngIf="readMore">
+    <app-page-question
+    [questionHeader]="'How much is geo-tracking benefitting society, or is it an invasion of our privacy? Join the discussion.'"
+    >
+      <div class="readMore">
           <p class="question">
-            As new tracking and surveillance technologies arise, we are examining their necessity,
-            effectiveness, and (potential) consequences.
+            As citizens we are questioning the necessity, effectiveness and the potential consequences of the introduction of new tracking or surveillance technologies as the result of COVID-19 outbreak.
           </p>
           <p class="question">
             To answer this question seriously, we need to understand first:
           </p>
           <ul>
-            <li>The specificities of the technology implement.</li>
             <li>How is this information being collected?</li>
-            <li>Who is being watched?</li>
-            <li>Who has access to the data?</li>
             <li>How is the information being used?</li>
+            <li>Is tracking voluntary?</li>
             <li>For how long are individuals being tracked?</li>
+            <li>Is the tracking effort transparent?</li>
           </ul>
           <p class="question">
-            CovidMeasures aim to provide some facts and perspectives to help your thinking.
-            Feel free to contribute to the debate.
+            CovidMeasures aims to provide facts and perspectives to enrich your reflections. We encourage you to contribute to the debate.
           </p>
-          <button mat-button *ngIf="readMore" (click)="readMore=!readMore">Read Less</button>
-        </div>
       </div>
-    </div>
-
-    <br>
-    <hr>
+    </app-page-question>
 
     <p>
       This page is currently being written. We need your help to gather relevant data from around the world. Please add your contribution.

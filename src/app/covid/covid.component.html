@@ -1,9 +1,30 @@
-<div class="main-content">
+<div class="main-content pt-md-0">
   <div class="container-fluid">
 
     <div layout-align="end end">
       <h2 *ngIf="isMobile"><u>{{ titleService.getTitle().split(':')[0] }}</u></h2>
     </div>
+
+    <app-page-question
+    [questionHeader]="'How is the COVID-19 pandemic evolving around the world? What are the trends to come? Join the discussion.'"
+    >
+      <div class="readMore">
+          <p class="question">
+            We are recording the number of cases in each country, total deaths, new cases, and new deaths every 24 hours.
+          </p>
+          <p class="question">
+            To answer this question seriously, we need to understand first:
+          </p>
+          <ul>
+            <li>The number of COVID-19 cases per country.</li>
+            <li>The real impacts of government measures on the pandemic evolution.</li>
+            <li>How COVID-19 statistics trigger new government measures.</li>
+          </ul>
+          <p class="question">
+            CovidMeasures aims to provide facts and perspectives to enrich your reflections. We encourage you to contribute to the debate.
+          </p>
+      </div>
+    </app-page-question>
 
     <div class="row">
       <div class="col-md-6">
