@@ -77,7 +77,10 @@
               </thead>
               <tbody>
                 <tr *ngFor="let row of collection | paginate: { itemsPerPage: 10, currentPage: p }">
-                  <td>{{ row.location }}</td>
+                  <td *ngIf="row.alpha3 === 'WRD'" class="thick">{{ row.location }}</td>
+                  <td *ngIf="row.alpha3 !== 'WRD'" class="thick">
+                    <a href="#/country/{{row.alpha3}}">{{ row.location }}</a>
+                  </td>
                   <td>{{ row.impact }}</td>
                   <td>{{ row.description }}</td>
                   <td>{{ row.measure }}</td>

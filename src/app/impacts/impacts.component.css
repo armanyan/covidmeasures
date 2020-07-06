@@ -62,6 +62,10 @@ td.left, td.center {
 .my-pagination /deep/ .ngx-pagination .current {
   background: #ed5658;
 }
+
+td.thick {
+  font-weight: bold;
+}
 /* --------------------------- BUTTONS ---------------------------------*/
 
 /*non-active button*/

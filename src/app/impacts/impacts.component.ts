@@ -132,6 +132,7 @@ export class ImpactsComponent implements OnInit {
       }
       impacts.push({
         location: row.alpha3[0] === 'WRD' ? 'World' : getCountryNameByAlpha(row.alpha3[0]),
+        alpha3: row.alpha3[0],
         impact: row.impact,
         description: row.description,
         measure: row.measure,
