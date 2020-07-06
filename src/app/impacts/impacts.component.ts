@@ -2,13 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Title } from "@angular/platform-browser";
 import * as typeformEmbed from '@typeform/embed';
+import { MatDialog } from '@angular/material/dialog';
 
+import { EconomicDataComponent } from 'app/components/economic-data/economic-data.component';
 import { aws, mobileWidth, getCountryNameByAlpha } from '../utils';
 import * as gdp from '../data/gdp';
 import * as unemployment from '../data/unemployment';
 import * as import_impacts from '../data/imports';
 import * as export_impacts from '../data/exports';
-import { NONE_TYPE } from '@angular/compiler';
 
 export interface Impact {
   impact: string,
@@ -39,7 +40,8 @@ export class ImpactsComponent implements OnInit {
 
   constructor(
     private titleService: Title,
-    private http: HttpClient
+    private http: HttpClient,
+    private dialog: MatDialog
   ) { }
 
   async ngOnInit() {
@@ -195,6 +197,13 @@ export class ImpactsComponent implements OnInit {
       this.countriesData.sort((a, b) => (a[header][subheader] === undefined) ? 1 :(a[header][subheader] > b[header][subheader]) ? -1 : 1) :
       this.countriesData.sort((a, b) => (a[header][subheader] === undefined) ? 1 :(a[header][subheader] > b[header][subheader]) ? 1 : -1);
     this.sortingOrder = !this.sortingOrder;
+  }
+
+  public openEconomicData(indicator: string, country: string, value: number, updated: string) {
+    const dialogRef = this.dialog.open(EconomicDataComponent, {
+      width: '500px',
+      data: { indicator, country, value, updated: new Date(updated) }
+    });
   }
 
 }

@@ -55,7 +55,7 @@
                   *ngFor="let header of economicImpactHeaders"
                   class="text-primary center-align"
                 >
-                <button (click)="sortTable(header)" mat-button>
+                <button class="default" (click)="sortTable(header)" mat-button>
                   {{ header }} <i class="material-icons" style="font-size: 20px;">sort</i>
                 </button>
                 </th>
@@ -66,10 +66,15 @@
                     <a href="#/country/{{row['Country'].alpha3}}">{{ row['Country'].name }}</a>
                   </td>
                   <td class="center-align">
-                    <div *ngIf="row['Stringency Score'].avg !== undefined"
-                      title="Last update: {{ row['Stringency Score'].last }}"
+                    <div *ngIf="row['Stringency Score'].avg !== undefined" title="Click for more info.">
+                    <button
+                      onclick="this.blur()"
+                      (click)="openEconomicData('Stringency Score', row['Country'].name, row['Stringency Score'].avg, row['Stringency Score'].last)"
+                      mat-button
                     >
                       {{ row['Stringency Score'].avg }}
+                    </button>
+                      <!-- {{ row['Stringency Score'].avg }} -->
                     </div>
                     <div *ngIf="row['Stringency Score'].avg === undefined">
                       N/A
@@ -77,10 +82,16 @@
                   </td>
                   <td class="center-align">
                     <div *ngIf="row['GDP'].avg !== undefined"
-                      title="Last update: {{ row['GDP'].last }}"
+                      title="Click for more info."
                       [ngClass]="{'positive': row['GDP'].avg > 0, 'negative': row['GDP'].avg < 0}"
                     >
-                      {{ row['GDP'].avg }}%
+                      <button
+                        onclick="this.blur()"
+                        (click)="openEconomicData('GDP', row['Country'].name, row['GDP'].avg, row['GDP'].last)"
+                        mat-button
+                      >
+                        {{ row['GDP'].avg }}%
+                      </button>
                     </div>
                     <div *ngIf="row['GDP'].avg === undefined">
                       No data
@@ -88,10 +99,16 @@
                   </td>
                   <td class="center-align">
                     <div *ngIf="row['Unemployment Rate'].avg !== undefined"
-                      title="Last update: {{ row['Unemployment Rate'].last }}"
+                      title="Click for more info."
                       [ngClass]="{'positive': row['Unemployment Rate'].avg < 0, 'negative': row['Unemployment Rate'].avg >= 0}"
                     >
-                      {{ row['Unemployment Rate'].avg | number }}%
+                      <button
+                        onclick="this.blur()"
+                        (click)="openEconomicData('Unemployment Rate', row['Country'].name, row['Unemployment Rate'].avg, row['Unemployment Rate'].last)"
+                        mat-button
+                      >
+                        {{ row['Unemployment Rate'].avg | number }}%
+                      </button>
                     </div>
                     <div *ngIf="row['Unemployment Rate'].avg === undefined">
                       No data
@@ -99,19 +116,31 @@
                   </td>
                   <td class="center-align">
                     <div *ngIf="row['Imports'].avg !== undefined"
-                      title="Last update: {{ row['Imports'].last }}"
+                      title="Click for more info."
                       [ngClass]="{'positive': row['Imports'].avg >= 0, 'negative': row['Imports'].avg < 0}"
                     >
-                      {{ row['Imports'].avg | number }} %
+                      <button
+                        onclick="this.blur()"
+                        (click)="openEconomicData('Imports', row['Country'].name, row['Imports'].avg, row['Imports'].last)"
+                        mat-button
+                      >
+                        {{ row['Imports'].avg | number }} %
+                      </button>
                     </div>
                     <div *ngIf="row['Imports'].avg === undefined">No data</div>
                   </td>
                   <td class="center-align">
                     <div *ngIf="row['Exports'].avg !== undefined"
-                      title="Last update: {{ row['Exports'].last}}" 
+                      title="Click for more info." 
                       [ngClass]="{'positive': row['Exports'].avg >= 0, 'negative': row['Exports'].avg < 0}"
                     >
-                      {{ row['Exports'].avg | number }} %
+                      <button
+                        onclick="this.blur()"
+                        (click)="openEconomicData('Exports', row['Country'].name, row['Exports'].avg, row['Exports'].last)"
+                        mat-button
+                      >
+                        {{ row['Exports'].avg | number }} %
+                      </button>
                     </div>
                     <div *ngIf="row['Exports'].avg === undefined">No data</div>
                   </td>

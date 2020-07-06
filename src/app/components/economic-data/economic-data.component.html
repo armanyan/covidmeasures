@@ -1,0 +1,15 @@
+<div class="container-fluid">
+  <h3>{{ data.indicator }} for {{ data.country }}</h3>
+  <p>{{ descriptions[data.indicator] }}</p>
+  <p>Current evolution for 2020 compared to 2019:
+    <span [ngClass]="{
+      'stringency': data.indicator === 'Stringency Score',
+      'positive': (data.value > 0 && data.indicator !== 'Unemployment Rate') || (data.value < 0 && data.indicator === 'Unemployment Rate'),
+      'negative': (data.value < 0 && data.indicator !== 'Unemployment Rate') || (data.value > 0 && data.indicator === 'Unemployment Rate')
+    }">
+      {{ data.value | number }}
+    </span>
+  </p>
+  <p>The value was last computed on {{ data.updated | date }}</p>
+  <i><small>Source: Trading Economics</small></i>
+</div>
