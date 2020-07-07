@@ -34,6 +34,7 @@ export class ImpactsComponent implements OnInit {
   public countriesData = [];
   public countries = [];
   public sortingOrder = true; // true for des
+  public indicators = ['GDP', 'Unemployment Rate', 'Imports', 'Exports'];
 
   p: number = 1;
   collection: any[];
@@ -200,9 +201,19 @@ export class ImpactsComponent implements OnInit {
   }
 
   public openEconomicData(indicator: string, country: string, value: number, updated: string) {
-    const dialogRef = this.dialog.open(EconomicDataComponent, {
+    const scores = {'countries': [], 'scores': []};
+    if (indicator === 'Stringency Score') {
+      for (const country of this.countriesData) {
+        if (country['Country'].name === 'Euro Area') {
+          continue;
+        }
+        scores['countries'].push(country['Country'].name);
+        scores['scores'].push(country['Stringency Score'].avg);
+      }
+    }
+    this.dialog.open(EconomicDataComponent, {
       width: '500px',
-      data: { indicator, country, value, updated: new Date(updated) }
+      data: { indicator, country, value, updated: new Date(updated), scores }
     });
   }
 
