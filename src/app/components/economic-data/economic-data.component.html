@@ -1,9 +1,8 @@
 <div class="container-fluid">
   <h3>{{ data.indicator }} for {{ data.country }}</h3>
   <p>{{ descriptions[data.indicator] }}</p>
-  <p>Average evolution for 2020 compared to 2019:
+  <p *ngIf="data.indicator !== 'Stringency Score'">Average evolution for 2020 compared to 2019:
     <span [ngClass]="{
-      'stringency': data.indicator === 'Stringency Score',
       'positive': (data.value > 0 && data.indicator !== 'Unemployment Rate') || (data.value < 0 && data.indicator === 'Unemployment Rate'),
       'negative': (data.value < 0 && data.indicator !== 'Unemployment Rate') || (data.value > 0 && data.indicator === 'Unemployment Rate')
     }">
