@@ -16,6 +16,47 @@ a:hover{
   color: #e03b3e;
 }
 
+td.eco {
+    border: 1px solid #333;
+    padding: 10px;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.center-align {
+  text-align: center;
+  vertical-align: middle;
+}
+
+span.reduce {
+  font-size: 70%;
+}
+
+th.header {
+  border: 1px solid #fff;
+  text-align: center;
+  vertical-align: middle;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+td.thick {
+  font-weight: bold;
+}
+
+tr.primary-header {
+  background-color: #333;
+  color: #fff;
+}
+
+tr.secondary-header {
+  color: rgb(0, 0, 0);
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+
 div.center {
   margin-left: auto;
   margin-right: auto;
@@ -23,6 +64,14 @@ div.center {
 
 div.text-align {
   text-align: center;
+}
+
+.negative {
+  color: #e03b3e;
+}
+
+.positive {
+  color: forestgreen;
 }
 
 /* --------------------------- HEADERS ----------------------------- */
@@ -69,7 +118,7 @@ td.thick {
 /* --------------------------- BUTTONS ---------------------------------*/
 
 /*non-active button*/
-.mat-button, .mat-icon-button, .mat-stroked-button, .mat-flat-button {
+.mat-button.default, .mat-icon-button, .mat-stroked-button, .mat-flat-button {
   background-color: #e9e9e9;
   margin: 0.4% 0.2%;
   border-radius:28px;
@@ -79,7 +128,7 @@ td.thick {
 }
 
 /*non-active button hover*/
-.mat-button:hover, .mat-icon-button:hover, .mat-stroked-button:hover, .mat-flat-button:hover {
+.mat-button.default:hover, .mat-icon-button:hover, .mat-stroked-button:hover, .mat-flat-button:hover {
   background-color: #e6dede;
   margin: 0.4% 0.2%;
   border-radius:28px;

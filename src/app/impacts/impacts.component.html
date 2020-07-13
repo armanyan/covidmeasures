@@ -31,8 +31,89 @@
       <div class="card card-border">
 
         <div class="card-header card-header-success">
-          <h3 class="card-title">
-            Impact of Government Covid-19 Measures</h3>
+          <h3 class="card-title">Economic Impacts since COVID-19 outbreak</h3>
+        </div>
+
+        <div class="card-body">
+
+          <div class="content table-responsive table-full-width">
+            <table class="table">
+              <thead>
+                <th
+                  *ngFor="let header of economicImpactHeaders"
+                  class="text-primary center-align"
+                >
+                <button class="default" (click)="sortTable(header)" mat-button>
+                  {{ header }} <i class="material-icons" style="font-size: 20px;">sort</i>
+                </button>
+                </th>
+              </thead>
+              <tbody>
+                <tr class="center-align" *ngFor="let row of countriesData">
+                  <td class="thick">
+                    <a href="#/country/{{row['Country'].alpha3}}">{{ row['Country'].name }}</a>
+                  </td>
+                  <td class="center-align">
+                    <div *ngIf="row['Stringency Score'].avg !== undefined" title="Click for more info.">
+                    <button
+                      onclick="this.blur()"
+                      (click)="openEconomicData('Stringency Score', row['Country'].name, row['Stringency Score'].avg, row['Stringency Score'].last)"
+                      mat-button
+                    >
+                      {{ row['Stringency Score'].avg }}
+                    </button>
+                    </div>
+                    <div *ngIf="row['Stringency Score'].avg === undefined">
+                      N/A
+                    </div>
+                  </td>
+                  <td class="center-align" *ngFor="let indicator of indicators">
+                    <div *ngIf="row[indicator].avg !== undefined"
+                      title="Click for more info."
+                      [ngClass]="{
+                        'positive': (row[indicator].avg > 0 && indicator !== 'Unemployment Rate') ||
+                                    (row[indicator].avg < 0 && indicator === 'Unemployment Rate'),
+                        'negative': (row[indicator].avg < 0 && indicator !== 'Unemployment Rate') ||
+                                    (row[indicator].avg > 0 && indicator === 'Unemployment Rate')
+                      }">
+                      <button
+                        onclick="this.blur()"
+                        (click)="openEconomicData(indicator, row['Country'].name, row[indicator].avg, row[indicator].last)"
+                        mat-button
+                      >
+                        <span *ngIf="row[indicator].avg > 0">+</span>{{ row[indicator].avg | number }}%
+                      </button>
+                    </div>
+                    <div *ngIf="row[indicator].avg === undefined">
+                      No data
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+    
+        </div>
+
+        <div class="card-footer">
+          <div class="stats">
+            <!-- Put Updated On date -->
+          </div>
+          <div class="stats">
+            Source: Trading Economics & CovidMeasures Community
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <hr>
+
+    <div class="col-md-12">
+      <div class="card card-border">
+
+        <div class="card-header card-header-success">
+          <h3 class="card-title">Impact of Government COVID-19 Measures</h3>
             <mat-form-field>
               <mat-label style="color: rgb(218, 205, 205);">Search by Country, Measure or key word</mat-label>
               <input  matInput (keyup)="applyFilter($event)">
