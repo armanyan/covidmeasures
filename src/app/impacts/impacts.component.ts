@@ -128,15 +128,17 @@ export class ImpactsComponent implements OnInit {
     }
 
     const stringencies = [];
+    let c1: number, c2: number, c6: number, c7: number, c8: number;
     for (const i in evolution.dates) {
       // dates are in euro format - month is at position 1
       if (months.includes(evolution.dates[i].split('/')[1])) {
         const data = evolution.data[alpha3];
-        stringencies.push(
-          data.lockdown[i] + data.school_closure[i] + data.business_closure[i] +
-          data.international_travel[i] + data.public_events[i] + data.gatherings_restriction[i] +
-          data.public_transport[i] + data.domestic_travel[i] + data.public_information[i]
-        );
+        c1 = data.school_closure[i] === 0 ? 0 : (100*(data.school_closure[i]-0.5*(1-data.school_closure_flag[i])))/3;
+        c2 = data.business_closure[i] === 0 ? 0 : (100*(data.business_closure[i]-0.5*(1-data.business_closure_flag[i])))/3;
+        c6 = data.lockdown[i] === 0 ? 0 : (100*(data.lockdown[i]-0.5*(1-data.lockdown_flag[i])))/3;
+        c7 = data.domestic_travel[i] === 0 ? 0 : (100*(data.domestic_travel[i]-0.5*(1-data.domestic_travel_flag[i])))/2;
+        c8 = data.international_travel[i] === 0 ? 0 : (100*data.international_travel[i])/4;
+        stringencies.push(Math.round((c1+c2+c6+c7+c8)/5));
       }
     }
     return stringencies;
@@ -211,9 +213,10 @@ export class ImpactsComponent implements OnInit {
         scores['scores'].push(country['Stringency Score'].avg);
       }
     }
+    const d = updated.split('/');
     this.dialog.open(EconomicDataComponent, {
       width: '500px',
-      data: { indicator, country, value, updated: new Date(updated), scores }
+      data: { indicator, country, value, updated: new Date(`${d[2]}-${d[1]}-${d[0]}`), scores }
     });
   }
 
