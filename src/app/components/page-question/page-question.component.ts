@@ -8,6 +8,7 @@ import { Component, OnInit, Input } from '@angular/core';
 export class PageQuestionComponent implements OnInit {
 
   @Input() questionHeader: string;
+  @Input() readMore: boolean;
   
   constructor() { }
 
