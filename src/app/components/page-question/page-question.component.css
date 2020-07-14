@@ -1,7 +1,8 @@
 
 div.question {
-    margin-left: 10px;
+    margin-left: 0;
     margin-top: 10px;
+    width: 100%;
 }
 
 :host ::ng-deep p.question, :host ::ng-deep h4.question  {
@@ -34,4 +35,10 @@ div.question {
 /*non-active button text*/
 .mat-button.mat-primary, .mat-icon-button.mat-primary, .mat-stroked-button.mat-primary {
     color: #aaa5a5;
+}
+
+@media (max-width: 400px) {
+    div.question{
+        margin: 0;
+    }
 }
