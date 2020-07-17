@@ -11,6 +11,11 @@ import * as unemployment from '../data/unemployment';
 import * as import_impacts from '../data/imports';
 import * as export_impacts from '../data/exports';
 
+interface Location {
+  value: string;
+  viewValue: string;
+}
+
 export interface Impact {
   impact: string,
   description: string,
@@ -36,6 +41,19 @@ export class ImpactsComponent implements OnInit {
   public sortingOrder = true; // true for des
   public indicators = ['GDP', 'Unemployment Rate', 'Imports', 'Exports'];
 
+  public locations: Location[] = [
+    {value: 'G20', viewValue: 'G20'},
+    {value: 'World', viewValue: 'World'},
+    {value: 'Northern America', viewValue: 'North America'},
+    {value: 'Europe', viewValue: 'Europe'},
+    {value: 'Asia', viewValue: 'Asia'},
+    {value: 'Africa', viewValue: 'Africa'},
+    {value: 'Oceania', viewValue: 'Oceania'},
+    {value: 'Latin America and the Caribbean', viewValue: 'Latin America and the Caribbean'},
+  ]
+  public economicImpactsRegion = 'G20';
+  private evolution: any;
+
   p: number = 1;
   collection: any[];
 
@@ -55,12 +73,13 @@ export class ImpactsComponent implements OnInit {
     this.collection = this.impacts;
     this.setWidget();
 
-    const evolution = (await this.http.get(`${aws}/evolution.json`).toPromise() as any);
-    this.processEconomicData(evolution);
+    this.evolution = (await this.http.get(`${aws}/evolution.json`).toPromise() as any);
+    this.processEconomicData(this.evolution);
   }
 
-  private async processEconomicData(evolution: any) {
-    this.countries = Object.keys(gdp.default);
+  private  processEconomicData(evolution: any, countries: any = Object.keys(gdp.default)) {
+
+    this.countries = countries;
     this.countries.sort();
     let dates;
     let value;
@@ -221,4 +240,38 @@ export class ImpactsComponent implements OnInit {
     });
   }
 
+  public changeEconomicRegion(value:string) {
+    this.economicImpactsRegion = value;
+    this.countriesData = []
+
+    switch (value) {
+      case 'G20':
+        this.processEconomicData(this.evolution, Object.keys(gdp.default));
+        break;
+      case 'World':
+        this.processEconomicData(this.evolution, []);
+        break;
+      case 'Northern America':
+        this.processEconomicData(this.evolution, []);
+        break;
+      case 'Europe':
+        this.processEconomicData(this.evolution, []);
+        break;
+      case 'Asia':
+        this.processEconomicData(this.evolution, []);
+        break;
+      case 'Africa':
+        this.processEconomicData(this.evolution, []);
+        break;
+      case 'Oceania':
+        this.processEconomicData(this.evolution, []);
+        break;
+      case 'Latin America and the Caribbean':
+        this.processEconomicData(this.evolution, []);
+        break;
+      default:
+        break;
+    }
+
+  }
 }

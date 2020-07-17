@@ -32,6 +32,21 @@
 
         <div class="card-header card-header-success">
           <h3 class="card-title">Economic Impacts since COVID-19 outbreak</h3>
+
+          <ng-container *ngIf="!isMobile">
+            <ng-container *ngFor="let location of locations">
+              <button mat-raised-button *ngIf="economicImpactsRegion===location.value"
+                class="float" type="button" color="primary">
+                <span>{{ location.viewValue }}</span>
+              </button>
+
+              <button mat-button *ngIf="economicImpactsRegion!==location.value"
+                class="float" type="button" color="primary"
+                (click)="changeEconomicRegion(location.value)">
+                <span>{{ location.viewValue }}</span>
+              </button>
+            </ng-container>
+          </ng-container>
         </div>
 
         <div class="card-body">
