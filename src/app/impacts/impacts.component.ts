@@ -91,7 +91,6 @@ export class ImpactsComponent implements OnInit {
     this.import_impacts = (await this.http.get(`${aws}/world_imports.json`).toPromise() as any);
     this.export_impacts = (await this.http.get(`${aws}/world_exports.json`).toPromise() as any);
 
-    // console.log(Object.keys(alpha3))
     this.processEconomicData(this.evolution);
   }
 
@@ -102,7 +101,6 @@ export class ImpactsComponent implements OnInit {
     let dates;
     let value;
     for (let country of this.countries) {
-      // console.log(country)
       const current = {
         'Country': { name: country, alpha3: '' },
         'Stringency Score': { last: '', avg: '' }, // use avg instead of score for convenience
@@ -113,7 +111,6 @@ export class ImpactsComponent implements OnInit {
       };
 
       const stringencies = this.getStringency(country, evolution);
-      // console.log(stringencies)
       if (stringencies.length > 1) {
         current['Country'].alpha3 = this.getAlpha3FromName(country, evolution);
         current['Stringency Score'].last = evolution.dates[evolution.dates.length-1];
@@ -122,7 +119,6 @@ export class ImpactsComponent implements OnInit {
         current['Stringency Score'].last = undefined;
         current['Stringency Score'].avg = undefined;
       }
-      // console.log(country, current)
       // const datasets = { "GDP": gdp, "Unemployment Rate": unemployment, "Imports": import_impacts, "Exports": export_impacts };
       const datasets = { 
         "GDP": this.gdp_growth, 
@@ -132,8 +128,6 @@ export class ImpactsComponent implements OnInit {
       };
       let IS_VALID_COUNTRY = true;
       for (const key of Object.keys(datasets)) {
-        // console.log(key)
-        // console.log(datasets[key][country])
         if(datasets[key][country] == undefined){
           // if the country name does not exists in datasets 
           // we set country as inValid
@@ -169,13 +163,11 @@ export class ImpactsComponent implements OnInit {
           }
         }else{
           // if country is not valid we assign undefined
-          // console.log(country)
           current[key].last = undefined;
           current[key].avg = undefined;
         }
         
       }
-      // console.log(country, datasets)
       this.countriesData.push(current);
     }
   }
