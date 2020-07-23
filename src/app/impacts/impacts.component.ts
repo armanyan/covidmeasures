@@ -126,6 +126,7 @@ export class ImpactsComponent implements OnInit {
         "Imports": this.import_impacts, 
         "Exports": this.export_impacts 
       };
+      let numberNoData = 0;
       let IS_VALID_COUNTRY = true;
       for (const key of Object.keys(datasets)) {
         if(datasets[key][country] == undefined){
@@ -160,15 +161,19 @@ export class ImpactsComponent implements OnInit {
           } else {
             current[key].last = undefined;
             current[key].avg = undefined;
+            numberNoData += 1;
           }
         }else{
           // if country is not valid we assign undefined
           current[key].last = undefined;
           current[key].avg = undefined;
+          numberNoData += 1;
         }
-        
       }
-      this.countriesData.push(current);
+      if (numberNoData < 2) {
+        this.countriesData.push(current);
+      }
+
     }
   }
 
