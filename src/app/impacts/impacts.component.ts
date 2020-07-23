@@ -284,6 +284,7 @@ export class ImpactsComponent implements OnInit {
   }
 
   public openEconomicData(indicator: string, country: string, value: number, updated: string) {
+    console.log(updated)
     const scores = {'countries': [], 'scores': []};
     if (indicator === 'Stringency Score') {
       for (const country of this.countriesData) {
@@ -294,10 +295,22 @@ export class ImpactsComponent implements OnInit {
         scores['scores'].push(country['Stringency Score'].avg);
       }
     }
-    const d = updated.split('/');
+    const d = updated.split('/').length > 1 ? updated.split('/') : updated;
     this.dialog.open(EconomicDataComponent, {
       width: '500px',
-      data: { indicator, country, value, updated: new Date(`${d[2]}-${d[1]}-${d[0]}`), scores }
+      data: { 
+        indicator, 
+        country, 
+        value, 
+        updated: Array.isArray(d) ? new Date(`${d[2]}-${d[1]}-${d[0]}`) : new Date(updated), 
+        scores ,
+        dataSets: {
+          'GDP': this.gdp_growth,
+          'Unemployment Rate': this.unemployment,
+          'Imports': this.import_impacts,
+          'Exports': this.export_impacts
+        }
+      },
     });
   }
 
