@@ -289,7 +289,6 @@ export class ImpactsComponent implements OnInit {
   }
 
   public openEconomicData(indicator: string, country: string, value: number, updated: string) {
-    console.log(updated)
     const scores = {'countries': [], 'scores': []};
     if (indicator === 'Stringency Score') {
       for (const country of this.countriesData) {
@@ -339,41 +338,41 @@ export class ImpactsComponent implements OnInit {
         break;
       }
       case 'Europe': {
-        const northAmericaAlpha3 = country_codes.filter(country => country.region == 'Europe')
+        const europe = country_codes.filter(country => country.region == 'Europe')
           .map(country => country["alpha-3"]);
-        const countries = allCountries.filter(country => northAmericaAlpha3.includes(country.alpha3))
+        const countries = allCountries.filter(country => europe.includes(country.alpha3))
           .map(country => country.country_name);
         this.processEconomicData(this.evolution, countries);
         break;
       }
       case 'Asia': {
-        const northAmericaAlpha3 = country_codes.filter(country => country.region == 'Asia')
+        const asia = country_codes.filter(country => country.region == 'Asia')
           .map(country => country["alpha-3"]);
-        const countries = allCountries.filter(country => northAmericaAlpha3.includes(country.alpha3))
+        const countries = allCountries.filter(country => asia.includes(country.alpha3))
           .map(country => country.country_name);
         this.processEconomicData(this.evolution, countries);
         break;
       }
       case 'Africa': {
-        const northAmericaAlpha3 = country_codes.filter(country => country.region == 'Africa')
+        const africa = country_codes.filter(country => country.region == 'Africa')
           .map(country => country["alpha-3"]);
-        const countries = allCountries.filter(country => northAmericaAlpha3.includes(country.alpha3))
+        const countries = allCountries.filter(country => africa.includes(country.alpha3))
           .map(country => country.country_name);
         this.processEconomicData(this.evolution, countries);
         break;
       }
       case 'Oceania': {
-        const northAmericaAlpha3 = country_codes.filter(country => country.region == 'Oceania')
+        const oceania = country_codes.filter(country => country.region == 'Oceania')
           .map(country => country["alpha-3"]);
-        const countries = allCountries.filter(country => northAmericaAlpha3.includes(country.alpha3))
+        const countries = allCountries.filter(country => oceania.includes(country.alpha3))
           .map(country => country.country_name);
         this.processEconomicData(this.evolution, countries);
         break;
       }
       case 'Latin America and the Caribbean':{
-        const northAmericaAlpha3 = country_codes.filter(country => country["sub-region"] == 'Latin America and the Caribbean')
+        const latinAmericaCaribbean = country_codes.filter(country => country["sub-region"] == 'Latin America and the Caribbean')
           .map(country => country["alpha-3"]);
-        const countries = allCountries.filter(country => northAmericaAlpha3.includes(country.alpha3))
+        const countries = allCountries.filter(country => latinAmericaCaribbean.includes(country.alpha3))
           .map(country => country.country_name);
         this.processEconomicData(this.evolution, countries);
         break;
