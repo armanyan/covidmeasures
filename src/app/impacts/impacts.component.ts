@@ -6,12 +6,13 @@ import { MatDialog } from '@angular/material/dialog';
 
 import { EconomicDataComponent } from 'app/components/economic-data/economic-data.component';
 import { aws, mobileWidth, getCountryNameByAlpha } from '../utils';
-import * as gdp from '../data/gdp';
+// import * as gdp from '../data/gdp';
 // import * as unemployment from '../data/unemployment';
 // import * as import_impacts from '../data/imports';
 // import * as export_impacts from '../data/exports';
 
 import allCountries from '../data/countries';
+import g20Countries from '../data/g20_countries';
 import country_codes from '../data/country_codes';
 
 interface Location {
@@ -94,8 +95,7 @@ export class ImpactsComponent implements OnInit {
     this.processEconomicData(this.evolution);
   }
 
-  private  processEconomicData(evolution: any, countries: any = Object.keys(gdp.default)) {
-
+  private processEconomicData(evolution: any, countries: Array<string> = g20Countries) {
     this.countries = countries;
     this.countries.sort();
     let dates;
@@ -324,7 +324,7 @@ export class ImpactsComponent implements OnInit {
 
     switch (value) {
       case 'G20':
-        this.processEconomicData(this.evolution, Object.keys(gdp.default));
+        this.processEconomicData(this.evolution, g20Countries);
         break;
       case 'World':
         this.processEconomicData(this.evolution, allCountries.map(country => country.country_name));
@@ -378,7 +378,7 @@ export class ImpactsComponent implements OnInit {
         break;
       }
       default:
-        this.processEconomicData(this.evolution, Object.keys(gdp.default));
+        this.processEconomicData(this.evolution, g20Countries);
         break;
     }
 
