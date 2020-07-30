@@ -2,17 +2,18 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import Chart from 'chart.js';
 
-import * as gdp from '../../data/gdp';
-import * as unemployment from '../../data/unemployment';
-import * as import_impacts from '../../data/imports';
-import * as export_impacts from '../../data/exports';
+// import * as gdp from '../../data/gdp';
+// import * as unemployment from '../../data/unemployment';
+// import * as import_impacts from '../../data/imports';
+// import * as export_impacts from '../../data/exports';
 
 export interface EconomicData {
   indicator: string;
   country: string;
   value: number;
   updated: string;
-  scores?: any
+  scores?: any;
+  dataSets: any;
 }
 
 @Component({
@@ -29,18 +30,18 @@ export class EconomicDataComponent implements OnInit {
     'Exports': 'The amount of exported goods to other countries, in billion dollars.'
   };
 
-  public datasets = {
-    'GDP': gdp,
-    'Unemployment Rate': unemployment,
-    'Imports': import_impacts,
-    'Exports': export_impacts
-  }
+  // public datasets = {
+  //   'GDP': gdp,
+  //   'Unemployment Rate': unemployment,
+  //   'Imports': import_impacts,
+  //   'Exports': export_impacts
+  // }
 
   public drawChart = true;
 
   constructor(
     public dialogRef: MatDialogRef<EconomicDataComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: EconomicData
+    @Inject(MAT_DIALOG_DATA) public data: EconomicData,
   ) {}
 
   ngOnInit() {
@@ -56,10 +57,10 @@ export class EconomicDataComponent implements OnInit {
 
     let data: number[], labels: string[], dates2019: string[], dates2020: string[], backgroundColor: string[], text: string;
     if (indicator !== 'Stringency Score') {
-      dates2019 = Object.keys(this.datasets[indicator].default[country]).filter(date => date.startsWith('2019'));
-      dates2020 = Object.keys(this.datasets[indicator].default[country]).filter(date => date.startsWith('2020'));
+      dates2019 = Object.keys(this.data.dataSets[indicator][country]).filter(date => date.startsWith('2019'));
+      dates2020 = Object.keys(this.data.dataSets[indicator][country]).filter(date => date.startsWith('2020'));
       labels = dates2019.concat(dates2020);
-      data = labels.map(date => this.datasets[indicator].default[country][date]);
+      data = labels.map(date => this.data.dataSets[indicator][country][date]);
       backgroundColor = dates2019.map(x => "#3e95cd").concat(dates2020.map(x => "#8e5ea2"));
       text = 'Variation in 2019-2020';
     } else {
