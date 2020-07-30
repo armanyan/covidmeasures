@@ -8,6 +8,7 @@ import { EconomicDataComponent } from 'app/components/economic-data/economic-dat
 import { aws, mobileWidth, getCountryNameByAlpha } from '../utils';
 
 import allCountries from '../data/countries';
+import alpha3s from '../data/alpha3';
 import g20Countries from '../data/g20_countries';
 import country_codes from '../data/country_codes';
 
@@ -104,7 +105,7 @@ export class ImpactsComponent implements OnInit {
       };
 
       const stringencies = this.getStringency(country, evolution);
-      if (stringencies.length > 1) {
+      if (stringencies.reduce((a, b) => a+b) !== 0) {
         current['Country'].alpha3 = this.getAlpha3FromName(country, evolution);
         current['Stringency Score'].last = evolution.dates[evolution.dates.length-1];
         current['Stringency Score'].avg = stringencies.reduce((a, b) => a+b);
@@ -112,7 +113,6 @@ export class ImpactsComponent implements OnInit {
         current['Stringency Score'].last = undefined;
         current['Stringency Score'].avg = undefined;
       }
-      // const datasets = { "GDP": gdp, "Unemployment Rate": unemployment, "Imports": import_impacts, "Exports": export_impacts };
       const datasets = { 
         "GDP": this.gdp_growth, 
         "Unemployment Rate": this.unemployment, 
@@ -323,50 +323,44 @@ export class ImpactsComponent implements OnInit {
         this.processEconomicData(this.evolution, allCountries.map(country => country.country_name));
         break;
       case 'Northern America': {
-        const northAmericaAlpha3 = country_codes.filter(country => country["sub-region"] == 'Northern America')
+        const northAmerica = country_codes.filter(country => country["sub-region"] == 'Northern America')
           .map(country => country["alpha-3"]);
-        const countries = allCountries.filter(country => northAmericaAlpha3.includes(country.alpha3))
-          .map(country => country.country_name);
+        const countries = northAmerica.map(alpha3 => alpha3s[alpha3].name);
         this.processEconomicData(this.evolution, countries);
         break;
       }
       case 'Europe': {
         const europe = country_codes.filter(country => country.region == 'Europe')
           .map(country => country["alpha-3"]);
-        const countries = allCountries.filter(country => europe.includes(country.alpha3))
-          .map(country => country.country_name);
+        const countries = europe.map(alpha3 => alpha3s[alpha3].name);
         this.processEconomicData(this.evolution, countries);
         break;
       }
       case 'Asia': {
         const asia = country_codes.filter(country => country.region == 'Asia')
           .map(country => country["alpha-3"]);
-        const countries = allCountries.filter(country => asia.includes(country.alpha3))
-          .map(country => country.country_name);
+        const countries = asia.map(alpha3 => alpha3s[alpha3].name);
         this.processEconomicData(this.evolution, countries);
         break;
       }
       case 'Africa': {
         const africa = country_codes.filter(country => country.region == 'Africa')
           .map(country => country["alpha-3"]);
-        const countries = allCountries.filter(country => africa.includes(country.alpha3))
-          .map(country => country.country_name);
+        const countries = africa.map(alpha3 => alpha3s[alpha3].name);
         this.processEconomicData(this.evolution, countries);
         break;
       }
       case 'Oceania': {
         const oceania = country_codes.filter(country => country.region == 'Oceania')
           .map(country => country["alpha-3"]);
-        const countries = allCountries.filter(country => oceania.includes(country.alpha3))
-          .map(country => country.country_name);
+        const countries = oceania.map(alpha3 => alpha3s[alpha3].name);
         this.processEconomicData(this.evolution, countries);
         break;
       }
       case 'Latin America and the Caribbean':{
         const latinAmericaCaribbean = country_codes.filter(country => country["sub-region"] == 'Latin America and the Caribbean')
           .map(country => country["alpha-3"]);
-        const countries = allCountries.filter(country => latinAmericaCaribbean.includes(country.alpha3))
-          .map(country => country.country_name);
+        const countries = latinAmericaCaribbean.map(alpha3 => alpha3s[alpha3].name);
         this.processEconomicData(this.evolution, countries);
         break;
       }
