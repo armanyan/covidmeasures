@@ -6,10 +6,6 @@ import { MatDialog } from '@angular/material/dialog';
 
 import { EconomicDataComponent } from 'app/components/economic-data/economic-data.component';
 import { aws, mobileWidth, getCountryNameByAlpha } from '../utils';
-// import * as gdp from '../data/gdp';
-// import * as unemployment from '../data/unemployment';
-// import * as import_impacts from '../data/imports';
-// import * as export_impacts from '../data/exports';
 
 import allCountries from '../data/countries';
 import g20Countries from '../data/g20_countries';
@@ -42,7 +38,7 @@ export class ImpactsComponent implements OnInit {
   public impacts: Impact[] = [];
   public countriesData = [];
   public countries = [];
-  public sortingOrder = true; // true for des
+  public sortingOrder = true; // true for desc
   public indicators = ['GDP', 'Unemployment Rate', 'Imports', 'Exports'];
 
   public locations: Location[] = [
@@ -64,8 +60,6 @@ export class ImpactsComponent implements OnInit {
   private import_impacts: any; 
   private export_impacts: any;
 
-
-
   p: number = 1;
   collection: any[];
 
@@ -86,9 +80,8 @@ export class ImpactsComponent implements OnInit {
     this.setWidget();
 
     this.evolution = (await this.http.get(`${aws}/evolution.json`).toPromise() as any);
-    
     this.gdp_growth = (await this.http.get(`${aws}/world_gdp_rate.json`).toPromise() as any);
-    this.unemployment = (await this.http.get(`${aws}/world_unemployement_rate.json`).toPromise() as any);
+    this.unemployment = (await this.http.get(`${aws}/world_unemployment_rate.json`).toPromise() as any);
     this.import_impacts = (await this.http.get(`${aws}/world_imports.json`).toPromise() as any);
     this.export_impacts = (await this.http.get(`${aws}/world_exports.json`).toPromise() as any);
 
