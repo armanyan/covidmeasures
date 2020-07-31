@@ -9,6 +9,7 @@ declare interface RouteInfo {
     class: string;
     soon?: boolean;
     hide?: boolean;
+    link?: boolean;
     belongsTo?: string;
 }
 export const ROUTES: RouteInfo[] = [
@@ -24,6 +25,7 @@ export const ROUTES: RouteInfo[] = [
   { path: '/masks', title: 'Masks', hide: true, icon:'healing', class: '',  belongsTo: 'measures' },
   { path: '/testing', title: 'Testing', soon: true, icon:'local_hospital', class: '', belongsTo: 'measures' },
   { path: '/aboutus', title: 'About Us', icon:'supervisor_account', class: '' },
+  { path: '', title: 'Buy Me a Coffee', icon:'local_cafe', class: '', link: true }
 ];
 
 @Component({
@@ -58,7 +60,7 @@ export class SidebarComponent implements OnInit {
       return true;
   };
 
-  public navigateToROute(path: string){
+  public navigateToRoute(path: string){
     // seems a problem in firefox to navigate twice
     this.router.navigateByUrl(path).then(()=> {
       // console.log("navigated once")
