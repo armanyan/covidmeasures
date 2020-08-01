@@ -15,6 +15,12 @@ interface CovidCategories {
   value: string;
 }
 
+enum ChildrenCases {
+  PerCovid = 'perCovidCases',
+  PerDeaths = 'perCovidDeaths',
+  Total = 'total'
+}
+
 @Component({
   selector: 'app-school',
   templateUrl: './school.component.html',
@@ -63,6 +69,8 @@ export class SchoolComponent implements OnInit {
   public schoolYearsMissedPer: number;
 
   public perCovidActive = false;
+
+  public covidChildrenCases: string = 'perCovidCases';
 
   public schoolClosureFull = [];
   public schoolClosure = [];
@@ -161,11 +169,18 @@ export class SchoolComponent implements OnInit {
 
   // TODO unify the desktop and mobile versions
   public changeCovidActiveDeath(category?: string) {
-    if (category) {
-      this.currentCovidCategory = category;
+    // if (category) {
+    //   this.currentCovidCategory = category;
+    // }
+
+    
+    // this.perCovidActive = !this.perCovidActive;
+    if ((<any>Object).values(ChildrenCases).includes(category)) {
+      this.covidChildrenCases = category;
+      console.log(this.covidChildrenCases);
+      this.covidVSSchoolChangeRegion(this.covidVSSchoolRegion);
     }
-    this.perCovidActive = !this.perCovidActive;
-    this.covidVSSchoolChangeRegion(this.covidVSSchoolRegion);
+
   }
 
   /**
@@ -226,7 +241,25 @@ export class SchoolComponent implements OnInit {
   public covidVSSchoolChangeRegion(region: string) {
     this.covidVSSchoolRegion = region;
     this.impactedChildren = this.getRegionChildrenPopulation(region);
-    const divider = this.perCovidActive ? this.covidByContinent[region].activeCases : this.covidByContinent[region].deaths;
+    
+    // let divider = this.perCovidActive ? this.covidByContinent[region].activeCases : this.covidByContinent[region].deaths;
+    let divider: any;
+    switch (this.covidChildrenCases) {
+      
+      case ChildrenCases.PerCovid:
+        divider = this.covidByContinent[region].activeCases;
+        this.covidChildrenCases = ChildrenCases.PerCovid;
+        break;
+
+      case ChildrenCases.PerDeaths:
+        divider = this.covidByContinent[region].deaths;
+        this.covidChildrenCases = ChildrenCases.PerDeaths;
+        break;
+    
+      default:
+        break;
+    }
+    
     this.impactedChildrenPer = Math.floor(this.impactedChildren/divider);
     this.schoolYearsMissedPer = Math.floor(
       (this.getAverageDaysMissedPerRegion(region)*this.impactedChildren)/(divider*365)
