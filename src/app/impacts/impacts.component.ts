@@ -6,10 +6,16 @@ import { MatDialog } from '@angular/material/dialog';
 
 import { EconomicDataComponent } from 'app/components/economic-data/economic-data.component';
 import { aws, mobileWidth, getCountryNameByAlpha } from '../utils';
-import * as gdp from '../data/gdp';
-import * as unemployment from '../data/unemployment';
-import * as import_impacts from '../data/imports';
-import * as export_impacts from '../data/exports';
+
+import allCountries from '../data/countries';
+import alpha3s from '../data/alpha3';
+import g20Countries from '../data/g20_countries';
+import country_codes from '../data/country_codes';
+
+interface Location {
+  value: string;
+  viewValue: string;
+}
 
 export interface Impact {
   impact: string,
@@ -33,8 +39,27 @@ export class ImpactsComponent implements OnInit {
   public impacts: Impact[] = [];
   public countriesData = [];
   public countries = [];
-  public sortingOrder = true; // true for des
+  public sortingOrder = true; // true for desc
   public indicators = ['GDP', 'Unemployment Rate', 'Imports', 'Exports'];
+
+  public locations: Location[] = [
+    {value: 'G20', viewValue: 'G20'},
+    {value: 'World', viewValue: 'World'},
+    {value: 'Northern America', viewValue: 'North America'},
+    {value: 'Europe', viewValue: 'Europe'},
+    {value: 'Asia', viewValue: 'Asia'},
+    {value: 'Africa', viewValue: 'Africa'},
+    {value: 'Oceania', viewValue: 'Oceania'},
+    {value: 'Latin America and the Caribbean', viewValue: 'Latin America and the Caribbean'},
+  ]
+  public economicImpactsRegion = 'G20';
+
+  private evolution: any;
+
+  private gdp_growth: any;
+  private unemployment: any;
+  private import_impacts: any; 
+  private export_impacts: any;
 
   p: number = 1;
   collection: any[];
@@ -55,16 +80,21 @@ export class ImpactsComponent implements OnInit {
     this.collection = this.impacts;
     this.setWidget();
 
-    const evolution = (await this.http.get(`${aws}/evolution.json`).toPromise() as any);
-    this.processEconomicData(evolution);
+    this.evolution = (await this.http.get(`${aws}/evolution.json`).toPromise() as any);
+    this.gdp_growth = (await this.http.get(`${aws}/world_gdp_rate.json`).toPromise() as any);
+    this.unemployment = (await this.http.get(`${aws}/world_unemployment_rate.json`).toPromise() as any);
+    this.import_impacts = (await this.http.get(`${aws}/world_imports.json`).toPromise() as any);
+    this.export_impacts = (await this.http.get(`${aws}/world_exports.json`).toPromise() as any);
+
+    this.processEconomicData(this.evolution);
   }
 
-  private async processEconomicData(evolution: any) {
-    this.countries = Object.keys(gdp.default);
+  private processEconomicData(evolution: any, countries: Array<string> = g20Countries) {
+    this.countries = countries;
     this.countries.sort();
     let dates;
     let value;
-    for (const country of this.countries) {
+    for (let country of this.countries) {
       const current = {
         'Country': { name: country, alpha3: '' },
         'Stringency Score': { last: '', avg: '' }, // use avg instead of score for convenience
@@ -75,7 +105,7 @@ export class ImpactsComponent implements OnInit {
       };
 
       const stringencies = this.getStringency(country, evolution);
-      if (stringencies.length > 1) {
+      if (stringencies.reduce((a, b) => a+b) !== 0) {
         current['Country'].alpha3 = this.getAlpha3FromName(country, evolution);
         current['Stringency Score'].last = evolution.dates[evolution.dates.length-1];
         current['Stringency Score'].avg = stringencies.reduce((a, b) => a+b);
@@ -83,28 +113,60 @@ export class ImpactsComponent implements OnInit {
         current['Stringency Score'].last = undefined;
         current['Stringency Score'].avg = undefined;
       }
-
-      const datasets = { "GDP": gdp, "Unemployment Rate": unemployment, "Imports": import_impacts, "Exports": export_impacts };
+      const datasets = { 
+        "GDP": this.gdp_growth, 
+        "Unemployment Rate": this.unemployment, 
+        "Imports": this.import_impacts, 
+        "Exports": this.export_impacts 
+      };
+      let numberNoData = 0;
+      let IS_VALID_COUNTRY = true;
       for (const key of Object.keys(datasets)) {
-        value = 0;
-        dates = Object.keys(datasets[key].default[country]).filter(date => date.startsWith('2020'));
-        const dates2019 = Object.keys(datasets[key].default[country]).filter(date => date.startsWith('2019'));
-        const average2019 = key === "GDP" ? 0 : dates2019.map(date => datasets[key].default[country][date]).reduce((a, b) => a+b)/dates2019.length;
-
-        value = 0;
-        for (const date of dates) {
-          value += datasets[key].default[country][date] - average2019;
+        if(datasets[key][country] == undefined){
+          // if the country name does not exists in datasets 
+          // we set country as inValid
+          IS_VALID_COUNTRY = false; 
+          // we re-check country
+          const foundCountry = allCountries.find(country => country.alpha3 === current.Country.alpha3);
+          if (foundCountry) {
+            // if we found country we replace name
+            country = foundCountry.country_name;
+            if (datasets[key][country]) IS_VALID_COUNTRY = true;
+          }
+        }else{
+          IS_VALID_COUNTRY = true;
         }
-        if (value !== 0) {
-          value = ['Imports', 'Exports'].includes(key) ? ((value / dates.length) / average2019)*100 : value / dates.length;
-          current[key].last = dates[dates.length-1];
-          current[key].avg = value;
-        } else {
+
+        if (IS_VALID_COUNTRY) {
+          dates = Object.keys(datasets[key][country]).filter(date => date.startsWith('2020'));
+          const dates2019 = Object.keys(datasets[key][country]).filter(date => date.startsWith('2019'));
+          const average2019 = key === "GDP" ? 0 : 
+          dates2019.length ? dates2019.map(date => datasets[key][country][date]).reduce((a, b) => a+b)/dates2019.length : 0;
+  
+          value = 0;
+          for (const date of dates) {
+            value += datasets[key][country][date] - average2019;
+          }
+          if (value !== 0) {
+            value = ['Imports', 'Exports'].includes(key) ? ((value / dates.length) / average2019)*100 : value / dates.length;
+            current[key].last = dates[dates.length-1];
+            current[key].avg = value;
+          } else {
+            current[key].last = undefined;
+            current[key].avg = undefined;
+            numberNoData += 1;
+          }
+        }else{
+          // if country is not valid we assign undefined
           current[key].last = undefined;
           current[key].avg = undefined;
+          numberNoData += 1;
         }
       }
-      this.countriesData.push(current);
+      if (numberNoData < 2) {
+        this.countriesData.push(current);
+      }
+
     }
   }
 
@@ -129,15 +191,26 @@ export class ImpactsComponent implements OnInit {
 
     const stringencies = [];
     let c1: number, c2: number, c6: number, c7: number, c8: number;
+
     for (const i in evolution.dates) {
       // dates are in euro format - month is at position 1
       if (months.includes(evolution.dates[i].split('/')[1])) {
         const data = evolution.data[alpha3];
-        c1 = data.school_closure[i] === 0 ? 0 : (100*(data.school_closure[i]-0.5*(1-data.school_closure_flag[i])))/3;
-        c2 = data.business_closure[i] === 0 ? 0 : (100*(data.business_closure[i]-0.5*(1-data.business_closure_flag[i])))/3;
-        c6 = data.lockdown[i] === 0 ? 0 : (100*(data.lockdown[i]-0.5*(1-data.lockdown_flag[i])))/3;
-        c7 = data.domestic_travel[i] === 0 ? 0 : (100*(data.domestic_travel[i]-0.5*(1-data.domestic_travel_flag[i])))/2;
-        c8 = data.international_travel[i] === 0 ? 0 : (100*data.international_travel[i])/4;
+        c1 = data.school_closure == undefined || data.school_closure[i] === 0 ? 0 : 
+        (100*(data.school_closure[i]-0.5*(1-data.school_closure_flag[i])))/3;
+        
+        c2 = data.business_closure == undefined || data.business_closure[i] === 0 ? 0 : 
+        (100*(data.business_closure[i]-0.5*(1-data.business_closure_flag[i])))/3;
+        
+        c6 = data.lockdown == undefined || data.lockdown[i] === 0 ? 0 : 
+        (100*(data.lockdown[i]-0.5*(1-data.lockdown_flag[i])))/3;
+        
+        c7 = data.domestic_travel == undefined || data.domestic_travel[i] === 0 ? 0 : 
+        (100*(data.domestic_travel[i]-0.5*(1-data.domestic_travel_flag[i])))/2;
+        
+        c8 = data.international_travel == undefined || data.international_travel[i] === 0 ? 0 : 
+        (100*data.international_travel[i])/4;
+        
         stringencies.push(Math.round((c1+c2+c6+c7+c8)/5));
       }
     }
@@ -146,7 +219,12 @@ export class ImpactsComponent implements OnInit {
 
   private getAlpha3FromName(name: string, evolution: any) {
     for (const country of Object.keys(evolution.data)) {
-      if (evolution.data[country].name === name || evolution.data[country].name.replace(/_/g, ' ') === name) {
+      if (
+        evolution.data[country].name === name ||
+        evolution.data[country].name.replace(/_/g, ' ') === name ||
+        evolution.data[country].name.split(' ').slice(0,2).join(' ').toLowerCase() === name.toLocaleLowerCase() || 
+        evolution.data[country].name.split('_').slice(0,2).join(' ').toLowerCase() === name.toLocaleLowerCase()
+        ) {
         return country;
       }
     }
@@ -214,11 +292,82 @@ export class ImpactsComponent implements OnInit {
         scores['scores'].push(country['Stringency Score'].avg);
       }
     }
-    const d = updated.split('/');
+    const d = updated.split('/').length > 1 ? updated.split('/') : updated;
     this.dialog.open(EconomicDataComponent, {
       width: '500px',
-      data: { indicator, country, value, updated: new Date(`${d[2]}-${d[1]}-${d[0]}`), scores }
+      data: { 
+        indicator, 
+        country, 
+        value, 
+        updated: Array.isArray(d) ? new Date(`${d[2]}-${d[1]}-${d[0]}`) : new Date(updated), 
+        scores ,
+        dataSets: {
+          'GDP': this.gdp_growth,
+          'Unemployment Rate': this.unemployment,
+          'Imports': this.import_impacts,
+          'Exports': this.export_impacts
+        }
+      },
     });
   }
 
+  public changeEconomicRegion(value:string) {
+    this.economicImpactsRegion = value;
+    this.countriesData = []
+
+    switch (value) {
+      case 'G20':
+        this.processEconomicData(this.evolution, g20Countries);
+        break;
+      case 'World':
+        this.processEconomicData(this.evolution, allCountries.map(country => country.country_name));
+        break;
+      case 'Northern America': {
+        const northAmerica = country_codes.filter(country => country["sub-region"] == 'Northern America')
+          .map(country => country["alpha-3"]);
+        const countries = northAmerica.map(alpha3 => alpha3s[alpha3].name);
+        this.processEconomicData(this.evolution, countries);
+        break;
+      }
+      case 'Europe': {
+        const europe = country_codes.filter(country => country.region == 'Europe')
+          .map(country => country["alpha-3"]);
+        const countries = europe.map(alpha3 => alpha3s[alpha3].name);
+        this.processEconomicData(this.evolution, countries);
+        break;
+      }
+      case 'Asia': {
+        const asia = country_codes.filter(country => country.region == 'Asia')
+          .map(country => country["alpha-3"]);
+        const countries = asia.map(alpha3 => alpha3s[alpha3].name);
+        this.processEconomicData(this.evolution, countries);
+        break;
+      }
+      case 'Africa': {
+        const africa = country_codes.filter(country => country.region == 'Africa')
+          .map(country => country["alpha-3"]);
+        const countries = africa.map(alpha3 => alpha3s[alpha3].name);
+        this.processEconomicData(this.evolution, countries);
+        break;
+      }
+      case 'Oceania': {
+        const oceania = country_codes.filter(country => country.region == 'Oceania')
+          .map(country => country["alpha-3"]);
+        const countries = oceania.map(alpha3 => alpha3s[alpha3].name);
+        this.processEconomicData(this.evolution, countries);
+        break;
+      }
+      case 'Latin America and the Caribbean':{
+        const latinAmericaCaribbean = country_codes.filter(country => country["sub-region"] == 'Latin America and the Caribbean')
+          .map(country => country["alpha-3"]);
+        const countries = latinAmericaCaribbean.map(alpha3 => alpha3s[alpha3].name);
+        this.processEconomicData(this.evolution, countries);
+        break;
+      }
+      default:
+        this.processEconomicData(this.evolution, g20Countries);
+        break;
+    }
+
+  }
 }
