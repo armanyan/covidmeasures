@@ -121,6 +121,11 @@ tr td.active {
 .card-header a {
   text-decoration: none;
 }
+
+.active-red-button {
+  background-color: #ed5658 !important;
+  color: #000 !important;
+}
 /* --------------------------- CONTENT ----------------------------------*/
 
 /*columns names*/
