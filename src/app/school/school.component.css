@@ -126,6 +126,18 @@ tr td.active {
   background-color: #ed5658 !important;
   color: #000 !important;
 }
+
+.divider hr {  
+  border: 1px solid #83C187;
+}
+.divider .title{
+  color: #83C187;
+  font-size: 30px;
+  width: 250px;
+}
+#theDebate iframe{
+  height: 150vh;
+}
 /* --------------------------- CONTENT ----------------------------------*/
 
 /*columns names*/
@@ -164,5 +176,11 @@ tr td.active {
 @media (max-width: 1200px) {
   .table{
     table-layout: auto;
+  }
+}
+
+@media (max-width: 900px) {
+  #theDebate iframe{
+    height: 100vh;
   }
 }

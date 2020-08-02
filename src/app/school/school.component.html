@@ -1,69 +1,163 @@
 <app-page-loaders [hidden]="isClientReady"></app-page-loaders>
-<div class="main-content  pt-md-0">
+<div class="main-content pt-md-0 px-md-0">
   <div class="container-fluid">
-
     <div layout-align="end end">
-      <h2 *ngIf="isMobile"><u>{{ titleService.getTitle().split(':')[0] }}</u></h2>
+      <h2 *ngIf="isMobile">
+        <u>{{ titleService.getTitle().split(":")[0] }}</u>
+      </h2>
     </div>
 
     <app-page-question
-    [readMore]="readMore"
-    [questionHeader]="'Do the benefits of school closures outweigh the toll on education? Join the discussion.'"
+      [readMore]="readMore"
+      [questionHeader]="
+        'Do the benefits of school closures outweigh the toll on education? Join the discussion.'
+      "
     >
       <div class="readMore">
-          <p class="question">
-            We are examining the trade-offs of disrupting children's education with the (perceived) reduction of spreading COVID-19.
-          </p>
-          <p class="question">
-            To answer this question seriously, we need to understand first:
-          </p>
-          <ul>
-              <li>The rules in place around the world.</li>
-              <li>The potential toll on education and the impacts on children and their families.</li>
-              <li>The strategies of educational institutions to mitigate the affects of school closures.</li>
-              <li>The danger of COVID-19 exposure to children and their parents.</li>
-          </ul>
-          <p class="question">
-            CovidMeasures aims to provide facts and perspectives to enrich your reflections. We encourage you to contribute to the debate.
-          </p>
+        <p class="question">
+          We are examining the trade-offs of disrupting children's education
+          with the (perceived) reduction of spreading COVID-19.
+        </p>
+        <p class="question">
+          To answer this question seriously, we need to understand first:
+        </p>
+        <ul>
+          <li>The rules in place around the world.</li>
+          <li>
+            The potential toll on education and the impacts on children and
+            their families.
+          </li>
+          <li>
+            The strategies of educational institutions to mitigate the affects
+            of school closures.
+          </li>
+          <li>
+            The danger of COVID-19 exposure to children and their parents.
+          </li>
+        </ul>
+        <p class="question">
+          CovidMeasures aims to provide facts and perspectives to enrich your
+          reflections. We encourage you to contribute to the debate.
+        </p>
       </div>
     </app-page-question>
-
-    <!-- <p style="padding-bottom:1%;">
-      {{ school_intro_1 }}
-    </p> -->
-
-    <div class="row">
-      <div class="col-md-2"></div>
-      <div class="card card-border col-12 col-md-8">
-        <div class="card-header card-header-success">
-          <h3 class="card-title">How many children impacted around the world?</h3>
-
-          <div *ngIf="isMobile">
-            <mat-label>Choose Region</mat-label>
-            <mat-select [(value)]="schoolClosureRegion" (selectionChange)="schoolClosureChangeLocation($event.value)">
-              <mat-option *ngFor="let location of locations" [value]="location.value">
-                {{location.viewValue}}
-              </mat-option>
-            </mat-select>
-          </div>
-
-          <ng-container *ngIf="!isMobile">
-            <ng-container *ngFor="let location of locations">
-              <button mat-raised-button *ngIf="schoolClosureRegion===location.value"
-                class="float" type="button" color="primary">
-                <span>{{ location.viewValue }}</span>
-              </button>
-
-              <button mat-button *ngIf="schoolClosureRegion!==location.value"
-                class="float" type="button" color="primary"
-                (click)="schoolClosureChangeLocation(location.value)">
-                <span>{{ location.viewValue }}</span>
-              </button>
-            </ng-container>
-          </ng-container>
-
+    <!-- ------------------------------ GLOBAL DATA SECTION ----------------------------------------->
+    <div class="global-data" id="globalData">
+      <div class="divider d-flex">
+        <div class="" style="width: 20%;">
+          <hr class="hr-left" />
         </div>
+        <div class="title text-center">Global Data</div>
+        <div class="w-100">
+          <hr class="hr-right" />
+        </div>
+      </div>
+      <div class="container pt-5" style="max-width: 1400px;">
+        <div class="card card-border">
+          <div class="card-header card-header-success">
+            <h3 class="card-title">
+              Number of children affected by school closures
+            </h3>
+
+            <div *ngIf="isMobile">
+              <mat-label>Per</mat-label>
+              <mat-select
+                [(value)]="currentCovidCategory"
+                (selectionChange)="changeCovidActiveDeath($event.value)"
+              >
+                <mat-option
+                  *ngFor="let cat of covidCategories"
+                  [value]="cat.value"
+                >
+                  {{ cat.value }}
+                </mat-option>
+              </mat-select>
+
+              <hr />
+
+              <mat-label>Choose Region</mat-label>
+              <mat-select
+                [(value)]="covidVSSchoolRegion"
+                (selectionChange)="covidVSSchoolChangeRegion($event.value)"
+              >
+                <mat-option
+                  *ngFor="let location of locations"
+                  [value]="location.value"
+                >
+                  {{ location.viewValue }}
+                </mat-option>
+              </mat-select>
+            </div>
+
+            <ng-container *ngIf="!isMobile">
+              <button
+                mat-button
+                class="float"
+                [ngClass]="{
+                  'active-red-button': covidChildrenCases == 'total'
+                }"
+                color="primary"
+                (click)="changeCovidActiveDeath('total')"
+              >
+                <span>Total</span>
+              </button>
+              <button
+                mat-button
+                class="float"
+                [ngClass]="{
+                  'active-red-button': covidChildrenCases == 'perCovidCases'
+                }"
+                color="primary"
+                (click)="changeCovidActiveDeath('perCovidCases')"
+              >
+                <span>Per COVID-19 Active Case</span>
+              </button>
+              <button
+                mat-button
+                class="float"
+                type="button"
+                [ngClass]="{
+                  'active-red-button': covidChildrenCases == 'perCovidDeaths'
+                }"
+                color="primary"
+                (click)="changeCovidActiveDeath('perCovidDeaths')"
+              >
+                <span>Per COVID-19 Death</span>
+              </button>
+              <!-- <button mat-button *ngIf="!perCovidActive" class="float" type="button" color="primary"
+                (click)="changeCovidActiveDeath()">
+                <span>Per COVID-19 Active Case</span>
+              </button>
+              <button mat-raised-button *ngIf="!perCovidActive" class="float" type="button" color="primary">
+                <span>Per COVID-19 Death</span>
+              </button> -->
+
+              <hr />
+
+              <ng-container *ngFor="let location of locations">
+                <button
+                  mat-raised-button
+                  *ngIf="covidVSSchoolRegion === location.value"
+                  class="float"
+                  type="button"
+                  color="primary"
+                >
+                  <span>{{ location.viewValue }}</span>
+                </button>
+
+                <button
+                  mat-button
+                  *ngIf="covidVSSchoolRegion !== location.value"
+                  class="float"
+                  type="button"
+                  color="primary"
+                  (click)="covidVSSchoolChangeRegion(location.value)"
+                >
+                  <span>{{ location.viewValue }}</span>
+                </button>
+              </ng-container>
+            </ng-container>
+          </div>
           <div class="card-body">
             <div class="table-responsive">
               <table class="table">
@@ -74,144 +168,24 @@
                   <th>
                     Average duration of school closure
                   </th>
+                  <th>
+                    Cumulated school years missed
+                  </th>
                 </thead>
                 <tbody>
                   <tr>
                     <td class="left">
-                      {{numberChildrenImpacted | number}}
+                      {{ impactedChildrenPer | number }}
                     </td>
+                    <td class="left">{{ averageDaysMissed | number }} days</td>
                     <td class="left">
-                      {{averageDaysMissed | number}} days
+                      {{ schoolYearsMissedPer | number }}
                     </td>
                   </tr>
                 </tbody>
               </table>
-              </div>
-          </div>
-
-          <div class="card-footer ">
-            <div class="stats">
-              Updated on {{ schoolClosureTableUpdatedOn }}
-            </div>
-            <div class="stats">
-              Source: CovidMeasures Community & &nbsp;
-              <a href="https://www.bsg.ox.ac.uk/research/research-projects/coronavirus-government-response-tracker" target="_blank">OxCGRT</a>
             </div>
           </div>
-
-      </div>
-      <div class="col-md-2"></div>
-    </div>
-
-    <p style="padding-top:1%;">
-      {{ school_graph_1_below }}
-    </p>
-    <p style="text-align: right;">
-      <em>{{school_graph_1_below_last_update}}</em>
-    </p>
-
-    <div class="card card-border">
-      <div class="card-header card-header-success">
-        <h3 class="card-title">Map - School Closure</h3>
-      </div>
-      <div class="card-body" style="height: 80vh;" *ngIf="schoolClosureData">
-        <app-map-school-closure [countries]="schoolClosureData.countries"></app-map-school-closure>
-      </div>
-      <div class="card-footer ">
-        <div class="stats">
-          Updated on {{ schoolClosureTableUpdatedOn }}
-        </div>
-        <div class="stats">
-          Source: CovidMeasures Community & &nbsp;
-          <a href="https://www.bsg.ox.ac.uk/research/research-projects/coronavirus-government-response-tracker" target="_blank">OxCGRT</a>
-        </div>
-      </div>
-    </div>
-
-    <hr>
-    <h3>How COVID-19 compares to school closure impacts?</h3>
-    <div class="card card-border">
-      <div class="card-header card-header-success">
-        <h3 class="card-title ">School Closure & COVID-19 Ratios</h3>
-
-        <div *ngIf="isMobile">
-          <mat-label>Per</mat-label>
-          <mat-select [(value)]="currentCovidCategory" (selectionChange)="changeCovidActiveDeath($event.value)">
-            <mat-option *ngFor="let cat of covidCategories" [value]="cat.value">
-              {{cat.value}}
-            </mat-option>
-          </mat-select>
-
-          <hr>
-
-          <mat-label>Choose Region</mat-label>
-          <mat-select [(value)]="covidVSSchoolRegion" (selectionChange)="covidVSSchoolChangeRegion($event.value)">
-            <mat-option *ngFor="let location of locations" [value]="location.value">
-              {{location.viewValue}}
-            </mat-option>
-          </mat-select>
-        </div>
-
-        <ng-container *ngIf="!isMobile">
-
-          <button mat-raised-button *ngIf="perCovidActive"
-            class="float" type="button" color="primary">
-            <span>Per COVID-19 Active Case</span>
-          </button>
-          <button mat-button *ngIf="perCovidActive"
-            class="float" type="button" color="primary" (click)="changeCovidActiveDeath()">
-            <span>Per COVID-19 Death</span>
-          </button>
-          <button mat-button *ngIf="!perCovidActive"
-            class="float" type="button" color="primary" (click)="changeCovidActiveDeath()">
-            <span>Per COVID-19 Active Case</span>
-          </button>
-          <button mat-raised-button *ngIf="!perCovidActive"
-            class="float" type="button" color="primary">
-            <span>Per COVID-19 Death</span>
-          </button>
-
-        <hr>
-
-          <ng-container *ngFor="let location of locations">
-            <button mat-raised-button *ngIf="covidVSSchoolRegion===location.value"
-              class="float" type="button" color="primary">
-              <span>{{ location.viewValue }}</span>
-            </button>
-
-            <button mat-button *ngIf="covidVSSchoolRegion!==location.value"
-              class="float" type="button" color="primary"
-              (click)="covidVSSchoolChangeRegion(location.value)">
-              <span>{{ location.viewValue }}</span>
-            </button>
-          </ng-container>
-        </ng-container>
-
-      </div>
-        <div class="card-body">
-          <div class="table-responsive">
-            <table class="table">
-              <thead class="text-primary">
-                <th>
-                  Number of children impacted
-                </th>
-                <th>
-                  Cumulated school years missed
-                </th>
-              </thead>
-              <tbody>
-                <tr>
-                  <td class="left">
-                    {{impactedChildrenPer | number}}
-                  </td>
-                  <td class="left">
-                    {{schoolYearsMissedPer | number}}
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-            </div>
-        </div>
 
           <div class="card-footer">
             <div class="stats">
@@ -219,173 +193,311 @@
             </div>
             <div class="stats">
               Source: CovidMeasures Community & &nbsp;
-              <a href="https://www.bsg.ox.ac.uk/research/research-projects/coronavirus-government-response-tracker" target="_blank">OxCGRT</a>
+              <a
+                href="https://www.bsg.ox.ac.uk/research/research-projects/coronavirus-government-response-tracker"
+                target="_blank"
+                >OxCGRT</a
+              >
             </div>
           </div>
-
-      </div>
-
-    <p style="padding-top:1%;">
-      {{ school_graph_2_below }}
-    </p>
-    <p style="text-align: right;">
-      <em>{{school_graph_2_below_last_update}}</em>
-    </p>
-
-    <hr>
-
-    <div class="col-md-12">
-      <div class="card card-border">
-
-        <div class="card-header card-header-success">
-          <h3 class="card-title">School Closure Status Per Country</h3>
-          <mat-form-field>
-            <mat-label style="color: rgb(218, 205, 205);">Search by Country</mat-label>
-            <input matInput (keyup)="applyFilter($event)" [(ngModel)]="filterCountry" placeholder="United States of America, France, China...">
-          </mat-form-field>
         </div>
 
-        <div class="card-body">
-
-          <div class="content table-responsive table-full-width">
-            <table class="table">
-              <thead>
-                <th class="text-primary" *ngFor="let row of statsHeaders" (click)="sortTable(row.title)">
-                  <div class="d-flex justify-content-center align-items-center" style="cursor: pointer;">
-                    {{ row.title }} <i *ngIf="row.sortable" class="material-icons" style="font-size: 20px;">arrow_drop_down</i>
-                  </div>
-                </th>
-              </thead>
-              <tbody>
-                <tr *ngFor="let row of schoolClosure">
-                  <td [ngClass]="{active: sortStatus.country.active}">{{ row.name }}</td>
-                  <td [ngClass]="{active: sortStatus.children.active}" class="text-center">{{ row.children | number }}</td>
-                  <td [ngClass]="{active: sortStatus.start.active}" class="text-center">{{ row.start | date }}</td>
-                  <td [ngClass]="{active: sortStatus.end.active}" class="text-center">{{ row.end | date }}</td>
-                  <td [ngClass]="{active: sortStatus.duration.active}" class="text-center">{{ row.duration }}</td>
-                  <td class="text-center">{{ row.status }}</td>
-                </tr>
-              </tbody>
-            </table>
-            </div>
-    
-        </div>
-
-        <div class="card-footer">
-          <div class="stats">
-            Updated on {{ schoolClosureTableUpdatedOn }}
-          </div>
-          <div class="stats">
-            Source: CovidMeasures Community & &nbsp;
-            <a href="https://www.bsg.ox.ac.uk/research/research-projects/coronavirus-government-response-tracker" target="_blank">OxCGRT</a>
-          </div>
-        </div>
-
-      </div>
-    </div>
-
-    <hr>
-
-    <div class="col-md-12">
-      <div class="card card-border">
-
-        <div class="card-header card-header-success">
-          <h3 class="card-title">List of School Closure Impacts</h3>
-          <mat-form-field>
-            <mat-label style="color: rgb(218, 205, 205);">Search by Country, Measure or key word</mat-label>
-            <input  matInput (keyup)="applyImpactFilter($event)" placeholder="United States of America, France, China...">
-          </mat-form-field>
-        </div>
-
-        <div class="row pt-3" [ngClass]="{'mobile-table-text': isMobile}">
-          <div class="col-md-1"></div>
-          <div class="col-md-7 text-left">
-            <h4>Tell us about other impacts of School Closure</h4>
-            <p class="m-0 p-0">
-              We want to hear both positive and negative impacts of those measures.<br>
-              <!-- Vote for the most impactful in your life and the life of others around you (coming soon).<br> -->
-              <b>
-                An impact can be mental, physical, direct, or indirect - an impact is any change in your life.
-              </b>
+        <hr style="margin-top: 80px; border: 1px solid #a9b0bb;" />
+        <div class="row justify-content-center">
+          <div class="col-10 pt-5 pb-3" style="font-family: Roboto;">
+            <p>
+              {{ TEXT_P1 }}
+            </p>
+            <p>
+              {{ TEXT_P2 }}
+            </p>
+            <p class="text-right">
+              <em>Last update: 2020/04/22</em>
             </p>
           </div>
-          <div class="col-md-3">
-            <button id="addImpact" class="text-decoration-none text-dark nav-link float-right" 
-              mat-raised-button type="button" color="primary"
-            >
-              <span class="span.size">
-                <i class="fa fa-plus" aria-hidden="true"></i>
-                Add an Impact
-              </span>
-            </button>
-          </div>
-          <div class="col-md-1"></div>
         </div>
-        <hr>
+        <hr style="margin-bottom: 100px; border: 1px solid #a9b0bb;" />
 
-        <div class="card-body">
-
-          <div class="content table-responsive table-full-width">
-            <table class="table">
-              <thead>
-                <th class="text-primary" *ngFor="let row of impactHeaders">
-                  {{ row }}
-                </th>
-              </thead>
-              <tbody>
-                <tr *ngFor="let row of impactCollection | paginate: { itemsPerPage: 7, currentPage: p }">
-                  <td>{{ row.impact }}</td>
-                  <td>{{ row.desc}}</td>
-                  <td>{{ row.link }}</td>
-                  <td>{{ row.countries }}</td>
-                  <td *ngIf="row.source.startsWith('http')">
-                    <a href="{{ row.source }}" target="_blank">{{ row.source.split('/')[2] }}</a>
-                  </td>
-                  <td *ngIf="!row.source.startsWith('http')">
-                    {{ row.source }}
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-            <div class="d-flex justify-content-center">
-              <pagination-controls class="my-pagination" (pageChange)="p = $event"></pagination-controls>
+        <div class="card card-border">
+          <div class="card-header card-header-success">
+            <h3 class="card-title">Map - School Closure</h3>
+          </div>
+          <div
+            class="card-body"
+            style="height: 80vh;"
+            *ngIf="schoolClosureData"
+          >
+            <app-map-school-closure
+              [countries]="schoolClosureData.countries"
+            ></app-map-school-closure>
+          </div>
+          <div class="card-footer">
+            <div class="stats">
+              Updated on {{ schoolClosureTableUpdatedOn }}
+            </div>
+            <div class="stats">
+              Source: CovidMeasures Community & &nbsp;
+              <a
+                href="https://www.bsg.ox.ac.uk/research/research-projects/coronavirus-government-response-tracker"
+                target="_blank"
+                >OxCGRT</a
+              >
             </div>
           </div>
-    
         </div>
 
-        <div class="card-footer">
-          <div class="stats">
-            Source: CovidMeasures Community
+        <div class="col-md-12" style="margin-top: 64px;">
+          <div class="card card-border">
+            <div class="card-header card-header-success">
+              <h3 class="card-title">School Closure Status Per Country</h3>
+              <mat-form-field>
+                <mat-label style="color: rgb(218, 205, 205);"
+                  >Search by Country</mat-label
+                >
+                <input
+                  matInput
+                  (keyup)="applyFilter($event)"
+                  [(ngModel)]="filterCountry"
+                  placeholder="United States of America, France, China..."
+                />
+              </mat-form-field>
+            </div>
+
+            <div class="card-body">
+              <div class="content table-responsive table-full-width">
+                <table class="table">
+                  <thead>
+                    <th
+                      class="text-primary"
+                      *ngFor="let row of statsHeaders"
+                      (click)="sortTable(row.title)"
+                    >
+                      <div
+                        class="d-flex justify-content-center align-items-center"
+                        style="cursor: pointer;"
+                      >
+                        {{ row.title }}
+                        <i
+                          *ngIf="row.sortable"
+                          class="material-icons"
+                          style="font-size: 20px;"
+                          >arrow_drop_down</i
+                        >
+                      </div>
+                    </th>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let row of schoolClosure">
+                      <td [ngClass]="{ active: sortStatus.country.active }">
+                        {{ row.name }}
+                      </td>
+                      <td
+                        [ngClass]="{ active: sortStatus.children.active }"
+                        class="text-center"
+                      >
+                        {{ row.children | number }}
+                      </td>
+                      <td
+                        [ngClass]="{ active: sortStatus.start.active }"
+                        class="text-center"
+                      >
+                        {{ row.start | date }}
+                      </td>
+                      <td
+                        [ngClass]="{ active: sortStatus.end.active }"
+                        class="text-center"
+                      >
+                        {{ row.end | date }}
+                      </td>
+                      <td
+                        [ngClass]="{ active: sortStatus.duration.active }"
+                        class="text-center"
+                      >
+                        {{ row.duration }}
+                      </td>
+                      <td class="text-center">{{ row.status }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div class="card-footer">
+              <div class="stats">
+                Updated on {{ schoolClosureTableUpdatedOn }}
+              </div>
+              <div class="stats">
+                Source: CovidMeasures Community & &nbsp;
+                <a
+                  href="https://www.bsg.ox.ac.uk/research/research-projects/coronavirus-government-response-tracker"
+                  target="_blank"
+                  >OxCGRT</a
+                >
+              </div>
+            </div>
           </div>
         </div>
+      </div>
+    </div>
+    <!-- ------------------------------ IMPACTS SECTION ----------------------------------------->
+    <div class="impacts-data" id="impacts">
+      <div class="divider d-flex" style="margin-top: 89px;">
+        <div class="" style="width: 20%;">
+          <hr class="hr-left" />
+        </div>
+        <div class="title text-center">
+          Impacts
+        </div>
+        <div class="w-100">
+          <hr class="hr-right" />
+        </div>
+      </div>
+      <div class="container pt-5" style="max-width: 1400px;">
+        <div class="col-md-12">
+          <div class="card card-border">
+            <div class="card-header card-header-success">
+              <h3 class="card-title">List of School Closure Impacts</h3>
+              <mat-form-field>
+                <mat-label style="color: rgb(218, 205, 205);"
+                  >Search by Country, Measure or key word</mat-label
+                >
+                <input
+                  matInput
+                  (keyup)="applyImpactFilter($event)"
+                  placeholder="United States of America, France, China..."
+                />
+              </mat-form-field>
+            </div>
 
+            <div class="row pt-3" [ngClass]="{ 'mobile-table-text': isMobile }">
+              <div class="col-md-1"></div>
+              <div class="col-md-7 text-left">
+                <h4>Tell us about other impacts of School Closure</h4>
+                <p class="m-0 p-0">
+                  We want to hear both positive and negative impacts of those
+                  measures.<br />
+                  <!-- Vote for the most impactful in your life and the life of others around you (coming soon).<br> -->
+                  <b>
+                    An impact can be mental, physical, direct, or indirect - an
+                    impact is any change in your life.
+                  </b>
+                </p>
+              </div>
+              <div class="col-md-3">
+                <button
+                  id="addImpact"
+                  class="text-decoration-none text-dark nav-link float-right"
+                  mat-raised-button
+                  type="button"
+                  color="primary"
+                >
+                  <span class="span.size">
+                    <i class="fa fa-plus" aria-hidden="true"></i>
+                    Add an Impact
+                  </span>
+                </button>
+              </div>
+              <div class="col-md-1"></div>
+            </div>
+            <hr />
+
+            <div class="card-body">
+              <div class="content table-responsive table-full-width">
+                <table class="table">
+                  <thead>
+                    <th class="text-primary" *ngFor="let row of impactHeaders">
+                      {{ row }}
+                    </th>
+                  </thead>
+                  <tbody>
+                    <tr
+                      *ngFor="
+                        let row of impactCollection
+                          | paginate: { itemsPerPage: 7, currentPage: p }
+                      "
+                    >
+                      <td>{{ row.impact }}</td>
+                      <td>{{ row.desc }}</td>
+                      <td>{{ row.link }}</td>
+                      <td>{{ row.countries }}</td>
+                      <td *ngIf="row.source.startsWith('http')">
+                        <a href="{{ row.source }}" target="_blank">{{
+                          row.source.split("/")[2]
+                        }}</a>
+                      </td>
+                      <td *ngIf="!row.source.startsWith('http')">
+                        {{ row.source }}
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                <div class="d-flex justify-content-center">
+                  <pagination-controls
+                    class="my-pagination"
+                    (pageChange)="p = $event"
+                  ></pagination-controls>
+                </div>
+              </div>
+            </div>
+
+            <div class="card-footer">
+              <div class="stats">
+                Source: CovidMeasures Community
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- ----------------------------------------------- DEBATE SECTION -------------------------------------->
+    <div class="debate" id="theDebate">
+      <div class="divider d-flex" style="margin-top: 89px;">
+        <div class="" style="width: 20%;">
+          <hr class="hr-left" />
+        </div>
+        <div class="title text-center">
+          The Debate
+        </div>
+        <div class="w-100">
+          <hr class="hr-right" />
+        </div>
+      </div>
+      <div class="pt-5">
+        <div class="row justify-content-center p-0">
+          <div class="col-12 p-sm-0 p-md-1" style="width: 100%;">
+            <iframe
+              data-loaded="true"
+              title="Free Will or Determinism: Do We Have Free Will? — kialo.com"
+              src="https://www.kialo.com/public-health-policy-should-limit-school-attendance-in-the-fall-due-to-covid-19-38830?embedder=https://support.kialo.com&amp;utm_source=support.kialo.com&amp;utm_medium=embed"
+              style="border: 0px none;"
+              allowfullscreen=""
+              width="100%"
+            ></iframe>
+          </div>
+        </div>
       </div>
     </div>
 
-    <hr>
-
-    <p>
-      The status of school closures worldwide was made possible thanks to the community of <b>CovidMeasures</b>.
-      Please help to keep this database up-to-date. <a href="https://forms.gle/aFGWDjLbvXAm8ZkR7" target="_blank">Join our team </a>or
-      just <a href="https://forms.gle/TuLNu54Xr6vfYedq5" target="_blank">contribute</a>
+    <!-- <p>
+      The status of school closures worldwide was made possible thanks to the
+      community of <b>CovidMeasures</b>. Please help to keep this database
+      up-to-date.
+      <a href="https://forms.gle/aFGWDjLbvXAm8ZkR7" target="_blank"
+        >Join our team </a
+      >or just
+      <a href="https://forms.gle/TuLNu54Xr6vfYedq5" target="_blank"
+        >contribute</a
+      >
       by verifying its accuracy in your region.
     </p>
-    <hr>
+    <hr />
     <div class="row justify-content-center">
       <div class="col-md-11" *ngIf="isClientReady">
-        <disqus [identifier]="'/schoolx!zId'" [url]="'https://covidmeasures.info/school'"></disqus>
-        <!-- <div *ngIf="schoolClosureData">
-          <app-disqus-comments 
-          [countriesData]="schoolClosureData.countries"
-          [baseUrl]="'https://covidmeasures.info'"
-          [page]="'school'"
-          [uniqueString]="'x!zId'"
-          [countryAlpha3]="countryView"
-          [uniqueAll]="true"
-          ></app-disqus-comments>
-        </div> -->
+        <disqus
+          [identifier]="'/schoolx!zId'"
+          [url]="'https://covidmeasures.info/school'"
+        ></disqus>
       </div>
-    </div>
+    </div> -->
   </div>
 </div>
