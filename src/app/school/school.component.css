@@ -19,7 +19,7 @@ div.center {
 div.text-align {
   text-align: center;
 }
-
+:host { display: block; }   
 /* --- color of the mat-select text -- */
 
 :host /deep/ .mat-select-value-text {
@@ -126,7 +126,7 @@ tr td.active {
   background-color: #ed5658 !important;
   color: #000 !important;
 }
-
+/* --------------------------- DIVIDER ----------------------------------*/
 .divider hr {  
   border: 1px solid #83C187;
 }
@@ -135,9 +135,52 @@ tr td.active {
   font-size: 30px;
   width: 250px;
 }
+
+/* --------------------------- DEBATE ----------------------------------*/
 #theDebate iframe{
   height: 150vh;
 }
+
+/* --------------------------- PAGE NAVIGATION ----------------------------------*/
+.page-nav {  
+  width: 100%;
+  margin-top: 50px;
+  margin-bottom: 50px;
+  background-color: #fff;
+  z-index: 10;
+}
+
+.nav-fixed {
+  position: fixed;
+  position: -webkit-sticky ;
+  top: 0 ; 
+  margin: 0 !important;
+}
+
+.page-nav ul{
+  font-family: Roboto;
+  list-style: none;
+  font-weight: normal;
+  color:  #b4adad;
+  font-size: 16px;
+  margin-left: 100px;
+  max-width: 543px;
+  padding: 15px 0;
+}
+
+.page-nav li.section-link {
+  cursor: pointer;
+} 
+.page-nav li.section-link:hover{
+  color: #a7a0a0;
+  font-weight: bold;
+} 
+
+mat-toolbar[color="warn"] {
+  position: sticky;
+  top: var(--default-height);
+}
+
 /* --------------------------- CONTENT ----------------------------------*/
 
 /*columns names*/

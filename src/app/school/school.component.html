@@ -41,6 +41,19 @@
         </p>
       </div>
     </app-page-question>
+    <!-- ------------------------------ PAGE Navigator ----------------------------------------->
+
+    <div class="page-nav " id="pageNavbar">
+      <ul class="d-flex justify-content-between ">
+        <li>Jump to:</li>
+        <li class="section-link" (click)="scrollInto('globalData')">Global Data</li>
+        <li class="section-link" (click)="scrollInto('impacts')">Impacts</li>
+        <li class="section-link" (click)="scrollInto('theDebate')">Debate</li>
+      </ul>
+    </div>
+
+    <mat-toolbar color="warn">Second Toolbar</mat-toolbar>
+
     <!-- ------------------------------ GLOBAL DATA SECTION ----------------------------------------->
     <div class="global-data" id="globalData">
       <div class="divider d-flex">

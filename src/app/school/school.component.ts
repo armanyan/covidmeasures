@@ -1,10 +1,11 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, HostListener, Inject} from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Title } from "@angular/platform-browser";
 import * as typeformEmbed from '@typeform/embed';
 
 import { aws, mobileWidth, getRegionByAlpha, getCountryNameByAlpha, getChildrenNoSchool } from '../utils';
 import * as text from '../data/texts/school_closure';
+import { DOCUMENT } from '@angular/common';
 
 interface Location {
   value: string;
@@ -123,10 +124,13 @@ export class SchoolComponent implements OnInit {
 
   public isClientReady: boolean = false;
 
+  private navTopDistance: number;
+
   constructor(
     private titleService: Title,
     private http: HttpClient,
-    private changeDetector: ChangeDetectorRef
+    private changeDetector: ChangeDetectorRef,
+    @Inject(DOCUMENT) document
   ) { }
 
   async ngOnInit() {
@@ -146,6 +150,27 @@ export class SchoolComponent implements OnInit {
 
     this.isClientReady = true;
     this.changeDetector.detectChanges();
+    // we get the distance of pagenave from the top of the screen
+    this.navTopDistance = document.getElementById('pageNavbar').getBoundingClientRect().top;
+  }
+  // we set Listener for scroll
+  @HostListener('window:scroll', ['$event'])
+  onWindowScroll(e) {
+    let pageNavbar = document.getElementById('pageNavbar');
+     if (window.pageYOffset > this.navTopDistance) {
+       // if scroll past pagenav we make it fixed
+       pageNavbar.classList.add('nav-fixed');
+     } else {
+      pageNavbar.classList.remove('nav-fixed'); 
+     }
+  }
+
+  public scrollInto(id: string): void {
+    const el: HTMLElement|null = document.getElementById(id);
+    if (el) {
+      setTimeout(() =>
+        el.scrollIntoView({behavior: 'smooth', block: 'start', inline: 'nearest'}), 0);
+    }
   }
 
   private setTexts() {
