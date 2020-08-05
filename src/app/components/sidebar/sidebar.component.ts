@@ -9,6 +9,7 @@ declare interface RouteInfo {
     class: string;
     soon?: boolean;
     hide?: boolean;
+    link?: boolean;
     belongsTo?: string;
 }
 export const ROUTES: RouteInfo[] = [
@@ -24,6 +25,7 @@ export const ROUTES: RouteInfo[] = [
   { path: '/masks', title: 'Masks', hide: true, icon:'healing', class: '',  belongsTo: 'measures' },
   { path: '/testing', title: 'Testing', soon: true, icon:'local_hospital', class: '', belongsTo: 'measures' },
   { path: '/aboutus', title: 'About Us', icon:'supervisor_account', class: '' },
+  { path: 'https://www.buymeacoffee.com/covidmeasures', title: 'Buy Us A Coffee', icon:'local_cafe', class: '', link: true }
 ];
 
 @Component({
@@ -41,15 +43,14 @@ export class SidebarComponent implements OnInit {
 
   ngOnInit() {
     const statistics = { title: "Statistics", collapse: true, icon: 'arrow_drop_down', menus : []};
-    statistics.menus = ROUTES.filter(item => item.belongsTo == 'statistics');
+    statistics.menus = ROUTES.filter(item => item.belongsTo === 'statistics');
     
     const measures =  { title: "Measures", collapse:true, icon: 'arrow_drop_down', menus : []};
-    measures.menus = ROUTES.filter(item => item.belongsTo == 'measures');
+    measures.menus = ROUTES.filter(item => item.belongsTo === 'measures');
 
-    this.menuItems = ROUTES.filter(menuItem => menuItem.belongsTo == undefined);
+    this.menuItems = ROUTES.filter(menuItem => menuItem.belongsTo === undefined);
     this.menuItems.splice(1,0, measures);
     this.menuItems.splice(2,0, statistics);
-
   }
   isMobileMenu() {
       if ($(window).width() > 991) {
@@ -58,7 +59,7 @@ export class SidebarComponent implements OnInit {
       return true;
   };
 
-  public navigateToROute(path: string){
+  public navigateToRoute(path: string){
     // seems a problem in firefox to navigate twice
     this.router.navigateByUrl(path).then(()=> {
       // console.log("navigated once")
