@@ -11,4 +11,6 @@ export default {
     "According to our count, 4/5th of the child population on the planet is (or has been) impacted by measures of the school closure. So far children have already been out of school for 1 month on average without knowing for how long. Recent announcements in some countries suggest that it may last until the summer.",
   p2:
     "To arrive at the ratios above, we compared the total number of school children affected by school closures to the number of active COVID-19 cases, and then to the number of deaths caused by COVID-19. The aim is to capture the current magnitude of the COVID-19 pandemic compared to the impacts of school closure measures on children’s education. We can notice large disparities between the continents. Nevertheless, a key takeaway is that the relative toll on education is relatively high. Therefore, governments should carefully evaluate the necessity any additional days of school closures.",
+  p3:
+    "The status of school closures worldwide was made possible thanks to the community of CovidMeasures. Please help to keep this database up-to-date. Join our team or just contribute by verifying its accuracy in your region.",
 };

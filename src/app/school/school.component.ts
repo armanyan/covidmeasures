@@ -34,6 +34,7 @@ export class SchoolComponent implements OnInit {
   /** Texts */
   public TEXT_P1: string;
   public TEXT_P2: string;
+  public TEXT_P3: string;
   public school_graph_1_below_last_update: string;
   public school_graph_2_below: string;
   public school_graph_2_below_last_update: string;
@@ -179,6 +180,7 @@ export class SchoolComponent implements OnInit {
   private setTexts() {
     this.TEXT_P1 = text.default.p1;
     this.TEXT_P2 = text.default.p2;
+    this.TEXT_P3 = text.default.p3;
     this.school_graph_1_below_last_update = text.default.school_graph_1_below_last_update;
     this.school_graph_2_below = text.default.school_graph_2_below;
     this.school_graph_2_below_last_update = text.default.school_graph_2_below_last_update;
