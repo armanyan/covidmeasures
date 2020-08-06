@@ -144,8 +144,6 @@ tr td.active {
 /* --------------------------- PAGE NAVIGATION ----------------------------------*/
 .page-nav {  
   width: 100%;
-  margin-top: 50px;
-  margin-bottom: 50px;
   background-color: #fff;
   z-index: 10;
 }
@@ -164,6 +162,7 @@ tr td.active {
   color:  #b4adad;
   font-size: 16px;
   max-width: 543px;
+  padding-top: 20px;
 }
 
 .page-nav li.section-link {

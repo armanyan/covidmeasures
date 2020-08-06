@@ -157,7 +157,7 @@ export class SchoolComponent implements OnInit {
   @HostListener('window:scroll', ['$event'])
   onWindowScroll(e) {
     let pageNavbar = document.getElementById('pageNavbar');
-     if (window.pageYOffset > this.navTopDistance) {
+     if (window.pageYOffset > this.navTopDistance+200) {
        // if scroll past pagenav we make it fixed
        pageNavbar.classList.add('nav-fixed');
      } else {
@@ -166,10 +166,13 @@ export class SchoolComponent implements OnInit {
   }
 
   public scrollInto(id: string): void {
+
+    const yOffset = -60; 
     const el: HTMLElement|null = document.getElementById(id);
+    const y = el.getBoundingClientRect().top + window.pageYOffset + yOffset;
     if (el) {
       setTimeout(() =>
-        el.scrollIntoView({behavior: 'smooth', block: 'start', inline: 'nearest'}), 0);
+        window.scrollTo({top: y, behavior: 'smooth'}), 0);
     }
   }
 
