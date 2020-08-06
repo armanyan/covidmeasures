@@ -278,25 +278,28 @@ export class SchoolComponent implements OnInit {
 
       case ChildrenCases.Total:
         this.impactedChildrenPer = Math.floor(this.getRegionChildrenPopulation(region));
+        divider = 1;
         break;
       
       case ChildrenCases.PerCovid:
         divider = this.covidByContinent[region].activeCases;
         this.impactedChildrenPer = Math.floor(this.impactedChildren/divider);
+        divider = divider * 365;
         break;
 
       case ChildrenCases.PerDeaths:
         divider = this.covidByContinent[region].deaths;
         this.impactedChildrenPer = Math.floor(this.impactedChildren/divider);
+        divider = divider * 365;
         break;
     
       default:
         break;
     }
-    this.schoolYearsMissedPer = Math.floor(
-      (this.getAverageDaysMissedPerRegion(region)*this.impactedChildren)/(divider*365)
-    );
     this.averageDaysMissed = this.getAverageDaysMissedPerRegion(region);
+    this.schoolYearsMissedPer = Math.floor(
+      (this.getAverageDaysMissedPerRegion(region)*this.impactedChildren)/divider
+    );
   }
 
   /**
