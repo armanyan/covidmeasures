@@ -1,0 +1,20 @@
+<div
+  class="page-nav-container pb-5 pt-3 d-flex align-items-center"
+  style="height: 150px;"
+>
+  <div class="row page-nav" id="pageNavbar">
+    <div class="col-1"></div>
+    <ul class="col-11 d-flex justify-content-between">
+      <li>Jump to:</li>
+      <li
+        class="section-link"
+        *ngFor="let section of pageSections"
+        (click)="scrollInto(section.sectionID)"
+      >
+        {{ section.name }}
+      </li>
+      <!-- <li class="section-link" (click)="scrollInto('impacts')">Impacts</li>
+      <li class="section-link" (click)="scrollInto('theDebate')">Debate</li> -->
+    </ul>
+  </div>
+</div>

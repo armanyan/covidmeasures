@@ -1,0 +1,32 @@
+/* --------------------------- PAGE NAVIGATION ----------------------------------*/
+.page-nav {
+  width: 100%;
+  background-color: #fff;
+  z-index: 10;
+}
+
+.nav-fixed {
+  position: fixed;
+  position: -webkit-sticky;
+  top: 0;
+  margin: 0 !important;
+}
+
+.page-nav ul {
+  font-family: Roboto;
+  list-style: none;
+  font-weight: normal;
+  color: #b4adad;
+  font-size: 16px;
+  max-width: 543px;
+  padding-top: 20px;
+}
+
+.page-nav li.section-link {
+  cursor: pointer;
+}
+
+.page-nav li.section-link:hover {
+  color: #a7a0a0;
+  font-weight: bold;
+}
