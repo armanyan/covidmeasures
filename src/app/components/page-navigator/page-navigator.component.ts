@@ -6,16 +6,18 @@ import { DOCUMENT } from "@angular/common";
   styleUrls: ["./page-navigator.component.css"],
 })
 export class PageNavigatorComponent implements OnInit {
-  private navTopDistance: number;
   @Input() pageSections: Array<{ name: string; sectionID: string }>;
+  @Input() navTopDistance: number = 0;
 
   constructor(@Inject(DOCUMENT) document) {}
 
   ngOnInit(): void {
     // we get the distance of pagenave from the top of the screen
-    this.navTopDistance = document
-      .getElementById("pageNavbar")
-      .getBoundingClientRect().top;
+    if (!this.navTopDistance) {
+      this.navTopDistance = document
+        .getElementById("pageNavbar")
+        .getBoundingClientRect().top;
+    }
   }
 
   @HostListener("window:scroll", ["$event"])
