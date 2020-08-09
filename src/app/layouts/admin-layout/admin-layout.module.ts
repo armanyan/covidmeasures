@@ -42,6 +42,8 @@ import { RemindMeComponent } from '../../components/remind-me/remind-me.componen
 import { EvolutionCountryComponent } from '../../components/charts/evolution-country/evolution-country.component';
 import { PageQuestionComponent } from '../../components/page-question/page-question.component'
 import { PageNavigatorComponent } from '../../components/page-navigator/page-navigator.component';
+import { PageSeparatorComponent } from '../../components/page-separator/page-separator.component';
+
 @NgModule({
   imports: [
     CommonModule,
@@ -89,7 +91,8 @@ import { PageNavigatorComponent } from '../../components/page-navigator/page-nav
     RemindMeComponent,
     EvolutionCountryComponent,
     PageQuestionComponent,
-    PageNavigatorComponent
+    PageNavigatorComponent,
+    PageSeparatorComponent
   ]
 })
 
