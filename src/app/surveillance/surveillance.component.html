@@ -1,96 +1,159 @@
 <div class="main-content pt-md-0">
   <div class="container-fluid">
-
     <div layout-align="end end">
-      <h2 *ngIf="isMobile"><u>{{ titleService.getTitle().split(':')[0] }}</u></h2>
+      <h2 *ngIf="isMobile">
+        <u>{{ titleService.getTitle().split(":")[0] }}</u>
+      </h2>
     </div>
 
     <app-page-question
-    [questionHeader]="'How much is geo-tracking benefitting society, or is it an invasion of our privacy? Join the discussion.'"
+      [questionHeader]="
+        'How much is geo-tracking benefitting society, or is it an invasion of our privacy? Join the discussion.'
+      "
     >
       <div class="readMore">
-          <p class="question">
-            As citizens we are questioning the necessity, effectiveness and the potential consequences of the introduction of new tracking or surveillance technologies as the result of COVID-19 outbreak.
-          </p>
-          <p class="question">
-            To answer this question seriously, we need to understand first:
-          </p>
-          <ul>
-            <li>How is this information being collected?</li>
-            <li>How is the information being used?</li>
-            <li>Is tracking voluntary?</li>
-            <li>For how long are individuals being tracked?</li>
-            <li>Is the tracking effort transparent?</li>
-          </ul>
-          <p class="question">
-            CovidMeasures aims to provide facts and perspectives to enrich your reflections. We encourage you to contribute to the debate.
-          </p>
+        <p class="question">
+          As citizens we are questioning the necessity, effectiveness and the
+          potential consequences of the introduction of new tracking or
+          surveillance technologies as the result of COVID-19 outbreak.
+        </p>
+        <p class="question">
+          To answer this question seriously, we need to understand first:
+        </p>
+        <ul>
+          <li>How is this information being collected?</li>
+          <li>How is the information being used?</li>
+          <li>Is tracking voluntary?</li>
+          <li>For how long are individuals being tracked?</li>
+          <li>Is the tracking effort transparent?</li>
+        </ul>
+        <p class="question">
+          CovidMeasures aims to provide facts and perspectives to enrich your
+          reflections. We encourage you to contribute to the debate.
+        </p>
       </div>
     </app-page-question>
-
-    <p>
-      This page is currently being written. We need your help to gather relevant data from around the world. Please add your contribution.
-    </p>
-
-    <br>
-
-    <div class="col-md-12">
-      <div class="card card-border">
-
-        <div class="card-header card-header-success">
-          <h3 class="card-title">Surveillance Measures Per Country
-            <a mat-raised-button class="nav-link float-right" type="button"
-              color="primary" href="https://forms.gle/s5ecbqZnJJapACNR9" target="_blank"
-            >
-              <i class="material-icons">policy</i>
-              <span>Add Your Contribution</span>
-            </a>
-          </h3>
+    <!-- ------------------------------ PAGE Navigator ----------------------------------------->
+    <app-page-navigator
+      [pageSections]="[
+        { name: 'Global Data', sectionID: 'globalData' },
+        { name: 'Debate', sectionID: 'theDebate' }
+      ]"
+    ></app-page-navigator>
+    <!-- ------------------------------ GLOBAL DATA SECTION ----------------------------------------->
+    <div class="global-data" id="globalData">
+      <div class="divider d-flex">
+        <div class="" style="width: 20%;">
+          <hr class="hr-left" />
         </div>
-
-        <div class="card-body">
-
-          <div class="content table-responsive table-full-width">
-            <table class="table">
-              <thead>
-                <th class="text-primary" *ngFor="let row of headers">
-                  {{ row }}
-                </th>
-              </thead>
-              <tbody>
-                <tr *ngFor="let row of table">
-                  <td>{{ row.country }}</td>
-                  <td>{{ row.name }}</td>
-                  <td>{{ row.desc}}</td>
-                  <td>{{ row.release }}</td>
-                  <td>{{ row.device }}</td>
-                  <td>{{ row.target }}</td>
-                  <td>{{ row.geo }}</td>
-                  <td>{{ row.big_data }}</td>
-                  <td>{{ row.app }}</td>
-                  <td>{{ row.other }}</td>
-                  <td>{{ row.status }}</td>
-                </tr>
-              </tbody>
-            </table>
+        <div class="title text-center">Global Data</div>
+        <div class="w-100">
+          <hr class="hr-right" />
+        </div>
+      </div>
+      <div class="container pt-5" style="max-width: 1400px;">
+        <div class="col-md-12">
+          <div class="card card-border">
+            <div class="card-header card-header-success">
+              <h3 class="card-title">
+                Surveillance Measures Per Country
+                <a
+                  mat-raised-button
+                  class="nav-link float-right"
+                  type="button"
+                  color="primary"
+                  href="https://forms.gle/s5ecbqZnJJapACNR9"
+                  target="_blank"
+                >
+                  <i class="material-icons">policy</i>
+                  <span>Add Your Contribution</span>
+                </a>
+              </h3>
             </div>
-    
-        </div>
 
-        <div class="card-footer">
-          <div class="stats">
-            Source: CovidMeasures Community
+            <div class="card-body">
+              <div class="content table-responsive table-full-width">
+                <table class="table">
+                  <thead>
+                    <th class="text-primary" *ngFor="let row of headers">
+                      {{ row }}
+                    </th>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let row of table">
+                      <td>{{ row.country }}</td>
+                      <td>{{ row.name }}</td>
+                      <td>{{ row.desc }}</td>
+                      <td>{{ row.release }}</td>
+                      <td>{{ row.device }}</td>
+                      <td>{{ row.target }}</td>
+                      <td>{{ row.geo }}</td>
+                      <td>{{ row.big_data }}</td>
+                      <td>{{ row.app }}</td>
+                      <td>{{ row.other }}</td>
+                      <td>{{ row.status }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div class="card-footer">
+              <div class="stats">
+                Source: CovidMeasures Community
+              </div>
+            </div>
           </div>
         </div>
 
+        <hr style="margin-top: 80px; border: 1px solid #a9b0bb;" />
+        <div class="row justify-content-center">
+          <div class="col-10 pt-5 pb-3" style="font-family: Roboto;">
+            <p>
+              This page is currently being written. We need your help to gather
+              relevant data from around the world. Please add your contribution.
+            </p>
+          </div>
+        </div>
+        <hr style="margin-bottom: 100px; border: 1px solid #a9b0bb;" />
       </div>
     </div>
-    <hr>
+    <!-- ----------------------------------------------- DEBATE SECTION -------------------------------------->
+    <div class="debate" id="theDebate">
+      <div class="divider d-flex" style="margin-top: 89px;">
+        <div class="" style="width: 20%;">
+          <hr class="hr-left" />
+        </div>
+        <div class="title text-center">
+          The Debate
+        </div>
+        <div class="w-100">
+          <hr class="hr-right" />
+        </div>
+      </div>
+      <div class="pt-5">
+        <div class="row justify-content-center p-0">
+          <div class="col-12 p-sm-0 p-md-1" style="width: 100%;">
+            <iframe
+              data-loaded="true"
+              title="Free Will or Determinism: Do We Have Free Will? — kialo.com"
+              src="https://www.kialo.com/are-tracking-apps-a-legitimate-and-proportional-means-to-fight-covid-19-36145?embedder=https://support.kialo.com&amp;utm_source=support.kialo.com&amp;utm_medium=embed"
+              style="border: 0px none;"
+              allowfullscreen=""
+              width="100%"
+            ></iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- <hr />
     <div class="row justify-content-center" *ngIf="isClientReady">
       <div class="col-md-11">
-        <disqus [identifier]="'/surveillancessf!kId'" [url]="'https://covidmeasures.info/surveillance'"></disqus>
+        <disqus
+          [identifier]="'/surveillancessf!kId'"
+          [url]="'https://covidmeasures.info/surveillance'"
+        ></disqus>
       </div>
-    </div>
-
+    </div> -->
   </div>
 </div>
