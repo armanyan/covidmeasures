@@ -8,14 +8,17 @@
 <div class="sidebar-wrapper">
   <ul class="nav">
     <li routerLinkActive="active" *ngFor="let menuItem of menuItems" class="{{menuItem.class}} nav-item">
-      <a *ngIf="!menuItem.soon && !menuItem.hide && !menuItem.collapse" class="nav-link" (click)="navigateToROute(menuItem.path)" [routerLink]="[menuItem.path]">
+      <a *ngIf="!menuItem.link && !menuItem.soon && !menuItem.hide && !menuItem.collapse" class="nav-link" (click)="navigateToRoute(menuItem.path)" [routerLink]="[menuItem.path]">
         <i class="material-icons">{{menuItem.icon}}</i>
         <p><b>{{menuItem.title}}</b></p>
       </a>
-      <a *ngIf="menuItem.soon && !menuItem.hide" class="nav-link" (click)="navigateToROute(menuItem.path)" [routerLink]="[menuItem.path]">
+      <a *ngIf="!menuItem.link && menuItem.soon && !menuItem.hide" class="nav-link" (click)="navigateToRoute(menuItem.path)" [routerLink]="[menuItem.path]">
         <i class="material-icons">{{menuItem.icon}}</i>
         <p class="soon">{{menuItem.title}}</p>
       </a>
+      <div *ngIf="menuItem.link" class="nav-link">
+        <style>.bmc-button img{height: 34px !important;width: 35px !important;margin-bottom: 1px !important;box-shadow: none !important;border: none !important;vertical-align: middle !important;}.bmc-button{padding: 7px 15px 7px 10px !important;line-height: 35px !important;height:51px !important;text-decoration: none !important;display:inline-flex !important;color:#FFFFFF !important;background-color:#FF813F !important;border-radius: 5px !important;border: 1px solid transparent !important;padding: 7px 15px 7px 10px !important;font-size: 22px !important;letter-spacing: 0.6px !important;box-shadow: 0px 1px 2px rgba(190, 190, 190, 0.5) !important;-webkit-box-shadow: 0px 1px 2px 2px rgba(190, 190, 190, 0.5) !important;margin: 0 auto !important;font-family:‘Cookie’, cursive !important;-webkit-box-sizing: border-box !important;box-sizing: border-box !important;}.bmc-button:hover, .bmc-button:active, .bmc-button:focus {-webkit-box-shadow: 0px 1px 2px 2px rgba(190, 190, 190, 0.5) !important;text-decoration: none !important;box-shadow: 0px 1px 2px 2px rgba(190, 190, 190, 0.5) !important;opacity: 0.85 !important;color:#FFFFFF !important;}</style><link href="https://fonts.googleapis.com/css?family=Cookie" rel="stylesheet"><a class="bmc-button" target="_blank" href="https://www.buymeacoffee.com/covidmeasures"><img src="https://cdn.buymeacoffee.com/buttons/bmc-new-btn-logo.svg" alt="Buy us a coffee"><span style="margin-left:5px;font-size:28px !important;">Buy Us a Coffee</span></a>
+      </div>
       <div *ngIf="menuItem.collapse">
         <a data-toggle="collapse"
           href="#{{menuItem.title}}"
@@ -31,11 +34,11 @@
         <div class="collapse m-0 p-0" id="{{menuItem.title}}">
           <div class="card m-0 pl-3 pb-2">
             <li routerLinkActive="active" *ngFor="let menu of menuItem.menus" class="nav-item">
-              <a  *ngIf="!menu.soon" class="nav-link" (click)="navigateToROute(menu.path)" [routerLink]="[menu.path]">
+              <a  *ngIf="!menu.soon" class="nav-link" (click)="navigateToRoute(menu.path)" [routerLink]="[menu.path]">
                 <i class="material-icons">{{menu.icon}}</i>
                 <p><b>{{menu.title}}</b></p>
               </a>
-              <a *ngIf="menu.soon" class="nav-link" (click)="navigateToROute(menu.path)" [routerLink]="[menu.path]">
+              <a *ngIf="menu.soon" class="nav-link" (click)="navigateToRoute(menu.path)" [routerLink]="[menu.path]">
                 <i class="material-icons">{{menu.icon}}</i>
                 <p class="soon">{{menu.title}}</p>
               </a>
@@ -46,3 +49,5 @@
     </li>
   </ul>
 </div>
+
+<style>.bmc-button img{height: 34px !important;width: 35px !important;margin-bottom: 1px !important;box-shadow: none !important;border: none !important;vertical-align: middle !important;}.bmc-button{padding: 7px 15px 7px 10px !important;line-height: 35px !important;height:51px !important;text-decoration: none !important;display:inline-flex !important;color:#ffffff !important;background-color:#79D6B5 !important;border-radius: 5px !important;border: 1px solid transparent !important;padding: 7px 15px 7px 10px !important;font-size: 28px !important;letter-spacing:0.6px !important;box-shadow: 0px 1px 2px rgba(190, 190, 190, 0.5) !important;-webkit-box-shadow: 0px 1px 2px 2px rgba(190, 190, 190, 0.5) !important;margin: 0 auto !important;font-family:'Cookie', cursive !important;-webkit-box-sizing: border-box !important;box-sizing: border-box !important;}.bmc-button:hover, .bmc-button:active, .bmc-button:focus {-webkit-box-shadow: 0px 1px 2px 2px rgba(190, 190, 190, 0.5) !important;text-decoration: none !important;box-shadow: 0px 1px 2px 2px rgba(190, 190, 190, 0.5) !important;opacity: 0.85 !important;color:#ffffff !important;}</style><link href="https://fonts.googleapis.com/css?family=Cookie" rel="stylesheet"><a class="bmc-button" target="_blank" href="https://www.buymeacoffee.com/armancovid"><img src="https://cdn.buymeacoffee.com/buttons/bmc-new-btn-logo.svg" alt="Buy us a coffee"><span style="margin-left:5px;font-size:28px !important;">Buy us a coffee</span></a>
