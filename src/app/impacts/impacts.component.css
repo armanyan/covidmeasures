@@ -196,15 +196,6 @@ td.thick {
 .card-header a {
   text-decoration: none;
 }
-/* --------------------------- DIVIDER ----------------------------------*/
-.divider hr {
-  border: 1px solid #83c187;
-}
-.divider .title {
-  color: #83c187;
-  font-size: 30px;
-  width: 360px;
-}
 /* --------------------------- CONTENT ----------------------------------*/
 
 /*columns names*/
