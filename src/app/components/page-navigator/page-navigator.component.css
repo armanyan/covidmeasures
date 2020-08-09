@@ -1,15 +1,21 @@
 /* --------------------------- PAGE NAVIGATION ----------------------------------*/
+.page-nav-container {
+  background-color: #fff;
+  height: 150px;
+}
 .page-nav {
   width: 100%;
-  background-color: #fff;
-  z-index: 10;
 }
-
 .nav-fixed {
-  position: fixed;
+  position: fixed !important;
   position: -webkit-sticky;
   top: 0;
-  margin: 0 !important;
+  width: 100%;
+  z-index: 10;
+  padding-top: 0px;
+  height: auto;
+  margin-left: -40px;
+  background-color: #fff;
 }
 
 .page-nav ul {
@@ -29,4 +35,17 @@
 .page-nav li.section-link:hover {
   color: #a7a0a0;
   font-weight: bold;
+}
+/* 
+* when screen is small top nav will appear. there for in order to show fix page-navigator we must add margin
+*/
+@media (max-width: 992px) {
+  .nav-fixed {
+    margin-top: 50px;
+  }
+}
+@media (max-width: 576px) {
+  .nav-fixed {
+    margin-top: 30px;
+  }
 }
