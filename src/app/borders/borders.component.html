@@ -1,126 +1,200 @@
 <div class="main-content pt-md-0">
   <div class="container-fluid">
-
     <div layout-align="end end">
-      <h2 *ngIf="isMobile"><u>{{ titleService.getTitle().split(':')[0] }}</u></h2>
+      <h2 *ngIf="isMobile">
+        <u>{{ titleService.getTitle().split(":")[0] }}</u>
+      </h2>
     </div>
 
     <app-page-question
-    [questionHeader]="'Were the border closings enough to prevent the spread of COVID-19,
-    or did they only hinder our mobility? Join the discussion.'"
+      [questionHeader]="
+        'Were the border closings enough to prevent the spread of COVID-19,
+    or did they only hinder our mobility? Join the discussion.'
+      "
     >
       <div class="readMore">
-          <p class="question">
-            Looking at the timing, effectiveness, and consequences of border controls around the world,
-            we are examining their role in preventing the spread and resurgence of COVID-19.
-          </p>
-          <p class="question">
-            To answer this question seriously, we need to first understand:
-          </p>
-          <ul>
-              <li>The rules in place around the world.</li>
-              <li>How cases emerge as countries reopen.</li>
-          </ul>
-          <p class="question">
-            CovidMeasures aims to provide facts and perspectives to enrich your reflections. We encourage you to contribute to the debate.
-          </p>
+        <p class="question">
+          Looking at the timing, effectiveness, and consequences of border
+          controls around the world, we are examining their role in preventing
+          the spread and resurgence of COVID-19.
+        </p>
+        <p class="question">
+          To answer this question seriously, we need to first understand:
+        </p>
+        <ul>
+          <li>The rules in place around the world.</li>
+          <li>How cases emerge as countries reopen.</li>
+        </ul>
+        <p class="question">
+          CovidMeasures aims to provide facts and perspectives to enrich your
+          reflections. We encourage you to contribute to the debate.
+        </p>
       </div>
     </app-page-question>
-
-    <h3>Have a few seconds to spare?</h3>
-    <br>
-    <h4 style="padding-left: 4.2rem;"><b>Press play</b> below to start the 30-second survey about traveling abroad.</h4>
-    <br>
-
-    <div style="margin-left: 15px;">
-      <iframe src="https://www.videoask.com/fkua8husr"
-        allow="camera; microphone; autoplay; encrypted-media;"
-        width="100%"
-        height="600px"
-        style="border: none; border-radius: 24px"
-      >
-      </iframe>
-    </div>
-
-    <hr>
-
-    <div class="col-md-12">
-      <div class="card card-border">
-        <div class="card-header card-header-success">
-          <h3 class="card-title">
-            Map - International Travel Measures
-          </h3>
+    <!-- ------------------------------ PAGE Navigator ----------------------------------------->
+    <app-page-navigator
+      [pageSections]="[
+        { name: 'Global Data', sectionID: 'globalData' },
+        { name: 'Survey', sectionID: 'survey' },
+        { name: 'Country Data', sectionID: 'countryData' }
+      ]"
+    ></app-page-navigator>
+    <!-- ------------------------------ GLOBAL DATA SECTION ----------------------------------------->
+    <div class="global-data" id="globalData">
+      <div class="divider d-flex">
+        <div class="" style="width: 20%;">
+          <hr class="hr-left" />
         </div>
+        <div class="title text-center">Global Data</div>
+        <div class="w-100">
+          <hr class="hr-right" />
+        </div>
+      </div>
+      <div class="container py-5" style="max-width: 1400px;">
+        <div class="col-md-12">
+          <div class="card card-border">
+            <div class="card-header card-header-success">
+              <h3 class="card-title">
+                Map - International Travel Measures
+              </h3>
+            </div>
 
-          <iframe src="https://ourworldindata.org/grapher/international-travel-covid?year=2020-05-11" style="width: 100%; height: 600px; border: 1px white; box-shadow: none;"></iframe>
-       
+            <iframe
+              src="https://ourworldindata.org/grapher/international-travel-covid?year=2020-05-11"
+              style="
+                width: 100%;
+                height: 600px;
+                border: 1px white;
+                box-shadow: none;
+              "
+            ></iframe>
+          </div>
+        </div>
       </div>
     </div>
-    <br>
-    <hr>
+    <div id="survey">
+      <div class="divider d-flex">
+        <div class="" style="width: 20%;">
+          <hr class="hr-left" />
+        </div>
+        <div class="title text-center">Survey</div>
+        <div class="w-100">
+          <hr class="hr-right" />
+        </div>
+      </div>
+      <div class="container py-5" style="max-width: 1400px;">
+        <h3>Have a few seconds to spare?</h3>
+        <br />
+        <h4 style="padding-left: 4.2rem;">
+          <b>Press play</b> below to start the 30-second survey about traveling
+          abroad.
+        </h4>
+        <br />
 
-    <div class="row justify-content-center">
-      <div class="col-md-8 col-lg-6">
-        <div class="card card-border">
-          <div class="card-header card-header-success">
-            <h3 class="card-title">
-              International Travel Measures - Citizen Forum
-            </h3>
-          </div>
-          <div class="card-body">
-            <div class="row justify-content-center">
-                <div class="col-md-8">
+        <div style="margin-left: 15px;">
+          <iframe
+            src="https://www.videoask.com/fkua8husr"
+            allow="camera; microphone; autoplay; encrypted-media;"
+            width="100%"
+            height="600px"
+            style="border: none; border-radius: 24px;"
+          >
+          </iframe>
+        </div>
+      </div>
+    </div>
+
+    <div id="countryData">
+      <div class="divider d-flex">
+        <div class="" style="width: 20%;">
+          <hr class="hr-left" />
+        </div>
+        <div class="title text-center">Country Data</div>
+        <div class="w-100">
+          <hr class="hr-right" />
+        </div>
+      </div>
+      <div class="container py-5" style="max-width: 1400px;">
+        <div class="row justify-content-center">
+          <div class="col-md-9 col-lg-7">
+            <div class="card card-border">
+              <div class="card-header card-header-success">
+                <h3 class="card-title">
+                  International Travel Measures - Citizen Forum
+                </h3>
+              </div>
+              <div class="card-body">
+                <div class="row justify-content-center">
+                  <div class="col-md-8">
                     <div class="card">
-                        <div class="card-body card-country">
-                            <mat-select [(value)]="countryView" (selectionChange)="changeCountryView($event.value)">
-                                <mat-option *ngFor="let country of countriesList" [value]="country.value">
-                                    {{ country.viewValue }}
-                                </mat-option>
-                            </mat-select>
-                        </div>
+                      <div class="card-body card-country">
+                        <mat-select
+                          [(value)]="countryView"
+                          (selectionChange)="changeCountryView($event.value)"
+                        >
+                          <mat-option
+                            *ngFor="let country of countriesList"
+                            [value]="country.value"
+                          >
+                            {{ country.viewValue }}
+                          </mat-option>
+                        </mat-select>
+                      </div>
                     </div>
+                  </div>
                 </div>
-            </div>
-            <div class="d-flex justify-content-center align-items-center">
-                <div class="pr-md-5 pr-sm-2">
-                  <span class="material-icons size-padding s150">airplanemode_inactive</span>
+                <div class="d-flex justify-content-center align-items-center">
+                  <div class="pr-md-5 pr-sm-2">
+                    <span class="material-icons size-padding s150"
+                      >airplanemode_inactive</span
+                    >
+                  </div>
+                  <div>
+                    <p class="align-weight font-weight-bold">
+                      Started on:
+                      <span *ngIf="topic.start" class="w900">{{
+                        topic.start | date
+                      }}</span>
+                      <span *ngIf="!topic.start" class="w900">UNAVAILABLE</span>
+                    </p>
+                    <p class="align-weight font-weight-bold">
+                      Expected to End:
+                      <span *ngIf="topic.end" class="w900">{{
+                        topic.end | date
+                      }}</span>
+                      <span *ngIf="!topic.end" class="w900">UNAVAILABLE</span>
+                    </p>
+                    <p class="align-weight font-weight-bold">
+                      Currently <span class="w900">{{ topic.status }}</span>
+                    </p>
+                  </div>
                 </div>
-                <div>
-                  <p class="align-weight font-weight-bold">
-                    Started on: 
-                    <span *ngIf="topic.start" class="w900">{{ topic.start | date }}</span>
-                    <span *ngIf="!topic.start" class="w900">UNAVAILABLE</span>
-                  </p>
-                  <p class="align-weight font-weight-bold">
-                    Expected to End: 
-                    <span *ngIf="topic.end" class="w900">{{ topic.end | date }}</span>
-                    <span *ngIf="!topic.end" class="w900">UNAVAILABLE</span>
-                  </p>
-                  <p class="align-weight font-weight-bold">
-                    Currently <span class="w900">{{ topic.status }}</span>
-                  </p>
+                <div class="reminder">
+                  <button
+                    class="remind-button"
+                    (click)="openRemindMe()"
+                    mat-raised-button
+                  >
+                    <i class="material-icons">notifications_none</i>
+                    Get notified when border status changes
+                  </button>
                 </div>
-            </div>
-            <div class="reminder">
-              <button class="remind-button" (click)="openRemindMe()" mat-raised-button>
-                <i class="material-icons">notifications_none</i>
-                Get notified when border status changes
-              </button>
+              </div>
             </div>
           </div>
-        </div>
-      </div>
-      <div class="col-md-11">
-        <hr>
-        <div *ngIf="travelData">
-          <app-disqus-comments 
-            [countriesData]="travelData.countries"
-            [baseUrl]="'https://covidmeasures.info'"
-            [page]="'borders'"
-            [uniqueString]="'c!Id'"
-            [duplicatesID]="['GBR']"
-            [countryAlpha3]="countryView"
-          ></app-disqus-comments>
+          <div class="col-md-12">
+            <hr />
+            <div *ngIf="travelData">
+              <app-disqus-comments
+                [countriesData]="travelData.countries"
+                [baseUrl]="'https://covidmeasures.info'"
+                [page]="'borders'"
+                [uniqueString]="'c!Id'"
+                [duplicatesID]="['GBR']"
+                [countryAlpha3]="countryView"
+              ></app-disqus-comments>
+            </div>
+          </div>
         </div>
       </div>
     </div>
