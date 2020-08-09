@@ -1,117 +1,78 @@
 <div class="main-content pt-md-0">
   <div class="container-fluid">
-
     <div layout-align="end end">
-      <h2 *ngIf="isMobile"><u>{{ titleService.getTitle().split(':')[0] }}</u></h2>
+      <h2 *ngIf="isMobile">
+        <u>{{ titleService.getTitle().split(":")[0] }}</u>
+      </h2>
     </div>
 
-    <app-page-question
-    [questionHeader]="'Is COVID-19 as lethal as we\'ve come to think? How did we arrive at this perception? Join the discussion.'"
-    >
-      <div class="readMore">
-          <p class="question">
-            Compared to other diseases and causes of death throughout human history, how does COVID-19 compare?
-          </p>
-          <p>
-            <i>
-              During the COVID-19 crisis, it is probably good to remind everyone that COVID-19, as scary as it sounds,
-              is only one of many causes of death. The graphs below show the COVID-19 death rate as incremental rather
-              than the sole focus of the analysis. We are also providing an overview by age range which highlights
-              the age effect of the virus compared to the usual death rates.
-            </i>
-          </p>
-          <p>
-            <i>
-              We hope that this page can inform individuals on how COVID-19 has become a threat for themselves and their
-              loved ones compared to all the other death causes that we normally face in our day-to-day life.
-            </i>
-          </p>
-          <p class="question">
-            To answer this question seriously, we need to understand first:
-          </p>
-          <ul>
-            <li>The actual death rate of COVID-19 patients.</li>
-            <li>Death rates of other diseases through human history.</li>
-          </ul>
-          <p class="question">
-              CovidMeasures aims to provide facts and perspectives to enrich your reflections. We encourage you to contribute to the debate.
-          </p>
-      </div>
-    </app-page-question>
-
-    <!-- <p>
-      {{ death_intro_1 }}
-    </p>
-    <p>
-      {{ death_intro_2 }}
-    </p> -->
-
-    <div class=" row">
+    <div class="row">
       <div class="col-lg-12">
         <div class="card card-border">
-
           <div class="card-header card-header-success">
-            <h3 class="card-title">COVID-19 Death compared to Other Causes of Death</h3>
+            <h3 class="card-title">
+              COVID-19 Death compared to Other Causes of Death
+            </h3>
 
             <div *ngIf="isMobile">
               <mat-label>Choose Time Interval</mat-label>
               <mat-select [(value)]="deathStatsPeriod" (selectionChange)="changeDeathStatPeriod($event.value)">
                 <mat-option *ngFor="let date of dates" [value]="date.value">
-                  {{date.value}}
+                  {{ date.value }}
                 </mat-option>
               </mat-select>
             </div>
 
             <ng-container class="btn-group" *ngIf="!isMobile">
               <ng-container *ngFor="let date of dates">
-                <button mat-raised-button *ngIf="deathStatsPeriod===date.value"
-                  class="float" type="button" color="primary">
+                <button mat-raised-button *ngIf="deathStatsPeriod === date.value" class="float" type="button"
+                  color="primary">
                   <span>{{ date.value }}</span>
                 </button>
-  
-                <button mat-button *ngIf="deathStatsPeriod!==date.value"
-                  class="float" type="button" color="primary"
+
+                <button mat-button *ngIf="deathStatsPeriod !== date.value" class="float" type="button" color="primary"
                   (click)="changeDeathStatPeriod(date.value)">
                   <span>{{ date.value }}</span>
                 </button>
               </ng-container>
             </ng-container>
-
           </div>
 
-          <div class=" card-body">
+          <div class="card-body">
             <canvas id="DeathCausesChart" height="500"></canvas>
           </div>
 
-          <div class="card-footer ">
+          <div class="card-footer">
+            <div class="stats">Updated on {{ today | date }}</div>
             <div class="stats">
-              Updated on {{ today | date }}
-            </div>
-            <div class="stats">
-              Source: <a href="https://ourworldindata.org/causes-of-death"> Our World In Data</a> &nbsp; & &nbsp;
-              <a
-                href="https://coronavirus.jhu.edu/"
-              >JHU</a>
+              Source:
+              <a href="https://ourworldindata.org/causes-of-death">
+                Our World In Data</a>
+              &nbsp; & &nbsp;
+              <a href="https://coronavirus.jhu.edu/">JHU</a>
             </div>
           </div>
-
         </div>
       </div>
     </div>
 
-    <p>
-      {{death_graph_1_below}}
-    </p>
-    <p class="align-right">
-      <em>{{death_graph_1_below_last_update}}</em>
-    </p>
+    <hr style="margin-top: 80px; border: 1px solid #a9b0bb;" />
+    <div class="row justify-content-center">
+      <div class="col-10 pt-5 pb-3" style="font-family: Roboto; color: #000000;">
+        <p>
+          {{ death_graph_1_below }}
+        </p>
+        <p class="text-right">
+          <em>{{ death_graph_1_below_last_update }}</em>
+        </p>
+      </div>
+    </div>
+    <hr style="margin-bottom: 100px; border: 1px solid #a9b0bb;" />
 
-    <hr>
     <h3>Understanding COVID-19 Death By Age Range</h3>
 
     <div class="col-lg-12">
       <div class="card card-border">
-
         <div class="card-header card-header-success">
           <h3 class="card-title">COVID-19 Death Estimate By Age Range</h3>
 
@@ -119,45 +80,43 @@
             <mat-label>Choose Time Interval</mat-label>
             <mat-select [(value)]="estimationStatsPeriod" (selectionChange)="deathEstimationPeriodSwitch($event.value)">
               <mat-option *ngFor="let date of dates" [value]="date.value">
-                {{date.value}}
+                {{ date.value }}
               </mat-option>
             </mat-select>
 
-            <hr>
+            <hr />
 
             <mat-label>Choose Region</mat-label>
             <mat-select [(value)]="deathEstimationLocation" (selectionChange)="deathEstimationSwitch($event.value)">
               <mat-option *ngFor="let location of locations" [value]="location.value">
-                {{location.value}}
+                {{ location.value }}
               </mat-option>
             </mat-select>
           </div>
 
           <ng-container *ngIf="!isMobile">
             <ng-container *ngFor="let date of dates">
-              <button mat-raised-button *ngIf="estimationStatsPeriod===date.value"
-                class="float" type="button" color="primary">
+              <button mat-raised-button *ngIf="estimationStatsPeriod === date.value" class="float" type="button"
+                color="primary">
                 <span>{{ date.value }}</span>
               </button>
 
-              <button mat-button *ngIf="estimationStatsPeriod!==date.value"
-                class="float" type="button" color="primary"
-                (click)="deathEstimationPeriodSwitch(date.value)">
+              <button mat-button *ngIf="estimationStatsPeriod !== date.value" class="float" type="button"
+                color="primary" (click)="deathEstimationPeriodSwitch(date.value)">
                 <span>{{ date.value }}</span>
               </button>
             </ng-container>
 
-          <hr>
+            <hr />
 
             <ng-container *ngFor="let location of locations">
-              <button mat-raised-button *ngIf="deathEstimationLocation===location.value"
-                class="float" type="button" color="primary">
+              <button mat-raised-button *ngIf="deathEstimationLocation === location.value" class="float" type="button"
+                color="primary">
                 <span>{{ location.viewValue }}</span>
               </button>
 
-              <button mat-button *ngIf="deathEstimationLocation!==location.value"
-                class="float" type="button" color="primary"
-                (click)="deathEstimationSwitch(location.value)">
+              <button mat-button *ngIf="deathEstimationLocation !== location.value" class="float" type="button"
+                color="primary" (click)="deathEstimationSwitch(location.value)">
                 <span>{{ location.viewValue }}</span>
               </button>
             </ng-container>
@@ -168,42 +127,44 @@
           <canvas id="covidDeathEstimationChart" height="400"></canvas>
         </div>
 
-        <div class="card-footer ">
+        <div class="card-footer">
+          <div class="stats">Updated on {{ today | date }}</div>
           <div class="stats">
-            Updated on {{ today | date }}
-          </div>
-          <div class="stats">
-            Source: &nbsp; <a href="https://www.un.org/en/development/desa/publications/world-population-prospects-2015-revision.html">
+            Source: &nbsp;
+            <a href="https://www.un.org/en/development/desa/publications/world-population-prospects-2015-revision.html">
               United Nations
-            </a> &nbsp; & &nbsp;
-            <a
-              href="https://coronavirus.jhu.edu/"
-            >JHU</a>
+            </a>
+            &nbsp; & &nbsp;
+            <a href="https://coronavirus.jhu.edu/">JHU</a>
           </div>
         </div>
-
       </div>
     </div>
 
-    <p>
-      {{ death_graph_2_below }}
-    </p>
-    <p class="align-right">
-      <em>{{ death_graph_1_below_last_update }}</em>
-    </p>
-    <p>
-      <i>
-        Note: the age distribution figures are only <u>estimates</u> based on a
-        <a href="https://www.who.int/docs/default-source/coronaviruse/who-china-joint-mission-on-covid-19-final-report.pdf" target="_blank">WHO study</a> on the COVID-19 death rate, not actual figures.
-      </i>
-    </p>
+    <hr style="margin-top: 80px; border: 1px solid #a9b0bb;" />
+    <div class="row justify-content-center">
+      <div class="col-10 pt-5 pb-3" style="font-family: Roboto; color: #000000;">
+        <p>
+          {{ death_graph_2_below }}
+        </p>
+        <p>
+          Note: the age distribution figures are only <u>estimates</u> based on
+          a
+          <a href="https://www.who.int/docs/default-source/coronaviruse/who-china-joint-mission-on-covid-19-final-report.pdf"
+            target="_blank">WHO study</a>
+          on the COVID-19 death rate, not actual figures.
+        </p>
+        <p class="text-right">
+          <em>{{ death_graph_1_below_last_update }}</em>
+        </p>
+      </div>
+    </div>
+    <hr style="margin-bottom: 100px; border: 1px solid #a9b0bb;" />
 
-    <hr>
     <h3>Understanding How COVID-19 Increases Death Rate By Age</h3>
 
     <div class="col-lg-12">
       <div class="card card-border">
-
         <div class="card-header card-header-success">
           <h3 class="card-title">Death Estimate By Age Range</h3>
 
@@ -211,46 +172,43 @@
             <mat-label>Choose Time Interval</mat-label>
             <mat-select [(value)]="deathCausesPeriod" (selectionChange)="deathCausesPeriodSwitch($event.value)">
               <mat-option *ngFor="let date of dates" [value]="date.value">
-                {{date.value}}
+                {{ date.value }}
               </mat-option>
             </mat-select>
 
-          <hr>
+            <hr />
 
             <mat-label>Choose Region</mat-label>
             <mat-select [(value)]="deathCausesLocation" (selectionChange)="deathCausesLocationSwitch($event.value)">
               <mat-option *ngFor="let location of locations" [value]="location.value">
-                {{location.value}}
+                {{ location.value }}
               </mat-option>
             </mat-select>
           </div>
 
           <ng-container class="btn-group" *ngIf="!isMobile">
-
             <ng-container *ngFor="let date of dates">
-              <button mat-raised-button *ngIf="deathCausesPeriod===date.value"
-                class="float" type="button" color="primary">
+              <button mat-raised-button *ngIf="deathCausesPeriod === date.value" class="float" type="button"
+                color="primary">
                 <span>{{ date.value }}</span>
               </button>
 
-              <button mat-button *ngIf="deathCausesPeriod!==date.value"
-                class="float" type="button" color="primary"
+              <button mat-button *ngIf="deathCausesPeriod !== date.value" class="float" type="button" color="primary"
                 (click)="deathCausesPeriodSwitch(date.value)">
                 <span>{{ date.value }}</span>
               </button>
             </ng-container>
 
-          <hr>
+            <hr />
 
             <ng-container *ngFor="let location of locations">
-              <button mat-raised-button *ngIf="deathCausesLocation===location.value"
-                class="float" type="button" color="primary">
+              <button mat-raised-button *ngIf="deathCausesLocation === location.value" class="float" type="button"
+                color="primary">
                 <span>{{ location.viewValue }}</span>
               </button>
 
-              <button mat-button *ngIf="deathCausesLocation!==location.value"
-                class="float" type="button" color="primary"
-                (click)="deathCausesLocationSwitch(location.value)">
+              <button mat-button *ngIf="deathCausesLocation !== location.value" class="float" type="button"
+                color="primary" (click)="deathCausesLocationSwitch(location.value)">
                 <span>{{ location.viewValue }}</span>
               </button>
             </ng-container>
@@ -261,41 +219,47 @@
           <canvas id="deathCausesChart" height="400"></canvas>
         </div>
 
-        <div class="card-footer ">
+        <div class="card-footer">
+          <div class="stats">Updated on {{ today | date }}</div>
           <div class="stats">
-            Updated on {{ today | date }}
-          </div>
-          <div class="stats">
-            Source: &nbsp; <a href="https://www.un.org/en/development/desa/publications/world-population-prospects-2015-revision.html">
+            Source: &nbsp;
+            <a href="https://www.un.org/en/development/desa/publications/world-population-prospects-2015-revision.html">
               United Nations
-            </a> &nbsp; & &nbsp;
-            <a
-              href="https://coronavirus.jhu.edu/"
-            >JHU</a>
+            </a>
+            &nbsp; & &nbsp;
+            <a href="https://coronavirus.jhu.edu/">JHU</a>
           </div>
         </div>
-
       </div>
     </div>
 
-    <p>
-      {{ death_graph_3_below }}
-    </p>
-    <p class="align-right">
-      <em>{{ death_graph_3_below_last_update }}</em>
-    </p>
-    <p>
-      <i>
-        Note: this graph doesn't capture highly localized increases in certain countries or cities where COVID-19 death rates could be much higher.
-      </i>
-    </p>
+    <hr style="margin-top: 80px; border: 1px solid #a9b0bb;" />
+    <div class="row justify-content-center">
+      <div class="col-10 pt-5 pb-3" style="font-family: Roboto; color: #000000;">
+        <p>
+          {{ death_graph_3_below }}
+        </p>
+        <p>
+          Note: this graph doesn't capture highly localized increases in certain
+          countries or cities where COVID-19 death rates could be much higher.
+        </p>
+        <p class="text-right">
+          <em>{{ death_graph_3_below_last_update }}</em>
+        </p>
+      </div>
+    </div>
+    <hr style="margin-bottom: 10px; border: 1px solid #a9b0bb;" />
 
-    <hr>
+    <div class="row justify-content-center">
+      <div class="col-10 pt-1 pb-3" style="font-family: Roboto; color: #000000;">
+        <h3>Should we be scared of dying of COVID-19?</h3>
 
-    <h3>Should we be scared of dying of COVID-19?</h3>
-
-    <p>
-      The figures above can help you assess if COVID-19 is a threat to your life or your beloved ones.
-      But there is no simple answer and it will depend on your perception of death in your day-to-day.
-    </p>
-   
+        <p>
+          The figures above can help you assess if COVID-19 is a threat to your
+          life or your beloved ones. But there is no simple answer and it will
+          depend on your perception of death in your day-to-day.
+        </p>
+      </div>
+    </div>
+  </div>
+</div>

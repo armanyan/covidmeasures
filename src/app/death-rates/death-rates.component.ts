@@ -86,12 +86,12 @@ export class DeathRatesComponent implements OnInit {
   private deathsPerCountry = [];
 
   constructor(
-    private titleService: Title,
+    // private titleService: Title,
     private http: HttpClient
   ) { }
 
   async ngOnInit() {
-    this.titleService.setTitle('Death Rates: Citizens Tracking COVID-19 & Other Deaths Causes Statistics');
+    // this.titleService.setTitle('Death Rates: Citizens Tracking COVID-19 & Other Deaths Causes Statistics');
     this.isMobile = window.innerWidth > mobileWidth ? false : true;
     this.setText();
     await this.setCurrentDeathEvolution()
