@@ -15,6 +15,12 @@ interface CovidCategories {
   value: string;
 }
 
+enum ChildrenCases {
+  PerCovid = 'perCovidCases',
+  PerDeaths = 'perCovidDeaths',
+  Total = 'total'
+}
+
 @Component({
   selector: 'app-school',
   templateUrl: './school.component.html',
@@ -24,11 +30,14 @@ export class SchoolComponent implements OnInit {
   public isMobile: boolean;
   public readMore = false;
 
-  public school_intro_1: string;
-  public school_graph_1_below: string;
+  /** Texts */
+  public TEXT_P1: string;
+  public TEXT_P2: string;
+  public TEXT_P3: string;
   public school_graph_1_below_last_update: string;
   public school_graph_2_below: string;
   public school_graph_2_below_last_update: string;
+/** Texts end*/
 
   public locations: Location[] = [
     {value: 'World', viewValue: 'World'},
@@ -63,6 +72,8 @@ export class SchoolComponent implements OnInit {
   public schoolYearsMissedPer: number;
 
   public perCovidActive = false;
+
+  public covidChildrenCases: string = 'perCovidCases';
 
   public schoolClosureFull = [];
   public schoolClosure = [];
@@ -113,6 +124,8 @@ export class SchoolComponent implements OnInit {
 
   public isClientReady: boolean = false;
 
+  private navTopDistance: number;
+
   constructor(
     private titleService: Title,
     private http: HttpClient,
@@ -139,8 +152,9 @@ export class SchoolComponent implements OnInit {
   }
 
   private setTexts() {
-    this.school_intro_1 = text.default.school_intro_1;
-    this.school_graph_1_below = text.default.school_graph_1_below;
+    this.TEXT_P1 = text.default.p1;
+    this.TEXT_P2 = text.default.p2;
+    this.TEXT_P3 = text.default.p3;
     this.school_graph_1_below_last_update = text.default.school_graph_1_below_last_update;
     this.school_graph_2_below = text.default.school_graph_2_below;
     this.school_graph_2_below_last_update = text.default.school_graph_2_below_last_update;
@@ -161,11 +175,16 @@ export class SchoolComponent implements OnInit {
 
   // TODO unify the desktop and mobile versions
   public changeCovidActiveDeath(category?: string) {
-    if (category) {
-      this.currentCovidCategory = category;
+    // if (category) {
+    //   this.currentCovidCategory = category;
+    // }
+
+    // this.perCovidActive = !this.perCovidActive;
+    if ((<any>Object).values(ChildrenCases).includes(category)) {
+      this.covidChildrenCases = category;
+      this.covidVSSchoolChangeRegion(this.covidVSSchoolRegion);
     }
-    this.perCovidActive = !this.perCovidActive;
-    this.covidVSSchoolChangeRegion(this.covidVSSchoolRegion);
+
   }
 
   /**
@@ -226,10 +245,34 @@ export class SchoolComponent implements OnInit {
   public covidVSSchoolChangeRegion(region: string) {
     this.covidVSSchoolRegion = region;
     this.impactedChildren = this.getRegionChildrenPopulation(region);
-    const divider = this.perCovidActive ? this.covidByContinent[region].activeCases : this.covidByContinent[region].deaths;
-    this.impactedChildrenPer = Math.floor(this.impactedChildren/divider);
+    
+    // let divider = this.perCovidActive ? this.covidByContinent[region].activeCases : this.covidByContinent[region].deaths;
+    let divider: any;
+    switch (this.covidChildrenCases) {
+
+      case ChildrenCases.Total:
+        this.impactedChildrenPer = Math.floor(this.getRegionChildrenPopulation(region));
+        divider = 1;
+        break;
+      
+      case ChildrenCases.PerCovid:
+        divider = this.covidByContinent[region].activeCases;
+        this.impactedChildrenPer = Math.floor(this.impactedChildren/divider);
+        divider = divider * 365;
+        break;
+
+      case ChildrenCases.PerDeaths:
+        divider = this.covidByContinent[region].deaths;
+        this.impactedChildrenPer = Math.floor(this.impactedChildren/divider);
+        divider = divider * 365;
+        break;
+    
+      default:
+        break;
+    }
+    this.averageDaysMissed = this.getAverageDaysMissedPerRegion(region);
     this.schoolYearsMissedPer = Math.floor(
-      (this.getAverageDaysMissedPerRegion(region)*this.impactedChildren)/(divider*365)
+      (this.getAverageDaysMissedPerRegion(region)*this.impactedChildren)/divider
     );
   }
 

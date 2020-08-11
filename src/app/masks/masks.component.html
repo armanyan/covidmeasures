@@ -1,83 +1,123 @@
 <div class="main-content pt-md-0">
   <div class="container-fluid">
-
     <div layout-align="end end">
-      <h2 *ngIf="isMobile"><u>{{ titleService.getTitle().split(':')[0] }}</u></h2>
+      <h2 *ngIf="isMobile">
+        <u>{{ titleService.getTitle().split(":")[0] }}</u>
+      </h2>
     </div>
 
     <app-page-question
-    [questionHeader]="'Masks prevent the spread of covid-19 among medical professionals, have they been as effective with civilian use? Join the discussion.'"
+      [questionHeader]="
+        'Masks prevent the spread of covid-19 among medical professionals, have they been as effective with civilian use? Join the discussion.'
+      "
     >
       <div class="readMore">
-          <p class="question">
-            As citizens, we are examining the necessity, effectiveness, and impacts of wearing
-            masks in public places during the COVID-19 outbreak.
-          </p>
-          <p class="question">
-            CovidMeasures aims to provide facts and perspectives to enrich your reflections. We encourage you to contribute to the debate.
-          </p>
+        <p class="question">
+          As citizens, we are examining the necessity, effectiveness, and
+          impacts of wearing masks in public places during the COVID-19
+          outbreak.
+        </p>
+        <p class="question">
+          CovidMeasures aims to provide facts and perspectives to enrich your
+          reflections. We encourage you to contribute to the debate.
+        </p>
       </div>
     </app-page-question>
-
-    <div class="card card-border">
-      <div class="card-header card-header-success">
-        <h3 class="card-title">Map - Masks</h3>
-      </div>
-      <div class="card-body" style="height: 80vh;" *ngIf="countryMasksData">
-        <app-map-masks [countryMasksData]="countryMasksData"></app-map-masks>
-      </div>
-      <div class="card-footer ">
-        <div class="stats">
-          <!-- Updated on [Date] -->
-        </div>
-        <div class="stats">
-          Source: CovidMeasures Community & &nbsp;
-          <a href="https://www.bsg.ox.ac.uk/research/research-projects/coronavirus-government-response-tracker" target="_blank">OxCGRT</a>
-        </div>
-      </div>
-    </div>
-    <div class="row justify-content-center">
-      <div class="col-md-6">
+    <!-- ------------------------------ PAGE Navigator ----------------------------------------->
+    <app-page-navigator
+      [pageSections]="[
+        { name: 'Global Data', sectionID: 'globalData' },
+        { name: 'Survey', sectionID: 'survey' },
+        { name: 'Comments', sectionID: 'comments' }
+      ]"
+    ></app-page-navigator>
+    <!-- ------------------------------ GLOBAL DATA SECTION ----------------------------------------->
+    <div class="global-data" id="globalData">
+      <app-page-separator [title]="'Global Data'"></app-page-separator>
+      <div class="container py-5" style="max-width: 1400px;">
         <div class="card card-border">
           <div class="card-header card-header-success">
-            <h3 class="card-title ">Citizen opinion on mask effectiveness against coronavirus.</h3>
+            <h3 class="card-title">Map - Masks</h3>
           </div>
-
-          <div class="card-body">
-            <canvas id="masksPieChart" height="200"></canvas>
+          <div class="card-body" style="height: 80vh;" *ngIf="countryMasksData">
+            <app-map-masks
+              [countryMasksData]="countryMasksData"
+            ></app-map-masks>
           </div>
-
           <div class="card-footer">
             <div class="stats">
-              Updated on {{ maskPieLastUpdated }}
+              <!-- Updated on [Date] -->
             </div>
             <div class="stats">
-              Source: CovidMeasures Community
+              Source: CovidMeasures Community & &nbsp;
+              <a
+                href="https://www.bsg.ox.ac.uk/research/research-projects/coronavirus-government-response-tracker"
+                target="_blank"
+                >OxCGRT</a
+              >
             </div>
           </div>
+        </div>
+        <div class="row justify-content-center">
+          <div class="col-md-6">
+            <div class="card card-border">
+              <div class="card-header card-header-success">
+                <h3 class="card-title">
+                  Citizen opinion on mask effectiveness against coronavirus.
+                </h3>
+              </div>
 
+              <div class="card-body">
+                <canvas id="masksPieChart" height="200"></canvas>
+              </div>
+
+              <div class="card-footer">
+                <div class="stats">Updated on {{ maskPieLastUpdated }}</div>
+                <div class="stats">
+                  Source: CovidMeasures Community
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
+    <!-- ------------------------------ SURVEY SECTION ----------------------------------------->
+    <div class="global-data" id="survey">
+      <app-page-separator [title]="'Survey'"></app-page-separator>
+      <div class="container py-5" style="max-width: 1400px;">
+        <h3>Have a few seconds to spare?</h3>
+        <br />
+        <h4 style="padding-left: 4rem;">
+          <b>Press play</b> below to start the 30-second survey, and let us know
+          about masks in your area.
+        </h4>
+        <br />
 
-    <h3>Have a few seconds to spare?</h3>
-    <br>
-    <h4 style="padding-left: 4rem;"><b>Press play</b> below to start the 30-second survey, and let us know about masks in your area.</h4>
-    <br>
-
-    <div>
-      <iframe src="https://www.videoask.com/fz1zar16c"
-        allow="camera; microphone; autoplay; encrypted-media;"
-        width="100%"
-        height="600px"
-        style="border: none; border-radius: 24px"
-      >
-      </iframe>
+        <div>
+          <iframe
+            src="https://www.videoask.com/fz1zar16c"
+            allow="camera; microphone; autoplay; encrypted-media;"
+            width="100%"
+            height="600px"
+            style="border: none; border-radius: 24px;"
+          >
+          </iframe>
+        </div>
+      </div>
     </div>
-    <hr>
-    <div class="row justify-content-center" *ngIf="isClientReady">
-      <div class="col-md-11">
-        <disqus [identifier]="'/masksmk!kId'" [url]="'https://covidmeasures.info/masks'"></disqus>
+    <!-- ------------------------------ Comment SECTION ----------------------------------------->
+    <div id="comments">
+      <app-page-separator [title]="'Comments'"></app-page-separator>
+      <div class="container py-5" style="max-width: 1400px;">
+        <div class="row justify-content-center" *ngIf="isClientReady">
+          <div class="col-md-12">
+            <disqus
+              [identifier]="'/masksmk!kId'"
+              [url]="'https://covidmeasures.info/masks'"
+            ></disqus>
+          </div>
+        </div>
       </div>
     </div>
   </div>

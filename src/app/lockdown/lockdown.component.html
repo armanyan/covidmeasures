@@ -1,421 +1,538 @@
 <app-page-loaders [hidden]="isClientReady"></app-page-loaders>
 <div class="main-content pt-md-0">
   <div class="container-fluid">
-
     <div layout-align="end end">
-      <h2 *ngIf="isMobile"><u>{{ titleService.getTitle().split(':')[0] }}</u></h2>
+      <h2 *ngIf="isMobile">
+        <u>{{ titleService.getTitle().split(":")[0] }}</u>
+      </h2>
     </div>
 
     <app-page-question
-    [questionHeader]="'Lockdowns are meant to prevent the spread of covid-19 and alleviate hospitals, but how else have they affected society? Join the discussion.'"
+      [questionHeader]="
+        'Lockdowns are meant to prevent the spread of covid-19 and alleviate hospitals, but how else have they affected society? Join the discussion.'
+      "
     >
-    <div class="readMore">
-      <p class="question">
-        As citizens, we are examining the need for restricting movement and business activities
-        to keep the spread of COVID-19 under control, as well as the side effects on society.
-      </p>
-      <p class="question">
-        To answer this question seriously, we need to understand first:
-      </p>
-      <ul>
-        <li>The lockdown measures in place around the world.</li>
-        <li>The costs of those measures to society and individuals’ moral, happiness, and health.</li>
-        <li>The many impacts of lockdown measures.</li>
-      </ul>
-      <p class="question">
-        CovidMeasures aims to provide facts and perspectives to enrich your reflections. We encourage you to contribute to the debate.
-      </p>
-    </div>
-    </app-page-question>
-    <!-- <div>
-        <p>
-          {{ lockdown_intro_1 }}
+      <div class="readMore">
+        <p class="question">
+          As citizens, we are examining the need for restricting movement and
+          business activities to keep the spread of COVID-19 under control, as
+          well as the side effects on society.
         </p>
-    </div> -->
-
-
-<div class="form-row">
-  <div class="col-md-1"></div>
-  <div class="col-md-10 text-center">
-    <div class="card card-border">
-      <div class="card-header card-header-success">
-        <h3 class="card-title">Lockdown Measures Overview</h3>
-        <div *ngIf="isMobile">
-          <mat-label>Choose Region</mat-label>
-          <mat-select [(value)]="lockdownRegion" (selectionChange)="lockdownChangeRegion($event.value)">
-            <mat-option *ngFor="let location of locations" [value]="location.value">
-              {{ location.viewValue }}
-            </mat-option>
-          </mat-select>
-        </div>
-
-        <ng-container *ngIf="!isMobile">
-          <ng-container *ngFor="let location of locations">
-            <button mat-raised-button *ngIf="lockdownRegion===location.value"
-              class="float" type="button" color="primary">
-              <span>{{ location.viewValue }}</span>
-            </button>
-
-            <button mat-button *ngIf="lockdownRegion!==location.value"
-              class="float" type="button" color="primary"
-              (click)="lockdownChangeRegion(location.value)">
-              <span>{{ location.viewValue }}</span>
-            </button>
-          </ng-container>
-        </ng-container>
+        <p class="question">
+          To answer this question seriously, we need to understand first:
+        </p>
+        <ul>
+          <li>The lockdown measures in place around the world.</li>
+          <li>
+            The costs of those measures to society and individuals’ moral,
+            happiness, and health.
+          </li>
+          <li>The many impacts of lockdown measures.</li>
+        </ul>
+        <p class="question">
+          CovidMeasures aims to provide facts and perspectives to enrich your
+          reflections. We encourage you to contribute to the debate.
+        </p>
       </div>
-      <table class="table">
-        <thead class="text-primary">
-          <th>
-            People Impacted By Lockdown
-          </th>
-          <th>
-            Population Impacted By Curfew
-          </th>
-          <th>
-            Average Duration
-          </th>
-        </thead>
-        <tbody>
-          <tr>
-            <td class="table-datas">
-              {{lockdownImpactedPeople | number}}
-            </td>
-            <td class="table-datas">
-              {{curfewImpactedPeople | number}}
-            </td>
-            <td class="table-datas">
-              {{averageDaysMissed | number}} days
-            </td>
-          </tr>
-        </tbody>
-      </table>
-          <div class="card-footer ">
-            <div class="stats">
-              Updated on {{lockdownTableUpdatedOn}}
-            </div>
-            <div class="stats">
-              Source: CovidMeasures Community
+    </app-page-question>
+    <!-- ------------------------------ PAGE Navigator ----------------------------------------->
+    <app-page-navigator
+      [pageSections]="[
+        { name: 'Global Data', sectionID: 'globalData' },
+        { name: 'Impacts', sectionID: 'impacts' },
+        { name: 'Debate', sectionID: 'theDebate' }
+      ]"
+      [navTopDistance]="326"
+    ></app-page-navigator>
+    <!-- ------------------------------ GLOBAL DATA SECTION ----------------------------------------->
+    <div class="global-data" id="globalData">
+      <app-page-separator [title]="'Global Data'"></app-page-separator>
+      <div class="container pt-5" style="max-width: 1400px;">
+        <!-- - Lockdown Measures Overview - -->
+        <div class="form-row">
+          <div class="col-12 text-center">
+            <div class="card card-border">
+              <div class="card-header card-header-success">
+                <h3 class="card-title">Lockdown Measures Overview</h3>
+                <div *ngIf="isMobile">
+                  <mat-label>Choose Region</mat-label>
+                  <mat-select
+                    [(value)]="lockdownRegion"
+                    (selectionChange)="lockdownChangeRegion($event.value)"
+                  >
+                    <mat-option
+                      *ngFor="let location of locations"
+                      [value]="location.value"
+                    >
+                      {{ location.viewValue }}
+                    </mat-option>
+                  </mat-select>
+                </div>
+
+                <ng-container *ngIf="!isMobile">
+                  <ng-container *ngFor="let location of locations">
+                    <button
+                      mat-raised-button
+                      *ngIf="lockdownRegion === location.value"
+                      class="float"
+                      type="button"
+                      color="primary"
+                    >
+                      <span>{{ location.viewValue }}</span>
+                    </button>
+
+                    <button
+                      mat-button
+                      *ngIf="lockdownRegion !== location.value"
+                      class="float"
+                      type="button"
+                      color="primary"
+                      (click)="lockdownChangeRegion(location.value)"
+                    >
+                      <span>{{ location.viewValue }}</span>
+                    </button>
+                  </ng-container>
+                </ng-container>
+              </div>
+              <table class="table">
+                <thead class="text-primary">
+                  <th>
+                    People Impacted By Lockdown
+                  </th>
+                  <th>
+                    Population Impacted By Curfew
+                  </th>
+                  <th>
+                    Average Duration
+                  </th>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="table-datas">
+                      {{ lockdownImpactedPeople | number }}
+                    </td>
+                    <td class="table-datas">
+                      {{ curfewImpactedPeople | number }}
+                    </td>
+                    <td class="table-datas">
+                      {{ averageDaysMissed | number }} days
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <div class="card-footer">
+                <div class="stats">Updated on {{ lockdownTableUpdatedOn }}</div>
+                <div class="stats">
+                  Source: CovidMeasures Community
+                </div>
+              </div>
             </div>
           </div>
-
-      </div>
-    </div>
-    <div class="col-md-1"></div>
-  </div>
-
-    <p style="margin-top:2%;">
-      {{ lockdown_tab_1_below }}
-    </p>
-
-    <!-- Lockdown Map Starts -->
-    <div class="card card-border">
-      <div class="card-header card-header-success">
-        <h3 class="card-title">Map - Lockdown Status</h3>
-      </div>
-      <div class="card-body" style="height: 80vh;" *ngIf="lockdownData">
-        <app-map-lockdown [countries]="lockdownData.countries"></app-map-lockdown>
-      </div>
-      <div class="card-footer ">
-        <div class="stats">
-          Updated on {{ lockdownTableUpdatedOn }}
         </div>
-        <div class="stats">
-          Source: CovidMeasures Community & &nbsp;
-          <a href="https://www.bsg.ox.ac.uk/research/research-projects/coronavirus-government-response-tracker" target="_blank">OxCGRT</a>
-        </div>
-      </div>
-    </div>
-    <!-- Lockdown Map Ends -->
-    <h3>What is the status of lockdown measures around the world?</h3>
+        <!-- ------ Lockdown Measures Overview ENDS ------ -->
+        <p style="margin-top: 2%;">
+          {{ lockdown_tab_1_below }}
+        </p>
 
-    <div class="row">
-      <div class="col-md-6">
+        <!-- Lockdown Map Starts -->
         <div class="card card-border">
-
           <div class="card-header card-header-success">
-            <h3 class="card-title ">By Number of Countries</h3>
-
-            <div *ngIf="isMobile">
-              <mat-label>Choose Region</mat-label>
-              <mat-select
-                [(value)]="lockdownPieChartCountriesRegion"
-                (selectionChange)="lockdownChangePieChartCountriesRegion($event.value)">
-                <mat-option *ngFor="let location of locations" [value]="location.value">
-                  {{location.viewValue}}
-                </mat-option>
-              </mat-select>
-            </div>
-
-            <ng-container *ngIf="!isMobile">
-              <ng-container *ngFor="let location of locations">
-                <button mat-raised-button *ngIf="lockdownPieChartCountriesRegion===location.value"
-                  class="float" type="button" color="primary">
-                  <span>{{ location.viewValue }}</span>
-                </button>
-
-                <button mat-button *ngIf="lockdownPieChartCountriesRegion!==location.value"
-                  class="float" type="button" color="primary"
-                  (click)="lockdownChangePieChartCountriesRegion(location.value)">
-                  <span>{{ location.viewValue }}</span>
-                </button>
-              </ng-container>
-            </ng-container>
+            <h3 class="card-title">Map - Lockdown Status</h3>
           </div>
-
-          <div class="card-body">
-            <canvas id="lockdownCountriesPieChart" height="200"></canvas>
+          <div class="card-body" style="height: 80vh;" *ngIf="lockdownData">
+            <app-map-lockdown
+              [countries]="lockdownData.countries"
+            ></app-map-lockdown>
           </div>
-
           <div class="card-footer">
+            <div class="stats">Updated on {{ lockdownTableUpdatedOn }}</div>
             <div class="stats">
-              Updated on {{ lockdownTableUpdatedOn }}
+              Source: CovidMeasures Community & &nbsp;
+              <a
+                href="https://www.bsg.ox.ac.uk/research/research-projects/coronavirus-government-response-tracker"
+                target="_blank"
+                >OxCGRT</a
+              >
             </div>
-            <div class="stats">
-              Source: CovidMeasures Community
+          </div>
+        </div>
+        <!-- Lockdown Map Ends -->
+        <h3>What is the status of lockdown measures around the world?</h3>
+
+        <div class="row">
+          <div class="col-md-6">
+            <div class="card card-border">
+              <div class="card-header card-header-success">
+                <h3 class="card-title">By Number of Countries</h3>
+
+                <div *ngIf="isMobile">
+                  <mat-label>Choose Region</mat-label>
+                  <mat-select
+                    [(value)]="lockdownPieChartCountriesRegion"
+                    (selectionChange)="
+                      lockdownChangePieChartCountriesRegion($event.value)
+                    "
+                  >
+                    <mat-option
+                      *ngFor="let location of locations"
+                      [value]="location.value"
+                    >
+                      {{ location.viewValue }}
+                    </mat-option>
+                  </mat-select>
+                </div>
+
+                <ng-container *ngIf="!isMobile">
+                  <ng-container *ngFor="let location of locations">
+                    <button
+                      mat-raised-button
+                      *ngIf="lockdownPieChartCountriesRegion === location.value"
+                      class="float"
+                      type="button"
+                      color="primary"
+                    >
+                      <span>{{ location.viewValue }}</span>
+                    </button>
+
+                    <button
+                      mat-button
+                      *ngIf="lockdownPieChartCountriesRegion !== location.value"
+                      class="float"
+                      type="button"
+                      color="primary"
+                      (click)="
+                        lockdownChangePieChartCountriesRegion(location.value)
+                      "
+                    >
+                      <span>{{ location.viewValue }}</span>
+                    </button>
+                  </ng-container>
+                </ng-container>
+              </div>
+
+              <div class="card-body">
+                <canvas id="lockdownCountriesPieChart" height="200"></canvas>
+              </div>
+
+              <div class="card-footer">
+                <div class="stats">Updated on {{ lockdownTableUpdatedOn }}</div>
+                <div class="stats">
+                  Source: CovidMeasures Community
+                </div>
+              </div>
             </div>
           </div>
 
+          <div class="col-md-6">
+            <div class="card card-border">
+              <div class="card-header card-header-success">
+                <h3 class="card-title">By Population Impacted</h3>
+                <div *ngIf="isMobile">
+                  <mat-label>Choose Region</mat-label>
+                  <mat-select
+                    [(value)]="lockdownPieChartPopulationRegion"
+                    (selectionChange)="
+                      lockdownChangePieChartPopulationRegion($event.value)
+                    "
+                  >
+                    <mat-option
+                      *ngFor="let location of locations"
+                      [value]="location.value"
+                    >
+                      {{ location.viewValue }}
+                    </mat-option>
+                  </mat-select>
+                </div>
+
+                <ng-container *ngIf="!isMobile">
+                  <ng-container *ngFor="let location of locations">
+                    <button
+                      mat-raised-button
+                      *ngIf="
+                        lockdownPieChartPopulationRegion === location.value
+                      "
+                      class="float"
+                      type="button"
+                      color="primary"
+                    >
+                      <span>{{ location.viewValue }}</span>
+                    </button>
+
+                    <button
+                      mat-button
+                      *ngIf="
+                        lockdownPieChartPopulationRegion !== location.value
+                      "
+                      class="float"
+                      type="button"
+                      color="primary"
+                      (click)="
+                        lockdownChangePieChartPopulationRegion(location.value)
+                      "
+                    >
+                      <span>{{ location.viewValue }}</span>
+                    </button>
+                  </ng-container>
+                </ng-container>
+              </div>
+
+              <div class="card-body">
+                <canvas id="lockdownPopulationPieChart" height="200"></canvas>
+              </div>
+
+              <div class="card-footer">
+                <div class="stats">Updated on {{ lockdownTableUpdatedOn }}</div>
+                <div class="stats">
+                  Source: CovidMeasures Community
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-      </div>
 
-      <div class="col-md-6">
-        <div class="card card-border">
+        <p style="margin-top: 2%;">
+          {{ lockdown_tab_2_below }}
+        </p>
 
-          <div class="card-header card-header-success">
-            <h3 class="card-title">By Population Impacted</h3>
-            <div *ngIf="isMobile">
-              <mat-label>Choose Region</mat-label>
-              <mat-select
-                [(value)]="lockdownPieChartPopulationRegion"
-                (selectionChange)="lockdownChangePieChartPopulationRegion($event.value)">
-                <mat-option *ngFor="let location of locations" [value]="location.value">
-                  {{ location.viewValue }}
-                </mat-option>
-              </mat-select>
+        <div class="col-md-12">
+          <div class="card card-border">
+            <div class="card-header card-header-success">
+              <h3 class="card-title">Detailed View For Each Country</h3>
+              <mat-form-field>
+                <mat-label style="color: rgb(218, 205, 205);"
+                  >Search by Country</mat-label
+                >
+                <input
+                  matInput
+                  (keyup)="applyFilter($event)"
+                  [(ngModel)]="filterCountry"
+                  placeholder="United States of America, France, China..."
+                />
+              </mat-form-field>
             </div>
 
-            <ng-container *ngIf="!isMobile">
-              <ng-container *ngFor="let location of locations">
-                <button mat-raised-button *ngIf="lockdownPieChartPopulationRegion===location.value"
-                  class="float" type="button" color="primary">
-                  <span>{{ location.viewValue }}</span>
+            <div class="card-body">
+              <div class="content table-responsive table-full-width">
+                <table class="table">
+                  <thead>
+                    <th
+                      class="text-primary"
+                      *ngFor="let row of statsHeaders"
+                      (click)="sortTable(row.title)"
+                    >
+                      <div
+                        class="d-flex justify-content-center align-items-center"
+                        style="cursor: pointer;"
+                      >
+                        {{ row.title }}
+                        <i
+                          *ngIf="row.sortable"
+                          class="material-icons"
+                          style="font-size: 20px;"
+                        >
+                          arrow_drop_down
+                        </i>
+                      </div>
+                    </th>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let row of lockdownTable">
+                      <td [ngClass]="{ active: sortStatus.name.active }">
+                        {{ row.name }}
+                      </td>
+                      <td
+                        [ngClass]="{ active: sortStatus.population.active }"
+                        class="text-center"
+                      >
+                        {{ row.population | number }}
+                      </td>
+                      <td class="text-center">{{ row.lockdown }}</td>
+                      <td class="text-center">{{ row.curfew }}</td>
+                      <td class="text-center">{{ row.business }}</td>
+                      <td class="text-center">{{ row.other }}</td>
+                      <td
+                        [ngClass]="{ active: sortStatus.start.active }"
+                        class="text-center"
+                      >
+                        {{ row.start | date }}
+                      </td>
+                      <td
+                        [ngClass]="{ active: sortStatus.end.active }"
+                        class="text-center"
+                      >
+                        {{ row.end | date }}
+                      </td>
+                      <td
+                        [ngClass]="{ active: sortStatus.duration.active }"
+                        class="text-center"
+                      >
+                        {{ row.duration }}
+                      </td>
+                      <td>{{ row.status }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div class="card-footer">
+              <div class="stats">Updated on {{ lockdownTableUpdatedOn }}</div>
+              <div class="stats">
+                Source: CovidMeasures Community & &nbsp;
+                <a
+                  href="https://www.bsg.ox.ac.uk/research/research-projects/coronavirus-government-response-tracker"
+                  target="_blank"
+                  >OxCGRT</a
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- ------------------------------ IMPACTS SECTION ----------------------------------------->
+    <div class="impacts-data" id="impacts">
+      <app-page-separator [title]="'Impacts'"></app-page-separator>
+      <div class="container pt-5" style="max-width: 1400px;">
+        <!-- <h3 style="margin-bottom: 5%;">Lockdown Impacts</h3> -->
+        <div class="col-md-12">
+          <div class="card card-border">
+            <div class="card-header card-header-success">
+              <h3 class="card-title">List of Lockdown Impacts & Solutions</h3>
+              <mat-form-field>
+                <mat-label style="color: rgb(218, 205, 205);"
+                  >Search by Country, Measure or key word</mat-label
+                >
+                <input
+                  matInput
+                  (keyup)="applyImpactFilter($event)"
+                  placeholder="United States of America, France, China..."
+                />
+              </mat-form-field>
+            </div>
+
+            <div class="row pt-3" [ngClass]="{ 'mobile-table-text': isMobile }">
+              <div class="col-md-1"></div>
+              <div class="col-md-7 text-left">
+                <h4>Tell us about other impacts of Lockdown</h4>
+                <p class="m-0 p-0">
+                  We want to hear both positive and negative impacts of those
+                  measures.<br />
+                  <!-- Vote for the most impactful in your life and the life of others around you (coming soon).<br> -->
+                  <b>
+                    An impact can be mental, physical, direct, or indirect - an
+                    impact is any change in your life.
+                  </b>
+                </p>
+              </div>
+              <div class="col-md-3">
+                <button
+                  id="addImpact"
+                  class="text-decoration-none text-dark nav-link float-right"
+                  mat-raised-button
+                  type="button"
+                  color="primary"
+                >
+                  <span class="span.size">
+                    <i class="fa fa-plus" aria-hidden="true"></i>
+                    Add an Impact
+                  </span>
                 </button>
-
-                <button mat-button *ngIf="lockdownPieChartPopulationRegion!==location.value"
-                  class="float" type="button" color="primary"
-                  (click)="lockdownChangePieChartPopulationRegion(location.value)">
-                  <span>{{ location.viewValue }}</span>
-                </button>
-              </ng-container>
-            </ng-container>
-          </div>
-            
-          <div class="card-body">
-            <canvas id="lockdownPopulationPieChart" height="200"></canvas>
-          </div>
-
-          <div class="card-footer">
-            <div class="stats">
-              Updated on {{ lockdownTableUpdatedOn }}
+              </div>
+              <div class="col-md-1"></div>
             </div>
-            <div class="stats">
-              Source: CovidMeasures Community
+            <hr />
+
+            <div class="card-body">
+              <div class="content table-responsive table-full-width">
+                <table class="table">
+                  <thead>
+                    <th class="text-primary" *ngFor="let row of impactHeaders">
+                      {{ row }}
+                    </th>
+                  </thead>
+                  <tbody>
+                    <tr
+                      *ngFor="
+                        let row of impactCollection
+                          | paginate: { itemsPerPage: 7, currentPage: p }
+                      "
+                    >
+                      <td>{{ row.impact }}</td>
+                      <td>{{ row.desc }}</td>
+                      <td>{{ row.link }}</td>
+                      <td>{{ row.countries }}</td>
+                      <td *ngIf="row.source.startsWith('http')">
+                        <a href="{{ row.source }}" target="_blank">{{
+                          row.source.split("/")[2]
+                        }}</a>
+                      </td>
+                      <td *ngIf="!row.source.startsWith('http')">
+                        {{ row.source }}
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                <div class="d-flex justify-content-center">
+                  <pagination-controls
+                    class="my-pagination"
+                    (pageChange)="p = $event"
+                  ></pagination-controls>
+                </div>
+              </div>
+            </div>
+
+            <div class="card-footer">
+              <div class="stats">
+                Source: CovidMeasures Community
+              </div>
             </div>
           </div>
-
         </div>
       </div>
-
     </div>
-
-    <p style="margin-top:2%">
-      {{ lockdown_tab_2_below}}
-    </p>
-
-    <div class="col-md-12">
-      <div class="card card-border">
-
-        <div class="card-header card-header-success">
-          <h3 class="card-title">Detailed View For Each Country</h3>
-          <mat-form-field>
-            <mat-label style="color: rgb(218, 205, 205);">Search by Country</mat-label>
-            <input  matInput (keyup)="applyFilter($event)" [(ngModel)]="filterCountry"
-              placeholder="United States of America, France, China..."
+    <!-- ----------------------------------------------- DEBATE SECTION -------------------------------------->
+    <div class="debate" id="theDebate">
+      <app-page-separator [title]="'The Debate'"></app-page-separator>
+      <div class="pt-5">
+        <div class="row justify-content-center p-0">
+          <div class="col-12 p-sm-0 p-md-1" style="width: 100%;">
+            <iframe
+              data-loaded="true"
+              title="Free Will or Determinism: Do We Have Free Will? — kialo.com"
+              src="https://www.kialo.com/should-the-government-reimpose-a-lockdown-if-covid-19-cases-spike-again%E2%80%8B-38833?embedder=https://support.kialo.com&amp;utm_source=support.kialo.com&amp;utm_medium=embed"
+              style="border: 0px none;"
+              allowfullscreen=""
+              width="100%"
+            ></iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="container">
+      <hr style="margin-top: 80px; border: 1px solid #a9b0bb;" />
+      <div class="row justify-content-center">
+        <div class="col-9 pt-5 pb-3" style="font-family: Roboto;">
+          <p style="margin-top: 2%;">
+            The status of lockdown measures worldwide was made possible thanks
+            to the community of <b>CovidMeasures</b>. Please help to keep this
+            database up-to-date.
+            <a href="https://forms.gle/DmmnetQ76by64hF68" target="_blank"
+              >Join our team </a
+            >or just
+            <a href="https://forms.gle/TuLNu54Xr6vfYedq5" target="_blank"
+              >contribute</a
             >
-          </mat-form-field>
+            by verifying its accuracy in your region.
+          </p>
         </div>
-
-        <div class="card-body">
-
-          <div class="content table-responsive table-full-width">
-            <table class="table">
-              <thead>
-                <th class="text-primary" *ngFor="let row of statsHeaders" (click)="sortTable(row.title)">
-                  <div class="d-flex justify-content-center align-items-center" style="cursor: pointer;">
-                    {{ row.title }}
-                    <i *ngIf="row.sortable" class="material-icons" style="font-size: 20px;">
-                      arrow_drop_down
-                    </i>
-                  </div>
-                </th>
-              </thead>
-              <tbody>
-                <tr *ngFor="let row of lockdownTable">
-                  <td [ngClass]="{active: sortStatus.name.active}">{{ row.name }}</td>
-                  <td [ngClass]="{active: sortStatus.population.active}" class="text-center">
-                    {{ row.population | number}}
-                  </td>
-                  <td class="text-center">{{ row.lockdown }}</td>
-                  <td class="text-center">{{ row.curfew }}</td>
-                  <td class="text-center">{{ row.business }}</td>
-                  <td class="text-center">{{ row.other }}</td>
-                  <td [ngClass]="{active: sortStatus.start.active}" class="text-center">
-                    {{ row.start | date }}
-                  </td>
-                  <td [ngClass]="{active: sortStatus.end.active}" class="text-center">
-                    {{ row.end | date }}
-                  </td>
-                  <td [ngClass]="{active: sortStatus.duration.active}" class="text-center">
-                    {{ row.duration }}
-                  </td>
-                  <td>{{ row.status }}</td>
-                </tr>
-              </tbody>
-            </table>
-            </div>
-    
-        </div>
-
-        <div class="card-footer">
-          <div class="stats">
-            Updated on {{ lockdownTableUpdatedOn }}
-          </div>
-          <div class="stats">
-            Source: CovidMeasures Community & &nbsp;
-            <a href="https://www.bsg.ox.ac.uk/research/research-projects/coronavirus-government-response-tracker"
-              target="_blank">OxCGRT</a>
-          </div>
-        </div>
-
       </div>
     </div>
 
-    <h3 style="margin-bottom:5%">Lockdown Impacts</h3>
-
-    <div class="col-md-12">
-      <div class="card card-border">
-
-        <div class="card-header card-header-success">
-          <h3 class="card-title">List of Lockdown Impacts & Solutions</h3>
-          <mat-form-field>
-            <mat-label style="color: rgb(218, 205, 205);">Search by Country, Measure or key word</mat-label>
-            <input  matInput (keyup)="applyImpactFilter($event)" placeholder="United States of America, France, China...">
-          </mat-form-field>
-        </div>
-
-        <div class="row pt-3" [ngClass]="{'mobile-table-text': isMobile}">
-          <div class="col-md-1"></div>
-          <div class="col-md-7 text-left">
-            <h4>Tell us about other impacts of Lockdown</h4>
-            <p class="m-0 p-0">
-              We want to hear both positive and negative impacts of those measures.<br>
-              <!-- Vote for the most impactful in your life and the life of others around you (coming soon).<br> -->
-              <b>
-                An impact can be mental, physical, direct, or indirect - an impact is any change in your life.
-              </b>
-            </p>
-          </div>
-          <div class="col-md-3">
-            <button id="addImpact" class="text-decoration-none text-dark nav-link float-right" 
-              mat-raised-button type="button" color="primary"
-            >
-              <span class="span.size">
-                <i class="fa fa-plus" aria-hidden="true"></i>
-                Add an Impact
-              </span>
-            </button>
-          </div>
-          <div class="col-md-1"></div>
-        </div>
-        <hr>
-
-        <div class="card-body">
-
-          <div class="content table-responsive table-full-width">
-            <table class="table">
-              <thead>
-                <th class="text-primary" *ngFor="let row of impactHeaders">
-                  {{ row }}
-                </th>
-              </thead>
-              <tbody>
-                <tr *ngFor="let row of impactCollection | paginate: { itemsPerPage: 7, currentPage: p }">
-                  <td>{{ row.impact }}</td>
-                  <td>{{ row.desc}}</td>
-                  <td>{{ row.link }}</td>
-                  <td>{{ row.countries }}</td>
-                  <td *ngIf="row.source.startsWith('http')">
-                    <a href="{{ row.source }}" target="_blank">{{ row.source.split('/')[2] }}</a>
-                  </td>
-                  <td *ngIf="!row.source.startsWith('http')">
-                    {{ row.source }}
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-            <div class="d-flex justify-content-center">
-              <pagination-controls class="my-pagination" (pageChange)="p = $event"></pagination-controls>
-            </div>
-          </div>
-    
-        </div>
-
-        <div class="card-footer">
-          <div class="stats">
-            Source: CovidMeasures Community
-          </div>
-        </div>
-
-      </div>
-    </div>
-
-    <p style="margin-top:2%">
-      The status of lockdown measures worldwide was made possible
-      thanks to the community of <b>CovidMeasures</b>.
-      Please help to keep this database up-to-date.
-      <a href="https://forms.gle/DmmnetQ76by64hF68" target="_blank">Join our team </a>or
-      just <a href="https://forms.gle/TuLNu54Xr6vfYedq5" target="_blank">contribute</a>
-      by verifying its accuracy in your region.
-    </p>
-    <hr>
+    <!-- <hr>
     <div class="row justify-content-center">
       <div class="col-md-11" *ngIf="isClientReady">
         <disqus [identifier]="'/lockdownk!kId'" [url]="'https://covidmeasures.info/lockdown'"></disqus>
-        <!-- <div *ngIf="lockdownData">
-          <app-disqus-comments 
-          [countriesData]="lockdownData.countries"
-          [baseUrl]="'https://covidmeasures.info'"
-          [page]="'lockdown'"
-          [uniqueString]="'k!kId'"
-          [countryAlpha3]="countryView"
-          [uniqueAll]="true"
-          ></app-disqus-comments>
-        </div> -->
-      </div>
-    </div>
-    <!-- <hr>
-
-    <div class="col-md-12">
-      <div class="card card-border">
-
-        <div class="card-header card-header-success">
-          <h3 class="card-title">Add an Impact</h3>
-        </div>
-
-        <div class="card-body">
-          <div id="addImpact" style="width: 100%; height: 500px;"></div>
-        </div>
       </div>
     </div> -->
   </div>

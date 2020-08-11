@@ -1,15 +1,7 @@
 /* --------------------------- GENERAL ----------------------------- */
-p{
-  margin: 0 6% 4% 6%;
-  text-align: justify;
-}
 
 p.align-right {
   text-align: right;
-}
-
-h3{
-  margin:4.5% 3% 0 3%;
 }
 
 a{
