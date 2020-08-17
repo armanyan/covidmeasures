@@ -41,6 +41,8 @@ import { PageLoadersComponent } from '../../components/page-loaders/page-loaders
 import { RemindMeComponent } from '../../components/remind-me/remind-me.component';
 import { EvolutionCountryComponent } from '../../components/charts/evolution-country/evolution-country.component';
 import { PageQuestionComponent } from '../../components/page-question/page-question.component'
+import { PageNavigatorComponent } from '../../components/page-navigator/page-navigator.component';
+import { PageSeparatorComponent } from '../../components/page-separator/page-separator.component';
 
 @NgModule({
   imports: [
@@ -88,7 +90,9 @@ import { PageQuestionComponent } from '../../components/page-question/page-quest
     PageLoadersComponent,
     RemindMeComponent,
     EvolutionCountryComponent,
-    PageQuestionComponent
+    PageQuestionComponent,
+    PageNavigatorComponent,
+    PageSeparatorComponent
   ]
 })
 

@@ -1,175 +1,193 @@
 <div class="main-content pt-md-0">
   <div class="container-fluid">
-
     <div layout-align="end end">
-      <h2 *ngIf="isMobile"><u>{{ titleService.getTitle().split(':')[0] }}</u></h2>
+      <h2 *ngIf="isMobile">
+        <u>{{ titleService.getTitle().split(":")[0] }}</u>
+      </h2>
     </div>
 
-    <app-page-question
-    [questionHeader]="'How is the COVID-19 pandemic evolving around the world? What are the trends to come? Join the discussion.'"
-    >
+    <app-page-question [questionHeader]="
+    
+        'How is the COVID-19 pandemic evolving around the world? Is COVID-19 as lethal as we\'ve come to think? Join the discussion.'
+      ">00
       <div class="readMore">
-          <p class="question">
-            We are recording the number of cases in each country, total deaths, new cases, and new deaths every 24 hours.
-          </p>
-          <p class="question">
-            To answer this question seriously, we need to understand first:
-          </p>
-          <ul>
-            <li>The number of COVID-19 cases per country.</li>
-            <li>The real impacts of government measures on the pandemic evolution.</li>
-            <li>How COVID-19 statistics trigger new government measures.</li>
-          </ul>
-          <p class="question">
-            CovidMeasures aims to provide facts and perspectives to enrich your reflections. We encourage you to contribute to the debate.
-          </p>
+        <p class="question">
+          We are recording the number of cases in each country, total deaths,
+          new cases, and new deaths every 24 hours.
+        </p>
+        <p class="question">
+          To answer this question seriously, we need to understand first:
+        </p>
+        <ul>
+          <li>The number of COVID-19 cases per country.</li>
+          <li>
+            The real impacts of government measures on the pandemic evolution.
+          </li>
+          <li>How COVID-19 statistics trigger new government measures.</li>
+        </ul>
+        <p class="question">
+          CovidMeasures aims to provide facts and perspectives to enrich your
+          reflections. We encourage you to contribute to the debate.
+        </p>
       </div>
     </app-page-question>
+    <!-- ------------------------------ PAGE Navigator ----------------------------------------->
+    <app-page-navigator [pageSections]="[
+        { name: 'Global Data', sectionID: 'globalData' },
+        { name: 'Death Rates', sectionID: 'deathRates' }
+      ]" [navTopDistance]="326"></app-page-navigator>
+    <!-- ------------------------------ GLOBAL DATA SECTION ----------------------------------------->
+    <div class="global-data" id="globalData">
+      <app-page-separator [title]="'Global Data'"></app-page-separator>
+      <div class="container py-5" style="max-width: 1400px;">
+        <div class="row pb-5">
+          <div class="col-md-6">
+            <div class="card card-border">
+              <div class="card-header card-header-success">
+                <h3 class="card-title">
+                  Reported COVID-19 Infection Cases Worldwide
+                </h3>
 
-    <div class="row">
-      <div class="col-md-6">
-        <div class="card card-border">
-          <div class="card-header card-header-success">
-            <h3 class="card-title">Reported COVID-19 Infection Cases Worldwide</h3>
+                <ng-container *ngIf="!isMobile">
+                  <ng-container *ngFor="let view of views">
+                    <button mat-raised-button *ngIf="casesView === view" class="float" type="button" color="primary">
+                      <span>{{ view }}</span>
+                    </button>
 
-            <ng-container *ngIf="!isMobile">
-              <ng-container *ngFor="let view of views">
-                <button mat-raised-button *ngIf="casesView===view"
-                  class="float" type="button" color="primary">
-                  <span>{{ view }}</span>
-                </button>
-  
-                <button mat-button *ngIf="casesView!==view"
-                  class="float" type="button" color="primary"
-                  (click)="casesChangeView()">
-                  <span>{{ view }}</span>
-                </button>
-              </ng-container>
-            </ng-container>
+                    <button mat-button *ngIf="casesView !== view" class="float" type="button" color="primary"
+                      (click)="casesChangeView()">
+                      <span>{{ view }}</span>
+                    </button>
+                  </ng-container>
+                </ng-container>
 
-            <ng-container *ngIf="isMobile">
-              <mat-select [(value)]="casesView" (selectionChange)="casesChangeView($event.value)">
-                <mat-option *ngFor="let view of views" [value]="view">
-                  {{view}}
-                </mat-option>
-              </mat-select>
-            </ng-container>
-
-          </div>
-          <div class="card-body ">
-            <canvas id=chartCases width="400" height="400"></canvas>
-          </div>
-          <div class="card-footer">
-            <div class="stats">
-              Updated on {{ dataLastUpdate }}
+                <ng-container *ngIf="isMobile">
+                  <mat-select [(value)]="casesView" (selectionChange)="casesChangeView($event.value)">
+                    <mat-option *ngFor="let view of views" [value]="view">
+                      {{ view }}
+                    </mat-option>
+                  </mat-select>
+                </ng-container>
+              </div>
+              <div class="card-body">
+                <canvas id="chartCases" width="400" height="400"></canvas>
+              </div>
+              <div class="card-footer">
+                <div class="stats">Updated on {{ dataLastUpdate }}</div>
+                <div class="stats">
+                  Source:
+                  <a
+                    href="https://www.ecdc.europa.eu/en/publications-data/download-todays-data-geographic-distribution-covid-19-cases-worldwide">ECDC</a>
+                </div>
+              </div>
             </div>
-            <div class="stats">
-              Source:
-              <a
-                href="https://www.ecdc.europa.eu/en/publications-data/download-todays-data-geographic-distribution-covid-19-cases-worldwide"
-              >ECDC</a></div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="card card-border">
+              <div class="card-header card-header-success">
+                <h3 class="card-title">Reported COVID-19 Deaths Worldwide</h3>
+
+                <ng-container *ngIf="!isMobile">
+                  <ng-container *ngFor="let view of views">
+                    <button mat-raised-button *ngIf="deathsView === view" class="float" type="button" color="primary">
+                      <span>{{ view }}</span>
+                    </button>
+
+                    <button mat-button *ngIf="deathsView !== view" class="float" type="button" color="primary"
+                      (click)="deathsChangeView()">
+                      <span>{{ view }}</span>
+                    </button>
+                  </ng-container>
+                </ng-container>
+
+                <ng-container *ngIf="isMobile">
+                  <mat-select [(value)]="deathsView" (selectionChange)="deathsChangeView($event.value)">
+                    <mat-option *ngFor="let view of views" [value]="view">
+                      {{ view }}
+                    </mat-option>
+                  </mat-select>
+                </ng-container>
+              </div>
+              <div class="card-body">
+                <canvas id="chartDeaths" width="400" height="400"></canvas>
+              </div>
+              <div class="card-footer">
+                <div class="stats">Updated on {{ dataLastUpdate }}</div>
+                <div class="stats">
+                  Source:
+                  <a
+                    href="https://www.ecdc.europa.eu/en/publications-data/download-todays-data-geographic-distribution-covid-19-cases-worldwide">ECDC</a>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-
-      <div class="col-md-6">
-        <div class="card card-border">
-          <div class="card-header card-header-success">
-            <h3 class="card-title">Reported COVID-19 Deaths Worldwide</h3>
-
-            <ng-container *ngIf="!isMobile">
-              <ng-container *ngFor="let view of views">
-                <button mat-raised-button *ngIf="deathsView===view"
-                  class="float" type="button" color="primary">
-                  <span>{{ view }}</span>
-                </button>
-  
-                <button mat-button *ngIf="deathsView!==view"
-                  class="float" type="button" color="primary"
-                  (click)="deathsChangeView()">
-                  <span>{{ view }}</span>
-                </button>
-              </ng-container>
-            </ng-container>
-
-            <ng-container *ngIf="isMobile">
-              <mat-select [(value)]="deathsView" (selectionChange)="deathsChangeView($event.value)">
-                <mat-option *ngFor="let view of views" [value]="view">
-                  {{view}}
-                </mat-option>
-              </mat-select>
-            </ng-container>
-
-          </div>
-          <div class="card-body ">
-            <canvas id=chartDeaths width="400" height="400"></canvas>
-          </div>
-          <div class="card-footer">
-            <div class="stats">
-              Updated on {{ dataLastUpdate }}
+        <div class="col-md-12">
+          <div class="card card-border">
+            <div class="card-header card-header-success">
+              <h3 class="card-title">COVID-19 Worldwide Statistics</h3>
+              <mat-form-field>
+                <mat-label style="color: rgb(218, 205, 205);">Filter by Country</mat-label>
+                <input matInput (keyup)="applyFilter($event)" [(ngModel)]="filterCountry"
+                  placeholder="United States of America, France, China..." />
+              </mat-form-field>
             </div>
-            <div class="stats">
-              Source:
-              <a
-                href="https://www.ecdc.europa.eu/en/publications-data/download-todays-data-geographic-distribution-covid-19-cases-worldwide"
-              >ECDC</a></div>
+
+            <div class="card-body">
+              <div class="content table-responsive table-full-width">
+                <table class="table">
+                  <thead>
+                    <th class="text-primary" *ngFor="let row of statsHeaders" (click)="sortTable(row)">
+                      <div class="d-flex align-items-center" style="cursor: pointer;">
+                        {{ row }}
+                        <i class="material-icons" style="font-size: 20px;">arrow_drop_down</i>
+                      </div>
+                    </th>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let row of stats">
+                      <td [ngClass]="{ active: sortStatus.country.active }">
+                        {{ row.country }}
+                      </td>
+                      <td [ngClass]="{ active: sortStatus.totalCases.active }">
+                        {{ row.total_cases | number }}
+                      </td>
+                      <td [ngClass]="{ active: sortStatus.newCases.active }">
+                        {{ row.new_cases | number }}
+                      </td>
+                      <td [ngClass]="{ active: sortStatus.totalDeaths.active }">
+                        {{ row.total_deaths | number }}
+                      </td>
+                      <td [ngClass]="{ active: sortStatus.newDeaths.active }">
+                        {{ row.new_deaths | number }}
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div class="card-footer">
+              <div class="stats">Updated on {{ dataLastUpdate }}</div>
+              <div class="stats">
+                Source:
+                <a
+                  href="https://www.ecdc.europa.eu/en/publications-data/download-todays-data-geographic-distribution-covid-19-cases-worldwide">ECDC</a>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
-
-    <hr>
-
-    <div class="col-md-12">
-      <div class="card card-border">
-
-        <div class="card-header card-header-success">
-          <h3 class="card-title">COVID-19 Worldwide Statistics</h3>
-          <mat-form-field>
-            <mat-label style="color: rgb(218, 205, 205);">Filter by Country</mat-label>
-            <input matInput (keyup)="applyFilter($event)" [(ngModel)]="filterCountry" placeholder="United States of America, France, China...">
-          </mat-form-field>
-        </div>
-
-        <div class="card-body">
-
-          <div class="content table-responsive table-full-width">
-            <table class="table">
-              <thead>
-                <th class="text-primary" *ngFor="let row of statsHeaders" (click)="sortTable(row)">
-                  <div class="d-flex align-items-center" style="cursor: pointer;">
-                    {{ row }} <i class="material-icons" style="font-size: 20px;">arrow_drop_down</i>
-                  </div>
-                </th>
-              </thead>
-              <tbody>
-                <tr *ngFor="let row of stats">
-                  <td [ngClass]="{active: sortStatus.country.active}">{{ row.country }}</td>
-                  <td [ngClass]="{active: sortStatus.totalCases.active}">{{ row.total_cases | number }}</td>
-                  <td [ngClass]="{active: sortStatus.newCases.active}">{{ row.new_cases | number }}</td>
-                  <td [ngClass]="{active: sortStatus.totalDeaths.active}">{{ row.total_deaths | number }}</td>
-                  <td [ngClass]="{active: sortStatus.newDeaths.active}">{{ row.new_deaths | number }}</td>
-                </tr>
-              </tbody>
-            </table>
-            </div>
-    
-        </div>
-
-        <div class="card-footer">
-          <div class="stats">
-            Updated on {{ dataLastUpdate }}
-          </div>
-          <div class="stats">
-            Source:
-            <a
-              href="https://www.ecdc.europa.eu/en/publications-data/download-todays-data-geographic-distribution-covid-19-cases-worldwide"
-            >ECDC</a>
-          </div>
-        </div>
-
+    <!-- ------------DEATH RATES STARTS HERE --------------- -->
+    <div class="global-data" id="deathRates">
+      <app-page-separator [title]="'Death Rates'"></app-page-separator>
+      <div class="container py-5" style="max-width: 1400px;">
+        <!-- we import app-death-rates  -->
+        <app-death-rates></app-death-rates>
       </div>
     </div>
-
+    <!-- ------------DEATH RATES ENDS HERE --------------- -->
   </div>
 </div>
