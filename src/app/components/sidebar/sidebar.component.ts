@@ -16,6 +16,7 @@ export const ROUTES: RouteInfo[] = [
   { path: '/country', title: 'Country Overview',  icon:'outlined_flag', class: '' },
   { path: '/lockdown', title: 'Lockdown', icon:'lock', class: '',  belongsTo: 'measures' },
   { path: '/school', title: 'School Closure',  icon:'school', class: '',  belongsTo: 'measures' },
+  { path: '/news', title: 'News Channel',  icon:'video_library', class: '' },
   { path: '/covid', title: 'COVID-19 Statistics',  icon:'table_chart', class: '' },
   { path: '/impacts', title: 'Impacts',  icon:'vertical_align_center', class: '' },
   // { path: '/covid', title: 'COVID-19',  icon: 'table_chart', class: '', belongsTo: 'statistics' },
