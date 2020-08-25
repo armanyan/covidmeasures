@@ -1,1 +1,49 @@
-<p>news-videos works!</p>
+<div class="main-content pt-md-0">
+  <app-page-question
+    [readMore]="readMore"
+    [questionHeader]="'To be written....'"
+  >
+    <div class="readMore">content here</div>
+  </app-page-question>
+  <div class="container py-5" style="max-width: 1400px; min-height: 100vh">
+    <div class="videos-container">
+      <div class="iframe-container bg-dark p-0">
+        <iframe
+          width="100%"
+          style="height: inherit"
+          [src]="showedVideoSrc"
+          frameborder="0"
+          allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen
+        ></iframe>
+      </div>
+      <!-- videos on side -->
+      <div class="playlist-container bg-dark">
+        <div
+          *ngFor="let item of playlists"
+          class="playlist-item"
+          [ngStyle]="{
+            'background-image': 'url(' + item.snippet.thumbnails.high.url + ')'
+          }"
+          (click)="setShowedVideo(item.snippet.resourceId.videoId)"
+        ></div>
+      </div>
+    </div>
+    <br />
+
+    <!-- <div
+      class="bg-dark py-2"
+      style="height: 320px; width: 100%; overflow-x: auto; white-space: nowrap;"
+    >
+      <div
+        *ngFor="let item of playlists"
+        class="playlist-item d-inline-block"
+        style="width: 300px;"
+        [ngStyle]="{
+          'background-image': 'url(' + item.snippet.thumbnails.high.url + ')'
+        }"
+        (click)="setShowedVideo(item.snippet.resourceId.videoId)"
+      ></div>
+    </div> -->
+  </div>
+</div>
