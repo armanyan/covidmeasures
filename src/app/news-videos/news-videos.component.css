@@ -10,7 +10,17 @@
   width: 100%;
   overflow-y: auto;
 }
-
+.uploads-header {
+  background-color: #82c386;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: aliceblue;
+  font-weight: bold;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  height: 60px;
+}
 .playlist-item {
   height: 300px;
   border: 2px solid #82c386;
@@ -26,7 +36,7 @@
   background-size: cover; /* <------ */
   background-repeat: no-repeat;
   background-position: center center;
-  background-size: contain;
+  background-size: fit;
 }
 
 @media only screen and (max-width: 1350px) {
@@ -39,15 +49,19 @@
     height: 500px;
   }
   .playlist-container {
-    height: 350px;
+    height: 300px;
     width: 100%;
     overflow-y: hidden;
     overflow-x: auto;
     white-space: nowrap;
+    padding-bottom: 35px;
+  }
+  .uploads-header {
+    height: 30px;
   }
   .playlist-item {
     height: 100%;
-    width: 300px;
+    width: 260px;
     display: inline-block;
   }
 }
