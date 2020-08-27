@@ -6,7 +6,7 @@
   </a>
 </div>
 <div class="sidebar-wrapper">
-  <ul class="nav">
+  <ul class="nav  pb-5">
     <li routerLinkActive="active" *ngFor="let menuItem of menuItems" class="{{menuItem.class}} nav-item">
       <a *ngIf="!menuItem.link && !menuItem.soon && !menuItem.hide && !menuItem.collapse" class="nav-link" (click)="navigateToRoute(menuItem.path)" [routerLink]="[menuItem.path]">
         <i class="material-icons">{{menuItem.icon}}</i>
@@ -21,7 +21,7 @@
       </div>
       <div *ngIf="menuItem.collapse">
         <a data-toggle="collapse"
-          href="#{{menuItem.title}}"
+          href="#{{menuItem.id}}"
           role="button"
           aria-expanded="false"
           class="d-flex align-items-center justify-content-between"
@@ -31,10 +31,14 @@
           </h4>
         <i class="material-icons arrow">arrow_drop_down</i>
         </a>
-        <div class="collapse m-0 p-0" id="{{menuItem.title}}">
+        <div class="collapse m-0 p-0"  [ngClass]="{'show' : menuItem.show}" id="{{menuItem.id}}">
           <div class="card m-0 pl-3 pb-2">
             <li routerLinkActive="active" *ngFor="let menu of menuItem.menus" class="nav-item">
-              <a  *ngIf="!menu.soon" class="nav-link" (click)="navigateToRoute(menu.path)" [routerLink]="[menu.path]">
+              <a  *ngIf="menu.href" class="nav-link" target="_blank" href="{{ menu.path }}">
+                <i class="material-icons">{{menu.icon}}</i>
+                <p><b>{{menu.title}}</b></p>
+              </a>
+              <a  *ngIf="!menu.soon && !menu.href" class="nav-link" (click)="navigateToRoute(menu.path)" [routerLink]="[menu.path]">
                 <i class="material-icons">{{menu.icon}}</i>
                 <p><b>{{menu.title}}</b></p>
               </a>
