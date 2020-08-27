@@ -34,7 +34,12 @@ export const ROUTES: RouteInfo[] = [
     class: "",
     belongsTo: "measures",
   },
-  { path: "/news", title: "News Channel", icon: "video_library", class: "" },
+  {
+    path: "/news",
+    title: "CovidMeasures TV",
+    icon: "video_library",
+    class: "",
+  },
   {
     path: "/covid",
     title: "COVID-19 Statistics",
@@ -160,7 +165,6 @@ export class SidebarComponent implements OnInit {
     );
     this.menuItems.splice(1, 0, measures);
     this.menuItems.splice(7, 0, socialMedia);
-    console.log(socialMedia);
   }
   isMobileMenu() {
     if ($(window).width() > 991) {

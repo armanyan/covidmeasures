@@ -13,12 +13,19 @@ export class NewsVideosComponent implements OnInit {
   public showedVideoSrc: SafeResourceUrl;
   public playlists = [];
   public currentVideoId: string;
+  public showSubscribebutton: boolean = false;
 
   constructor(private titleService: Title, private sanitizer: DomSanitizer) {}
 
   ngOnInit(): void {
-    this.titleService.setTitle("News Channel");
+    this.titleService.setTitle("CovidMeasures TV");
     this.getYoutubeVideos();
+
+    const node = document.createElement('script'); 
+    node.src = "https://apis.google.com/js/platform.js"; 
+    node.type = 'text/javascript';
+    node.async = true;
+    document.getElementsByTagName('head')[0].appendChild(node);
   }
 
   private async getYoutubeVideos() {
