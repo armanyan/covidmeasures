@@ -38,8 +38,8 @@
                 <img src="{{ menu.icon }}" />
                 <p><b>{{menu.title}}</b></p>
               </a>
-              <a  *ngIf="!menu.soon && !menu.href" class="nav-link" (click)="navigateToRoute(menu.path)" [routerLink]="[menu.path]">
-                <i class="material-icons">{{menu.icon}}</i>
+              <a  *ngIf="!menu.soon && !menu.href" class="nav-link px-1" (click)="navigateToRoute(menu.path)" [routerLink]="[menu.path]">
+                <i class="material-icons mr-1">{{menu.icon}}</i>
                 <p><b>{{menu.title}}</b></p>
               </a>
               <a *ngIf="menu.soon" class="nav-link" (click)="navigateToRoute(menu.path)" [routerLink]="[menu.path]">
