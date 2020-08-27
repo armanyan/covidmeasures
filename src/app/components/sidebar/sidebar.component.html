@@ -34,8 +34,8 @@
         <div class="collapse m-0 p-0"  [ngClass]="{'show' : menuItem.show}" id="{{menuItem.id}}">
           <div class="card m-0 pl-3 pb-2">
             <li routerLinkActive="active" *ngFor="let menu of menuItem.menus" class="nav-item">
-              <a  *ngIf="menu.href" class="nav-link" target="_blank" href="{{ menu.path }}">
-                <i class="material-icons">{{menu.icon}}</i>
+              <a  *ngIf="menu.href" class="nav-href-link" target="_blank" href="{{ menu.path }}">
+                <img src="{{ menu.icon }}" />
                 <p><b>{{menu.title}}</b></p>
               </a>
               <a  *ngIf="!menu.soon && !menu.href" class="nav-link" (click)="navigateToRoute(menu.path)" [routerLink]="[menu.path]">

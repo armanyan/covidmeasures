@@ -5,3 +5,11 @@ p.soon {
 i.arrow {
   font-size: 40px;
 }
+.nav-href-link {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+.nav-href-link img{
+  margin-right: 15px;
+}
