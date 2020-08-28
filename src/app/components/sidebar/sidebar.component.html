@@ -9,11 +9,11 @@
   <ul class="nav  pb-5">
     <li routerLinkActive="active" *ngFor="let menuItem of menuItems" class="{{menuItem.class}} nav-item">
       <a *ngIf="!menuItem.link && !menuItem.soon && !menuItem.hide && !menuItem.collapse" class="nav-link" (click)="navigateToRoute(menuItem.path)" [routerLink]="[menuItem.path]">
-        <i class="material-icons">{{menuItem.icon}}</i>
+        <i class="material-icons mr-1">{{menuItem.icon}}</i>
         <p><b>{{menuItem.title}}</b></p>
       </a>
       <a *ngIf="!menuItem.link && menuItem.soon && !menuItem.hide" class="nav-link" (click)="navigateToRoute(menuItem.path)" [routerLink]="[menuItem.path]">
-        <i class="material-icons">{{menuItem.icon}}</i>
+        <i class="material-icons mr-1">{{menuItem.icon}}</i>
         <p class="soon">{{menuItem.title}}</p>
       </a>
       <div *ngIf="menuItem.link" class="nav-link">
@@ -43,7 +43,7 @@
                 <p><b>{{menu.title}}</b></p>
               </a>
               <a *ngIf="menu.soon" class="nav-link" (click)="navigateToRoute(menu.path)" [routerLink]="[menu.path]">
-                <i class="material-icons">{{menu.icon}}</i>
+                <i class="material-icons mr-1">{{menu.icon}}</i>
                 <p class="soon">{{menu.title}}</p>
               </a>
             </li>

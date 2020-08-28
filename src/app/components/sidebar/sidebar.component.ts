@@ -152,7 +152,7 @@ export class SidebarComponent implements OnInit {
 
     const measures = {
       title: "Measures",
-      show: true,
+      show: false,
       id: "measures",
       collapse: true,
       icon: "arrow_drop_down",
