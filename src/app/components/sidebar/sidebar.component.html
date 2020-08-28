@@ -42,7 +42,7 @@
                 <i class="material-icons mr-1">{{menu.icon}}</i>
                 <p><b>{{menu.title}}</b></p>
               </a>
-              <a *ngIf="menu.soon" class="nav-link" (click)="navigateToRoute(menu.path)" [routerLink]="[menu.path]">
+              <a *ngIf="menu.soon" class="nav-link" class="nav-link px-1" (click)="navigateToRoute(menu.path)" [routerLink]="[menu.path]">
                 <i class="material-icons mr-1">{{menu.icon}}</i>
                 <p class="soon">{{menu.title}}</p>
               </a>
