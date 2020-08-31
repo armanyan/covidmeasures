@@ -43,7 +43,7 @@ import { EvolutionCountryComponent } from '../../components/charts/evolution-cou
 import { PageQuestionComponent } from '../../components/page-question/page-question.component'
 import { PageNavigatorComponent } from '../../components/page-navigator/page-navigator.component';
 import { PageSeparatorComponent } from '../../components/page-separator/page-separator.component';
-
+import { NewsVideosComponent } from '../../news-videos/news-videos.component';
 @NgModule({
   imports: [
     CommonModule,
@@ -92,7 +92,8 @@ import { PageSeparatorComponent } from '../../components/page-separator/page-sep
     EvolutionCountryComponent,
     PageQuestionComponent,
     PageNavigatorComponent,
-    PageSeparatorComponent
+    PageSeparatorComponent,
+    NewsVideosComponent
   ]
 })
 

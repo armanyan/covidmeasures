@@ -1,0 +1,62 @@
+<div class="main-content pt-md-0">
+  <div class="container py-5" style="max-width: 1400px; min-height: 100vh">
+    <p style="font-size: 24px" class="font-weight-bold">
+      Worldwide Government Responses
+    </p>
+    <p class="mb-5">
+      Every episode, we’ll highlight regulation changes in countries around the
+      world. We’ll cover lockdown measures, school closures and reopenings, and
+      contact tracing and surveillance.
+    </p>
+    <div class="videos-container" *ngIf="currentVideoId">
+      <div class="iframe-container bg-dark p-0">
+        <iframe
+          width="100%"
+          style="height: inherit; box-shadow: none"
+          [src]="showedVideoSrc"
+          frameborder="0"
+          allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen
+        ></iframe>
+      </div>
+      <!-- videos on side -->
+      <div class="playlist-container bg-dark">
+        <div class="uploads-header">OUR UPLOADS</div>
+        <div
+          *ngFor="let item of playlists"
+          class="playlist-item img-scale"
+          [ngStyle]="playlistItemStyle(item)"
+          (click)="setShowedVideo(item.snippet.resourceId.videoId)"
+        ></div>
+      </div>
+    </div>
+    <div
+      class="d-flex align-items-center justify-content-end"
+      style="height: 50px"
+    >
+      <div class="mr-2">Subscribe to our YouTube channel to stay informed!</div>
+      <div
+        class="g-ytsubscribe"
+        data-channelid="UCH4NDnTrZ8NukMbLWwcIGeg"
+        data-layout="default"
+        data-count="default"
+      ></div>
+    </div>
+    <br />
+
+    <!-- <div
+      class="bg-dark py-2"
+      style="height: 320px; width: 100%; overflow-x: auto; white-space: nowrap;"
+    >
+      <div
+        *ngFor="let item of playlists"
+        class="playlist-item d-inline-block"
+        style="width: 300px;"
+        [ngStyle]="{
+          'background-image': 'url(' + item.snippet.thumbnails.high.url + ')'
+        }"
+        (click)="setShowedVideo(item.snippet.resourceId.videoId)"
+      ></div>
+    </div> -->
+  </div>
+</div>

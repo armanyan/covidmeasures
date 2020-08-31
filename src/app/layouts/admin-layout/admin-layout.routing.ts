@@ -13,6 +13,7 @@ import { BordersComponent } from '../../borders/borders.component';
 import { MasksComponent } from '../../masks/masks.component';
 import { TestingComponent } from '../../testing/testing.component';
 import { AboutUsComponent } from '../../about-us/about-us.component';
+import { NewsVideosComponent } from '../../news-videos/news-videos.component';
 
 export const AdminLayoutRoutes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -30,4 +31,5 @@ export const AdminLayoutRoutes: Routes = [
   { path: 'masks', component: MasksComponent },
   { path: 'testing', component: TestingComponent },
   { path: 'aboutus', component: AboutUsComponent },
+  { path: 'news', component: NewsVideosComponent }
 ];
