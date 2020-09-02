@@ -22,11 +22,14 @@ export class PageNavigatorComponent implements OnInit {
     }
     // we get the params in he url
     this.route.queryParams.subscribe(params => {
-      this.paramSection = params['section'];
-      // we add little delay
-      setTimeout(()=> {
-        this.scrollInto(this.paramSection)
-      }, 1000)
+      if ( params['section']) {
+        this.paramSection = params['section'];
+        // we add little delay
+        setTimeout(()=> {
+          this.scrollInto(this.paramSection)
+        }, 1000)
+      }
+
     });
   }
 
