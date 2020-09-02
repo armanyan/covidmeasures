@@ -28,6 +28,7 @@ const routes: Routes =[
     ReactiveFormsModule,
     RouterModule.forRoot(routes,{
        useHash: true,
+       anchorScrolling: 'enabled',
        scrollPositionRestoration: 'enabled'
     })
   ],
