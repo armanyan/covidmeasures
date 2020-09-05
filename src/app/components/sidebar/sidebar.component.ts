@@ -35,12 +35,6 @@ export const ROUTES: RouteInfo[] = [
     belongsTo: "measures",
   },
   {
-    path: "/news",
-    title: "CovidMeasures TV",
-    icon: "video_library",
-    class: "",
-  },
-  {
     path: "/covid",
     title: "COVID-19 Statistics",
     icon: "table_chart",
@@ -88,6 +82,12 @@ export const ROUTES: RouteInfo[] = [
     icon: "local_hospital",
     class: "",
     belongsTo: "measures",
+  },
+  {
+    path: "/news",
+    title: "CovidMeasures TV",
+    icon: "video_library",
+    class: "",
   },
   {
     path: "/aboutus",
