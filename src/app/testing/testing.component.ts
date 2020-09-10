@@ -17,7 +17,7 @@ export class TestingComponent implements OnInit {
 
   ngOnInit(): void {
     this.isMobile = window.innerWidth > mobileWidth ? false : true;
-    this.titleService.setTitle('Testing: Citizens Tracking COVID-19 Testing');
+    this.titleService.setTitle('Tests and Vaccines: Citizens Tracking COVID-19 Testing');
   }
 
 }

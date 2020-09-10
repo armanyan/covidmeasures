@@ -77,8 +77,8 @@ export const ROUTES: RouteInfo[] = [
   },
   {
     path: "/testing",
-    title: "Testing",
-    soon: true,
+    title: "Tests & Vaccine",
+    // soon: true,
     icon: "local_hospital",
     class: "",
     belongsTo: "measures",
