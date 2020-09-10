@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ChangeDetectorRef, SimpleChanges } from '@angular/core';
+import { Component, OnInit, Input, ChangeDetectorRef, SimpleChanges, Output, EventEmitter } from '@angular/core';
 import { Chart } from 'chart.js';
 import moment from 'moment'
 import { FormBuilder, FormGroup } from '@angular/forms';
@@ -53,6 +53,7 @@ export class EvolutionCountryComponent implements OnInit {
   @Input() countryView: string;
   @Input() countryList: Country[];
   @Input() evolution: any;
+  @Output() switchCountry = new EventEmitter();
 
   constructor(
     private formBuilder: FormBuilder,

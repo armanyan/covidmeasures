@@ -1,12 +1,30 @@
 <div>
   <div class="card card-border">
 
-    <div class="card-header card-header-success d-flex justify-content-between">
+    <div class="row card-header card-header-success d-flex justify-content-between">
+      <div class="col-12 col-md-6">
         <h3 class="card-title">Reported COVID-19 Infection Cases & Deaths Per Day</h3>
-        <button class="btn btn-success d-flex align-items-center" data-toggle="modal" data-target="#compareEvolutionModal">
-        <i class="fa fa-plus mr-1" aria-hidden="true"></i>
-        Add a Country
-        </button>
+      </div>
+      <div class="evolution-btn-container col-12 col-md-6 row">
+        <div class="col-12 col-sm-6 ">
+          <button class="evolution-btn btn btn-success d-flex align-items-center text-left" data-toggle="modal"
+            data-target="#compareEvolutionModal">
+            <span class="material-icons mr-2" style="font-size: 30px;">
+              autorenew
+            </span>
+            Switch Country
+          </button>
+        </div>
+        <div class="col-12 col-sm-6 ">
+          <button class="evolution-btn btn btn-success d-flex align-items-center text-left" data-toggle="modal"
+            data-target="#compareEvolutionModal">
+            <span class="material-icons" style="font-size: 30px;">
+              add
+            </span>
+            Add a Country
+          </button>
+        </div>
+      </div>
     </div>
     <!-- Evolution Calendar Range Starts -->
     <div class="card m-0 p-0  px-sm-2 pt-4">
@@ -17,47 +35,44 @@
               <h5 class="font-weight-bold">Evolution Range</h5>
             </div>
             <div class="col-lg-4 col-md-6 form-group my-0 py-0">
-              <input
-                type="text" class="form-control mb-3"
-                laceholder="Dates Picker"
-                
-                bsDaterangepicker
-                formControlName="dateRange"
-                [bsConfig]="{containerClass:'theme-dark-blue', isAnimated: true }"
-                (ngModelChange)="evolutionRangeChanged()"
-                />
+              <input type="text" class="form-control mb-3" laceholder="Dates Picker" bsDaterangepicker
+                formControlName="dateRange" [bsConfig]="{containerClass:'theme-dark-blue', isAnimated: true }"
+                (ngModelChange)="evolutionRangeChanged()" />
             </div>
           </div>
         </form>
       </div>
     </div>
-      <!-- Evolution Calendar Range Ends -->
+    <!-- Evolution Calendar Range Ends -->
     <div class="card-body p-1">
-        <div class="d-flex p-0 m-0 pl-md-4">
-        <button class="btn" [ngClass]="{'btn-success': !isPerMillion}" [disabled]="!isPerMillion" (click)="toPerMillion(false)">Total</button>
-        <button class="btn" [ngClass]="{'btn-success': isPerMillion}" [disabled]="isPerMillion" (click)="toPerMillion(true)">Per 1 Million</button>
-    </div>
-        <div id="wrapper" class="m-0 pt-1 chart-pos">
-          <canvas id="countryChartCases"></canvas>
-        </div>
+      <div class="d-flex p-0 m-0 pl-md-4">
+        <button class="btn" [ngClass]="{'btn-success': !isPerMillion}" [disabled]="!isPerMillion"
+          (click)="toPerMillion(false)">Total</button>
+        <button class="btn" [ngClass]="{'btn-success': isPerMillion}" [disabled]="isPerMillion"
+          (click)="toPerMillion(true)">Per 1 Million</button>
+      </div>
+      <div id="wrapper" class="m-0 pt-1 chart-pos">
+        <canvas id="countryChartCases"></canvas>
+      </div>
     </div>
     <div class="card-footer">
-        <div class="stats">
-        Updated on 
+      <div class="stats">
+        Updated on
         {{ evolutionUpdatedOn }}
-        </div>
-        <div class="stats">
+      </div>
+      <div class="stats">
         Source:
         <a
-            href="https://www.ecdc.europa.eu/en/publications-data/download-todays-data-geographic-distribution-covid-19-cases-worldwide">
-            ECDC
+          href="https://www.ecdc.europa.eu/en/publications-data/download-todays-data-geographic-distribution-covid-19-cases-worldwide">
+          ECDC
         </a>
-        </div>
+      </div>
     </div>
   </div>
 
- <!-- Modal -->
- <div class="modal fade" id="compareEvolutionModal" tabindex="-1" role="dialog" aria-labelledby="compareEvolutionModalLabel" aria-hidden="true">
+  <!-- Modal -->
+  <div class="modal fade" id="compareEvolutionModal" tabindex="-1" role="dialog"
+    aria-labelledby="compareEvolutionModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
         <div class="modal-header  pb-0">
@@ -71,21 +86,14 @@
             <span class="material-icons text-primary">
               search
             </span>
-            <input type="text" 
-            class="form-control" 
-            id="compareCountry" 
-            placeholder="United States, Canada, etc..."
-            (keyup)="filterCompared($event)"
-            >
+            <input type="text" class="form-control" id="compareCountry" placeholder="United States, Canada, etc..."
+              (keyup)="filterCompared($event)">
           </div>
           <ul class="list-group">
-            <li class="list-group-item"
-            style="cursor: pointer;"
-            *ngFor="let country of searchedCountry"
-            (click)="setComparedCountry(country.value, country.viewValue)"
-            [ngClass]="{'active': country.value == comparedCountry.name }"
-            data-dismiss="modal" aria-label="Close"
-            >{{country.viewValue}}</li>
+            <li class="list-group-item" style="cursor: pointer;" *ngFor="let country of searchedCountry"
+              (click)="setComparedCountry(country.value, country.viewValue)"
+              [ngClass]="{'active': country.value == comparedCountry.name }" data-dismiss="modal" aria-label="Close">
+              {{country.viewValue}}</li>
             <!-- <li class="list-group-item"*ngFor="let country of countryList"></li> -->
           </ul>
         </div>

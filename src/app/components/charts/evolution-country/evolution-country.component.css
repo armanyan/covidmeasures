@@ -1,11 +1,21 @@
 /* --------------------------- HEADERS ----------------------------- */
-.card .card-header-success .card-icon, .card .card-header-success .card-text, .card .card-header-success:not(.card-header-icon):not(.card-header-text), .card.bg-success, .card.card-rotate.bg-success .front, .card.card-rotate.bg-success .back {
-background: #333b33;
+.card .card-header-success .card-icon,
+.card .card-header-success .card-text,
+.card .card-header-success:not(.card-header-icon):not(.card-header-text),
+.card.bg-success,
+.card.card-rotate.bg-success .front,
+.card.card-rotate.bg-success .back {
+  background: #333b33;
 }
-.card .card-header-success .card-icon, .card .card-header-success:not(.card-header-icon):not(.card-header-text), .card .card-header-success .card-text {
--webkit-box-shadow: 0 4px 20px 0px rgba(0, 0, 0, 0.14), 0 7px 10px -5px rgba(115, 56, 68, 0.4);
--moz-box-shadow: 0 4px 20px 0px rgba(0, 0, 0, 0.14), 0 7px 10px -5px rgba(115, 56, 68, 0.4);
-box-shadow: 0 4px 20px 0px rgba(0, 0, 0, 0.14), 0 7px 10px -5px rgba(115, 56, 68, 0.4);
+.card .card-header-success .card-icon,
+.card .card-header-success:not(.card-header-icon):not(.card-header-text),
+.card .card-header-success .card-text {
+  -webkit-box-shadow: 0 4px 20px 0px rgba(0, 0, 0, 0.14),
+    0 7px 10px -5px rgba(115, 56, 68, 0.4);
+  -moz-box-shadow: 0 4px 20px 0px rgba(0, 0, 0, 0.14),
+    0 7px 10px -5px rgba(115, 56, 68, 0.4);
+  box-shadow: 0 4px 20px 0px rgba(0, 0, 0, 0.14),
+    0 7px 10px -5px rgba(115, 56, 68, 0.4);
 }
 
 /* --------------------------- CONTENT ----------------------------------*/
@@ -16,51 +26,62 @@ box-shadow: 0 4px 20px 0px rgba(0, 0, 0, 0.14), 0 7px 10px -5px rgba(115, 56, 68
 }
 
 .card {
-    box-shadow:none;
+  box-shadow: none;
 }
 
-.card-border{
-    border:1px solid rgba(0, 0, 0, 0.4);
-    border-radius:6px;
-    -webkit-border-radius: 6px;
-    -moz-border-radius: 6px;
+.card-border {
+  border: 1px solid rgba(0, 0, 0, 0.4);
+  border-radius: 6px;
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
 }
-
 
 .card .card-country {
-    background: #ed5658;
-    font-size: large;
-    font-weight: 500;
-    -webkit-border-radius: 28;
-    -moz-border-radius: 28;
-    border-radius: 28px;
-    -webkit-box-shadow: 0 4px 20px 0px rgba(0, 0, 0, 0.14), 0 7px 10px -5px rgba(115, 56, 68, 0.4);
-    -moz-box-shadow: 0 4px 20px 0px rgba(0, 0, 0, 0.14), 0 7px 10px -5px rgba(115, 56, 68, 0.4);
-    box-shadow: 0 4px 20px 0px rgba(0, 0, 0, 0.14), 0 7px 10px -5px rgba(115, 56, 68, 0.4);
+  background: #ed5658;
+  font-size: large;
+  font-weight: 500;
+  -webkit-border-radius: 28;
+  -moz-border-radius: 28;
+  border-radius: 28px;
+  -webkit-box-shadow: 0 4px 20px 0px rgba(0, 0, 0, 0.14),
+    0 7px 10px -5px rgba(115, 56, 68, 0.4);
+  -moz-box-shadow: 0 4px 20px 0px rgba(0, 0, 0, 0.14),
+    0 7px 10px -5px rgba(115, 56, 68, 0.4);
+  box-shadow: 0 4px 20px 0px rgba(0, 0, 0, 0.14),
+    0 7px 10px -5px rgba(115, 56, 68, 0.4);
 }
 
 .btn-primary {
-    background: #da474c !important;
+  background: #da474c !important;
 }
 
 .chart-pos {
-    position: relative;
-    height: 60vh
-  }
-  
+  position: relative;
+  height: 60vh;
+}
+
 /* --------------------------- MODAL ----------------------------------*/
-.list-group-item:hover{
-    background-color: #ed5658;
-    color: aliceblue;
-  }
-  .list-group-item.active{
-    background-color: #e03b3e;
-  }
-  
+.list-group-item:hover {
+  background-color: #ed5658;
+  color: aliceblue;
+}
+.list-group-item.active {
+  background-color: #e03b3e;
+}
+
 /**************************CARD-GRID*****************************/
 .card-grid {
-    display: grid;
-    grid-template-columns: auto auto auto;
-    grid-gap: 0.5em;
-    margin: auto;
+  display: grid;
+  grid-template-columns: auto auto auto;
+  grid-gap: 0.5em;
+  margin: auto;
+}
+
+.evolution-btn {
+  max-width: 150px;
+  padding: 10px 15px;
+}
+.evolution-btn-container {
+  max-width: 350px;
+  padding-right: 16px;
 }
