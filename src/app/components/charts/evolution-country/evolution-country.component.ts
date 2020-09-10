@@ -26,6 +26,10 @@ interface EvolutionChart {
   comparedTravel: any[];
 }
 
+enum ModalAction {
+  compare = "compare",
+  switch = "switch",
+}
 @Component({
   selector: 'app-evolution-country',
   templateUrl: './evolution-country.component.html',
@@ -49,6 +53,11 @@ export class EvolutionCountryComponent implements OnInit {
   private countryPopulation:number = 0;
   public searchedCountry: Array<any>;
   public isPerMillion: boolean = false;
+
+  public modalConfig: {title: string; action: string;} = {
+    title:"Compare Country", 
+    action: ModalAction.compare
+  };
 
   @Input() countryView: string;
   @Input() countryList: Country[];
@@ -409,7 +418,10 @@ export class EvolutionCountryComponent implements OnInit {
     const data = date.split('/');
     return `${data[0]} ${monthNames[parseInt(data[1])-1]} ${data[2]}` 
   }
-
+  /**
+ * @param alpha3 to get the population of the country
+ * @param name to get the name of the country
+ */
   public setComparedCountry(alpha3: string, name: string){
     this.isPerMillion = false;
     this.comparedCountry = {
@@ -443,5 +455,31 @@ export class EvolutionCountryComponent implements OnInit {
       if(row.value.toLowerCase().includes(search)) return row;
       if(row.viewValue.toLowerCase().includes(search)) return row;
     }).slice(0,5);
+  }
+  /**
+   * @param 'title' a string to display when modal is opened
+   * @param 'action' holds info on what functionality to execute
+   */ 
+  public setModalConfig(title:string, action:string){
+    this.modalConfig.title = title;
+    this.modalConfig.action = action;
+  }
+    /**
+   * @param alpha3 to get the population of the country
+   * @param name to get the name of the country
+   * @param 'action' to determin what functionality to execute
+   */
+  public countrySelected(action:string, alpha3:string, name:string= '') {
+    switch (action) {
+      case ModalAction.compare:
+        this.setComparedCountry(alpha3, name);
+        break;
+      case ModalAction.switch:
+        this.switchCountry.emit(alpha3);
+        break;
+      default:
+        break;
+    }
+
   }
 }

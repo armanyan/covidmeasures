@@ -262,6 +262,7 @@
           [countryView]="countryView"
           [countryList]="countryList"
           [evolution]="evolution"
+          (switchCountry)="countryChangeView($event)"
           *ngIf="isClientReady"
         ></app-evolution-country>
         <br />

@@ -85,3 +85,7 @@
   max-width: 350px;
   padding-right: 16px;
 }
+.modal-title {
+  font-weight: 900;
+  font-size: 20px;
+}
