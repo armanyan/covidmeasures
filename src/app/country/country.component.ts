@@ -119,7 +119,8 @@ export class CountryComponent implements OnInit {
         "viewValue": this.evolution.data[alpha].name.split('_').join(' ')
       });
     }
-    
+    this.isClientReady = true;
+    this.changeDetector.detectChanges();
     const alpha3 = this.activatedRoute.snapshot.paramMap.get('alpha3');
     if (alpha3) {
       this.countryChangeView(alpha3);
@@ -132,9 +133,6 @@ export class CountryComponent implements OnInit {
     
     this.setTotalDeathRatio();
     this.setWidget();
-
-    this.isClientReady = true;
-    this.changeDetector.detectChanges();
   }
 
   private async getUserCountry() {

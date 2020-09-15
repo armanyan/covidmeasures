@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ChangeDetectorRef, SimpleChanges } from '@angular/core';
+import { Component, OnInit, Input, ChangeDetectorRef, SimpleChanges, Output, EventEmitter, ViewChildren, ViewChild, ElementRef } from '@angular/core';
 import { Chart } from 'chart.js';
 import moment from 'moment'
 import { FormBuilder, FormGroup } from '@angular/forms';
@@ -26,13 +26,18 @@ interface EvolutionChart {
   comparedTravel: any[];
 }
 
+enum ModalAction {
+  compare = "compare",
+  switch = "switch",
+}
 @Component({
   selector: 'app-evolution-country',
   templateUrl: './evolution-country.component.html',
   styleUrls: ['./evolution-country.component.css']
 })
 export class EvolutionCountryComponent implements OnInit {
-
+  @ViewChild('closeModalbutton',{static: false}) private closeModalbutton: ElementRef;
+  @ViewChild('modalInputField',{static: false}) private modalInputField: ElementRef;
   private currentCountryName: string;
   public calendarForm: FormGroup;
   public countryAllCasesCTX: Chart;
@@ -50,9 +55,15 @@ export class EvolutionCountryComponent implements OnInit {
   public searchedCountry: Array<any>;
   public isPerMillion: boolean = false;
 
+  public modalConfig: {title: string; action: string;} = {
+    title:"Compare Country", 
+    action: ModalAction.compare
+  };
+
   @Input() countryView: string;
   @Input() countryList: Country[];
   @Input() evolution: any;
+  @Output() switchCountry = new EventEmitter();
 
   constructor(
     private formBuilder: FormBuilder,
@@ -408,7 +419,10 @@ export class EvolutionCountryComponent implements OnInit {
     const data = date.split('/');
     return `${data[0]} ${monthNames[parseInt(data[1])-1]} ${data[2]}` 
   }
-
+  /**
+ * @param alpha3 to get the population of the country
+ * @param name to get the name of the country
+ */
   public setComparedCountry(alpha3: string, name: string){
     this.isPerMillion = false;
     this.comparedCountry = {
@@ -442,5 +456,34 @@ export class EvolutionCountryComponent implements OnInit {
       if(row.value.toLowerCase().includes(search)) return row;
       if(row.viewValue.toLowerCase().includes(search)) return row;
     }).slice(0,5);
+  }
+  /**
+   * @param 'title' a string to display when modal is opened
+   * @param 'action' holds info on what functionality to execute
+   */ 
+  public setModalConfig(title:string, action:string){
+    this.modalConfig.title = title;
+    this.modalConfig.action = action;
+  }
+    /**
+   * @param alpha3 to get the population of the country
+   * @param name to get the name of the country
+   * @param 'action' to determin what functionality to execute
+   */
+  public countrySelected(action:string, alpha3:string, name:string= '') {
+    // we submit click event to the close btn at the dom
+    this.closeModalbutton.nativeElement.click()
+    switch (action) {
+      case ModalAction.compare:
+        this.setComparedCountry(alpha3, name);
+        break;
+      case ModalAction.switch:
+        this.switchCountry.emit(alpha3);
+        break;
+      default:
+        break;
+    }
+    // after selecting we clear the input field
+    this.modalInputField.nativeElement.value = '';
   }
 }
