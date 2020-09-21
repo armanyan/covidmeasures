@@ -262,3 +262,9 @@ td.center {
     grid-template-columns: auto;
   }
 }
+
+@media (max-width: 500px) {
+  .container-fluid, .container{
+    padding: 0 !important;
+  }
+}

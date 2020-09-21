@@ -156,3 +156,9 @@ tr td.active {
     table-layout: auto;
   }
 }
+
+@media (max-width: 500px) {
+  .container-fluid, .container{
+    padding: 0 !important;
+  }
+}
