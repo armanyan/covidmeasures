@@ -1,5 +1,5 @@
-<div class="main-content pt-md-0">
-  <div class="container-fluid">
+<div class="main-content pt-md-0 px-md-0 px-lg-4">
+  <div class="container-fluid px-md-0">
     <div layout-align="end end">
       <h2 *ngIf="isMobile">
         <u>{{ titleService.getTitle().split(":")[0] }}</u>
@@ -37,11 +37,11 @@
         { name: 'Death Rates', sectionID: 'deathRates' }
       ]" [navTopDistance]="326"></app-page-navigator>
     <!-- ------------------------------ GLOBAL DATA SECTION ----------------------------------------->
-    <div class="global-data" id="globalData">
+    <div class="global-data px-md-0" id="globalData">
       <app-page-separator [title]="'Global Data'"></app-page-separator>
-      <div class="container py-5" style="max-width: 1400px;">
+      <div class="container-fluid py-5 px-md-0" style="max-width: 1400px;">
         <div class="row pb-5">
-          <div class="col-md-6">
+          <div class="col-md-6 px-md-0">
             <div class="card card-border">
               <div class="card-header card-header-success">
                 <h3 class="card-title">
@@ -83,7 +83,7 @@
             </div>
           </div>
 
-          <div class="col-md-6">
+          <div class="col-md-6 px-md-0">
             <div class="card card-border">
               <div class="card-header card-header-success">
                 <h3 class="card-title">Reported COVID-19 Deaths Worldwide</h3>
@@ -123,7 +123,7 @@
             </div>
           </div>
         </div>
-        <div class="col-md-12">
+        <div class="col-md-12 px-0">
           <div class="card card-border">
             <div class="card-header card-header-success">
               <h3 class="card-title">COVID-19 Worldwide Statistics</h3>
@@ -183,7 +183,7 @@
     <!-- ------------DEATH RATES STARTS HERE --------------- -->
     <div class="global-data" id="deathRates">
       <app-page-separator [title]="'Death Rates'"></app-page-separator>
-      <div class="container py-5" style="max-width: 1400px;">
+      <div class="container py-5 px-0" style="max-width: 1400px;">
         <!-- we import app-death-rates  -->
         <app-death-rates></app-death-rates>
       </div>
