@@ -31,11 +31,11 @@
       <div class="card-body  m-0 p-0">
         <form [formGroup]="calendarForm">
           <div class="row">
-            <div class="col-lg-2 col-md-4 d-flex justify-content-md-end justify-content-sm-start align-items-center">
-              <h5 class="font-weight-bold">Evolution Range</h5>
+            <div class="col-lg-2 col-md-4  d-flex justify-content-md-end justify-content-sm-start align-items-center">
+              <h5 class="font-weight-bold px-2">Evolution Range</h5>
             </div>
-            <div class="col-lg-4 col-md-6 form-group my-0 py-0">
-              <input type="text" class="form-control mb-3" laceholder="Dates Picker" bsDaterangepicker
+            <div class="col-lg-4 col-md-6 form-group my-0 py-0 ">
+              <input type="text" class="form-control mb-3 px-2" laceholder="Dates Picker" bsDaterangepicker
                 formControlName="dateRange" [bsConfig]="{containerClass:'theme-dark-blue', isAnimated: true }"
                 (ngModelChange)="evolutionRangeChanged()" />
             </div>

@@ -214,3 +214,9 @@ mat-toolbar[color="warn"] {
     height: 100vh;
   }
 }
+
+@media (max-width: 500px) {
+  .container-fluid, .container{
+    padding: 0 !important;
+  }
+}
