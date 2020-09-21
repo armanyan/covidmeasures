@@ -156,6 +156,14 @@ tr td.active {
   background-color: #ed5658 !important;
   color: #000 !important;
 }
+
+/* Survey */
+
+div.survey {
+  background-image: url('../../assets/img/pencils.png');
+  width: 100%;
+  height: 600px;
+}
 /* --------------------------- DEBATE ----------------------------------*/
 #theDebate iframe {
   height: 150vh;
@@ -215,10 +223,8 @@ mat-toolbar[color="warn"] {
   }
 }
 
-/* Survey */
-
-div.survey {
-  background-image: url('../../assets/img/pencils.png');
-  width: 100%;
-  height: 600px;
+@media (max-width: 500px) {
+  .container-fluid, .container{
+    padding: 0 !important;
+  }
 }
