@@ -146,6 +146,7 @@ export class SchoolComponent implements OnInit {
     this.covidVSSchoolChangeRegion('World');
     this.setSchoolClosure();
     this.setWidget();
+    this.setSurveyWidget();
 
     this.isClientReady = true;
     this.changeDetector.detectChanges();
@@ -490,6 +491,19 @@ export class SchoolComponent implements OnInit {
         autoClose: 3000
       }).open();
     })
+  }
+
+  private setSurveyWidget() {
+    const el = document.getElementById('survey');
+    typeformEmbed.makeWidget(
+      el,
+      'https://form.typeform.com/to/ECUQTkgL',
+      {
+        hideFooter: true,
+        hideHeaders: true,
+        opacity: 0,
+      }
+      );
   }
 }
 

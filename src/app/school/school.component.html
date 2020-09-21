@@ -46,7 +46,8 @@
       [pageSections]="[
         { name: 'Global Data', sectionID: 'globalData' },
         { name: 'Impacts', sectionID: 'impacts' },
-        { name: 'Debate', sectionID: 'theDebate' }
+        { name: 'Debate', sectionID: 'theDebate' },
+        { name: 'Survey', sectionID: 'theSurvey' }
       ]"
       [navTopDistance]="326"
       *ngIf="isClientReady"
@@ -459,6 +460,20 @@
         </div>
       </div>
     </div>
+    <!------------------------------------------------- SURVEY SECTION -------------------------------------->
+    <br>
+    <div id="theSurvey">
+      <app-page-separator [title]="'       The Survey'"></app-page-separator>
+      <div class="pt-5">
+        <div class="row justify-content-center p-0">
+          <div class="col-12 p-sm-0 p-md-1" style="width: 100%;">
+            <div class="survey" id="survey">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <div class="container">
       <hr style="margin-top: 80px; border: 1px solid #a9b0bb;" />
       <div class="row justify-content-center">
