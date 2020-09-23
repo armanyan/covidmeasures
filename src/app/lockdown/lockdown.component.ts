@@ -40,7 +40,7 @@ export class LockdownComponent implements OnInit {
 
   public impactHeaders = ['Impact', 'Description', 'Link to Lockdown', 'Countries Impacted', 'Source'];
   public impactTable = [];
-  public p: number = 1;
+  public pageIndicator = 1;
   public impactCollection: any[];
 
   public lockdownRegion = "World";
@@ -366,6 +366,7 @@ export class LockdownComponent implements OnInit {
       if(row.link ? row.link.toLowerCase().includes(search) : false) return row;
       if(row.source ? row.source.toLowerCase().includes(search) : false) return row;
     });
+    this.pageIndicator = 1;
   }
 
   /***

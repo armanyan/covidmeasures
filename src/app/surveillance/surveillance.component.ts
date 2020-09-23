@@ -14,11 +14,13 @@ export class SurveillanceComponent implements OnInit {
   public readMore = false;
 
   public headers = [
-    "Country", "Name", "Description", "Release Date", "Device", "Target",
-    "Geo-Tracking", "Big Data", "User App", "Other Features", "Status"
+    "Country", "Name", "Description", "Device", "Target",
+    "Geo-Tracking", "Big Data", "User App", "Status"
   ];
 
+  public tableFull = [];
   public table = [];
+  public pageIndicator = 1;
   public isClientReady: boolean = false;
   constructor(
     public titleService: Title
@@ -34,20 +36,35 @@ export class SurveillanceComponent implements OnInit {
 
   private setTable() {
     for (const row of surveillance.default) {
-      this.table.push({
+      this.tableFull.push({
         "country": row.country,
         "name": row.name,
         "desc": row.description,
-        "release": row.release,
         "device": row.device,
         "target": row.target,
         "geo": row.geo_tracking,
         "big_data": row.big_data,
         "app": row.app,
-        "other": row.other,
         "status": row.status
       });
     }
+    this.table = this.tableFull;
+  }
+
+  /**
+   * Search filter for the impacts table
+   * @param event object that contains the search word entered by the user.
+   */
+  applyImpactFilter(event: Event) {
+    const search = (event.target as any).value.toLowerCase();
+    this.table = this.tableFull.filter(row => {
+      if(row.country ? row.country.toLowerCase().includes(search) : false) return row;
+      if(row.name ? row.name.toLowerCase().includes(search) : false) return row;
+      if(row.desc ? row.desc.toLowerCase().includes(search) : false) return row;
+      if(row.device ? row.device.toLowerCase().includes(search) : false) return row;
+      if(row.status ? row.status.toLowerCase().includes(search) : false) return row;
+    });
+    this.pageIndicator = 1;
   }
 
 }

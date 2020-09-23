@@ -41,6 +41,7 @@ export class ImpactsComponent implements OnInit {
   public countries = [];
   public sortingOrder = true; // true for desc
   public indicators = ['GDP', 'Unemployment Rate', 'Imports', 'Exports'];
+  public pageIndicator = 1;
 
   public locations: Location[] = [
     {value: 'G20', viewValue: 'G20'},
