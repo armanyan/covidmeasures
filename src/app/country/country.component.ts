@@ -7,7 +7,7 @@ import { Location } from '@angular/common';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import * as typeformEmbed from '@typeform/embed';
 
-import { mobileWidth, monthNames, getCountryNameByAlpha, getAlpha3FromAlpha2,
+import { mobileWidth, getCountryNameByAlpha, getAlpha3FromAlpha2,
          getChildrenNoSchool, getCountryPopulation, aws } from '../utils';
 
 interface Country {
@@ -48,7 +48,8 @@ export class CountryComponent implements OnInit {
     restriction_type: '',
     start_reopening: '',
     end: '',
-    comment: ''
+    comment: '',
+    lockdown_counter: 0
   };
   public businessClosure = {
     status: 'No Data',
@@ -106,7 +107,7 @@ export class CountryComponent implements OnInit {
 
     this.evolution = (await this.http.get(`${aws}/evolution.json`).toPromise() as any);
     this.schoolClosureData = (await this.http.get(`${aws}/school_closure.json`).toPromise() as any);
-    this.lockdownData = (await this.http.get(`${aws}/lockdown.json`).toPromise() as any);
+    this.lockdownData = (await this.http.get(`${aws}/new_lockdown.json`).toPromise() as any);
     this.impactData = (await this.http.get(`${aws}/community_impacts.json`).toPromise() as any);
     this.travelData = (await this.http.get(`${aws}/international_flights.json`).toPromise() as any);
     this.setImpactTable();
@@ -163,12 +164,14 @@ export class CountryComponent implements OnInit {
 
     const lockdownCountry = this.getCountry(this.lockdownData.countries, alpha3);
     this.lockdown.status = lockdownCountry.status;
-    this.lockdown.date = lockdownCountry.start;
-    this.lockdown.current_coverage = lockdownCountry.current_coverage
-    this.lockdown.restriction_type = lockdownCountry.restriction_type
-    this.lockdown.start_reopening = lockdownCountry.start_reopening
-    this.lockdown.end = lockdownCountry.end
-    this.lockdown.comment = lockdownCountry.comments
+    const length = lockdownCountry['dates'].length - 1;
+    this.lockdown.date = lockdownCountry['dates'][length].start;
+    this.lockdown.current_coverage = lockdownCountry.current_coverage;
+    this.lockdown.restriction_type = lockdownCountry.restriction_type;
+    this.lockdown.start_reopening = lockdownCountry['dates'][length].start_reopening;
+    this.lockdown.end = lockdownCountry['dates'][length].end;
+    this.lockdown.comment = lockdownCountry.comments;
+    this.lockdown.lockdown_counter = length + 1;
 
     this.businessClosure.status = lockdownCountry.status_business;
     this.businessClosure.date = lockdownCountry.start_business_closure;
