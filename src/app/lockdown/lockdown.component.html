@@ -131,14 +131,11 @@
           </div>
         </div>
         <!-- ------ Lockdown Measures Overview ENDS ------ -->
-        <p style="margin-top: 2%;">
-          {{ lockdown_tab_1_below }}
-        </p>
 
         <!-- Lockdown Map Starts -->
         <div class="card card-border">
           <div class="card-header card-header-success">
-            <h3 class="card-title">Map - Lockdown Status</h3>
+            <h3 class="card-title">Lockdown Status</h3>
           </div>
           <div class="card-body" style="height: 80vh;" *ngIf="lockdownData">
             <app-map-lockdown
@@ -341,32 +338,20 @@
                       <td [ngClass]="{ active: sortStatus.name.active }">
                         {{ row.name }}
                       </td>
-                      <td
-                        [ngClass]="{ active: sortStatus.population.active }"
-                        class="text-center"
-                      >
+                      <td [ngClass]="{ active: sortStatus.population.active }" class="text-center">
                         {{ row.population | number }}
                       </td>
                       <td class="text-center">{{ row.lockdown }}</td>
                       <td class="text-center">{{ row.curfew }}</td>
                       <td class="text-center">{{ row.business }}</td>
                       <td class="text-center">{{ row.other }}</td>
-                      <td
-                        [ngClass]="{ active: sortStatus.start.active }"
-                        class="text-center"
-                      >
+                      <td [ngClass]="{ active: sortStatus.start.active }" class="text-center">
                         {{ row.start | date }}
                       </td>
-                      <td
-                        [ngClass]="{ active: sortStatus.end.active }"
-                        class="text-center"
-                      >
+                      <td [ngClass]="{ active: sortStatus.end.active }" class="text-center">
                         {{ row.end | date }}
                       </td>
-                      <td
-                        [ngClass]="{ active: sortStatus.duration.active }"
-                        class="text-center"
-                      >
+                      <td [ngClass]="{ active: sortStatus.duration.active }" class="text-center">
                         {{ row.duration }}
                       </td>
                       <td>{{ row.status }}</td>
@@ -401,9 +386,9 @@
             <div class="card-header card-header-success">
               <h3 class="card-title">List of Lockdown Impacts & Solutions</h3>
               <mat-form-field>
-                <mat-label style="color: rgb(218, 205, 205);"
-                  >Search by Country, Measure or key word</mat-label
-                >
+                <mat-label class="search">
+                  Search by Country, Impact or key word
+                </mat-label>
                 <input
                   matInput
                   (keyup)="applyImpactFilter($event)"
@@ -453,20 +438,17 @@
                     </th>
                   </thead>
                   <tbody>
-                    <tr
-                      *ngFor="
-                        let row of impactCollection
-                          | paginate: { itemsPerPage: 7, currentPage: p }
-                      "
+                    <tr *ngFor =
+                      "let row of impactCollection | paginate: { itemsPerPage: 7, currentPage: pageIndicator }"
                     >
                       <td>{{ row.impact }}</td>
                       <td>{{ row.desc }}</td>
                       <td>{{ row.link }}</td>
                       <td>{{ row.countries }}</td>
                       <td *ngIf="row.source.startsWith('http')">
-                        <a href="{{ row.source }}" target="_blank">{{
-                          row.source.split("/")[2]
-                        }}</a>
+                        <a href="{{ row.source }}" target="_blank">
+                          {{ row.source.split("/")[2]}}
+                        </a>
                       </td>
                       <td *ngIf="!row.source.startsWith('http')">
                         {{ row.source }}
@@ -477,7 +459,7 @@
                 <div class="d-flex justify-content-center">
                   <pagination-controls
                     class="my-pagination"
-                    (pageChange)="p = $event"
+                    (pageChange)="pageIndicator = $event"
                   ></pagination-controls>
                 </div>
               </div>
