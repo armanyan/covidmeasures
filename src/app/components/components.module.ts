@@ -10,7 +10,7 @@ import { MapSchoolClosureComponent } from './maps/map-school-closure/map-school-
 import { MapLockdownComponent } from './maps/map-lockdown/map-lockdown.component';
 import { MapMasksComponent } from './maps/map-masks/map-masks.component';
 import { DisqusCommentsComponent } from './pages-comments/disqus-comments.component';
-
+import { DisqusModule } from 'ngx-disqus';
 import { PageLoadersComponent } from './page-loaders/page-loaders.component';
 import { RemindMeComponent } from './remind-me/remind-me.component';
 import { EvolutionCountryComponent } from './charts/evolution-country/evolution-country.component';
@@ -23,6 +23,7 @@ import { SurveyAnswersProgressComponent } from './charts/survey-answers-progress
   imports: [
     CommonModule,
     RouterModule,
+    DisqusModule
   ],
   declarations: [
     FooterComponent,
@@ -56,6 +57,7 @@ import { SurveyAnswersProgressComponent } from './charts/survey-answers-progress
     PageQuestionComponent,
     PageNavigatorComponent,
     PageSeparatorComponent,
+    DisqusModule
   ]
 })
 export class ComponentsModule { }

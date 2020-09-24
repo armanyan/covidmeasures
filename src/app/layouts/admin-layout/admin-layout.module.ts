@@ -31,7 +31,6 @@ import { MapTilesService } from '../../_service/map/map-tiles.service';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { HomeComponent } from 'app/homepage/homepage.component';
-import { DisqusModule } from 'ngx-disqus';
 import { NewsVideosComponent } from '../../news-videos/news-videos.component';
 import { ComponentsModule } from '../../components/components.module' // holds imports of all custom app components
 @NgModule({
@@ -51,7 +50,6 @@ import { ComponentsModule } from '../../components/components.module' // holds i
     HttpClientModule,
     NgxPaginationModule,
     BsDatepickerModule.forRoot(),
-    DisqusModule,
     ComponentsModule
   ],
   providers: [
