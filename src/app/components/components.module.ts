@@ -18,6 +18,7 @@ import { PageQuestionComponent } from "./page-question/page-question.component";
 import { PageNavigatorComponent } from "./page-navigator/page-navigator.component";
 import { PageSeparatorComponent } from "./page-separator/page-separator.component";
 import { SurveySchoolAnswersComponent } from "./charts/survey-school-answers/survey-school-answers.component";
+import { SurveyTravelAnswersComponent } from "./charts/survey-travel-answers/survey-travel-answers.component";
 
 @NgModule({
   imports: [CommonModule, RouterModule, DisqusModule],
@@ -37,6 +38,7 @@ import { SurveySchoolAnswersComponent } from "./charts/survey-school-answers/sur
     PageNavigatorComponent,
     PageSeparatorComponent,
     SurveySchoolAnswersComponent,
+    SurveyTravelAnswersComponent,
   ],
   exports: [
     FooterComponent,
@@ -53,6 +55,7 @@ import { SurveySchoolAnswersComponent } from "./charts/survey-school-answers/sur
     PageNavigatorComponent,
     PageSeparatorComponent,
     SurveySchoolAnswersComponent,
+    SurveyTravelAnswersComponent,
     DisqusModule,
   ],
 })
