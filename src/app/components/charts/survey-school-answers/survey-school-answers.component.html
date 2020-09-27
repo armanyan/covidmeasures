@@ -1,4 +1,7 @@
-<div class="p-sm-1 p-md-3 p-mb-5">
+<div class="p-sm-1 p-mb-5">
+  <br />
+  <hr style="margin-bottom: 100px; border: 1px solid #a9b0bb" />
+
   <div
     class="question-container d-flex justify-content-between align-items-center"
   >
@@ -39,12 +42,7 @@
             class="answer-text d-flex w-100 justify-content-between align-items-center pl-3"
           >
             <!-- left side Items -->
-            <div *ngIf="item.key == 1 || item.key == 0; else not_boolean">
-              {{ item.key == 1 ? "Yes" : "No" }}
-            </div>
-            <ng-template #not_boolean>
-              {{ item.key }}
-            </ng-template>
+            <div>{{ formatAnswer(item.key, currentSurvey.question) }}</div>
             <!-- right side items -->
             <div class="pr-3">
               {{ getPercentOf(item.value, currentSurvey.answers["total"]) }} %
@@ -54,4 +52,5 @@
       </div>
     </ng-container>
   </div>
+  <div style="margin-top: 100px;"></div>
 </div>

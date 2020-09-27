@@ -1,5 +1,5 @@
 import { Component, Input, AfterViewInit } from "@angular/core";
-import { aws } from "../../../utils";
+import { aws, getCountryNameByAlpha } from "../../../utils";
 
 @Component({
   selector: "app-survey-school-answers",
@@ -72,6 +72,7 @@ export class SurveySchoolAnswersComponent implements AfterViewInit {
         this.surveyIndex.max = Object.keys(this.surveyResults).length - 1;
       });
     this.setCurrentSurvey();
+    console.log(this.surveyResults);
   }
 
   getPercentOf(y: number, x: number) {
@@ -102,5 +103,18 @@ export class SurveySchoolAnswersComponent implements AfterViewInit {
       this.surveyIndex.current = this.surveyIndex.max;
     }
     this.setCurrentSurvey();
+  }
+
+  public formatAnswer(answer: string | number, question: string) {
+    switch (question) {
+      case "Q1 - Have schools reopened where you are?":
+        return answer == 1 ? "Yes" : "No";
+      case "Q4 - Are you a parent?":
+        return answer == 1 ? "Yes" : "No";
+      case "Q5 - What country are you in?":
+        return getCountryNameByAlpha(answer.toString());
+      default:
+        return answer;
+    }
   }
 }
