@@ -1,22 +1,35 @@
-import { Component, Input, OnInit } from "@angular/core";
+import { Component, Input, AfterViewInit } from "@angular/core";
 import { aws } from "../../../utils";
 
 @Component({
   selector: "app-survey-school-answers",
   templateUrl: "./survey-school-answers.component.html",
-  styleUrls: ["./survey-school-answers.component.css"],
+  styleUrls: ["./survey-school-answers.component.scss"],
 })
-export class SurveySchoolAnswersComponent implements OnInit {
+export class SurveySchoolAnswersComponent implements AfterViewInit {
   @Input() surveyQuestions: Object[];
+
+  public surveyResults: {};
+  public currentSurvey: {
+    question: string;
+    answers: object;
+  } = {
+    question: "",
+    answers: {},
+  };
+  private surveyIndex: {
+    current: number;
+    max: number;
+  } = { current: 0, max: 0 };
+
   constructor() {}
 
-  ngOnInit(): void {
-    fetch(`${aws}/community_school_reopening.json`)
+  async ngAfterViewInit() {
+    await fetch(`${aws}/community_school_reopening.json`)
       .then((res) => res.json())
       .then((data: Object[]) => {
         const surveyResults = {};
 
-        console.log("progress");
         data.forEach((item) => {
           // to change unreadable string of Q5 with Alpha3
           if (item["Alpha3 (from Table 2)"]) {
@@ -54,7 +67,40 @@ export class SurveySchoolAnswersComponent implements OnInit {
             }
           }
         });
-        console.log(surveyResults);
+        this.surveyResults = surveyResults;
+        this.surveyIndex.current = 0;
+        this.surveyIndex.max = Object.keys(this.surveyResults).length - 1;
       });
+    this.setCurrentSurvey();
+  }
+
+  getPercentOf(y: number, x: number) {
+    return (y / x) * 100;
+  }
+
+  private setCurrentSurvey() {
+    this.currentSurvey.question = Object.keys(this.surveyResults)[
+      this.surveyIndex.current
+    ];
+    this.currentSurvey.answers = this.surveyResults[
+      this.currentSurvey.question
+    ];
+  }
+
+  public nextSurvey() {
+    if (this.surveyIndex.current + 1 <= this.surveyIndex.max) {
+      this.surveyIndex.current = this.surveyIndex.current + 1;
+    } else {
+      this.surveyIndex.current = 0;
+    }
+    this.setCurrentSurvey();
+  }
+  public prevSurvey() {
+    if (this.surveyIndex.current - 1 >= 0) {
+      this.surveyIndex.current = this.surveyIndex.current - 1;
+    } else {
+      this.surveyIndex.current = this.surveyIndex.max;
+    }
+    this.setCurrentSurvey();
   }
 }

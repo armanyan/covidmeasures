@@ -1,23 +1,57 @@
-<div>
-  progress ar here
-
+<div class="p-sm-1 p-md-3 p-mb-5">
   <div
-    class="progress position-relative d-flex"
-    style="height: 50px; border-radius: 20px"
+    class="question-container d-flex justify-content-between align-items-center"
   >
-    <div
-      class="progress-bar"
-      role="progressbar"
-      style="border-radius: 20px"
-      [style.width]="'10%'"
-    ></div>
-    <div
-      class="justify-content-start d-flex position-absolute w-100"
-      style="height: 50px; border-radius: 20px"
-    >
-      <div style="font-weight: bolder" class="d-flex align-items-center pl-3">
-        60% complete
-      </div>
+    <button class="d-flex align-items-center" (click)="prevSurvey()">
+      <span class="material-icons"> keyboard_arrow_left </span>
+    </button>
+    <div class="question-text p-1 w-100">
+      {{ currentSurvey.question }}
     </div>
+    <button class="d-flex align-items-center" (click)="nextSurvey()">
+      <span class="material-icons"> keyboard_arrow_right </span>
+    </button>
+  </div>
+
+  <div class="answers-section py-2 px-sm-1 px-md-5">
+    <ng-container
+      *ngFor="let item of currentSurvey.answers | keyvalue; let i = index"
+    >
+      <div
+        class="progress position-relative d-flex my-2"
+        style="height: 50px; border-radius: 20px"
+        *ngIf="item.key != 'total'"
+      >
+        <div
+          class="progress-bar"
+          role="progressbar"
+          style="border-radius: 20px; background-color: #81c285"
+          [style.width]="
+            getPercentOf(item.value, currentSurvey.answers['total']) + '%'
+          "
+        ></div>
+        <div
+          class="justify-content-start d-flex position-absolute w-100"
+          style="height: 50px; border-radius: 20px"
+        >
+          <div
+            style="font-weight: bolder"
+            class="answer-text d-flex w-100 justify-content-between align-items-center pl-3"
+          >
+            <!-- left side Items -->
+            <div *ngIf="item.key == 1 || item.key == 0; else not_boolean">
+              {{ item.key == 1 ? "Yes" : "No" }}
+            </div>
+            <ng-template #not_boolean>
+              {{ item.key }}
+            </ng-template>
+            <!-- right side items -->
+            <div class="pr-3">
+              {{ getPercentOf(item.value, currentSurvey.answers["total"]) }} %
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
   </div>
 </div>
