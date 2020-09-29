@@ -60,16 +60,6 @@
             ></iframe>
           </div>
         </div>
-        <app-survey-travel-answers
-          [surveyQuestions]="{
-            Q1: 'How has covid-19 impacted your travel plans?',
-            Q2: 'What is the main reason your plans have been impacted?',
-            Q3: 'What is the biggest change to your travel plans?',
-            Q4: 'What is your primary mode of transportation?',
-            Q5: 'Will you be taking any extra precautions while you travel?',
-            Q6: 'What country are you in?'
-          }"
-        ></app-survey-travel-answers>
       </div>
     </div>
     <!-- ------------------------------ Survey SECTION ----------------------------------------->
@@ -96,6 +86,21 @@
         </div>
       </div>
     </div>
+    <!-- survey answers starts -->
+    <div class="container">
+      <app-survey-travel-answers
+        [surveyQuestions]="{
+          Q1: 'How has covid-19 impacted your travel plans?',
+          Q2: 'What is the main reason your plans have been impacted?',
+          Q3: 'What is the biggest change to your travel plans?',
+          Q4: 'What is your primary mode of transportation?',
+          Q5: 'Will you be taking any extra precautions while you travel?',
+          Q6: 'What country are you in?'
+        }"
+      ></app-survey-travel-answers>
+      <br />
+    </div>
+    <!-- survey answers ends -->
     <!-- ------------------------------ Country Data SECTION ----------------------------------------->
     <div id="countryData">
       <app-page-separator [title]="'Country Data'"></app-page-separator>

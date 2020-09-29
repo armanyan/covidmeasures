@@ -327,19 +327,6 @@
             </div>
           </div>
         </div>
-        <!-- survey answers starts -->
-        <app-survey-school-answers
-          [surveyQuestions]="{
-            Q1: 'Have schools reopened where you are?',
-            Q2:
-              'What new measures have been implemented to prevent the spread of COVID-19?This question is required.',
-            Q3: 'In your opinion, how necessary are the new measures?',
-            Q4: 'Are you a parent?',
-            Q5: 'What country are you in?'
-          }"
-        ></app-survey-school-answers>
-        <br>
-        <!-- survey answers ends -->
       </div>
     </div>
     <!-- ------------------------------ IMPACTS SECTION ----------------------------------------->
@@ -470,7 +457,21 @@
         </div>
       </div>
     </div>
-
+    <!-- survey answers starts -->
+    <div class="container">
+      <app-survey-school-answers
+        [surveyQuestions]="{
+          Q1: 'Have schools reopened where you are?',
+          Q2:
+            'What new measures have been implemented to prevent the spread of COVID-19?This question is required.',
+          Q3: 'In your opinion, how necessary are the new measures?',
+          Q4: 'Are you a parent?',
+          Q5: 'What country are you in?'
+        }"
+      ></app-survey-school-answers>
+      <br />
+    </div>
+    <!-- survey answers ends -->
     <div class="container">
       <hr style="margin-top: 80px; border: 1px solid #a9b0bb" />
       <div class="row justify-content-center">

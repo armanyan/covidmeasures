@@ -72,7 +72,7 @@ export class SurveySchoolAnswersComponent implements AfterViewInit {
         this.surveyIndex.max = Object.keys(this.surveyResults).length - 1;
       });
     this.setCurrentSurvey();
-    console.log(this.surveyResults);
+    // console.log(this.surveyResults);
   }
 
   getPercentOf(y: number, x: number) {
