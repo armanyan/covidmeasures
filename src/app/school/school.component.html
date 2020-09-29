@@ -97,33 +97,22 @@
                 mat-button
                 class="float"
                 [ngClass]="{
-                  'active-red-button': covidChildrenCases == 'total'
+                  'active-red-button': covidChildrenCases == 'Total'
                 }"
                 color="primary"
-                (click)="changeCovidActiveDeath('total')"
+                (click)="changeCovidActiveDeath('Total')"
               >
                 <span>Total</span>
               </button>
               <button
                 mat-button
                 class="float"
-                [ngClass]="{
-                  'active-red-button': covidChildrenCases == 'perCovidCases'
-                }"
-                color="primary"
-                (click)="changeCovidActiveDeath('perCovidCases')"
-              >
-                <span>Per COVID-19 Active Case</span>
-              </button>
-              <button
-                mat-button
-                class="float"
                 type="button"
                 [ngClass]="{
-                  'active-red-button': covidChildrenCases == 'perCovidDeaths'
+                  'active-red-button': covidChildrenCases == 'COVID-19 Death'
                 }"
                 color="primary"
-                (click)="changeCovidActiveDeath('perCovidDeaths')"
+                (click)="changeCovidActiveDeath('COVID-19 Death')"
               >
                 <span>Per COVID-19 Death</span>
               </button>
