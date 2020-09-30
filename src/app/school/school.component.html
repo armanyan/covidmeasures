@@ -55,7 +55,7 @@
     <!-- ------------------------------ GLOBAL DATA SECTION ----------------------------------------->
     <div class="global-data" id="globalData">
       <app-page-separator [title]="'Global Data'"></app-page-separator>
-      <div class="container pt-5" style="max-width: 1400px">
+      <div class="container pt-5" style="max-width: 1400px;">
         <div class="card card-border">
           <div class="card-header card-header-success">
             <h3 class="card-title">
@@ -97,33 +97,22 @@
                 mat-button
                 class="float"
                 [ngClass]="{
-                  'active-red-button': covidChildrenCases == 'total'
+                  'active-red-button': covidChildrenCases == 'Total'
                 }"
                 color="primary"
-                (click)="changeCovidActiveDeath('total')"
+                (click)="changeCovidActiveDeath('Total')"
               >
                 <span>Total</span>
               </button>
               <button
                 mat-button
                 class="float"
-                [ngClass]="{
-                  'active-red-button': covidChildrenCases == 'perCovidCases'
-                }"
-                color="primary"
-                (click)="changeCovidActiveDeath('perCovidCases')"
-              >
-                <span>Per COVID-19 Active Case</span>
-              </button>
-              <button
-                mat-button
-                class="float"
                 type="button"
                 [ngClass]="{
-                  'active-red-button': covidChildrenCases == 'perCovidDeaths'
+                  'active-red-button': covidChildrenCases == 'COVID-19 Death'
                 }"
                 color="primary"
-                (click)="changeCovidActiveDeath('perCovidDeaths')"
+                (click)="changeCovidActiveDeath('COVID-19 Death')"
               >
                 <span>Per COVID-19 Death</span>
               </button>
@@ -165,9 +154,15 @@
             <div class="table-responsive">
               <table class="table">
                 <thead class="text-primary">
-                  <th>Number of children impacted</th>
-                  <th>Average duration of school closure</th>
-                  <th>Cumulated school years missed</th>
+                  <th>
+                    Number of children impacted
+                  </th>
+                  <th>
+                    Average duration of school closure
+                  </th>
+                  <th>
+                    Cumulated school years missed
+                  </th>
                 </thead>
                 <tbody>
                   <tr>
@@ -199,9 +194,9 @@
           </div>
         </div>
 
-        <hr style="margin-top: 80px; border: 1px solid #a9b0bb" />
+        <hr style="margin-top: 80px; border: 1px solid #a9b0bb;" />
         <div class="row justify-content-center">
-          <div class="col-10 pt-5 pb-3 px-md-0" style="font-family: Roboto">
+          <div class="col-10 pt-5 pb-3 px-md-0" style="font-family: Roboto;">
             <p>
               {{ TEXT_P2 }}
             </p>
@@ -210,13 +205,17 @@
             </p>
           </div>
         </div>
-        <hr style="margin-bottom: 100px; border: 1px solid #a9b0bb" />
+        <hr style="margin-bottom: 100px; border: 1px solid #a9b0bb;" />
 
         <div class="card card-border">
           <div class="card-header card-header-success">
             <h3 class="card-title">School Closure</h3>
           </div>
-          <div class="card-body" style="height: 80vh" *ngIf="schoolClosureData">
+          <div
+            class="card-body"
+            style="height: 80vh;"
+            *ngIf="schoolClosureData"
+          >
             <app-map-school-closure
               [countries]="schoolClosureData.countries"
             ></app-map-school-closure>
@@ -236,12 +235,12 @@
           </div>
         </div>
 
-        <div class="col-md-12 px-0" style="margin-top: 64px">
+        <div class="col-md-12 px-0" style="margin-top: 64px;">
           <div class="card card-border">
             <div class="card-header card-header-success">
               <h3 class="card-title">School Closure Status Per Country</h3>
               <mat-form-field>
-                <mat-label style="color: rgb(218, 205, 205)"
+                <mat-label style="color: rgb(218, 205, 205);"
                   >Search by Country</mat-label
                 >
                 <input
@@ -264,13 +263,13 @@
                     >
                       <div
                         class="d-flex justify-content-center align-items-center"
-                        style="cursor: pointer"
+                        style="cursor: pointer;"
                       >
                         {{ row.title }}
                         <i
                           *ngIf="row.sortable"
                           class="material-icons"
-                          style="font-size: 20px"
+                          style="font-size: 20px;"
                           >arrow_drop_down</i
                         >
                       </div>
@@ -332,13 +331,13 @@
     <!-- ------------------------------ IMPACTS SECTION ----------------------------------------->
     <div class="impacts-data" id="impacts">
       <app-page-separator [title]="'Impacts'"></app-page-separator>
-      <div class="container pt-5" style="max-width: 1400px">
+      <div class="container pt-5" style="max-width: 1400px;">
         <div class="col-md-12 px-0">
           <div class="card card-border">
             <div class="card-header card-header-success">
               <h3 class="card-title">List of School Closure Impacts</h3>
               <mat-form-field>
-                <mat-label style="color: rgb(218, 205, 205)"
+                <mat-label style="color: rgb(218, 205, 205);"
                   >Search by Country, Measure or key word</mat-label
                 >
                 <input
@@ -421,7 +420,9 @@
             </div>
 
             <div class="card-footer">
-              <div class="stats">Source: CovidMeasures Community</div>
+              <div class="stats">
+                Source: CovidMeasures Community
+              </div>
             </div>
           </div>
         </div>
@@ -429,15 +430,15 @@
     </div>
     <!-- ----------------------------------------------- DEBATE SECTION -------------------------------------->
     <div class="debate" id="theDebate">
-      <app-page-separator [title]="'The Debate'"></app-page-separator>
+      <app-page-separator [title]="'       The Debate'"></app-page-separator>
       <div class="pt-5">
         <div class="row justify-content-center p-0">
-          <div class="col-12 p-sm-0 p-md-1 px-md-0" style="width: 100%">
+          <div class="col-12 p-sm-0 p-md-1 px-md-0" style="width: 100%;">
             <iframe
               data-loaded="true"
               title="Free Will or Determinism: Do We Have Free Will? — kialo.com"
               src="https://www.kialo.com/public-health-policy-should-limit-school-attendance-in-the-fall-due-to-covid-19-38830?embedder=https://support.kialo.com&amp;utm_source=support.kialo.com&amp;utm_medium=embed"
-              style="border: 0px none"
+              style="border: 0px none;"
               allowfullscreen=""
               width="100%"
             ></iframe>
@@ -446,36 +447,23 @@
       </div>
     </div>
     <!------------------------------------------------- SURVEY SECTION -------------------------------------->
-    <br />
+    <br>
     <div id="theSurvey">
-      <app-page-separator [title]="'The Survey'"></app-page-separator>
+      <app-page-separator [title]="'       The Survey'"></app-page-separator>
       <div class="pt-5">
         <div class="row justify-content-center p-0">
-          <div class="col-12 p-sm-0 p-md-1" style="width: 100%">
-            <div class="survey" id="survey"></div>
+          <div class="col-12 p-sm-0 p-md-1" style="width: 100%;">
+            <div class="survey" id="survey">
+            </div>
           </div>
         </div>
       </div>
     </div>
-    <!-- survey answers starts -->
+
     <div class="container">
-      <app-survey-school-answers
-        [surveyQuestions]="{
-          Q1: 'Have schools reopened where you are?',
-          Q2:
-            'What new measures have been implemented to prevent the spread of COVID-19?This question is required.',
-          Q3: 'In your opinion, how necessary are the new measures?',
-          Q4: 'Are you a parent?',
-          Q5: 'What country are you in?'
-        }"
-      ></app-survey-school-answers>
-      <br />
-    </div>
-    <!-- survey answers ends -->
-    <div class="container">
-      <hr style="margin-top: 80px; border: 1px solid #a9b0bb" />
+      <hr style="margin-top: 80px; border: 1px solid #a9b0bb;" />
       <div class="row justify-content-center">
-        <div class="col-9 pt-5 pb-3" style="font-family: Roboto">
+        <div class="col-9 pt-5 pb-3" style="font-family: Roboto;">
           <p>
             {{ TEXT_P3 }}
           </p>

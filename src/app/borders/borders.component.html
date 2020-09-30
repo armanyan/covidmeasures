@@ -42,11 +42,13 @@
     <!-- ------------------------------ GLOBAL DATA SECTION ----------------------------------------->
     <div class="global-data" id="globalData">
       <app-page-separator [title]="'Global Data'"></app-page-separator>
-      <div class="container py-5" style="max-width: 1400px">
+      <div class="container py-5" style="max-width: 1400px;">
         <div class="col-md-12">
           <div class="card card-border">
             <div class="card-header card-header-success">
-              <h3 class="card-title">International Travel Measures</h3>
+              <h3 class="card-title">
+                International Travel Measures
+              </h3>
             </div>
 
             <iframe
@@ -65,51 +67,38 @@
     <!-- ------------------------------ Survey SECTION ----------------------------------------->
     <div id="survey">
       <app-page-separator [title]="'Survey'"></app-page-separator>
-      <div class="container py-5" style="max-width: 1400px">
+      <div class="container py-5" style="max-width: 1400px;">
         <h3>Have a few seconds to spare?</h3>
         <br />
-        <h4 style="padding-left: 4.2rem">
+        <h4 style="padding-left: 4.2rem;">
           <b>Press play</b> below to start the 30-second survey about traveling
           abroad.
         </h4>
         <br />
 
-        <div style="margin-left: 15px">
+        <div style="margin-left: 15px;">
           <iframe
             src="https://www.videoask.com/fkua8husr"
             allow="camera; microphone; autoplay; encrypted-media;"
             width="100%"
             height="600px"
-            style="border: none; border-radius: 24px"
+            style="border: none; border-radius: 24px;"
           >
           </iframe>
         </div>
       </div>
     </div>
-    <!-- survey answers starts -->
-    <div class="container">
-      <app-survey-travel-answers
-        [surveyQuestions]="{
-          Q1: 'How has covid-19 impacted your travel plans?',
-          Q2: 'What is the main reason your plans have been impacted?',
-          Q3: 'What is the biggest change to your travel plans?',
-          Q4: 'What is your primary mode of transportation?',
-          Q5: 'Will you be taking any extra precautions while you travel?',
-          Q6: 'What country are you in?'
-        }"
-      ></app-survey-travel-answers>
-      <br />
-    </div>
-    <!-- survey answers ends -->
     <!-- ------------------------------ Country Data SECTION ----------------------------------------->
     <div id="countryData">
       <app-page-separator [title]="'Country Data'"></app-page-separator>
-      <div class="container py-5" style="max-width: 1400px">
+      <div class="container py-5" style="max-width: 1400px;">
         <div class="row justify-content-center">
           <div class="col-md-9 col-lg-7">
             <div class="card card-border">
               <div class="card-header card-header-success">
-                <h3 class="card-title">International Travel Measures</h3>
+                <h3 class="card-title">
+                  International Travel Measures
+                </h3>
               </div>
               <div class="card-body">
                 <div class="row justify-content-center">

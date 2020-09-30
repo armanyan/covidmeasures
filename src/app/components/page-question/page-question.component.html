@@ -7,12 +7,12 @@
             {{ questionHeader }}
         </h4>
         <ng-content select=".extraQuestionHeader"></ng-content>
-        <button class="q-btn" *ngIf="!readMore" (click)="readMore = !readMore">
+        <button mat-button *ngIf="!readMore" (click)="readMore = !readMore">
             Read More
         </button>
 
         <ng-content select=".readMore" *ngIf="readMore"></ng-content>
-        <button class="q-btn" *ngIf="readMore" (click)="readMore = !readMore">
+        <button mat-button *ngIf="readMore" (click)="readMore = !readMore">
             Read Less
         </button>
     </div>
