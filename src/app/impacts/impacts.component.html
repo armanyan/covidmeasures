@@ -99,7 +99,7 @@
                     </th>
                   </thead>
                   <tbody>
-                    <tr class="center-align" *ngFor="let row of countriesData">
+                    <tr class="center-align" *ngFor="let row of countriesData | paginate: { itemsPerPage: 10, currentPage: pageIndicator }">
                       <td class="thick">
                         <a href="#/country/{{ row['Country'].alpha3 }}">{{
                           row["Country"].name
@@ -172,6 +172,12 @@
                     </tr>
                   </tbody>
                 </table>
+                <div class="d-flex justify-content-center">
+                  <pagination-controls
+                    class="my-pagination"
+                    (pageChange)="pageIndicator = $event"
+                  ></pagination-controls>
+                </div>
               </div>
             </div>
 
