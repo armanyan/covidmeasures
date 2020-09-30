@@ -48,6 +48,10 @@ div.text-align {
     0 7px 10px -5px rgba(115, 56, 68, 0.4);
 }
 
+.search {
+  color: rgb(218, 205, 205);
+}
+
 /* --------------------------- TABLES ----------------------------- */
 td.left,
 td.center {
@@ -212,5 +216,11 @@ tr td.active {
 @media (max-width: 1200px) {
   .table {
     table-layout: auto;
+  }
+}
+
+@media (max-width: 500px) {
+  .container-fluid, .container{
+    padding: 0 !important;
   }
 }

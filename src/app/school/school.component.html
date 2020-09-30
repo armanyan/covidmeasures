@@ -1,5 +1,5 @@
 <app-page-loaders [hidden]="isClientReady"></app-page-loaders>
-<div class="main-content pt-md-0 px-md-0">
+<div class="main-content pt-md-0 px-md-0 px-lg-4">
   <div class="container-fluid">
     <div layout-align="end end">
       <h2 *ngIf="isMobile">
@@ -46,7 +46,8 @@
       [pageSections]="[
         { name: 'Global Data', sectionID: 'globalData' },
         { name: 'Impacts', sectionID: 'impacts' },
-        { name: 'Debate', sectionID: 'theDebate' }
+        { name: 'Debate', sectionID: 'theDebate' },
+        { name: 'Survey', sectionID: 'theSurvey' }
       ]"
       [navTopDistance]="326"
       *ngIf="isClientReady"
@@ -96,33 +97,22 @@
                 mat-button
                 class="float"
                 [ngClass]="{
-                  'active-red-button': covidChildrenCases == 'total'
+                  'active-red-button': covidChildrenCases == 'Total'
                 }"
                 color="primary"
-                (click)="changeCovidActiveDeath('total')"
+                (click)="changeCovidActiveDeath('Total')"
               >
                 <span>Total</span>
               </button>
               <button
                 mat-button
                 class="float"
-                [ngClass]="{
-                  'active-red-button': covidChildrenCases == 'perCovidCases'
-                }"
-                color="primary"
-                (click)="changeCovidActiveDeath('perCovidCases')"
-              >
-                <span>Per COVID-19 Active Case</span>
-              </button>
-              <button
-                mat-button
-                class="float"
                 type="button"
                 [ngClass]="{
-                  'active-red-button': covidChildrenCases == 'perCovidDeaths'
+                  'active-red-button': covidChildrenCases == 'COVID-19 Death'
                 }"
                 color="primary"
-                (click)="changeCovidActiveDeath('perCovidDeaths')"
+                (click)="changeCovidActiveDeath('COVID-19 Death')"
               >
                 <span>Per COVID-19 Death</span>
               </button>
@@ -206,15 +196,12 @@
 
         <hr style="margin-top: 80px; border: 1px solid #a9b0bb;" />
         <div class="row justify-content-center">
-          <div class="col-10 pt-5 pb-3" style="font-family: Roboto;">
-            <p>
-              {{ TEXT_P1 }}
-            </p>
+          <div class="col-10 pt-5 pb-3 px-md-0" style="font-family: Roboto;">
             <p>
               {{ TEXT_P2 }}
             </p>
             <p class="text-right">
-              <em>Last update: 2020/04/22</em>
+              <em>Last update: 2020/09/23</em>
             </p>
           </div>
         </div>
@@ -222,7 +209,7 @@
 
         <div class="card card-border">
           <div class="card-header card-header-success">
-            <h3 class="card-title">Map - School Closure</h3>
+            <h3 class="card-title">School Closure</h3>
           </div>
           <div
             class="card-body"
@@ -248,7 +235,7 @@
           </div>
         </div>
 
-        <div class="col-md-12" style="margin-top: 64px;">
+        <div class="col-md-12 px-0" style="margin-top: 64px;">
           <div class="card card-border">
             <div class="card-header card-header-success">
               <h3 class="card-title">School Closure Status Per Country</h3>
@@ -345,7 +332,7 @@
     <div class="impacts-data" id="impacts">
       <app-page-separator [title]="'Impacts'"></app-page-separator>
       <div class="container pt-5" style="max-width: 1400px;">
-        <div class="col-md-12">
+        <div class="col-md-12 px-0">
           <div class="card card-border">
             <div class="card-header card-header-success">
               <h3 class="card-title">List of School Closure Impacts</h3>
@@ -362,8 +349,8 @@
             </div>
 
             <div class="row pt-3" [ngClass]="{ 'mobile-table-text': isMobile }">
-              <div class="col-md-1"></div>
-              <div class="col-md-7 text-left">
+              <div class="col-md-1 px-md-0"></div>
+              <div class="col-md-7 px-md-0 text-left">
                 <h4>Tell us about other impacts of School Closure</h4>
                 <p class="m-0 p-0">
                   We want to hear both positive and negative impacts of those
@@ -446,7 +433,7 @@
       <app-page-separator [title]="'       The Debate'"></app-page-separator>
       <div class="pt-5">
         <div class="row justify-content-center p-0">
-          <div class="col-12 p-sm-0 p-md-1" style="width: 100%;">
+          <div class="col-12 p-sm-0 p-md-1 px-md-0" style="width: 100%;">
             <iframe
               data-loaded="true"
               title="Free Will or Determinism: Do We Have Free Will? — kialo.com"
@@ -459,6 +446,20 @@
         </div>
       </div>
     </div>
+    <!------------------------------------------------- SURVEY SECTION -------------------------------------->
+    <br>
+    <div id="theSurvey">
+      <app-page-separator [title]="'       The Survey'"></app-page-separator>
+      <div class="pt-5">
+        <div class="row justify-content-center p-0">
+          <div class="col-12 p-sm-0 p-md-1" style="width: 100%;">
+            <div class="survey" id="survey">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <div class="container">
       <hr style="margin-top: 80px; border: 1px solid #a9b0bb;" />
       <div class="row justify-content-center">

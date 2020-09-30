@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Title } from "@angular/platform-browser";
 import Chart from 'chart.js';
 
-import { createLineChart, getCountryNameByAlpha, monthNames, mobileWidth } from '../utils';
+import { createLineChart, monthNames, mobileWidth } from '../utils';
 
 export interface Stats {
   country: string;

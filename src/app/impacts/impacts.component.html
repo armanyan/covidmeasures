@@ -45,7 +45,7 @@
     <div id="economicImpacts">
       <app-page-separator [title]="'Economic Impacts'"></app-page-separator>
       <div class="container py-5" style="max-width: 1400px;">
-        <div class="col-12">
+        <div class="col-12 px-0">
           <div class="card card-border">
             <div class="card-header card-header-success">
               <h3 class="card-title">
@@ -99,7 +99,7 @@
                     </th>
                   </thead>
                   <tbody>
-                    <tr class="center-align" *ngFor="let row of countriesData">
+                    <tr class="center-align" *ngFor="let row of countriesData | paginate: { itemsPerPage: 10, currentPage: pageIndicator }">
                       <td class="thick">
                         <a href="#/country/{{ row['Country'].alpha3 }}">{{
                           row["Country"].name
@@ -172,6 +172,12 @@
                     </tr>
                   </tbody>
                 </table>
+                <div class="d-flex justify-content-center">
+                  <pagination-controls
+                    class="my-pagination"
+                    (pageChange)="pageIndicator = $event"
+                  ></pagination-controls>
+                </div>
               </div>
             </div>
 
@@ -191,7 +197,7 @@
     <div id="otherImpacts">
       <app-page-separator [title]="'Other Impacts'"></app-page-separator>
       <div class="container pt-5" style="max-width: 1400px;">
-        <div class="col-12">
+        <div class="col-12 px-0">
           <div class="card card-border">
             <div class="card-header card-header-success">
               <h3 class="card-title">Impact of Government COVID-19 Measures</h3>

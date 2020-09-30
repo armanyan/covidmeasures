@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ChangeDetectorRef, SimpleChanges, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, ChangeDetectorRef, SimpleChanges, Output, EventEmitter, ViewChildren, ViewChild, ElementRef } from '@angular/core';
 import { Chart } from 'chart.js';
 import moment from 'moment'
 import { FormBuilder, FormGroup } from '@angular/forms';
@@ -36,7 +36,8 @@ enum ModalAction {
   styleUrls: ['./evolution-country.component.css']
 })
 export class EvolutionCountryComponent implements OnInit {
-
+  @ViewChild('closeModalbutton',{static: false}) private closeModalbutton: ElementRef;
+  @ViewChild('modalInputField',{static: false}) private modalInputField: ElementRef;
   private currentCountryName: string;
   public calendarForm: FormGroup;
   public countryAllCasesCTX: Chart;
@@ -470,6 +471,8 @@ export class EvolutionCountryComponent implements OnInit {
    * @param 'action' to determin what functionality to execute
    */
   public countrySelected(action:string, alpha3:string, name:string= '') {
+    // we submit click event to the close btn at the dom
+    this.closeModalbutton.nativeElement.click()
     switch (action) {
       case ModalAction.compare:
         this.setComparedCountry(alpha3, name);
@@ -480,6 +483,7 @@ export class EvolutionCountryComponent implements OnInit {
       default:
         break;
     }
-
+    // after selecting we clear the input field
+    this.modalInputField.nativeElement.value = '';
   }
 }

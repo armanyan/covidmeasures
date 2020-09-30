@@ -1,5 +1,5 @@
 <app-page-loaders [hidden]="isClientReady"></app-page-loaders>
-<div class="main-content pt-md-0">
+<div class="main-content pt-md-0 px-md-0 px-lg-4">
   <div class="container-fluid">
     <div layout-align="end end">
       <h2 class="bold" *ngIf="isMobile">
@@ -150,6 +150,10 @@
                 <div class="collapse" id="collapseMovementRestriction">
                   <div class="bg-light py-3 m-0">
                     <p>
+                      <span class="weight">Number of lockdowns:</span>
+                      {{ lockdown.lockdown_counter }}
+                    </p>
+                    <p>
                       <span class="weight">Current coverage:</span>
                       {{ lockdown.current_coverage }}
                     </p>
@@ -159,11 +163,11 @@
                     </p>
                     <p>
                       <span class="weight">Started softening measures on:</span>
-                      {{ lockdown.start_reopening }}
+                      {{ lockdown.start_reopening | date }}
                     </p>
                     <p>
                       <span class="weight">Ended measures on:</span>
-                      {{ lockdown.end }}
+                      {{ lockdown.end | date }}
                     </p>
                     <p>{{ lockdown.comment }}</p>
                   </div>

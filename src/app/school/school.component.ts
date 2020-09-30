@@ -17,8 +17,8 @@ interface CovidCategories {
 
 enum ChildrenCases {
   PerCovid = 'perCovidCases',
-  PerDeaths = 'perCovidDeaths',
-  Total = 'total'
+  PerDeaths = 'COVID-19 Death',
+  Total = 'Total'
 }
 
 @Component({
@@ -51,7 +51,7 @@ export class SchoolComponent implements OnInit {
 
   public covidCategories: CovidCategories[] = [
     {value: 'COVID-19 Death'},
-    {value: 'COVID-19 Active Case'}
+    {value: 'Total'}
   ]
 
   public impactHeaders = ['Impact', 'Description', 'Link to Lockdown', 'Countries Impacted', 'Source'];
@@ -73,7 +73,7 @@ export class SchoolComponent implements OnInit {
 
   public perCovidActive = false;
 
-  public covidChildrenCases: string = 'perCovidCases';
+  public covidChildrenCases: string = 'COVID-19 Death';
 
   public schoolClosureFull = [];
   public schoolClosure = [];
@@ -146,6 +146,7 @@ export class SchoolComponent implements OnInit {
     this.covidVSSchoolChangeRegion('World');
     this.setSchoolClosure();
     this.setWidget();
+    this.setSurveyWidget();
 
     this.isClientReady = true;
     this.changeDetector.detectChanges();
@@ -280,15 +281,13 @@ export class SchoolComponent implements OnInit {
    * Sets the number of active cases and deaths for every country in the world.
    */
   private async setCurrentDeathEvolution() {
-    const data = await this.http.get('https://covidmeasures-data.s3.amazonaws.com/covid19api.json').toPromise();
+    const data = await this.http.get(`${aws}/evolution.json`).toPromise();
     let region: string;
-    for (const row of data["Countries"]) {
-      region = getRegionByAlpha(row["CountryCode"]);
-      this.covidByContinent[region]["activeCases"] += row["TotalConfirmed"]-row["TotalRecovered"]-row["TotalDeaths"];
-      this.covidByContinent[region]["deaths"] += row["TotalDeaths"];
-
-      this.covidByContinent['World']["activeCases"] += row["TotalConfirmed"]-row["TotalRecovered"]-row["TotalDeaths"];
-      this.covidByContinent['World']["deaths"] += row["TotalDeaths"];
+    for (const alpha3 of Object.keys(data["data"])) {
+      region = getRegionByAlpha(alpha3);
+      const deaths = data["data"][alpha3]['deaths'].reduce((a, b) => a + b, 0);
+      this.covidByContinent[region]["deaths"] += deaths;
+      this.covidByContinent['World']["deaths"] += deaths;
     }
   }
 
@@ -490,6 +489,19 @@ export class SchoolComponent implements OnInit {
         autoClose: 3000
       }).open();
     })
+  }
+
+  private setSurveyWidget() {
+    const el = document.getElementById('survey');
+    typeformEmbed.makeWidget(
+      el,
+      'https://form.typeform.com/to/ECUQTkgL',
+      {
+        hideFooter: true,
+        hideHeaders: true,
+        opacity: 0,
+      }
+      );
   }
 }
 
