@@ -1,40 +1,37 @@
+
 div.question {
-  margin-left: 10px;
-  margin-top: 10px;
+    margin-left: 10px;
+    margin-top: 10px;
 }
 
-:host ::ng-deep p.question,
-:host ::ng-deep h4.question {
-  margin-top: 15px;
-  margin-left: 0px;
-  margin-bottom: 15px;
-  margin-right: 0px;
+:host ::ng-deep p.question, :host ::ng-deep h4.question  {
+    margin-top: 15px;
+    margin-left: 0px;
+    margin-bottom: 15px;
+    margin-right: 0px;
 }
 
 /* --------------------------- BUTTONS ---------------------------------*/
 
 /*non-active button*/
-.q-btn {
-  background-color: #e9e9e9;
-  margin: 0.2%;
-  border-radius: 28px;
-  -webkit-border-radius: 28px;
-  -moz-border-radius: 28px;
-  padding: 0 16px;
-  line-height: 36px;
-  color: inherit;
-  border: none;
-
-  font-family: Roboto, Helvetica Neue, sans-serif;
-  font-size: 14px;
-  font-weight: 500;
+.mat-button, .mat-icon-button, .mat-stroked-button, .mat-flat-button {
+    background-color: #e9e9e9;
+    margin: 0.2%;
+    border-radius:28px;
+    -webkit-border-radius: 28px;
+    -moz-border-radius: 28px;
 }
 
 /*non-active button hover*/
-.q-btn:hover {
-  background-color: #e6dede;
-  margin: 0.2%;
-  border-radius: 28px;
-  -webkit-border-radius: 28px;
-  -moz-border-radius: 28px;
+.mat-button:hover, .mat-icon-button:hover, .mat-stroked-button:hover, .mat-flat-button:hover {
+    background-color: #e6dede;
+    margin: 0.2%;
+    border-radius:28px;
+    -webkit-border-radius: 28px;
+    -moz-border-radius: 28px;
+}
+
+/*non-active button text*/
+.mat-button.mat-primary, .mat-icon-button.mat-primary, .mat-stroked-button.mat-primary {
+    color: #aaa5a5;
 }
