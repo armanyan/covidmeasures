@@ -20,6 +20,14 @@ div.question {
   border-radius: 28px;
   -webkit-border-radius: 28px;
   -moz-border-radius: 28px;
+  padding: 0 16px;
+  line-height: 36px;
+  color: inherit;
+  border: none;
+
+  font-family: Roboto, Helvetica Neue, sans-serif;
+  font-size: 14px;
+  font-weight: 500;
 }
 
 /*non-active button hover*/
