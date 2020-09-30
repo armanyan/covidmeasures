@@ -17,8 +17,8 @@ interface CovidCategories {
 
 enum ChildrenCases {
   PerCovid = 'perCovidCases',
-  PerDeaths = 'COVID-19 Death',
-  Total = 'Total'
+  PerDeaths = 'perCovidDeaths',
+  Total = 'total'
 }
 
 @Component({
@@ -51,7 +51,7 @@ export class SchoolComponent implements OnInit {
 
   public covidCategories: CovidCategories[] = [
     {value: 'COVID-19 Death'},
-    {value: 'Total'}
+    {value: 'COVID-19 Active Case'}
   ]
 
   public impactHeaders = ['Impact', 'Description', 'Link to Lockdown', 'Countries Impacted', 'Source'];
@@ -73,7 +73,7 @@ export class SchoolComponent implements OnInit {
 
   public perCovidActive = false;
 
-  public covidChildrenCases: string = 'COVID-19 Death';
+  public covidChildrenCases: string = 'perCovidCases';
 
   public schoolClosureFull = [];
   public schoolClosure = [];
@@ -281,13 +281,15 @@ export class SchoolComponent implements OnInit {
    * Sets the number of active cases and deaths for every country in the world.
    */
   private async setCurrentDeathEvolution() {
-    const data = await this.http.get(`${aws}/evolution.json`).toPromise();
+    const data = await this.http.get('https://covidmeasures-data.s3.amazonaws.com/covid19api.json').toPromise();
     let region: string;
-    for (const alpha3 of Object.keys(data["data"])) {
-      region = getRegionByAlpha(alpha3);
-      const deaths = data["data"][alpha3]['deaths'].reduce((a, b) => a + b, 0);
-      this.covidByContinent[region]["deaths"] += deaths;
-      this.covidByContinent['World']["deaths"] += deaths;
+    for (const row of data["Countries"]) {
+      region = getRegionByAlpha(row["CountryCode"]);
+      this.covidByContinent[region]["activeCases"] += row["TotalConfirmed"]-row["TotalRecovered"]-row["TotalDeaths"];
+      this.covidByContinent[region]["deaths"] += row["TotalDeaths"];
+
+      this.covidByContinent['World']["activeCases"] += row["TotalConfirmed"]-row["TotalRecovered"]-row["TotalDeaths"];
+      this.covidByContinent['World']["deaths"] += row["TotalDeaths"];
     }
   }
 
