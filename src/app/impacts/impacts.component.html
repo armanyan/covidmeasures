@@ -99,7 +99,7 @@
                     </th>
                   </thead>
                   <tbody>
-                    <tr class="center-align" *ngFor="let row of countriesData | paginate: { itemsPerPage: 10, currentPage: pageIndicator }">
+                    <tr class="center-align" *ngFor="let row of countriesData | paginate: { itemsPerPage: 25, currentPage: pageIndicator }">
                       <td class="thick">
                         <a href="#/country/{{ row['Country'].alpha3 }}">{{
                           row["Country"].name
@@ -254,7 +254,7 @@
                     <tr
                       *ngFor="
                         let row of collection
-                          | paginate: { itemsPerPage: 10, currentPage: p }
+                          | paginate: { itemsPerPage: 25, currentPage: p }
                       "
                     >
                       <td *ngIf="row.alpha3 === 'WRD'" class="thick">
