@@ -107,7 +107,7 @@ export class CountryComponent implements OnInit {
 
     this.evolution = (await this.http.get(`${aws}/evolution.json`).toPromise() as any);
     this.schoolClosureData = (await this.http.get(`${aws}/school_closure.json`).toPromise() as any);
-    this.lockdownData = (await this.http.get(`${aws}/new_lockdown.json`).toPromise() as any);
+    this.lockdownData = (await this.http.get(`${aws}/lockdown.json`).toPromise() as any);
     this.impactData = (await this.http.get(`${aws}/community_impacts.json`).toPromise() as any);
     this.travelData = (await this.http.get(`${aws}/international_flights.json`).toPromise() as any);
     this.setImpactTable();

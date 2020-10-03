@@ -248,9 +248,11 @@ export class LockdownComponent implements OnInit {
   private setLockdownStatistics() {
     let duration;
     let population;
+    let index;
     for (const country of this.lockdownData.countries) {
       duration = this.getMissedDaysPerCountry(country);
       population = getCountryPopulation(country['alpha3'])*country.current_population_impacted;
+      index = country['dates'].length-1;
       this.lockdownTableFull.push({
         "name": country.name,
         "population": population > 0 ? population : '',
@@ -259,8 +261,8 @@ export class LockdownComponent implements OnInit {
         "curfew": this.format_restriction(country.curfew),
         "business": country.status_business === 'No data' ? '' : country.status_business,
         "other": this.getOtherMeasures(country),
-        "start": this.getDate(country['start']),
-        "end": this.getEndDate(country['end'], country['expected_end']),
+        "start": index > -1 ? this.getDate(country['dates'][index]['start']) : undefined,
+        "end": index > -1 ? this.getEndDate(country['dates'][index]['end'], country['dates'][index]['expected_end']) : undefined,
         "status": country['status']
       });
     }
@@ -295,10 +297,10 @@ export class LockdownComponent implements OnInit {
 
   private getEndDate(end: string, expectedEnd: string) {
     // end and expected_end could be equal only to '' or a date
-    if (end !== '') {
+    if (end !== undefined) {
       return new Date(end).toDateString();
     }
-    return expectedEnd === '' ? '' : new Date(expectedEnd).toDateString();
+    return expectedEnd === undefined ? undefined : new Date(expectedEnd).toDateString();
   }
 
   /**
@@ -326,14 +328,18 @@ export class LockdownComponent implements OnInit {
    */
   private getMissedDaysPerCountry(country: any) {
     // TODO fix the issue of null and "null"
-    if (country.start === '' || country.start === "null" || country.start === null) { // no data or no closure
-      return 0
+    let days = 0;
+    for (const dates of country['dates']) {
+      if (dates.start === '' || dates.start === "null" || dates.start === null) { // no data or no closure
+        return days;
+      }
+      const start = new Date(dates.start);
+      const today = new Date();
+      const planedEnd = dates.end === undefined ? today : new Date(dates.end);
+      const end = today < planedEnd ? today : planedEnd;
+      days += Math.floor((end.getTime()-start.getTime())/(1000*60*60*24));
     }
-    const start = new Date(country.start);
-    const today = new Date()
-    const planedEnd = country.end === '' ? today : new Date(country.end);
-    const end = today < planedEnd ? today : planedEnd;
-    return Math.floor((end.getTime()-start.getTime())/(1000*60*60*24));
+    return days;
   }
 
   private getDate(date: string) {

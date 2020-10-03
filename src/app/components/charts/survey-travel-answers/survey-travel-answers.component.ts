@@ -34,7 +34,7 @@ export class SurveyTravelAnswersComponent implements AfterViewInit {
           // to change unreadable string of Q6 with Alpha3
           if (item["Alpha3 (from Table 2)"]) {
             // we try
-            item["Q6 - Country"][0] = item["Alpha3 (from Table 2)"];
+            item["Q6 - Country"] = item["Alpha3 (from Table 2)"];
           }
           for (const key in item) {
             if (Object.prototype.hasOwnProperty.call(item, key)) {

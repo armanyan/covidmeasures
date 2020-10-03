@@ -67,7 +67,7 @@ export class BordersComponent implements OnInit {
           viewValue: element.name,
           "sub-region": element["sub-region"],
         });
-      }``
+      }
     }
   }
 
