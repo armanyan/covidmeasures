@@ -82,6 +82,14 @@ div.text-align {
   height: 60vh;
 }
 
+.negative {
+  color: #e03b3e;
+}
+
+.positive {
+  color: forestgreen;
+}
+
 /* --------------------------- HEADERS ----------------------------- */
 
 .card .card-header-success .card-icon,

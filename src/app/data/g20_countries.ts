@@ -21,6 +21,6 @@ export default [
   "Italy",
   "Russia",
   "Euro Area",
-  "United States",
+  "United States of America",
   "Japan",
 ];
