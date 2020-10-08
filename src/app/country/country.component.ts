@@ -91,10 +91,10 @@ export class CountryComponent implements OnInit {
 
   public economic_data = {
     'Country': this.currentCountryName,
-    'GDP': '',
-    'Unemployment Rate': '',
-    'Imports': '',
-    'Exports': '',
+    'GDP': 0,
+    'Unemployment Rate': 0,
+    'Imports': 0,
+    'Exports': 0,
   };
 
   private impactData: any;

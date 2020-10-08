@@ -120,8 +120,6 @@ export class LockdownComponent implements OnInit {
     const populationCTX = (document.getElementById("lockdownPopulationPieChart") as any).getContext("2d");
     this.lockdownPopulationPieChart = createPieChart(populationCTX, labels, populationDatasets, backgroundColor, 'People');
 
-    this.setWidget();
-
     this.isClientReady = true;
     this.changeDetector.detectChanges();
   }
@@ -488,14 +486,12 @@ export class LockdownComponent implements OnInit {
     }
   }
 
-  private setWidget() {
-    document.getElementById('addImpact').addEventListener('click', function () {
-      typeformEmbed.makePopup('https://admin114574.typeform.com/to/uTHShl', {
-        hideFooter: true,
-        hideHeaders: true,
-        opacity: 0,
-        autoClose: 3000
-      }).open();
-    })
+  private openPopUp() {
+    typeformEmbed.makePopup('https://admin114574.typeform.com/to/uTHShl', {
+      hideFooter: true,
+      hideHeaders: true,
+      opacity: 0,
+      autoClose: 3000
+    }).open();
   }
 }
