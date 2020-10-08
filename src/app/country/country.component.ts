@@ -3,7 +3,6 @@ import { Title } from '@angular/platform-browser';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute } from "@angular/router";
 import { Location } from '@angular/common'; 
-
 import { FormBuilder, FormGroup } from '@angular/forms';
 import * as typeformEmbed from '@typeform/embed';
 
@@ -91,10 +90,10 @@ export class CountryComponent implements OnInit {
 
   public economic_data = {
     'Country': this.currentCountryName,
-    'GDP': 0,
-    'Unemployment Rate': 0,
-    'Imports': 0,
-    'Exports': 0,
+    'GDP': { last: '', avg: 0 },
+    'Unemployment Rate': { last: '', avg: 0 },
+    'Imports': { last: '', avg: 0 },
+    'Exports': { last: '', avg: 0 },
   };
 
   private impactData: any;
@@ -190,9 +189,11 @@ export class CountryComponent implements OnInit {
       }
       if (value !== 0) {
         value = ['Imports', 'Exports'].includes(key) ? ((value / dates.length) / average2019)*100 : value / dates.length;
-        this.economic_data[key] = value;
+        this.economic_data[key].avg = value;
+        this.economic_data[key].last = dates[dates.length-1];
       } else {
-        this.economic_data[key] = undefined;
+        this.economic_data[key].avg = undefined;
+        this.economic_data[key].last = undefined;
       }
     }
   }

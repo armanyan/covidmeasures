@@ -332,14 +332,14 @@
             <div class="card-body">
               <table class="table">
                 <thead class="text-primary">
-                  <th>Children Impacted</th>
-                  <th>Cumulated Years At Home</th>
+                  <th class="header">Children Impacted</th>
+                  <th class="header">Cumulated Years At Home</th>
                 </thead>
                 <tbody>
-                  <td class="left">
+                  <td class="cell">
                     {{ schoolClosure.impacted_children | number }}
                   </td>
-                  <td class="center">
+                  <td class="cell">
                     {{ schoolClosure.years | number: ".0-0" }}
                   </td>
                 </tbody>
@@ -355,12 +355,12 @@
             <div class="card-body">
               <table class="table">
                 <thead class="text-primary">
-                  <th>People Impacted</th>
-                  <th>Cumulated Years At Home</th>
+                  <th class="header">People Impacted</th>
+                  <th class="header">Cumulated Years At Home</th>
                 </thead>
                 <tbody>
-                  <td class="left">{{ countryImpactedPeople | number }}</td>
-                  <td class="center">
+                  <td class="cell">{{ countryImpactedPeople | number }}</td>
+                  <td class="cell">
                     {{ countryCumulatedYears | number: ".0-0" }}
                   </td>
                 </tbody>
@@ -378,35 +378,35 @@
             <div class="card-body">
               <table class="table">
                 <thead class="text-primary">
-                  <th>Number of Days</th>
-                  <th>GDP Change</th>
-                  <th>Imports Change</th>
-                  <th>Exports Change</th>
-                  <th>Unemployment Change</th>
+                  <th class="header">Number of Days</th>
+                  <th class="header">GDP Change</th>
+                  <th class="header">Imports Change</th>
+                  <th class="header">Exports Change</th>
+                  <th class="header">Unemployment Change</th>
                 </thead>
                 <tbody>
-                  <td class="left">
+                  <td class="cell">
                     {{ businessClosure.days | number }}
                   </td>
-                  <td class="center"
-                    [ngClass]="{positive: economic_data['GDP'] > 0, negative: economic_data['GDP'] < 0}"
+                  <td class="cell"
+                    [ngClass]="{positive: economic_data['GDP'].avg > 0, negative: economic_data['GDP'].avg < 0}"
                   >
-                    {{ economic_data['Imports'] | number:'.0-1' }}%
+                    {{ economic_data['Imports'].avg | number:'.0-1' }}%
                   </td>
-                  <td class="center"
-                    [ngClass]="{positive: economic_data['Imports'] > 0, negative: economic_data['Imports'] < 0}"
+                  <td class="cell"
+                    [ngClass]="{positive: economic_data['Imports'].avg > 0, negative: economic_data['Imports'].avg < 0}"
                   >
-                    {{ economic_data['Imports'] | number:'.0-1' }}%
+                    {{ economic_data['Imports'].avg | number:'.0-1' }}%
                   </td>
-                  <td class="center"
-                    [ngClass]="{positive: economic_data['Exports'] > 0, negative: economic_data['Exports'] < 0}"
+                  <td class="cell"
+                    [ngClass]="{positive: economic_data['Exports'].avg > 0, negative: economic_data['Exports'].avg < 0}"
                   >
-                    {{ economic_data['Exports'] | number:'.0-1' }}%
+                    {{ economic_data['Exports'].avg | number:'.0-1' }}%
                   </td>
-                  <td class="center"
-                    [ngClass]="{positive: economic_data['Unemployment Rate'] < 0, negative: economic_data['Unemployment Rate'] > 0}"
+                  <td class="cell"
+                    [ngClass]="{positive: economic_data['Unemployment Rate'].avg < 0, negative: economic_data['Unemployment Rate'].avg > 0}"
                   >
-                    {{ economic_data['Unemployment Rate'] | number:'.0-1' }}%
+                    {{ economic_data['Unemployment Rate'].avg | number:'.0-1' }}%
                   </td>
                 </tbody>
               </table>

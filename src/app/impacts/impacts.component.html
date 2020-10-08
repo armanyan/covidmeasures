@@ -149,17 +149,16 @@
                                 indicator === 'Unemployment Rate')
                           }"
                         >
-                          <button
-                            onclick="this.blur()"
-                            (click)="
-                              openEconomicData(
-                                indicator,
-                                row['Country'].name,
-                                row[indicator].avg,
-                                row[indicator].last
-                              )
-                            "
-                            mat-button
+                        <button mat-button
+                          onclick="this.blur()"
+                          (click)="
+                            openEconomicData(
+                              indicator,
+                              row['Country'].name,
+                              row[indicator].avg,
+                              row[indicator].last
+                            )
+                          "
                           >
                             <span *ngIf="row[indicator].avg > 0">+</span
                             >{{ row[indicator].avg | number }}%
@@ -193,7 +192,7 @@
         </div>
       </div>
     </div>
-    <!-- ------------------------------ Other Impacts ----------------------------------------->
+    <!-------------------------------- Other Impacts ----------------------------------------->
     <div id="otherImpacts">
       <app-page-separator [title]="'Other Impacts'"></app-page-separator>
       <div class="container pt-5" style="max-width: 1400px;">
