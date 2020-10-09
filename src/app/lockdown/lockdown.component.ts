@@ -141,9 +141,10 @@ export class LockdownComponent implements OnInit {
     let lightRestrictions = 0;
     let noData = 0;
     for (const country of countries) {
+      const last = country['dates'].length ? country['dates'][country['dates'].length-1] : {};
       if (country.curfew === true) {
         curfew++;
-      } else if (country.end !== "") {
+      } else if (last.end !== undefined) {
         removedRestrictions++;
       } else if (country.movement_restrictions === true) {
         lockdown++;
@@ -168,10 +169,11 @@ export class LockdownComponent implements OnInit {
     let noData = 0;
     for (const country of countries) {
       const population = getCountryPopulation(country["alpha3"]);
+      const last = country['dates'].length ? country['dates'][country['dates'].length-1] : {};
       if (country.curfew === true) {
         curfew += Math.floor(population*country.current_population_impacted);
         lightRestrictions += Math.floor(population*(1-country.current_population_impacted));
-      } else if (country.end !== "") {
+      } else if (last.end !== undefined) {
         removedRestrictions += Math.floor(population*country.current_population_impacted);
         lightRestrictions += Math.floor(population*(1-country.current_population_impacted));
       } else if (country.movement_restrictions === true) {
