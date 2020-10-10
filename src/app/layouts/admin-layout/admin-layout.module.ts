@@ -16,6 +16,7 @@ import { SurveillanceComponent } from "../../surveillance/surveillance.component
 import { BordersComponent } from "../../borders/borders.component";
 import { MasksComponent } from "../../masks/masks.component";
 import { TestingComponent } from "../../testing/testing.component";
+import { GatheringsComponent } from '../../gatherings/gatherings.component';
 import { MatButtonModule } from "@angular/material/button";
 import { MatInputModule } from "@angular/material/input";
 import { MatRippleModule } from "@angular/material/core";
@@ -66,6 +67,7 @@ import { ComponentsModule } from "../../components/components.module"; // holds 
     BordersComponent,
     MasksComponent,
     TestingComponent,
+    GatheringsComponent,
     NewsVideosComponent,
   ],
 })

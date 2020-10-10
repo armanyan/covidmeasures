@@ -1,59 +1,10 @@
 /* --------------------------- GENERAL ----------------------------- */
-p {
-  margin: 0 6% 4% 6%;
-  text-align: justify;
-}
-
-p.align-weight {
-  text-align: center;
-  font-weight: 900;
-  font-size: 1.2em;
-}
-
-p.center {
-  text-align: center;
-}
-
-.weight {
-  font-weight: 900;
-}
-
-p.size {
-  font-size: 1.2em;
-}
-
-p.left-align {
-  margin: 0 0 1% 0;
-  text-align: left;
-}
-
-p.margin-padding {
-  margin: 0;
-  padding-bottom: 4%;
-}
-
-span.size {
-  font-size: 1.3em;
-}
-
-.bold {
-  font-weight: bold;
-}
-
-i.size-padding {
-  font-size: 2.5em;
-  padding: 2%;
-}
 a {
   color: #ed5658;
   text-decoration: underline;
 }
 a:hover {
   color: #e03b3e;
-}
-
-a.decor-off {
-  text-decoration: none;
 }
 
 div.center {
@@ -65,38 +16,21 @@ div.text-align {
   text-align: center;
 }
 
-.select-color {
-  color: rgb(52, 107, 186);
+.w900 {
+  font-weight: 900;
 }
 
-.mb5 {
-  margin-bottom: 5%;
+.s150 {
+  font-size: 150px;
 }
 
-.mt3 {
-  margin-top: 3%;
+.reminder {
+  margin-top: 25px;
 }
 
-.chart-pos {
-  position: relative;
-  height: 60vh;
-}
-
-.negative {
-  color: #e03b3e;
-}
-
-.positive {
-  color: forestgreen;
-}
-
-.cell {
-  text-align: center;
-  font-size: 1.3rem;
-}
-
-.header {
-  text-align: center;
+.remind-button {
+  display: flex;
+  margin: auto;
 }
 
 /* --------------------------- HEADERS ----------------------------- */
@@ -121,6 +55,12 @@ div.text-align {
 }
 
 /* --------------------------- TABLES ----------------------------- */
+td.left,
+td.center {
+  font-size: 1.3rem;
+  text-align: left;
+}
+
 .table thead th {
   font-size: 0.95rem;
   font-weight: 500;
@@ -129,19 +69,9 @@ div.text-align {
   vertical-align: top;
 }
 
-.mobile-table-text {
-  padding-left: 20px;
-  padding-right: 20px;
+.table-datas {
+  font-size: 1.3em;
 }
-
-.gov-measures td {
-  text-align: center;
-}
-
-.gov-measures .text-primary {
-  height: 73px;
-}
-
 /* --------------------------- BUTTONS ---------------------------------*/
 
 /*non-active button*/
@@ -150,7 +80,7 @@ div.text-align {
 .mat-stroked-button,
 .mat-flat-button {
   background-color: #e9e9e9;
-  margin: 0.2%;
+  margin: 0.4% 0.2%;
   border-radius: 28px;
   -webkit-border-radius: 28px;
   -moz-border-radius: 28px;
@@ -162,7 +92,7 @@ div.text-align {
 .mat-stroked-button:hover,
 .mat-flat-button:hover {
   background-color: #e6dede;
-  margin: 0.2%;
+  margin: 0.4% 0.2%;
   border-radius: 28px;
   -webkit-border-radius: 28px;
   -moz-border-radius: 28px;
@@ -190,7 +120,7 @@ div.text-align {
   border-radius: 28px;
   -webkit-border-radius: 28px;
   -moz-border-radius: 28px;
-  margin: 0.2%;
+  margin: 0.4% 0.2%;
 }
 /*active button hover*/
 .mat-flat-button.mat-primary:hover,
@@ -198,7 +128,7 @@ div.text-align {
 .mat-fab.mat-primary:hover,
 .mat-mini-fab.mat-primary:hover {
   background-color: #e03b3e;
-  margin: 0.2%;
+  margin: 0.4% 0.2%;
 }
 /*active button text*/
 .mat-flat-button.mat-primary,
@@ -211,6 +141,11 @@ div.text-align {
 .card-header a {
   text-decoration: none;
 }
+/* --------------------------- DEBATE ----------------------------------*/
+#theDebate iframe {
+  height: 150vh;
+}
+
 /* --------------------------- CONTENT ----------------------------------*/
 
 /*columns names*/
@@ -244,34 +179,8 @@ div.text-align {
     0 7px 10px -5px rgba(115, 56, 68, 0.4);
 }
 
-.btn-primary {
-  background: #da474c !important;
-}
-
-.card-citizen {
+.card-citizens {
   margin: 1% 0;
-}
-/**************************CARD-GRID*****************************/
-.card-grid {
-  display: grid;
-  grid-template-columns: auto auto auto;
-  grid-gap: 0.5em;
-  margin: auto;
-}
-@media all and (max-width: 1180px) and (min-width: 990px) {
-  .card-grid {
-    grid-template-columns: auto auto;
-  }
-}
-@media all and (max-width: 935px) {
-  .card-grid {
-    grid-template-columns: auto auto;
-  }
-}
-@media all and (max-width: 767px) {
-  .card-grid {
-    grid-template-columns: auto;
-  }
 }
 
 @media (max-width: 500px) {

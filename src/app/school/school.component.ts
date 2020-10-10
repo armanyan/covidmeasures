@@ -145,7 +145,6 @@ export class SchoolComponent implements OnInit {
     this.averageDaysMissed = this.getAverageDaysMissedPerRegion('World');
     this.covidVSSchoolChangeRegion('World');
     this.setSchoolClosure();
-    this.setWidget();
     this.setSurveyWidget();
 
     this.isClientReady = true;
@@ -480,15 +479,13 @@ export class SchoolComponent implements OnInit {
     }
   }
 
-  private setWidget() {
-    document.getElementById('addImpact').addEventListener('click', function () {
-      typeformEmbed.makePopup('https://admin114574.typeform.com/to/uTHShl', {
-        hideFooter: true,
-        hideHeaders: true,
-        opacity: 0,
-        autoClose: 3000
-      }).open();
-    })
+  public openPopUp () {
+    typeformEmbed.makePopup('https://admin114574.typeform.com/to/uTHShl', {
+      hideFooter: true,
+      hideHeaders: true,
+      opacity: 0,
+      autoClose: 3000
+    }).open();
   }
 
   private setSurveyWidget() {

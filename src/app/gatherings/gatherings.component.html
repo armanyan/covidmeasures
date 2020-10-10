@@ -1,0 +1,92 @@
+<div class="main-content pt-md-0 px-md-0 px-lg-4">
+  <div class="container-fluid">
+    <div layout-align="end end">
+      <h2 *ngIf="isMobile">
+        <u>{{ titleService.getTitle().split(":")[0] }}</u>
+      </h2>
+    </div>
+
+    <app-page-question
+      [questionHeader]="
+        'Some mass gathering question? Join the discussion.'
+      "
+    >
+      <div class="readMore">
+        <p class="question">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean id velit
+          ut mauris rutrum tincidunt. Donec quis lorem convallis, fermentum ligula in,
+          elementum metus. Cras eget ligula quis odio rhoncus tincidunt dignissim et ligula.
+        </p>
+        <p class="question">
+          Maecenas a tempus elit. Maecenas semper turpis quis odio maximus:
+        </p>
+        <ul>
+          <li>Maecenas sit amet euismod ipsum.</li>
+          <li>Etiam ut dolor nec turpis posuere feugiat.</li>
+        </ul>
+        <p class="question">
+          In sit amet felis aliquam, hendrerit sapien non, ultrices purus. Praesent feugiat dolor augue,
+          et ultrices massa aliquam volutpat. Ut quam justo, commodo vitae quam eget, aliquet semper odio.
+          Ut luctus justo metus, ac accumsan elit pharetra eu.
+        </p>
+      </div>
+    </app-page-question>
+    <!-- ------------------------------ PAGE Navigator ----------------------------------------->
+    <app-page-navigator
+      [pageSections]="[
+        { name: 'Global Data', sectionID: 'globalData' },
+        { name: 'Survey', sectionID: 'survey' }
+      ]"
+    ></app-page-navigator>
+    <!-- ------------------------------ GLOBAL DATA SECTION ----------------------------------------->
+    <div class="global-data" id="globalData">
+      <app-page-separator [title]="'Global Data'"></app-page-separator>
+      <div class="container py-5" style="max-width: 1400px;">
+        <div class="col-md-12">
+          <div class="card card-border">
+            <div class="card-header card-header-success">
+              <h3 class="card-title">
+                International Travel Measures
+              </h3>
+            </div>
+
+            <iframe
+              src="https://ourworldindata.org/grapher/public-gathering-rules-covid?time=earliest..latest"
+              style="
+                width: 100%;
+                height: 600px;
+                border: 1px white;
+                box-shadow: none;
+              "
+            ></iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- ------------------------------ Survey SECTION ----------------------------------------->
+    <div id="survey">
+      <app-page-separator [title]="'Survey'"></app-page-separator>
+      <div class="container py-5" style="max-width: 1400px;">
+        <h3>Have a few seconds to spare?</h3>
+        <br />
+        <h4 style="padding-left: 4.2rem;">
+          <b>Press play</b> below to start the 30-second survey about traveling
+          abroad.
+        </h4>
+        <br />
+
+        <div style="margin-left: 15px;">
+          <iframe
+            src="https://www.videoask.com/fpjh5811d"
+            allow="camera; microphone; autoplay; encrypted-media;"
+            width="100%"
+            height="600px"
+            style="border: none; border-radius: 24px;"
+          >
+          </iframe>
+        </div>
+      </div>
+    </div>
+    <!-- ------------------------------ Country Data SECTION ----------------------------------------->
+  </div>
+</div>

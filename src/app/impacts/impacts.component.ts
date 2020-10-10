@@ -79,7 +79,6 @@ export class ImpactsComponent implements OnInit {
     const rawData = (await this.http.get(url).toPromise() as any);
     this.impacts = this.formatImpactsData(rawData);
     this.collection = this.impacts;
-    this.setWidget();
 
     this.evolution = (await this.http.get(`${aws}/evolution.json`).toPromise() as any);
     this.gdp_growth = (await this.http.get(`${aws}/world_gdp_rate.json`).toPromise() as any);
@@ -264,14 +263,12 @@ export class ImpactsComponent implements OnInit {
     });
   }
 
-  private setWidget() {
-    document.getElementById('addImpact').addEventListener('click', function () {
-      typeformEmbed.makePopup('https://admin114574.typeform.com/to/uTHShl', {
-        hideFooter: true,
-        hideHeaders: true,
-        opacity: 0
-      }).open();
-    })
+  public openPopUp() {
+    typeformEmbed.makePopup('https://admin114574.typeform.com/to/uTHShl', {
+      hideFooter: true,
+      hideHeaders: true,
+      opacity: 0
+    }).open();
   }
 
   public sortTable(header: string) {

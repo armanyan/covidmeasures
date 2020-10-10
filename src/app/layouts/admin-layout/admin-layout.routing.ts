@@ -12,6 +12,7 @@ import { SurveillanceComponent } from '../../surveillance/surveillance.component
 import { BordersComponent } from '../../borders/borders.component';
 import { MasksComponent } from '../../masks/masks.component';
 import { TestingComponent } from '../../testing/testing.component';
+import { GatheringsComponent } from '../../gatherings/gatherings.component';
 import { AboutUsComponent } from '../../about-us/about-us.component';
 import { NewsVideosComponent } from '../../news-videos/news-videos.component';
 
@@ -30,6 +31,7 @@ export const AdminLayoutRoutes: Routes = [
   { path: 'borders/:alpha3', component: BordersComponent },
   { path: 'masks', component: MasksComponent },
   { path: 'testing', component: TestingComponent },
+  { path: 'gatherings', component: GatheringsComponent },
   { path: 'aboutus', component: AboutUsComponent },
   { path: 'news', component: NewsVideosComponent }
 ];

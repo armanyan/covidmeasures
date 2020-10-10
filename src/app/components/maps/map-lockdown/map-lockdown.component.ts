@@ -1,6 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
 import * as L from 'leaflet';
-import { MarkerService } from '../../../_service/map/marker.service';
 import { ShapeService } from '../../../_service/map/shape.service';
 import { MapTilesService } from '../../../_service/map/map-tiles.service';
 
@@ -56,12 +55,9 @@ export class MapLockdownComponent implements OnInit {
   @Input() countries: Array<Country>;
 
   constructor(
-    private markerService: MarkerService, 
     private shapeService: ShapeService,
     private mapTiles: MapTilesService
-    ) {
-     
-    }
+    ) {}
 
   ngOnInit(): void {
     this.initMap();
@@ -199,7 +195,8 @@ export class MapLockdownComponent implements OnInit {
   }
   private clickedCountry(country){
     if (country) {
-      return `
+      const last = country['dates'].length ? country['dates'][country['dates'].length-1] : {};
+      let res = `
       <div>
         <h6 class="d-flex justify-content-center">
           <strong>${country.name}</strong>
@@ -211,15 +208,11 @@ export class MapLockdownComponent implements OnInit {
           <p class="p-0 m-0">
             <strong>Type of restrictions:</strong> ${country.restriction_type}
           </p>
-          <p class="p-0 m-0">
-            <strong>Start date:</strong> ${country.start}
-          </p>
-          <p class="p-0 m-0">
-            <strong>Start softening date:</strong> ${country.start_reopening}
-          </p>
-          <p class="p-0 m-0">
-            <strong>End date:</strong> ${country.end}
-          </p>
+        `;
+      if (last.start) {res = res.concat(`<p class="p-0 m-0"><strong>Start date:</strong> ${last.start}</p>`)}
+      if (last.start_reopening) {res = res.concat(`<p class="p-0 m-0"><strong>Start softening date:</strong> ${last.start_reopening}</p>`)}
+      if (last.end) {res = res.concat(`<p class="p-0 m-0"><strong>End date:</strong> ${last.end}</p>`)}
+      return res.concat(`
         </div>
         <div class="d-flex justify-content-center">
           <a href="#/country/${country.alpha3}">
@@ -227,7 +220,7 @@ export class MapLockdownComponent implements OnInit {
           </a>
         </div>
       </div>
-    `;
+    `);
     }
   }
 }

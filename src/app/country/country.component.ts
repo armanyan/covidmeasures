@@ -3,7 +3,6 @@ import { Title } from '@angular/platform-browser';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute } from "@angular/router";
 import { Location } from '@angular/common'; 
-
 import { FormBuilder, FormGroup } from '@angular/forms';
 import * as typeformEmbed from '@typeform/embed';
 
@@ -78,15 +77,32 @@ export class CountryComponent implements OnInit {
 
   public impactHeaders = ['Measure', 'Impact', 'Description', 'Source'];
   public impactTable = [];
+
+  public lockdownData: any;
+  public isClientReady: boolean = false;
+
+  private economic_imports: any;
+  private economic_exports: any;
+  private economic_gdp_rate: any;
+  private economic_unemployment: any;
+  public import: number;
+  public export: number;
+
+  public economic_data = {
+    'Country': this.currentCountryName,
+    'GDP': { last: '', avg: 0 },
+    'Unemployment Rate': { last: '', avg: 0 },
+    'Imports': { last: '', avg: 0 },
+    'Exports': { last: '', avg: 0 },
+  };
+
   private impactData: any;
 
   private evolution: any;
   private schoolClosureData: any;
-  public lockdownData: any;
   private travelData: any;
 
   private countryPopulation:number = 0;
-  public isClientReady: boolean = false;
 
   constructor(
     private titleService: Title,
@@ -107,11 +123,14 @@ export class CountryComponent implements OnInit {
 
     this.evolution = (await this.http.get(`${aws}/evolution.json`).toPromise() as any);
     this.schoolClosureData = (await this.http.get(`${aws}/school_closure.json`).toPromise() as any);
-    this.lockdownData = (await this.http.get(`${aws}/new_lockdown.json`).toPromise() as any);
+    this.lockdownData = (await this.http.get(`${aws}/lockdown.json`).toPromise() as any);
     this.impactData = (await this.http.get(`${aws}/community_impacts.json`).toPromise() as any);
     this.travelData = (await this.http.get(`${aws}/international_flights.json`).toPromise() as any);
+    this.economic_imports = (await this.http.get(`${aws}/world_imports.json`).toPromise() as any);
+    this.economic_exports = (await this.http.get(`${aws}/world_exports.json`).toPromise() as any);
+    this.economic_gdp_rate = (await this.http.get(`${aws}/world_gdp_rate.json`).toPromise() as any);
+    this.economic_unemployment = (await this.http.get(`${aws}/world_unemployment_rate.json`).toPromise() as any);
     this.setImpactTable();
-    this.setStatsAndStatuses(this.countryView);
 
     this.countryList = [];
     for (const alpha of Object.keys(this.evolution.data)) {
@@ -131,9 +150,10 @@ export class CountryComponent implements OnInit {
     }
 
     this.currentCountryName = getCountryNameByAlpha(this.countryView);
-    
+    this.setStatsAndStatuses(this.countryView);
+    this.setEconomicData();
+
     this.setTotalDeathRatio();
-    this.setWidget();
   }
 
   private async getUserCountry() {
@@ -142,6 +162,39 @@ export class CountryComponent implements OnInit {
       return getAlpha3FromAlpha2((ip as any).country);
     } catch (_err) {
       return 'USA';
+    }
+  }
+
+  private setEconomicData() {
+    let dates;
+    let value;
+    this.economic_data.Country = this.currentCountryName;
+    const datasets = { 
+      "GDP": this.economic_gdp_rate,
+      "Unemployment Rate": this.economic_unemployment, 
+      "Imports": this.economic_imports,
+      "Exports": this.economic_exports
+    };
+    for (const key of Object.keys(datasets)) {
+      const alpha = this.getAlpha3FromName(this.currentCountryName, this.evolution);
+      dates = Object.keys(datasets[key][this.currentCountryName]).filter(date => date.startsWith('2020'));
+      const dates2019 = Object.keys(datasets[key][this.currentCountryName]).filter(date => date.startsWith('2019'));
+      const average2019 = key === "GDP" ? 0 : 
+        !dates2019.length ? 0 :
+        dates2019.map(date => datasets[key][this.currentCountryName][date]).reduce((a, b) => a+b)/dates2019.length;
+
+      value = 0;
+      for (const date of dates) {
+        value += datasets[key][this.currentCountryName][date] - average2019;
+      }
+      if (value !== 0) {
+        value = ['Imports', 'Exports'].includes(key) ? ((value / dates.length) / average2019)*100 : value / dates.length;
+        this.economic_data[key].avg = value;
+        this.economic_data[key].last = dates[dates.length-1];
+      } else {
+        this.economic_data[key].avg = undefined;
+        this.economic_data[key].last = undefined;
+      }
     }
   }
 
@@ -189,7 +242,7 @@ export class CountryComponent implements OnInit {
     const affectedPopulation = this.countryPopulation * lockdownCountry.current_population_impacted;
     this.countryImpactedPeople = Math.floor(affectedPopulation/this.statsDivider);
     this.countryCumulatedYears =
-      (this.getMissedDays(lockdownCountry.start, lockdownCountry.end)*affectedPopulation) / (365*this.statsDivider);
+      (this.getMissedDays(this.lockdown.date, this.lockdown.end)*affectedPopulation) / (365*this.statsDivider);
 
     this.setImpactTable();
   }
@@ -205,7 +258,8 @@ export class CountryComponent implements OnInit {
     }
     const start_data = new Date(start);
     const today = new Date()
-    const planedEnd = end === '' ? today : new Date(end);
+    // TODO replace by a regex
+    const planedEnd = end === '' || end === undefined ? today : new Date(end);
     const end_date = today < planedEnd ? today : planedEnd;
     return Math.floor((end_date.getTime()-start_data.getTime())/(1000*60*60*24));
   }
@@ -223,6 +277,7 @@ export class CountryComponent implements OnInit {
     this.setTotalDeathRatio();
     this.location.go('/country/'+value) // we change the url: /country/value:
     this.currentCountryName = getCountryNameByAlpha(value);
+    this.setEconomicData();
     this.setStatsAndStatuses(value);
   }
 
@@ -251,18 +306,30 @@ export class CountryComponent implements OnInit {
     }
   }
 
+  private getAlpha3FromName(name: string, evolution: any) {
+    for (const country of Object.keys(evolution.data)) {
+      if (
+        evolution.data[country].name === name ||
+        evolution.data[country].name.replace(/_/g, ' ') === name ||
+        evolution.data[country].name.split(' ').slice(0,2).join(' ').toLowerCase() === name.toLocaleLowerCase() || 
+        evolution.data[country].name.split('_').slice(0,2).join(' ').toLowerCase() === name.toLocaleLowerCase()
+        ) {
+        return country;
+      }
+    }
+    return undefined;
+  }
+
   private setTotalDeathRatio() {
     this.totalDeathRatio = this.evolution.data[this.countryView].deaths.reduce((a,b) => a + b) /
       this.evolution.data[this.countryView].cases.reduce((a,b) => a + b);
   }
 
-  private setWidget() {
-    document.getElementById('addImpact').addEventListener('click', function () {
-      typeformEmbed.makePopup('https://admin114574.typeform.com/to/uTHShl', {
-        hideFooter: true,
-        hideHeaders: true,
-        opacity: 0
-      }).open();
-    })
+  public openPopUp() {
+    typeformEmbed.makePopup('https://admin114574.typeform.com/to/uTHShl', {
+      hideFooter: true,
+      hideHeaders: true,
+      opacity: 0
+    }).open();
   }
 }

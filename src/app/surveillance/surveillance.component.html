@@ -86,7 +86,7 @@
                     </th>
                   </thead>
                   <tbody>
-                    <tr *ngFor="let row of table | paginate: { itemsPerPage: 5, currentPage: pageIndicator }">
+                    <tr *ngFor="let row of table | paginate: { itemsPerPage: 25, currentPage: pageIndicator }">
                       <td>{{ row.country }}</td>
                       <td>{{ row.name }}</td>
                       <td>{{ row.desc }}</td>

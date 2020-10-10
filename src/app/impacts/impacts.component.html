@@ -99,7 +99,7 @@
                     </th>
                   </thead>
                   <tbody>
-                    <tr class="center-align" *ngFor="let row of countriesData | paginate: { itemsPerPage: 10, currentPage: pageIndicator }">
+                    <tr class="center-align" *ngFor="let row of countriesData | paginate: { itemsPerPage: 25, currentPage: pageIndicator }">
                       <td class="thick">
                         <a href="#/country/{{ row['Country'].alpha3 }}">{{
                           row["Country"].name
@@ -149,17 +149,16 @@
                                 indicator === 'Unemployment Rate')
                           }"
                         >
-                          <button
-                            onclick="this.blur()"
-                            (click)="
-                              openEconomicData(
-                                indicator,
-                                row['Country'].name,
-                                row[indicator].avg,
-                                row[indicator].last
-                              )
-                            "
-                            mat-button
+                        <button mat-button
+                          onclick="this.blur()"
+                          (click)="
+                            openEconomicData(
+                              indicator,
+                              row['Country'].name,
+                              row[indicator].avg,
+                              row[indicator].last
+                            )
+                          "
                           >
                             <span *ngIf="row[indicator].avg > 0">+</span
                             >{{ row[indicator].avg | number }}%
@@ -193,7 +192,7 @@
         </div>
       </div>
     </div>
-    <!-- ------------------------------ Other Impacts ----------------------------------------->
+    <!-------------------------------- Other Impacts ----------------------------------------->
     <div id="otherImpacts">
       <app-page-separator [title]="'Other Impacts'"></app-page-separator>
       <div class="container pt-5" style="max-width: 1400px;">
@@ -225,11 +224,11 @@
               </div>
               <div class="col-md-3">
                 <button
-                  id="addImpact"
                   class="text-decoration-none text-dark nav-link float-right"
                   mat-raised-button
                   type="button"
                   color="primary"
+                  (click)="openPopUp()"
                 >
                   <span class="span.size">
                     <i class="fa fa-plus" aria-hidden="true"></i>
@@ -254,7 +253,7 @@
                     <tr
                       *ngFor="
                         let row of collection
-                          | paginate: { itemsPerPage: 10, currentPage: p }
+                          | paginate: { itemsPerPage: 25, currentPage: p }
                       "
                     >
                       <td *ngIf="row.alpha3 === 'WRD'" class="thick">
