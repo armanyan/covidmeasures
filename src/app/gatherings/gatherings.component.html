@@ -86,7 +86,20 @@
           </iframe>
         </div>
       </div>
+    </div> 
+    <!-- survey answers starts -->
+    <div class="container">
+      <app-survey-gatherings-answers
+        [surveyQuestions]="{
+          Q1: 'What type of public gatherings you are most likely to attend?',
+          Q2:
+            'How do you feel attending such an event right now?',
+          Q3: 'At this point in time, who should decide Whether you can go to gatherings or not?',
+          Q4: 'What country are you in?'
+        }"
+      ></app-survey-gatherings-answers>
+      <br />
     </div>
-    <!-- ------------------------------ Country Data SECTION ----------------------------------------->
+    <!-- survey answers ends -->
   </div>
 </div>
