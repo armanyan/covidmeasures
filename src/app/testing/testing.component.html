@@ -38,10 +38,26 @@
     <!-- ------------------------------ Tests & Vaccines SECTION ----------------------------------------->
     <div class="test-vaccines" id="test&Vaccines">
       <app-page-separator [title]="'Tests & Vaccines'"></app-page-separator>
-      <div class="container py-5" style="max-width: 1400px">
-        This page is currently being written. If you are interested in providing
-        us some useful information concerning the topic, you can write us to
-        <b>contact@covidmeasures.info</b>
+      <div class="container py-5" style="max-width: 1400px;">
+        <div class="col-md-12">
+          <div class="card card-border">
+            <div class="card-header card-header-success">
+              <h3 class="card-title">
+                Testing: Positive Rate
+              </h3>
+            </div>
+
+            <iframe
+              src="https://ourworldindata.org/grapher/positive-rate-daily-smoothed?time=latest"
+              style="
+                width: 100%;
+                height: 600px;
+                border: 1px white;
+                box-shadow: none;
+              "
+            ></iframe>
+          </div>
+        </div>
       </div>
     </div>
 
