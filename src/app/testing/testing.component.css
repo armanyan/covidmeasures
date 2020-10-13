@@ -25,6 +25,11 @@ div.text-align {
   text-align: center;
 }
 
+.country {
+  color: #d83b40 !important;
+  max-width: 100px;
+}
+
 /* --------------------------- HEADERS ----------------------------- */
 
 .card .card-header-success .card-icon,

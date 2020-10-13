@@ -61,6 +61,42 @@
       </div>
     </div>
 
+    <hr>
+
+    <div class="col-md-12">
+      <div class="card card-border">
+        <div class="card-header card-header-success">
+          <h3 class="card-title">Detailed View For Each Country</h3>
+        </div>
+
+        <div class="card-body">
+          <div class="content table-responsive table-full-width">
+            <table class="table">
+              <thead>
+                <th class="text-primary" *ngFor="let row of testingTableHeaders">
+                  {{ row }}
+                </th>
+              </thead>
+              <tbody>
+                <tr *ngFor="let row of testingData | paginate: { itemsPerPage: 25, currentPage: pageIndicator }">
+                  <td class="country">{{ row.name }}</td>
+                  <td>{{ row.positive_rate | number:'.0-3' }}</td>
+                  <td>{{ row.daily_test || 'No Data' }}</td>
+                  <td>{{ row.cases }}</td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="d-flex justify-content-center">
+              <pagination-controls
+                    class="my-pagination"
+                    (pageChange)="pageIndicator = $event"
+                  ></pagination-controls>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- ----------------------------------------------- DEBATE SECTION -------------------------------------->
     <div class="debate" id="theDebate">
       <app-page-separator [title]="'The Debate'"></app-page-separator>

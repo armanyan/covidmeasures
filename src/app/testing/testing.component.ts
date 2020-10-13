@@ -12,6 +12,8 @@ import { mobileWidth, aws, getCountryNameByAlpha } from '../utils';
 export class TestingComponent implements OnInit {
   public isMobile: boolean;
   public testingData = [];
+  public testingTableHeaders = ['Country', 'Positive Rate', 'Daily Tests', 'Total Cases'];
+  public pageIndicator = 1;
 
   private evolution: any;
  
