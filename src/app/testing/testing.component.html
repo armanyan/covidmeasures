@@ -61,28 +61,84 @@
       </div>
     </div>
 
-    <hr>
-
-    <div class="col-md-12">
+    <div class="container py-5" style="max-width: 1400px;">
+    <div class="col-12 px-0">
       <div class="card card-border">
         <div class="card-header card-header-success">
           <h3 class="card-title">Detailed View For Each Country</h3>
+
+          <ng-container *ngIf="!isMobile">
+            <ng-container *ngFor="let location of locations">
+              <button
+                mat-raised-button
+                *ngIf="testingLocation === location.value"
+                class="float"
+                type="button"
+                color="primary"
+              >
+                <span>{{ location.viewValue }}</span>
+              </button>
+
+              <button
+                mat-button
+                *ngIf="testingLocation !== location.value"
+                class="float"
+                type="button"
+                color="primary"
+                (click)="changeLocation(location.value)"
+              >
+                <span>{{ location.viewValue }}</span>
+              </button>
+            </ng-container>
+          </ng-container>
         </div>
 
         <div class="card-body">
           <div class="content table-responsive table-full-width">
             <table class="table">
               <thead>
-                <th class="text-primary" *ngFor="let row of testingTableHeaders">
+                <th class="text-primary" *ngFor="let row of testingTableHeaders"
+                  [ngClass]="{'justify-content-center text-center': row !== 'Country'}"
+                >
                   {{ row }}
                 </th>
               </thead>
               <tbody>
                 <tr *ngFor="let row of testingData | paginate: { itemsPerPage: 25, currentPage: pageIndicator }">
-                  <td class="country">{{ row.name }}</td>
-                  <td>{{ row.positive_rate | number:'.0-3' }}</td>
-                  <td>{{ row.daily_test || 'No Data' }}</td>
-                  <td>{{ row.cases }}</td>
+                  <td class="thick">
+                    <a href="#/country/{{ row.alpha3 }}">
+                      {{ row.name }}
+                    </a>
+                  </td>
+                  <td class="justify-content-center text-center">
+                    <button mat-button
+                      (click)="openDetailedData('positive_rate', row['name'], row['alpha3'])"
+                    >
+                      <span style="text-decoration: underline; font-weight: bold; text-shadow: 1px 1px #ccc1c1;">
+                        {{ row.positive_rate | number:'.0-3' }}%
+                      </span>
+                    </button>
+                  </td>
+                  <td class="justify-content-center text-center">
+                    <button mat-button
+                      (click)="openDetailedData('daily_test', row['name'], row['alpha3'])"
+                    >
+                      <span
+                        style="text-decoration: underline; font-weight: bold; text-shadow: 1px 1px #ccc1c1;"
+                      >
+                        {{ row.daily_test | number}}
+                      </span>
+                    </button>
+                  </td>
+                  <td class="justify-content-center text-center">
+                    <button mat-button
+                      (click)="openDetailedData('cases', row['name'], row['alpha3'])"
+                    >
+                      <span style="text-decoration: underline; font-weight: bold; text-shadow: 1px 1px #ccc1c1;">
+                        {{ row.cases | number}}
+                      </span>
+                    </button>
+                  </td>
                 </tr>
               </tbody>
             </table>
@@ -96,6 +152,8 @@
         </div>
       </div>
     </div>
+    </div>
+
 
     <!-- ----------------------------------------------- DEBATE SECTION -------------------------------------->
     <div class="debate" id="theDebate">

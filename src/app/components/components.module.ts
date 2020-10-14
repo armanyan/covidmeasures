@@ -33,6 +33,7 @@ import { PageSeparatorComponent } from "./page-separator/page-separator.componen
 import { SurveySchoolAnswersComponent } from "./charts/survey-school-answers/survey-school-answers.component";
 import { SurveyTravelAnswersComponent } from "./charts/survey-travel-answers/survey-travel-answers.component";
 import { SurveyGatheringsAnswersComponent } from './charts/survey-gatherings-answers/survey-gatherings-answers.component';
+import { TestingDataComponent } from './testing-data/testing-data.component';
 
 @NgModule({
   imports: [
@@ -69,6 +70,7 @@ import { SurveyGatheringsAnswersComponent } from './charts/survey-gatherings-ans
     SurveySchoolAnswersComponent,
     SurveyTravelAnswersComponent,
     SurveyGatheringsAnswersComponent,
+    TestingDataComponent,
   ],
   exports: [
     FooterComponent,

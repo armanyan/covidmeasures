@@ -2,11 +2,6 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import Chart from 'chart.js';
 
-// import * as gdp from '../../data/gdp';
-// import * as unemployment from '../../data/unemployment';
-// import * as import_impacts from '../../data/imports';
-// import * as export_impacts from '../../data/exports';
-
 export interface EconomicData {
   indicator: string;
   country: string;
@@ -29,13 +24,6 @@ export class EconomicDataComponent implements OnInit {
     'Imports': 'The amount of imported goods in the country, in billion dollars.',
     'Exports': 'The amount of exported goods to other countries, in billion dollars.'
   };
-
-  // public datasets = {
-  //   'GDP': gdp,
-  //   'Unemployment Rate': unemployment,
-  //   'Imports': import_impacts,
-  //   'Exports': export_impacts
-  // }
 
   public drawChart = true;
 

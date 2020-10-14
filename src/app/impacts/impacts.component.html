@@ -122,7 +122,9 @@
                             "
                             mat-button
                           >
-                            {{ row["Stringency Score"].avg }}
+                            <span style="text-decoration: underline; font-weight: bold; text-shadow: 1px 1px #ccc1c1;">
+                              {{ row["Stringency Score"].avg }}
+                            </span>
                           </button>
                         </div>
                         <div *ngIf="row['Stringency Score'].avg === undefined">
@@ -161,7 +163,10 @@
                           "
                           >
                             <span *ngIf="row[indicator].avg > 0">+</span
-                            >{{ row[indicator].avg | number }}%
+                            >
+                            <span style="text-decoration: underline; font-weight: bold; text-shadow: 1px 1px #ccc1c1;">
+                              {{ row[indicator].avg | number }}%
+                            </span>
                           </button>
                         </div>
                         <div *ngIf="row[indicator].avg === undefined">

@@ -16,6 +16,51 @@ a:hover {
   color: #e03b3e;
 }
 
+td.eco {
+  border: 1px solid #333;
+  padding: 10px;
+  text-align: center;
+  vertical-align: middle;
+}
+
+#theDebate iframe {
+  height: 150vh;
+}
+
+.center-align {
+  text-align: center;
+  vertical-align: middle;
+}
+
+span.reduce {
+  font-size: 70%;
+}
+
+th.header {
+  border: 1px solid #fff;
+  text-align: center;
+  vertical-align: middle;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+td.thick {
+  font-weight: bold;
+}
+
+tr.primary-header {
+  background-color: #333;
+  color: #fff;
+}
+
+tr.secondary-header {
+  color: rgb(0, 0, 0);
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+
 div.center {
   margin-left: auto;
   margin-right: auto;
@@ -25,9 +70,12 @@ div.text-align {
   text-align: center;
 }
 
-.country {
-  color: #d83b40 !important;
-  max-width: 100px;
+.negative {
+  color: #e03b3e;
+}
+
+.positive {
+  color: forestgreen;
 }
 
 /* --------------------------- HEADERS ----------------------------- */
@@ -66,13 +114,26 @@ td.center {
   vertical-align: top;
 }
 
+.mobile-table-text {
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
 .table-datas {
   font-size: 1.3em;
+}
+
+.my-pagination /deep/ .ngx-pagination .current {
+  background: #ed5658;
+}
+
+td.thick {
+  font-weight: bold;
 }
 /* --------------------------- BUTTONS ---------------------------------*/
 
 /*non-active button*/
-.mat-button,
+.mat-button.default,
 .mat-icon-button,
 .mat-stroked-button,
 .mat-flat-button {
@@ -84,7 +145,7 @@ td.center {
 }
 
 /*non-active button hover*/
-.mat-button:hover,
+.mat-button.default:hover,
 .mat-icon-button:hover,
 .mat-stroked-button:hover,
 .mat-flat-button:hover {
@@ -101,6 +162,7 @@ td.center {
 .mat-stroked-button.mat-primary {
   color: #aaa5a5;
 }
+
 /*non-active button text hover*/
 .mat-button.mat-primary:hover,
 .mat-icon-button.mat-primary:hover,
@@ -138,10 +200,6 @@ td.center {
 .card-header a {
   text-decoration: none;
 }
-/* --------------------------- DEBATE ----------------------------------*/
-#theDebate iframe {
-  height: 150vh;
-}
 /* --------------------------- CONTENT ----------------------------------*/
 
 /*columns names*/
@@ -178,8 +236,10 @@ td.center {
 .card-citizens {
   margin: 1% 0;
 }
-@media (max-width: 900px) {
-  #theDebate iframe {
-    height: 100vh;
+
+
+@media (max-width: 500px) {
+  .container-fluid, .container{
+    padding: 0 !important;
   }
 }
