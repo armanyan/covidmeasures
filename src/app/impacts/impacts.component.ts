@@ -6,7 +6,6 @@ import { MatDialog } from '@angular/material/dialog';
 
 import { EconomicDataComponent } from 'app/components/economic-data/economic-data.component';
 import { aws, mobileWidth, getCountryNameByAlpha } from '../utils';
-
 import allCountries from '../data/countries';
 import alpha3s from '../data/alpha3';
 import g20Countries from '../data/g20_countries';
@@ -294,11 +293,11 @@ export class ImpactsComponent implements OnInit {
     this.dialog.open(EconomicDataComponent, {
       width: '500px',
       data: { 
-        indicator, 
-        country, 
-        value, 
-        updated: Array.isArray(d) ? new Date(`${d[2]}-${d[1]}-${d[0]}`) : new Date(updated), 
-        scores ,
+        indicator,
+        country,
+        value,
+        updated: Array.isArray(d) ? new Date(`${d[2]}-${d[1]}-${d[0]}`) : new Date(updated),
+        scores,
         dataSets: {
           'GDP': this.gdp_growth,
           'Unemployment Rate': this.unemployment,

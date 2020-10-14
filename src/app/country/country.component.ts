@@ -81,6 +81,9 @@ export class CountryComponent implements OnInit {
   public lockdownData: any;
   public isClientReady: boolean = false;
 
+  public testingPositiveRatio: number;
+  public testingDaily: number;
+
   private economic_imports: any;
   private economic_exports: any;
   private economic_gdp_rate: any;
@@ -101,6 +104,7 @@ export class CountryComponent implements OnInit {
   private evolution: any;
   private schoolClosureData: any;
   private travelData: any;
+  private testingData: any;
 
   private countryPopulation:number = 0;
 
@@ -130,6 +134,7 @@ export class CountryComponent implements OnInit {
     this.economic_exports = (await this.http.get(`${aws}/world_exports.json`).toPromise() as any);
     this.economic_gdp_rate = (await this.http.get(`${aws}/world_gdp_rate.json`).toPromise() as any);
     this.economic_unemployment = (await this.http.get(`${aws}/world_unemployment_rate.json`).toPromise() as any);
+    this.testingData = (await this.http.get(`${aws}/ourworldindata_testing.json`).toPromise() as any);
     this.setImpactTable();
 
     this.countryList = [];
@@ -279,6 +284,17 @@ export class CountryComponent implements OnInit {
     this.currentCountryName = getCountryNameByAlpha(value);
     this.setEconomicData();
     this.setStatsAndStatuses(value);
+    this.setTestingData(value);
+  }
+
+  private setTestingData(alpha3: string) {
+    if (alpha3) {
+      if (Object.keys(this.testingData.data).includes(alpha3)) {
+        const index = this.testingData.data[alpha3].length - 1;
+        this.testingPositiveRatio = this.testingData.data[alpha3][index][7]*100;
+        this.testingDaily = this.testingData.data[alpha3][index][1];
+      }
+    }
   }
 
   public changeViewOption(value: string) {
