@@ -47,13 +47,6 @@ export const ROUTES: RouteInfo[] = [
     class: "",
   },
   {
-    path: "/economics",
-    title: "Economic Stimulus",
-    hide: true,
-    icon: "monetization_on",
-    class: "",
-  },
-  {
     path: "/surveillance",
     title: "Surveillance",
     icon: "policy",

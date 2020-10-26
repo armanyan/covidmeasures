@@ -8,6 +8,10 @@ import * as typeformEmbed from '@typeform/embed';
 
 import { mobileWidth, getCountryNameByAlpha, getAlpha3FromAlpha2,
          getChildrenNoSchool, getCountryPopulation, aws } from '../utils';
+import * as world_gdp_rate from '../data/world_gdp_rate';
+import * as world_imports from '../data/world_imports';
+import * as world_exports from '../data/world_exports';
+import * as world_unemployment_rate from '../data/world_unemployment_rate';
 
 interface Country {
   value: string;
@@ -84,10 +88,6 @@ export class CountryComponent implements OnInit {
   public testingPositiveRatio: number;
   public testingDaily: number;
 
-  private economic_imports: any;
-  private economic_exports: any;
-  private economic_gdp_rate: any;
-  private economic_unemployment: any;
   public import: number;
   public export: number;
 
@@ -130,10 +130,6 @@ export class CountryComponent implements OnInit {
     this.lockdownData = (await this.http.get(`${aws}/lockdown.json`).toPromise() as any);
     this.impactData = (await this.http.get(`${aws}/community_impacts.json`).toPromise() as any);
     this.travelData = (await this.http.get(`${aws}/international_flights.json`).toPromise() as any);
-    this.economic_imports = (await this.http.get(`${aws}/world_imports.json`).toPromise() as any);
-    this.economic_exports = (await this.http.get(`${aws}/world_exports.json`).toPromise() as any);
-    this.economic_gdp_rate = (await this.http.get(`${aws}/world_gdp_rate.json`).toPromise() as any);
-    this.economic_unemployment = (await this.http.get(`${aws}/world_unemployment_rate.json`).toPromise() as any);
     this.testingData = (await this.http.get(`${aws}/ourworldindata_testing.json`).toPromise() as any);
     this.setImpactTable();
 
@@ -175,10 +171,10 @@ export class CountryComponent implements OnInit {
     let value;
     this.economic_data.Country = this.currentCountryName;
     const datasets = { 
-      "GDP": this.economic_gdp_rate,
-      "Unemployment Rate": this.economic_unemployment, 
-      "Imports": this.economic_imports,
-      "Exports": this.economic_exports
+      "GDP": world_gdp_rate.default,
+      "Unemployment Rate": world_unemployment_rate.default, 
+      "Imports": world_imports.default,
+      "Exports": world_exports.default
     };
     for (const key of Object.keys(datasets)) {
       const alpha = this.getAlpha3FromName(this.currentCountryName, this.evolution);

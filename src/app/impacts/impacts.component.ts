@@ -10,6 +10,10 @@ import allCountries from '../data/countries';
 import alpha3s from '../data/alpha3';
 import g20Countries from '../data/g20_countries';
 import country_codes from '../data/country_codes';
+import * as world_gdp_rate from '../data/world_gdp_rate';
+import * as world_imports from '../data/world_imports';
+import * as world_exports from '../data/world_exports';
+import * as world_unemployment_rate from '../data/world_unemployment_rate';
 
 interface Location {
   value: string;
@@ -56,11 +60,6 @@ export class ImpactsComponent implements OnInit {
 
   private evolution: any;
 
-  private gdp_growth: any;
-  private unemployment: any;
-  private import_impacts: any; 
-  private export_impacts: any;
-
   p: number = 1;
   collection: any[];
 
@@ -80,10 +79,6 @@ export class ImpactsComponent implements OnInit {
     this.collection = this.impacts;
 
     this.evolution = (await this.http.get(`${aws}/evolution.json`).toPromise() as any);
-    this.gdp_growth = (await this.http.get(`${aws}/world_gdp_rate.json`).toPromise() as any);
-    this.unemployment = (await this.http.get(`${aws}/world_unemployment_rate.json`).toPromise() as any);
-    this.import_impacts = (await this.http.get(`${aws}/world_imports.json`).toPromise() as any);
-    this.export_impacts = (await this.http.get(`${aws}/world_exports.json`).toPromise() as any);
 
     this.processEconomicData(this.evolution);
   }
@@ -113,10 +108,10 @@ export class ImpactsComponent implements OnInit {
         current['Stringency Score'].avg = undefined;
       }
       const datasets = { 
-        "GDP": this.gdp_growth, 
-        "Unemployment Rate": this.unemployment, 
-        "Imports": this.import_impacts, 
-        "Exports": this.export_impacts 
+        "GDP": world_gdp_rate.default,
+        "Unemployment Rate": world_unemployment_rate.default,
+        "Imports": world_imports.default,
+        "Exports": world_exports.default
       };
       let numberNoData = 0;
       let IS_VALID_COUNTRY = true;
@@ -299,10 +294,10 @@ export class ImpactsComponent implements OnInit {
         updated: Array.isArray(d) ? new Date(`${d[2]}-${d[1]}-${d[0]}`) : new Date(updated),
         scores,
         dataSets: {
-          'GDP': this.gdp_growth,
-          'Unemployment Rate': this.unemployment,
-          'Imports': this.import_impacts,
-          'Exports': this.export_impacts
+          'GDP': world_gdp_rate.default,
+          'Unemployment Rate': world_imports.default,
+          'Imports': world_imports.default,
+          'Exports': world_exports.default
         }
       },
     });

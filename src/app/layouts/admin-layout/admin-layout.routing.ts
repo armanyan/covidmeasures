@@ -7,7 +7,6 @@ import { SchoolComponent } from '../../school/school.component';
 import { ImpactsComponent } from '../../impacts/impacts.component';
 import { CovidComponent } from '../../covid/covid.component';
 import { DeathRatesComponent } from '../../death-rates/death-rates.component';
-import { EconomicsComponent } from '../../economics/economics.component';
 import { SurveillanceComponent } from '../../surveillance/surveillance.component';
 import { BordersComponent } from '../../borders/borders.component';
 import { MasksComponent } from '../../masks/masks.component';
@@ -25,7 +24,6 @@ export const AdminLayoutRoutes: Routes = [
   { path: 'impacts', component: ImpactsComponent },
   { path: 'covid', component: CovidComponent },
   { path: 'deathrates', component: DeathRatesComponent },
-  { path: 'economics', component: EconomicsComponent },
   { path: 'surveillance',  component: SurveillanceComponent },
   { path: 'borders', component: BordersComponent, pathMatch: 'full' },
   { path: 'borders/:alpha3', component: BordersComponent },
