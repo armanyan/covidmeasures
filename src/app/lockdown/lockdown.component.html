@@ -336,7 +336,9 @@
                   <tbody>
                     <tr *ngFor="let row of lockdownTable">
                       <td [ngClass]="{ active: sortStatus.name.active }">
-                        {{ row.name }}
+                        <a href="#/country/{{ row.alpha3 }}">{{
+                          row.name
+                        }}</a>
                       </td>
                       <td [ngClass]="{ active: sortStatus.population.active }" class="text-center">
                         {{ row.population | number }}

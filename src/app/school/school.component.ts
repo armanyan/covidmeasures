@@ -312,7 +312,8 @@ export class SchoolComponent implements OnInit {
       children = this.getCountryChildrenByAlpha(country['alpha3']);
       duration = this.getMissedDaysPerCountry(country);
       this.schoolClosureFull.push({
-        "name": getCountryNameByAlpha(country['alpha3']),
+        "name": getCountryNameByAlpha(country.alpha3),
+        "alpha3": country.alpha3,
         "children": children === 0 ? '' : Math.floor(children),
         "start": this.getDate(country['start']),
         "end": country['end'] !== '' ? this.getDate(country['end']) : this.getDate(country['expected_end']),

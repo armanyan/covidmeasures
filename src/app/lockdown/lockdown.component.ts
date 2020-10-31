@@ -255,6 +255,7 @@ export class LockdownComponent implements OnInit {
       index = country['dates'].length-1;
       this.lockdownTableFull.push({
         "name": country.name,
+        "alpha3": country.alpha3,
         "population": population > 0 ? population : '',
         "duration": duration === 0 ? "" : duration+" days",
         "lockdown": this.format_restriction(country.movement_restrictions),

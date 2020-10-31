@@ -29,6 +29,15 @@ div.text-align {
   font-size: large;
 }
 
+.cell {
+  text-align: center;
+  font-size: 1.3rem;
+}
+
+.header {
+  text-align: center;
+}
+
 /* --------------------------- HEADERS ----------------------------- */
 
 .card .card-header-success .card-icon,

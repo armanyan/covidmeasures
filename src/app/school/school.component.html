@@ -154,19 +154,15 @@
             <div class="table-responsive">
               <table class="table">
                 <thead class="text-primary">
-                  <th>Number of children impacted</th>
-                  <th>Average duration of school closure</th>
-                  <th>Cumulated school years missed</th>
+                  <th class="header">Number of children impacted</th>
+                  <th class="header">Average duration of school closure</th>
+                  <th class="header">Cumulated school years missed</th>
                 </thead>
                 <tbody>
                   <tr>
-                    <td class="left">
-                      {{ impactedChildrenPer | number }}
-                    </td>
-                    <td class="left">{{ averageDaysMissed | number }} days</td>
-                    <td class="left">
-                      {{ schoolYearsMissedPer | number }}
-                    </td>
+                    <td class="cell">{{ impactedChildrenPer | number }}</td>
+                    <td class="cell">{{ averageDaysMissed | number }} days</td>
+                    <td class="cell">{{ schoolYearsMissedPer | number }}</td>
                   </tr>
                 </tbody>
               </table>
@@ -268,7 +264,9 @@
                   <tbody>
                     <tr *ngFor="let row of schoolClosure">
                       <td [ngClass]="{ active: sortStatus.country.active }">
-                        {{ row.name }}
+                        <a href="#/country/{{ row.alpha3 }}">{{
+                          row.name
+                        }}</a>
                       </td>
                       <td
                         [ngClass]="{ active: sortStatus.children.active }"
