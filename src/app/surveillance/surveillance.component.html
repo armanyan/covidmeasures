@@ -47,7 +47,7 @@
         <div class="col-md-12">
           <div class="card card-border">
             <div class="card-header card-header-success">
-              <h3 class="card-title">
+              <h3 class="card-title" #top>
                 Surveillance Measures Per Country
                 <a
                   mat-raised-button
@@ -103,6 +103,7 @@
                   <pagination-controls
                     class="my-pagination"
                     (pageChange)="pageIndicator = $event"
+                    (click)="scroll(top)"
                   ></pagination-controls>
                 </div>
               </div>

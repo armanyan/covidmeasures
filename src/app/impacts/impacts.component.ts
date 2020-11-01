@@ -83,6 +83,10 @@ export class ImpactsComponent implements OnInit {
     this.processEconomicData(this.evolution);
   }
 
+  public scroll(el: HTMLElement) {
+    el.scrollIntoView();
+  }
+
   private processEconomicData(evolution: any, countries: Array<string> = g20Countries) {
     this.countries = countries;
     this.countries.sort();

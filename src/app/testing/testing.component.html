@@ -65,7 +65,7 @@
     <div class="col-12 px-0">
       <div class="card card-border">
         <div class="card-header card-header-success">
-          <h3 class="card-title">Detailed View For Each Country</h3>
+          <h3 class="card-title" #top>Detailed View For Each Country</h3>
 
           <ng-container *ngIf="!isMobile">
             <ng-container *ngFor="let location of locations">
@@ -146,6 +146,7 @@
               <pagination-controls
                     class="my-pagination"
                     (pageChange)="pageIndicator = $event"
+                    (click)="scroll(top)"
                   ></pagination-controls>
             </div>
           </div>

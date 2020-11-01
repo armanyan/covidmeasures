@@ -324,6 +324,10 @@ export class SchoolComponent implements OnInit {
     this.schoolClosure = this.schoolClosureFull.slice(0, 10);
   }
 
+  public scroll(el: HTMLElement) {
+    el.scrollIntoView();
+  }
+
   private getDate(date: string) {
     return date === '' ? '' : (new Date(date)).toDateString();
   }

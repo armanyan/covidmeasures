@@ -270,6 +270,10 @@ export class LockdownComponent implements OnInit {
     this.lockdownTable = this.lockdownTableFull.slice(0, 10);
   }
 
+  public scroll(el: HTMLElement) {
+    el.scrollIntoView();
+  }
+
   private format_restriction(restriction: boolean|string) {
     if (restriction === '' || restriction === 'No Data') {
       return ''

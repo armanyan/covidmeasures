@@ -48,10 +48,7 @@
         <div class="col-12 px-0">
           <div class="card card-border">
             <div class="card-header card-header-success">
-              <h3 class="card-title">
-                Economic Impacts since COVID-19 outbreak
-              </h3>
-
+              <h3 class="card-title" #top>Economic Impacts since COVID-19 outbreak</h3>
               <ng-container *ngIf="!isMobile">
                 <ng-container *ngFor="let location of locations">
                   <button
@@ -180,6 +177,7 @@
                   <pagination-controls
                     class="my-pagination"
                     (pageChange)="pageIndicator = $event"
+                    (click)="scroll(top)"
                   ></pagination-controls>
                 </div>
               </div>

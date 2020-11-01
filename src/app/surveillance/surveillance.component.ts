@@ -51,6 +51,10 @@ export class SurveillanceComponent implements OnInit {
     this.table = this.tableFull;
   }
 
+  public scroll(el: HTMLElement) {
+    el.scrollIntoView();
+  }
+
   /**
    * Search filter for the impacts table
    * @param event object that contains the search word entered by the user.
