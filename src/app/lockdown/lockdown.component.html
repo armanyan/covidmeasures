@@ -336,7 +336,9 @@
                   <tbody>
                     <tr *ngFor="let row of lockdownTable">
                       <td [ngClass]="{ active: sortStatus.name.active }">
-                        {{ row.name }}
+                        <a href="#/country/{{ row.alpha3 }}">{{
+                          row.name
+                        }}</a>
                       </td>
                       <td [ngClass]="{ active: sortStatus.population.active }" class="text-center">
                         {{ row.population | number }}
@@ -384,7 +386,7 @@
         <div class="col-md-12">
           <div class="card card-border">
             <div class="card-header card-header-success">
-              <h3 class="card-title">List of Lockdown Impacts & Solutions</h3>
+              <h3 class="card-title" #top>List of Lockdown Impacts & Solutions</h3>
               <mat-form-field>
                 <mat-label class="search">
                   Search by Country, Impact or key word
@@ -459,6 +461,7 @@
                   <pagination-controls
                     class="my-pagination"
                     (pageChange)="pageIndicator = $event"
+                    (click)="scroll(top)"
                   ></pagination-controls>
                 </div>
               </div>

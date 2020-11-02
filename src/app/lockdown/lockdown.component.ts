@@ -255,6 +255,7 @@ export class LockdownComponent implements OnInit {
       index = country['dates'].length-1;
       this.lockdownTableFull.push({
         "name": country.name,
+        "alpha3": country.alpha3,
         "population": population > 0 ? population : '',
         "duration": duration === 0 ? "" : duration+" days",
         "lockdown": this.format_restriction(country.movement_restrictions),
@@ -267,6 +268,10 @@ export class LockdownComponent implements OnInit {
       });
     }
     this.lockdownTable = this.lockdownTableFull.slice(0, 10);
+  }
+
+  public scroll(el: HTMLElement) {
+    el.scrollIntoView();
   }
 
   private format_restriction(restriction: boolean|string) {

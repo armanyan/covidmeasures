@@ -56,6 +56,10 @@ export class TestingComponent implements OnInit {
     this.processTestingData(this.evolution, Object.keys(this.rawTestingData.data));
   }
 
+  public scroll(el: HTMLElement) {
+    el.scrollIntoView();
+  }
+
   private async processTestingData(evolution, countries) {
     for (const alpha of countries) {
       if (!Object.keys(evolution.data).includes(alpha) || !Object.keys(this.rawTestingData.data).includes(alpha)) {

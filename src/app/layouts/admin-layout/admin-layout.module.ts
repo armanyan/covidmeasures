@@ -11,7 +11,6 @@ import { ImpactsComponent } from "../../impacts/impacts.component";
 import { CovidComponent } from "../../covid/covid.component";
 import { DeathRatesComponent } from "../../death-rates/death-rates.component";
 import { AboutUsComponent } from "../../about-us/about-us.component";
-import { EconomicsComponent } from "../../economics/economics.component";
 import { SurveillanceComponent } from "../../surveillance/surveillance.component";
 import { BordersComponent } from "../../borders/borders.component";
 import { MasksComponent } from "../../masks/masks.component";
@@ -62,7 +61,6 @@ import { ComponentsModule } from "../../components/components.module"; // holds 
     DeathRatesComponent,
     AboutUsComponent,
     HomeComponent,
-    EconomicsComponent,
     SurveillanceComponent,
     BordersComponent,
     MasksComponent,
