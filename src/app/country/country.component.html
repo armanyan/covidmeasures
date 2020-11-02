@@ -396,7 +396,7 @@
                   <td class="cell"
                     [ngClass]="{positive: economic_data['GDP'].avg > 0, negative: economic_data['GDP'].avg < 0}"
                   >
-                    {{ economic_data['Imports'].avg | number:'.0-1' }}%
+                    {{ economic_data['GDP'].avg | number:'.0-1' }}%
                   </td>
                   <td class="cell"
                     [ngClass]="{positive: economic_data['Imports'].avg > 0, negative: economic_data['Imports'].avg < 0}"
