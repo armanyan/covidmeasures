@@ -38,6 +38,7 @@
     <app-page-navigator
       [pageSections]="[
         { name: 'Economic Impacts', sectionID: 'economicImpacts' },
+        { name: 'Survey', sectionID: 'survey' },
         { name: 'Other Impacts', sectionID: 'otherImpacts' }
       ]"
     ></app-page-navigator>
@@ -195,6 +196,29 @@
         </div>
       </div>
     </div>
+    <!-- ------------------------------ Survey SECTION ----------------------------------------->
+    <div id="survey">
+      <app-page-separator [title]="'Survey'"></app-page-separator>
+      <div class="container py-5" style="max-width: 1400px;">
+        <h3>Have a few seconds to spare?</h3>
+        <br />
+        <h4 style="padding-left: 4.2rem;">
+          <b>Press play</b> below to start the 30-second survey about economic impact.
+        </h4>
+        <br />
+
+        <div style="margin-left: 15px;">
+          <iframe
+            src="https://www.videoask.com/fgigzngm5"
+            allow="camera; microphone; autoplay; encrypted-media;"
+            width="100%"
+            height="600px"
+            style="border: none; border-radius: 24px;"
+          >
+          </iframe>
+        </div>
+      </div>
+    </div> 
     <!-------------------------------- Other Impacts ----------------------------------------->
     <div id="otherImpacts">
       <app-page-separator [title]="'Other Impacts'"></app-page-separator>
