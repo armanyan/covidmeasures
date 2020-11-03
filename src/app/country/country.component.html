@@ -123,7 +123,7 @@
           <div class="col-md-4 text-center">
             <div class="card card-border">
               <div class="card-header card-header-success">
-                <h4 class="card-title link" routerLink="/borders">Movement Restrictions</h4>
+                <h4 class="card-title link" routerLink="/lockdown">Movement Restrictions</h4>
               </div>
               <div>
                 <i class="material-icons size-padding">lock</i>
@@ -180,7 +180,7 @@
           <div class="col-md-4 text-center">
             <div class="card card-border">
               <div class="card-header card-header-success">
-                <h4 class="card-title link" routerLink="/lockdown">Businesses Closure</h4>
+                <h4 class="card-title link" routerLink="/impacts">Businesses Closure</h4>
               </div>
               <i class="material-icons size-padding">store</i>
               <p class="align-weight">
@@ -252,7 +252,7 @@
                 class="align-weight"
                 style="text-decoration: underline; cursor: pointer;"
                 (click)="openDetailedData('daily_test', currentCountryName, countryView)">
-                Current Positivity Rate: {{ testingPositiveRatio }}%
+                Current Positivity Rate: {{ testingPositiveRatio | number: '.0-2' }}%
               </p>
             </div>
           </div>
