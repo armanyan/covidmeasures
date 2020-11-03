@@ -109,6 +109,7 @@
                         >
                           <button
                             onclick="this.blur()"
+                            class="stringency"
                             (click)="
                               openEconomicData(
                                 'Stringency Score',
@@ -119,7 +120,7 @@
                             "
                             mat-button
                           >
-                            <span style="text-decoration: underline; font-weight: bold; text-shadow: 1px 1px #ccc1c1;">
+                            <span>
                               {{ row["Stringency Score"].avg }}
                             </span>
                           </button>
@@ -161,7 +162,7 @@
                           >
                             <span *ngIf="row[indicator].avg > 0">+</span
                             >
-                            <span style="text-decoration: underline; font-weight: bold; text-shadow: 1px 1px #ccc1c1;">
+                            <span >
                               {{ row[indicator].avg | number }}%
                             </span>
                           </button>
