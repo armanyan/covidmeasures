@@ -139,6 +139,15 @@
                       </span>
                     </button>
                   </td>
+                  <td class="justify-content-center text-center">
+                    <button mat-button
+                      (click)="openDetailedData('7-day', row['name'], row['alpha3'])"
+                    >
+                      <span style="text-decoration: underline; font-weight: bold; text-shadow: 1px 1px #ccc1c1;">
+                        {{ row["7-day"] | number:'.0-1' }}%
+                      </span>
+                    </button>
+                  </td>
                 </tr>
               </tbody>
             </table>
@@ -161,10 +170,9 @@
       <app-page-separator [title]="'The Debate'"></app-page-separator>
       <div class="pt-5">
         <div class="row justify-content-center p-0">
-          <div class="col-12 p-sm-0 p-md-1" style="width: 100%">
+          <div class="col-12 p-sm-0 p-md-1 px-md-0" style="width: 100%">
             <iframe
               data-loaded="true"
-              title="Free Will or Determinism: Do We Have Free Will? — kialo.com"
               src="https://www.kialo.com/how-important-are-vaccines-to-fight-covid-19-pandemic-39965?embedder=https://support.kialo.com&amp;utm_source=support.kialo.com&amp;utm_medium=embed"
               style="border: 0px none"
               allowfullscreen=""

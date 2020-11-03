@@ -18,7 +18,8 @@ export class TestingDataComponent implements OnInit {
   public indicatorName = {
     'positive_rate': 'Positive Rates Variation',
     'daily_test': 'Daily Tests Variation',
-    'cases': 'Daily Cases Variation'
+    'cases': 'Daily Cases Variation',
+    '7-day': '7-Day Death-Cases Ratio '
   };
   public drawChart = true;
 
@@ -38,27 +39,55 @@ export class TestingDataComponent implements OnInit {
   private composeChart() {
     const { indicator, country, alpha3, dataSets } = this.data;
 
-    let data: number[], labels: string[], backgroundColor: string[];
-    labels = indicator === 'cases' ?
-      dataSets.evolution.dates :
-      dataSets.testing.data[alpha3].map(array => array[0]);
-    
-    const index = indicator === 'positive_rate' ? 7 : 1;
-    data = indicator === 'cases' ?
-      dataSets.evolution.data[alpha3].cases :
-      dataSets.testing.data[alpha3].map(array => array[index]);
+    let data: number[], labels: string[], backgroundColor: string[], index: number, datasets: any[];
+
+    switch(indicator) {
+      case 'positive_rate':
+        labels = dataSets.testing.data[alpha3].map(array => array[0]);
+        datasets = [{
+          backgroundColor: labels.map(x => '#6A5ACD	'),
+          data: dataSets.testing.data[alpha3].map(array => array[7])
+        }]
+        break;
+      
+      case 'daily_test':
+        labels = dataSets.testing.data[alpha3].map(array => array[0]);
+        datasets = [{
+          backgroundColor: labels.map(x => '#6A5ACD	'),
+          data: dataSets.testing.data[alpha3].map(array => array[1])
+        }]
+        break;
+
+      case 'cases':
+        labels = dataSets.evolution.dates;
+        datasets = [{
+          backgroundColor: labels.map(x => '#6A5ACD	'),
+          data: dataSets.evolution.data[alpha3].cases
+        }]
+        break;
+      
+      case '7-day':
+        const length = dataSets.testing.data[alpha3].length
+        labels = dataSets.testing.data[alpha3].map(array => array[0]).slice(length-7, length);
+        datasets = [{
+          label: 'Cases',
+          backgroundColor: labels.map(x => '#6A5ACD	'),
+          data: dataSets.evolution.data[alpha3].cases.slice(length-7, length)
+        },
+        {
+          label: 'Death',
+          backgroundColor: labels.map(x => '#FF0000	'),
+          data: dataSets.evolution.data[alpha3].deaths.slice(length-7, length)
+        }]
+        break;
+    }
 
     backgroundColor = labels.map(x => '#6A5ACD	');
     new Chart(document.getElementById("indicator-chart"), {
       type: 'bar',
       data: {
         labels,
-        datasets: [
-          {
-            backgroundColor,
-            data
-          }
-        ]
+        datasets
       },
       options: {
         legend: { display: false },
