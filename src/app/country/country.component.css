@@ -251,6 +251,11 @@ div.text-align {
 .card-citizen {
   margin: 1% 0;
 }
+
+.card-title.link {
+  text-decoration: underline !important;
+  cursor: pointer;
+}
 /**************************CARD-GRID*****************************/
 .card-grid {
   display: grid;

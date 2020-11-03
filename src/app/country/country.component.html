@@ -74,7 +74,7 @@
           <div class="col-md-4 text-center">
             <div class="card card-border">
               <div class="card-header card-header-success">
-                <h4 class="card-title">Educational Facilities Closure</h4>
+                <h4 class="card-title link" routerLink="/school">Educational Facilities Closure</h4>
               </div>
               <div class="text-center">
                 <i class="material-icons size-padding">school</i>
@@ -123,7 +123,7 @@
           <div class="col-md-4 text-center">
             <div class="card card-border">
               <div class="card-header card-header-success">
-                <h4 class="card-title">Movement Restrictions</h4>
+                <h4 class="card-title link" routerLink="/borders">Movement Restrictions</h4>
               </div>
               <div>
                 <i class="material-icons size-padding">lock</i>
@@ -180,7 +180,7 @@
           <div class="col-md-4 text-center">
             <div class="card card-border">
               <div class="card-header card-header-success">
-                <h4 class="card-title">Businesses Closure</h4>
+                <h4 class="card-title link" routerLink="/lockdown">Businesses Closure</h4>
               </div>
               <i class="material-icons size-padding">store</i>
               <p class="align-weight">
@@ -222,7 +222,7 @@
           <div class="col-md-4 text-center">
             <div class="card card-border">
               <div class="card-header card-header-success">
-                <h4 class="card-title">International Travel</h4>
+                <h4 class="card-title link" routerLink="/borders" >International Travel</h4>
               </div>
               <i class="material-icons size-padding">flight_land</i>
               <p class="align-weight">Started on {{ travel.start | date }}</p>
@@ -233,7 +233,7 @@
           <div class="col-md-4 text-center">
             <div class="card card-border">
               <div class="card-header card-header-success">
-                <h4 class="card-title">Masks</h4>
+                <h4 class="card-title link" routerLink="/masks">Masks</h4>
               </div>
               <i class="material-icons size-padding">healing</i>
               <p class="align-weight">Started on No Data</p>
@@ -244,7 +244,7 @@
           <div class="col-md-4 text-center">
             <div class="card card-border">
               <div class="card-header card-header-success">
-                <h4 class="card-title">Testing</h4>
+                <h4 class="card-title link" routerLink="/testing">Testing</h4>
               </div>
               <i class="material-icons size-padding">local_hospital</i>
               <p class="align-weight">Daily test performed: {{ testingDaily | number }}</p>
@@ -329,7 +329,7 @@
           <div class="col-md-6 text-center">
             <div class="card card-border">
               <div class="card-header card-header-success">
-                <h4 class="card-title">Children Homeschooling</h4>
+                <h4 class="card-title link" routerLink="/school">Children Homeschooling</h4>
               </div>
 
               <div class="card-body">
@@ -353,7 +353,7 @@
           <div class="col-md-6 text-center">
             <div class="card card-border">
               <div class="card-header card-header-success">
-                <h4 class="card-title">People Staying Inside</h4>
+                <h4 class="card-title link" routerLink="/lockdown">People Staying Inside</h4>
               </div>
 
               <div class="card-body">
@@ -377,7 +377,7 @@
         <div class="card-grid d-flex justify-content-center text-center">
           <div class="card card-border col-md-12">
             <div class="card-header card-header-success">
-              <h4 class="card-title">Economic Slowdown</h4>
+              <h4 class="card-title link" routerLink="/impacts" [queryParams]="{section: 'economicImpacts'}">Economic Slowdown</h4>
             </div>
 
             <div class="card-body">

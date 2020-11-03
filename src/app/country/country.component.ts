@@ -101,7 +101,7 @@ export class CountryComponent implements OnInit {
 
   private impactData: any;
 
-  private evolution: any;
+  public evolution: any;
   private schoolClosureData: any;
   private travelData: any;
   private testingData: any;
@@ -109,7 +109,7 @@ export class CountryComponent implements OnInit {
   private countryPopulation:number = 0;
 
   constructor(
-    private titleService: Title,
+    public titleService: Title,
     private http: HttpClient,
     private activatedRoute: ActivatedRoute,
     private location: Location,
