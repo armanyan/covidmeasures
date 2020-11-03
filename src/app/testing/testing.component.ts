@@ -5,8 +5,6 @@ import { MatDialog } from '@angular/material/dialog';
 
 import { TestingDataComponent } from 'app/components/testing-data/testing-data.component';
 import { mobileWidth, aws, getCountryNameByAlpha } from '../utils';
-import allCountries from '../data/countries';
-import alpha3s from '../data/alpha3';
 import country_codes from '../data/country_codes';
 
 interface Location {
@@ -23,7 +21,7 @@ export class TestingComponent implements OnInit {
   public isMobile: boolean;
   public rawTestingData;
   public testingData = [];
-  public testingTableHeaders = ['Country', 'Positive Rate', 'Daily Tests', 'Total Cases'];
+  public testingTableHeaders = ['Country', 'Positive Rate', 'Daily Tests', 'Total Confirmed Cases', '7-day death rate'];
   public pageIndicator = 1;
 
   public locations: Location[] = [
@@ -66,12 +64,17 @@ export class TestingComponent implements OnInit {
         continue;
       }
       const lastIndex = this.rawTestingData.data[alpha].length - 1;
+      const length = evolution.data[alpha].cases.lengh;
+      const weekCases = evolution.data[alpha].cases.slice(length-7, length).reduce((a, b) => a+b, 0);
+      const weekDeaths = evolution.data[alpha].deaths.slice(length-7, length).reduce((a, b) => a+b, 0);
+
       this.testingData.push({
         "alpha3": alpha,
         "name": getCountryNameByAlpha(alpha),
         "positive_rate": this.rawTestingData.data[alpha][lastIndex][7]*100,
         "daily_test": this.rawTestingData.data[alpha][lastIndex][1],
-        "cases": evolution.data[alpha].cases.reduce((a, b) => a+b, 0)
+        "cases": evolution.data[alpha].cases.reduce((a, b) => a+b, 0),
+        "7-day": (weekDeaths/weekCases)*100
       })
     }
   }
