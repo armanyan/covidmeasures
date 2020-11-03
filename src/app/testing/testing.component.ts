@@ -39,7 +39,7 @@ export class TestingComponent implements OnInit {
   private evolution: any;
  
   constructor(
-    private titleService: Title,
+    public titleService: Title,
     private http: HttpClient,
     private dialog: MatDialog
   ) { }
