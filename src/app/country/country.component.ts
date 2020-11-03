@@ -4,6 +4,8 @@ import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute } from "@angular/router";
 import { Location } from '@angular/common'; 
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { TestingDataComponent } from 'app/components/testing-data/testing-data.component';
+import { MatDialog } from '@angular/material/dialog';
 import * as typeformEmbed from '@typeform/embed';
 
 import { mobileWidth, getCountryNameByAlpha, getAlpha3FromAlpha2,
@@ -101,7 +103,7 @@ export class CountryComponent implements OnInit {
 
   private impactData: any;
 
-  private evolution: any;
+  public evolution: any;
   private schoolClosureData: any;
   private travelData: any;
   private testingData: any;
@@ -109,12 +111,13 @@ export class CountryComponent implements OnInit {
   private countryPopulation:number = 0;
 
   constructor(
-    private titleService: Title,
+    public titleService: Title,
     private http: HttpClient,
     private activatedRoute: ActivatedRoute,
     private location: Location,
     private formBuilder: FormBuilder,
-    private changeDetector: ChangeDetectorRef
+    private changeDetector: ChangeDetectorRef,
+    private dialog: MatDialog
   ) { }
 
   async ngOnInit() {
@@ -153,8 +156,8 @@ export class CountryComponent implements OnInit {
     this.currentCountryName = getCountryNameByAlpha(this.countryView);
     this.setStatsAndStatuses(this.countryView);
     this.setEconomicData();
-
     this.setTotalDeathRatio();
+    this.setTestingData(this.countryView);
   }
 
   private async getUserCountry() {
@@ -344,4 +347,19 @@ export class CountryComponent implements OnInit {
       opacity: 0
     }).open();
   }
+
+  public openDetailedData(indicator: string, country: string, alpha3) {
+    this.dialog.open(TestingDataComponent, {
+      width: '500px',
+      data: { 
+        indicator,
+        country,
+        alpha3,
+        dataSets: {
+          'testing': this.testingData,
+          'evolution': this.evolution
+        }
+      },
+    });
+  };
 }

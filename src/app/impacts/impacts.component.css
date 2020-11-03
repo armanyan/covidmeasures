@@ -66,12 +66,18 @@ div.text-align {
   text-align: center;
 }
 
-.negative {
+.negative,
+.positive:hover {
   color: #e03b3e;
 }
 
-.positive {
+.positive,
+.negative:hover {
   color: forestgreen;
+}
+
+.stringency:hover {
+  color: #e03b3e;
 }
 
 /* --------------------------- HEADERS ----------------------------- */
@@ -233,9 +239,9 @@ td.thick {
   margin: 1% 0;
 }
 
-
 @media (max-width: 500px) {
-  .container-fluid, .container{
+  .container-fluid,
+  .container {
     padding: 0 !important;
   }
 }
