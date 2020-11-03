@@ -247,8 +247,13 @@
                 <h4 class="card-title link" routerLink="/testing">Testing</h4>
               </div>
               <i class="material-icons size-padding">local_hospital</i>
-              <p class="align-weight">Daily test performed: {{ testingDaily | number }}</p>
-              <p class="align-weight">Current Positivity Rate: {{ testingPositiveRatio | number }}%</p>
+              <p class="align-weight">Daily test performed: {{ testingDaily }}</p>
+              <p 
+                class="align-weight"
+                style="text-decoration: underline;"
+                (click)="openDetailedData('daily_test', currentCountryName, countryView)">
+                Current Positivity Rate: {{ testingPositiveRatio }}%
+              </p>
             </div>
           </div>
         </div>
