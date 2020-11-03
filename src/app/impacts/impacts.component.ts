@@ -64,7 +64,7 @@ export class ImpactsComponent implements OnInit {
   collection: any[];
 
   constructor(
-    private titleService: Title,
+    public titleService: Title,
     private http: HttpClient,
     private dialog: MatDialog
   ) { }
