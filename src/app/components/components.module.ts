@@ -34,6 +34,7 @@ import { SurveySchoolAnswersComponent } from "./charts/survey-school-answers/sur
 import { SurveyTravelAnswersComponent } from "./charts/survey-travel-answers/survey-travel-answers.component";
 import { SurveyGatheringsAnswersComponent } from './charts/survey-gatherings-answers/survey-gatherings-answers.component';
 import { TestingDataComponent } from './testing-data/testing-data.component';
+import { SurveyImpactsAnswersComponent } from './charts/survey-impacts-answers/survey-impacts-answers.component';
 
 @NgModule({
   imports: [
@@ -71,6 +72,8 @@ import { TestingDataComponent } from './testing-data/testing-data.component';
     SurveyTravelAnswersComponent,
     SurveyGatheringsAnswersComponent,
     TestingDataComponent,
+    SurveyImpactsAnswersComponent,
+    SurveyImpactsAnswersComponent
   ],
   exports: [
     FooterComponent,
@@ -90,6 +93,7 @@ import { TestingDataComponent } from './testing-data/testing-data.component';
     SurveyTravelAnswersComponent,
     SurveyGatheringsAnswersComponent,
     DisqusModule,
+    SurveyImpactsAnswersComponent
   ],
 })
-export class ComponentsModule {}
+export class ComponentsModule { }
